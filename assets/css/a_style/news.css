@@ -1,0 +1,498 @@
+﻿.aboutEpson_wrapper .nav_Pics_wrapper{
+    padding-top:0;
+}
+.aboutEpson_wrapper .nav_Pics{
+    margin: 15px auto 0;
+}
+/*news content left begin*/
+.nav_Pics .new_left{
+    width: 30%;
+    float: left;
+    padding-bottom: 20px;
+}
+.nav_Pics .new_right{
+    width: 70%;
+    /*height: 200px;*/
+    float: left;
+    background-color: #fff;
+}
+.aboutEpson_wrapper .nav_Pics{
+    padding-top: 0;
+}
+.nav_new_outer{
+    margin:0px 60px 5px 0px;
+}
+.nav_new,.nav_new_title{
+    font-size: 16px;
+    background-color: #9b9c9c;
+    color: #fff;
+    height: 40px;
+    line-height: 40px;
+    padding: 0px 12px 0px 17px;
+}
+.submenu{
+    display: none;
+}
+.submenu a{
+    width: 100%;
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    margin: 0px;
+    border: 1px solid #dadada;
+    border-top: 0px;
+    box-sizing: border-box;
+    padding: 0px 12px 0px 17px;
+    color:#404040;
+    font-size: 14px;
+
+}
+.submenu a:hover{
+    color: #0989ec;
+}
+.submenuShow{
+  display: block;
+}
+.new_active_title{
+    background-color: #505050;
+}
+.aboutEpson_wrapper img.nav_left_icon{
+    width: inherit;
+    float: right;
+    margin-top: 8px;
+    width: 24px;
+    height: 24px;
+}
+/*news content left end*/
+
+
+/*new content right begin*/
+.new_right_con{
+    margin-right: 45px;
+}
+.new_title{
+    /*height: 32px;*/
+    height: 36px;
+    border-bottom: 1px solid #bdbdbd;
+}
+.new_title .title_con{
+    font-size: 24px;
+    color: #505050;
+    font-weight: bold;
+}
+.new_list{
+    clear: both;
+    display: inline-block;
+    margin-bottom: 30px;
+    padding-bottom: 30px;
+}
+.new_list_outer{
+    padding-top: 30px;
+    padding-bottom: 30px;
+    min-height: 435px;
+}
+
+.new_list_outer p { padding-bottom:20px;}
+
+.new_list_outer .new_list_img{
+    width: 30%;
+    height: 166px;
+    float: left;
+    overflow: hidden;
+}
+.new_list_outer .new_list_img img{
+    width: 245px;
+    height: 166px;
+}
+.new_list_outer .new_list_con{
+    width: 70%;
+    float: left;
+    padding: 0px 35px;
+    box-sizing: border-box;
+}
+.new_title_list{
+    padding-bottom: 23px;
+}
+.typeAndTime{
+    /*padding-bottom: 36px;*/
+    padding-bottom: 18px;
+}
+.new_details{
+    height: 30px;
+    background-color: #1b8be9;
+    color: #fff;
+    width: 100px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 15px;
+    margin-top: 22px;
+}
+.new_details a{
+    color: #fff;
+}
+.type_name{
+    color: #268de6;
+}
+.type_time{
+    font-size: 12px;
+    color: #9b9c9c;
+}
+.new_title_list{
+    font-size: 18px;
+    color: #373737;
+}
+.new_content_list{
+    color: #676767;
+    font-size: 12px;
+}
+/*select style*/
+.select_outer{
+    float: right;
+}
+.select_Btn{
+    height: 27px;
+    line-height: 27px;
+    /*padding: 0px 10px;*/
+
+    font-size: 14px;
+    color: #fff;
+    width: 140px;
+    box-sizing: border-box;
+}
+.select_txt{
+    padding: 0px 10px;
+}
+.select_Btn img.bottom_icon{
+    width: inherit;
+    float: right;
+    padding-left:5px;
+    margin: 2px;
+}
+.select_list{
+    background-color: #e5e5e5;
+    padding: 0px 10px;
+}
+
+.aboutEpson_wrapper .nav_Pics ul li a {
+    color: #717171;
+}
+.aboutEpson_wrapper .nav_Pics ul li a:hover{
+    background: url("../a_images/public/bg-centra-tag-on.png");
+    color: #fff;
+}
+.aboutEpson_wrapper .nav_Pics ul li a.page_active{
+    background: url("../a_images/public/bg-centra-tag-on.png");
+    color: #fff;
+}
+.moreNews{
+    color: #404040;
+    text-align: center;
+    border: 1px solid #dadada;
+    padding: 6px 0px;
+}
+.aboutEpson_wrapper .moreNews img{
+    width: inherit;
+    vertical-align: middle;
+    margin-left: 5px;
+}
+.aboutEpson_wrapper .nav_Pics .select_list ul li a {
+    color: #fff;
+}
+.aboutEpson_wrapper .nav_Pics .select_list  ul li a:hover{
+    background: inherit;
+    color: #0989ec;
+    cursor:pointer;
+}
+.select_Btn:hover{
+    cursor:pointer;
+}
+.aboutEpson_wrapper .nav_Pics ul li img.arrow_left {
+    padding-top: 0px;
+}
+.aboutEpson_wrapper img.arrow_left{
+    width: 6px;
+    height: 8px;
+}
+.aboutEpson_wrapper .nav_Pics .select_list ul li{
+    width: 100%;
+}
+.option{
+    display: none;
+}
+.page_news{
+    border-top:1px solid #e0e0e0 ;
+    padding: 20px 0px;
+}
+.page_news ul{
+
+}
+.aboutEpson_wrapper .nav_Pics ul li {
+    display: inline-block;
+    margin-right: 15px;
+    width: 27px;
+    height: 50px;
+    font-size: 16px;
+    line-height: 40px;
+}
+.aboutEpson_wrapper .nav_Pics ul {
+    margin: 0 auto;
+    width: inherit;
+}
+.page_news ul{
+    display: table;
+}
+/*.page_news ul li{*/
+    /*background: url("../a_images/public/bg-centra-tag.png");*/
+    /*text-align: center;*/
+    /*color: #717171;*/
+    /*font-size: 12px;*/
+    /*line-height: 25px;*/
+/*}*/
+.page_news ul li a{
+    background: url("../a_images/public/bg-centra-tag.png");
+    text-align: center;
+    color: #717171;
+    font-size: 12px;
+    width: 27px;
+    height: 25px;
+    line-height: 25px;
+    display: inline-block;
+}
+
+/*mobile begin*/
+@media only screen and (max-width : 768px)  {
+
+    .nav_Pics .new_right {
+        box-sizing: border-box;
+        padding: 0 10px;
+        width: 100%;
+    }
+    .moreNews{
+        margin: 10px 0px;
+    }
+    .select_list{
+        z-index: 100;
+    }
+    .aboutEpson_wrapper .nav_Pics .select_list ul li a{
+        color: #404040;
+    }
+    .nav_Pics .new_right{
+        width: 100%;
+    }
+    .new_content_list{
+        display: none;
+    }
+    .new_right_con{
+        margin: 0px;
+    }
+
+    .new_list_outer .new_list_con {
+        width: 64%;
+        float: left;
+        padding: 0px;
+        box-sizing: border-box;
+    }
+    .aboutEpson_wrapper {
+        height: auto;
+        margin: inherit;
+        box-sizing: border-box;
+    }
+    .aboutEpson_wrapper .nav_Pics{
+        padding: 0px;
+    }
+    .select_Btn {
+        height: 27px;
+        line-height: 27px;
+        font-size: 12px;
+        color: #fff;
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .select_Btn .titleIn{
+        line-height:40px;
+        padding-left:16px;
+        margin-left:-10px;
+        margin-right:-10px;
+        height:40px;
+        font-size: 18px;
+        
+        background-color:black;
+    }
+    .titleIn a {
+        color:#fff;
+    }
+    
+    .select_outer_left{
+        float: left;
+        margin-right: 5px;
+    }
+    .new_title{
+        border: 0px;
+        position: relative;
+    }
+    .select_list {
+        padding: 0px 10px;
+        margin-left: -20px;
+        overflow-x:hidden;
+        position: absolute;
+        left: 0px;
+        box-sizing: border-box;
+        margin-top: 3px;
+        max-height: 600px;
+        width: 100%;
+
+    }
+    .aboutEpson_wrapper .nav_Pics ul li a {
+        color: #404040;
+    }
+    .aboutEpson_wrapper .nav_Pics ul li{
+        border-bottom: 1px solid #c4c4c4;
+        padding: 4px 0px;
+    }
+    .aboutEpson_wrapper .nav_Pics ul {
+        width: 100%;
+    }
+
+    .select_list{
+        display: none;
+    }
+    .option{
+        display: block;
+    }
+    .new_title_list{
+        font-size: 12px;
+    }
+    .typeAndTime, .new_title_list, .new_content_list {
+        padding-bottom: 7px;
+    }
+    .new_details {
+        background-color: #1b8be9;
+        color: #fff;
+        font-size: 12px;
+        height: 20px;
+        line-height: 20px;
+        text-align: center;
+        width: 75px;
+        position: absolute;
+        bottom: -7px;
+    }
+    .new_list_outer .new_list_img {
+        width: 31%;
+        height: 65px;
+        float: left;
+        overflow: hidden;
+        margin-right: 5%;
+    }
+    .new_list_outer .new_list_img img {
+        height: 83px;
+        width: 123px;
+        left: 50%;
+        position: relative;
+        margin-left: -61px;
+        top: 50%;
+        margin-top: -41px;
+    }
+    .new_title_list{
+        padding-bottom: 20px;
+    }
+    .typeAndTime{
+        font-size: 10px;
+    }
+    .type_time{
+        font-size: 9px;
+    }
+    .new_title_list{
+        line-height: 14px;
+    }
+    .new_list{
+        position: relative;
+       margin-bottom: 15px;
+        width: 100%;
+    }
+    .nav_new, .nav_new_title{
+        font-size: 14px;
+    }
+    .option.-webkit-scrollbar {
+            width: 0px;
+        }
+}
+/*@media (min-width: 375px) and (max-width: 413px) {*/
+    /*.content-group label{*/
+        /*font-size: 15px;*/
+    /*}*/
+    /*.content-group input{*/
+        /*width: 34%;*/
+    /*}*/
+/*}*/
+/*@media (min-width: 414px)and (max-width: 991px)  {*/
+    /*.content-group label{*/
+        /*font-size: 15px;*/
+    /*}*/
+    /*.content-group input{*/
+        /*width: 42%;*/
+    /*}*/
+/*}*/
+
+/*mobile end*/
+.news_title{
+    color: #505050;
+    font-size: 24px;
+    font-weight: bold;
+
+}
+.new_right_01{
+    width: 100%;
+}
+.new_list_outer p{
+    color: #333;
+    font-size: 14px;
+    line-height: 2em;
+}
+.news_photo{
+    text-align: center;
+}
+.news_photo img{
+    width: inherit;
+}
+.news_photo a {
+    color: #00b8f2;
+    text-decoration: none;
+}
+.new_list_outer .new_list:last-child{
+    border: 0px;
+}
+.new_title_outer{
+    border-bottom: 1px solid #bdbdbd;
+    height: 45px;
+}
+.new_list{
+    width: 100%;
+}
+.middleNavWrapper,.topPicWrapper,.productsClassWrapper{ background:#FFF; overflow:hidden; margin:12px 5px; height:22px;}
+.middleNavWrapper .middleNav{ max-width:1180px; margin:0 auto; height:22px; font-size:14px; color:#757575; font-family: Arial,"微软雅黑","黑体",sans-serif;}
+.middleNavWrapper .middleNav li{ height:22px; line-height:22px; float:left;}
+.middleNavWrapper .middleNav li a { color:#757575;}
+.middleNavWrapper .middleNav .middleNav_active{ color:#0c0c0c;}
+@media (max-width :768px) {
+	.middleNavWrapper{ display:none;}
+    .new_title_outer {
+    border-bottom: hidden;
+    height: 45px;
+    text-align: center;
+    }
+    .new_list_outer img{
+        width:100%;
+        height:100%;
+    }
+    .new_list_outer p embed{
+        height:100%;
+        width:100%;
+    }
+    .new_right{
+        margin:15px auto 15px;
+    }
+}    
+
+
+.new_right_01 .player { float:left; width:100%; height:auto; padding-bottom:20px;}
+.new_right_01 .player iframe { margin-left:245px; margin-top:30px;}

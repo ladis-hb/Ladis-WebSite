@@ -1,0 +1,56 @@
+﻿@media screen and (max-width: 1200px) and (min-width: 900px) {
+	.scrapWrapper .scrap,.searchWrapper .searchInfo,.goBug,#banner{
+		width: 976px;
+	}
+	.goBug .mall a{
+		width: 483px;
+		margin-right: 10px;
+		float: left;
+	}
+	.goBug .mall a img,.goBug .yuyue a img{
+		display: block;
+		width: 100%;
+	}
+	.goBug .yuyue a{
+		width: 488px;
+		float: left;
+	}
+	#banner{
+		/*overflow: hidden;*/
+	}
+	#banner .swiper-slide_1{
+		width: 976px;
+		background-size: cover;
+	}
+
+	.searchInfo {
+		padding: 15px 0;
+	}
+
+	.searchInfo .selectbox{
+		width: 288px;
+		background: #ffffff url(../a_images/public/nameicon_blank.png) no-repeat 253px 9px;
+		
+	}
+	.searchInfo .selectbox.mini{
+		width: 214px;
+		background: #ffffff url(../a_images/public/nameicon_blank.png) no-repeat 180px 9px;		
+	}
+	.searchInfo .selectbox .opts{
+		width: 288px;
+		line-height: 40px;
+		background: #ffffff;
+	}
+	.searchInfo .selectbox .opts.mini{
+		width: 214px;
+	}
+	.searchInfo .submit{
+		width: 97px;
+		-webkit-appearance: none;
+		border-radius: 0;
+	}
+	.searchInfo .ulInfo{
+		display: none;
+	}
+	#banner .arrow-left,#banner .arrow-right{display: none}
+}

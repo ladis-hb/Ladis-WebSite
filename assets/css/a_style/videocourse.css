@@ -1,0 +1,66 @@
+﻿/*left*/
+/*重写base.css*/
+.contentWrapper{ padding-top:0px;}
+.title{font-size: 24px;color: #0e1b8d; border-bottom:2px solid #CCC; padding-bottom:10px; padding-top:20px;}
+.title:first-child{ padding-top:0;}
+.cont .title a{ float:right; color:#666;}
+.title .tips{ color:#666666; font-size:14px; font-family:"微软雅黑"; padding-top:5px;}
+/***instruction***/
+.instruction{ padding:15px 0;}
+.instruction h3 , .instruction .instrInfo li{ color:#666; font-size:14px; font-weight:normal;}
+.instruction .instrInfo li{ margin-bottom:20px;}
+
+/*视频*/
+ .vedioWrapper { width:100%; /* padding:25px 0; */ }
+ .vedioWrapper .vedio{ display:inline-block; width:50%; float:left; padding-top: 25px;}
+ .vedioTitle{ font-size:16px; font-weight:normal; color:#666; height:40px; line-height:40px;}
+ 
+.kitShowVideo{ cursor:pointer;}
+
+ .vedioWrapper .videoDetail{ vertical-align:top; display:inline-block; font-size:14px; color:#666; margin-left:30px; max-width:310px;}
+ .vedioWrapper .videoDetail p{ padding-bottom:6px; line-height:20px; padding-bottom:22px;}
+ .vedioWrapper .videoDetail p.videoType{ padding-bottom: 0; }
+ .vedioWrapper .videoDetail p.tLong{margin-top: -23px;}
+ .vedioWrapper .videoDetail .videoTitle{ font-size:18px; }
+ .vedioWrapper .videoDetail .videoTitle a { color:#666;  word-break: break-word;  }
+ 
+ .vedioWrapper .videoDetail .vedio{ display:inline-block; width:50%; float:left;}
+ .vedioWrapper .vedioRight  a .kitShowVideo{ padding-left:27px;}
+ .vedioWrapper .videoMore a{ color:#666;}
+ .vedioWrapper .videoDetail .videoTitle a:hover ,.vedioWrapper .videoMore a:hover{ text-decoration:underline; color:#10218b;}
+
+
+
+
+
+@media only screen and (max-width : 1200px) {
+.vedioWrapper .videoDetail{ max-width:215px;}
+
+}
+@media only screen and (max-width : 1024px) {
+
+
+}
+@media only screen and (max-width : 900px) {
+.title:first-child{ padding-top:15px;}
+
+.vedioWrapper .vedio{ width:100%; float:none;}
+.vedioWrapper .vedioRight{ margin-top:35px;}
+.vedioWrapper .vedioRight a .kitShowVideo{ padding:0;}
+.vedioWrapper .videoDetail{ max-width:300px;}
+
+}
+
+
+@media only screen and (max-width : 680px) {
+.vedioWrapper .kitShowVideoImg{ display:inline-block; width:45%;}
+ .vedioWrapper .videoDetail{ max-width:48%; margin-left:12px;}
+.vedioWrapper .kitShowVideoImg .kitShowVideo{ width:100%;}
+}
+@media only screen and (max-width : 375px) {
+ .title{ font-size:20px;}
+
+}
+@media only screen and (max-width : 320px) {
+
+}

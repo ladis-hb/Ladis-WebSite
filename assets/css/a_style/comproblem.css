@@ -1,0 +1,40 @@
+﻿.contLeft .title{font-size: 24px;color: #0e1b8d;position: relative;font-weight: bold;}
+.contentWrapper .cont .contLeft .title >a{display: block;width: 160px;line-height: 26px;font-size: 14px;color: #fff;background: #9c9c9c;text-align: center;position: absolute;bottom: 2px;right: 1px;}
+.tabIconBox .tabIcon{padding-right: 153px;}
+.download{position: absolute;top:6px;right: 5px;}
+@media screen and (max-width: 1200px) and (min-width: 900px){
+	.contLeft .title{font-size: 20px;}
+    .tabIconBox .tabIcon{padding-right: 0;width: -webkit-calc((100% - 6px)/3);width: -moz-calc((100% - 6px)/3);width: calc((100% - 6px)/3);}
+}
+@media screen and (max-width: 899px){
+    .tabIconBox .tabIcon{padding: 8px;height:auto;width:32%;width: -webkit-calc((100% - 6px)/3);width: -moz-calc((100% - 6px)/3);width: calc((100% - 6px)/3);}
+    .tabIconBox .tabIcon:first-of-type{display:block;box-align:center;-webkit-box-align:center; -moz-box-align:center;}
+	@media screen and (max-width: 398px){
+		.tabIconBox .tabIcon{height: 50px;}
+		.tabIconBox .tabIcon:first-of-type{line-height: 35px;}
+	}
+	.contentWrapper .cont .contLeft .title >a{font-size:12px;width: 123px;}
+}
+.ulName{font-size: 18px;color: #232627;margin-top: 30px;border-bottom: 2px solid #ccc;line-height: 30px;font-weight: bold;}
+.contentWrapper .cont .contLeft .tabContBox .tabContTop ul.{margin-top:10px;border-top: 2px solid #ccc;}
+.contentWrapper .cont .contLeft .tabContBox .tabContTop li{position:relative;padding:12px 0;border-bottom: 1px solid #ccc;}
+.contentWrapper .cont .contLeft .tabContBox .tabContTop li a{display: block;width: 100%;height: 100%;color: #666;font-size: 16px;}
+.contentWrapper .cont .contLeft .tabContBox .tabContTop li a:hover{color: #073696;}
+
+
+.contentWrapper .cont .contLeft .tabContBox .tabContBottom .ulName{line-height: 42px;border-bottom: 2px solid #ccc;}
+.contentWrapper .cont .contLeft .tabContBox .tabContBottom .quesBox .quesName{position: relative;font-size: 16px ;color: #666;line-height: 42px;border-bottom: 1px solid #ccc;background: url(../a_images/public/prd_add.png) no-repeat right center;cursor:pointer;-webkit-text-size-adjust:none;}
+.contentWrapper .cont .contLeft .tabContBox .tabContBottom .quesBox .quesTab{background: url(../a_images/public/prd_red.png) no-repeat right center;color: #073696;}
+.contentWrapper .cont .contLeft .tabContBox .tabContBottom ul{width: 100%;display: none;}
+.contentWrapper .cont .contLeft .tabContBox .tabContBottom ul li{font-size: 14px;padding:12px 0;background: url(../a_images/public/prd_dot.png) no-repeat left 18px;padding-left: 15px;}
+.contentWrapper .cont .contLeft .tabContBox .tabContBottom ul li:nth-child(odd){
+	/* background: #dadada; */
+}
+.contentWrapper .cont .contLeft .tabContBox .tabContBottom ul li a{color:#666;}
+.contentWrapper .cont .contLeft .tabContBox .tabContBottom ul li a:hover{color: #073696;}
+
+@media screen and (max-width: 900px){
+	.contLeft .title{font-size: 20px;padding-bottom: 30px;}
+	.contentWrapper .cont .contLeft .tabContBox .tabContTop li a{font-size: 14px;-webkit-text-size-adjust:none}
+    .contentWrapper .cont .contLeft .tabContBox .tabContBottom ul li{font-size: 12px;-webkit-text-size-adjust:none}
+}

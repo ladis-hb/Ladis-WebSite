@@ -1,0 +1,1049 @@
+﻿/* 清除浮动 */
+.clearfix:before,.clearfix:after{
+    display:table;
+    content:"";}
+.clearfix:after{
+    clear:both;}
+.clearfix{zoom:1;}
+h1,h2,h3,h4,h5,h6{
+    font-weight: normal;
+    font-size: 12px;
+}
+.nav_new, .nav_new_title{
+    background-color: #dadada;
+    color: #404040;
+}
+.new_active_title {
+    background-color: #505050;
+    color: #fff;
+}
+.aboutEpson_wrapper .nav_Pics_wrapper {
+    padding-top:0;
+}
+.new_title{
+    position: relative;
+}
+.select_outer {
+    bottom: 3px;
+    position: absolute;
+    right: 0;
+    color: #505050;
+    font-size: 12px;
+}
+.select_outer a{
+    color: #505050;
+}
+.new_list-border h4{
+    margin: 20px 0 10px;
+    font-size: 18px;
+}
+.new_list_outer .new_list_con{
+    line-height: 30px;
+}
+.new_list_outer .new_list_con{
+    padding: 0 0 0 35px;
+}
+.new_list_outer .new_list_img img{
+    width: 100%;
+    height: 100%;
+}
+.new_list_outer .new_list_img h4{
+    text-align: center;
+    line-height: 1.3em;
+    padding-top: 12px;
+}
+.text-center{
+    text-align: center;
+}
+.text-centerbg{
+    /*background: #f1f1f1;*/
+    padding: 14px 0;
+    margin-bottom: 20px;
+}
+.text-center h3{
+    margin: 30px 0;
+    font-size: 30px;
+}
+.text-center p{
+    text-align: center;
+    line-height: 2em;
+    font-size: 18px;
+}
+.text-center h2{
+    font-size: 24px;
+    color: #231f20;
+    margin: 20px 0;
+    font-weight: bold;
+}
+.text-center img{
+    width: auto;
+    height: auto;
+    margin: 20px 0;
+}
+.new_list_outer .new_list_img {
+    float: left;
+    height: inherit;
+    overflow: hidden;
+    width: 30%;
+}
+/* .new_content_list p{
+    margin-bottom: 25px; 
+}*/
+.new_list{
+    border-bottom: 1px dashed #bdbdbd;
+}
+.text-left h2{
+    line-height: 2em;
+    padding-bottom: 26px;
+    border-bottom: 1px dashed #bdbdbd;
+    margin-bottom: 20px;
+}
+.text-left .list5{
+    padding-bottom: 20px;
+}
+.text-left p{
+    line-height: 2em;
+}
+.text-left .list5 h3{
+    font-weight: bold;
+    line-height: 2em;
+}
+.text-left h3 span{
+    color: #0989ec;
+    padding-right: 5px;
+}
+.text-left .list5 h4{
+    font-size: 18px;
+}
+.text-left .list5 h5{
+    background: #0989ec;
+    color: #fff;
+    font-size: 16px;
+    padding: 20px 14px;
+    margin: 20px 0;
+    text-align: center;
+    line-height: 2em;
+}
+.text-left .list5 img{
+    margin: 10px 0 20px;
+}
+.text-left .img-top{
+    padding-bottom: 20px;
+    padding-top: 0;
+}
+.text-left .img-top img{
+    margin: 0px 0 10px;
+}
+.list7 h2{
+    font-size: 18px;
+    padding-bottom: 20px;
+    line-height: 1.5em;
+}
+.list7 p{
+    line-height: 2em;
+}
+.list7 a{
+    display: inline-block;
+    padding: 3px 10px;
+    color: #fff;
+    background: #1b8be9;
+    font-size: 14px;
+    margin-right: 10px;
+    margin-bottom: 16px;
+}
+.list7 div dl{
+    margin-top: 30px;
+    width: 26%;
+    margin-right: 5%;
+    float: left;
+    margin-bottom: 20px;
+}
+.list7 div dd{
+    padding-top: 10px;
+}
+.list7-nav a{
+    display: inline-block;
+    padding: 3px 10px;
+    font-size: 18px;
+    margin-right: 16px;
+    margin-bottom: 16px;
+    border:1px solid #bdbdbd;
+    color: #505050;
+}
+.list7-nav a.current{
+    border:1px solid #0989ec;
+    color: #0989ec;
+}
+.list7-nav h3{
+    padding: 10px 0 20px;
+    border-bottom:1px dashed #bdbdbd;
+    margin-bottom: 20px;
+}
+.text-left .list9 h4{
+    padding-bottom: 20px;
+}
+.list9 h2{
+    color: #17619a;
+    border-bottom: 0;
+    margin-bottom: 0;
+}
+.text-left .list9 ul li{
+    width: 100%;
+    background: url(../a_images/public/icon.png) 0 3px no-repeat;
+    padding-left: 16px;
+}
+.text-left .list9 h5{
+    background: #f1f1f1;
+    color: #505050;
+    font-size: 18px;
+    text-align: left;
+    padding: 20px 30px;
+}
+.text-left .list9 p span{
+    color: #0989ec;
+    font-weight: bold;
+    padding-right: 6px;
+}
+.list10 h2{
+    font-size: 18px;
+    padding-bottom: 20px;
+    font-weight: bold;
+}
+.list10 .Report-Download img{
+    width: 25%;
+    height: auto;
+    display: block;
+    float: left;
+}
+.list10 .Report-Download{
+    padding: 20px 0;
+}
+.list10 .Report-Download .Report-DownloadR{
+    width: 72%;
+    float: right;
+}
+.list10 a{
+    display: block;
+    color: #0989ec;
+    text-decoration: underline;
+    line-height: 28px;
+    padding-left: 16px;
+    background: url(../a_images/public/prve.png) left 10px no-repeat;
+}
+.list10 h6{
+    padding: 20px 0 10px;
+    font-weight: bold;
+}
+.list10 p{
+    line-height: 2em;
+}
+table {
+    border-collapse:collapse;border-spacing:0;
+    width: 100%;
+}
+th {
+    text-align:inherit;
+}
+.list10 table{
+    margin-bottom: 20px;
+}
+.list10 th,.list10 td{
+    border:1px solid #f1f1f1;
+    padding: 8px 20px;
+}
+.list10 td a{
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: #0989ec;
+    text-decoration: underline;
+}
+.list10 th{
+    background: #f1f1f1;
+}
+.list10 .list10th{
+    width: 60%;
+}
+.list10 .list10tr{
+    width: 40%;
+}
+.list13{
+    margin-bottom: 20px;
+}
+.list13 img{
+    display: block;
+    width: 25%;
+    float: left;
+}
+.list13 .list13R{
+    width: 70%;
+    float: right;
+}
+.list13R h6{
+    font-size: 18px;
+    padding: 6px 0 30px;
+    font-weight: bold;
+}
+.list13R p{
+    line-height: 2em;
+}
+.list14 h2{
+    font-size: 18px;
+    color: #022a48;
+    margin-top: 20px;
+    line-height: 36px;
+    background: #e6f3fd;
+    padding: 0 10px;
+}
+.table13{
+    padding-top: 20px;
+}
+.table13 h6{
+    font-size: 18px;
+    padding: 30px 6px 30px 0px;
+    font-weight: bold;
+}
+.table13 tr td{
+    padding-right: 50px;
+    vertical-align: top;
+}
+.table13 tr td a {
+    color: #0989ec;
+    display: inline;
+    line-height: 28px;
+    text-decoration: underline;
+}
+.table13 p{
+    line-height: 2em;
+}
+.list14 h3{
+    font-size: 18px;
+    padding: 20px 0;
+}
+.list14 img{
+    margin: 20px 0;
+}
+.list14 p{
+    line-height: 2em;
+}
+.list14 p a{
+    color: #0989ec;
+    text-decoration: underline;
+}
+.list14img p{
+    width: 75%;
+    display: inline-block;
+    vertical-align: middle;
+}
+.list14img img{
+    display: inline-block;
+    width: 22%;
+    margin: 0 0 0 2%;
+    vertical-align: middle;
+}
+.list11 h2{
+    padding-bottom: 20px;
+    font-size: 18px;
+}
+.Company-details h4{
+    width: 100%;
+    border-top:1px dashed #bdbdbd;
+}
+.Company-details h5{
+    font-size: 18px;
+    font-weight: bold;
+    padding-bottom: 20px;
+}
+.Company-details a{
+    display: inline-block;
+    padding: 6px 20px;
+    font-size: 18px;
+    margin: 20px 10px 20px 0;
+    border:1px solid #bdbdbd;
+    color: #505050;
+    font-weight: 500;
+}
+.Company-details a.current{
+    color: #0989ec;
+    border:1px solid #0989ec;
+}
+.Company-details-out div{
+    width: 46%;
+    padding-right: 4%;
+    float: left;
+    margin-bottom: 30px;
+}
+.Company-details .Company-details-out a{
+    display: inline;
+    font-size: 12px;
+    color: #0989ec;
+    text-decoration: underline;
+    padding:0;
+    margin: 0;
+    border:0;
+    font-weight: normal;
+}
+.Company-details-out div h3{
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+.Company-details-out div p{
+    line-height: 2em;
+}
+@media only screen and (max-width : 800px){
+    .list13 img {
+        display: block;
+        width: 50%;
+        margin: auto;
+        float: none;
+        margin-bottom: 10px;
+    }
+    .list13 .list13R{
+        width: 100%;
+        float: right;
+    }
+body,h1,h2,h3,h4,h5,h6{
+    font-size: 14px;
+}
+    .aboutTitle_md{
+        font-size: 16px;
+        font-weight: bold;
+    }
+    .new_title_list{
+        font-size: 12px;
+        padding-top: 10px;
+    }
+    .nav_new_outer {
+        margin: 0px 0px 5px 0px;
+    }
+    .aboutTitle_md{
+        padding: 15px 0px;
+        border-bottom: 1px solid #bdbdbd;
+    }
+    .nav_Pics .new_right{
+        
+        margin-top: 10px;
+    }
+    .nav_Pics .new_left{
+        width: 100%;
+    }
+    .new_list_outer .new_list_img{
+        width: 100%;
+        height: auto;
+    }
+    .new_list_outer .new_list_img img {
+        width: 50%;
+        height: auto;
+        margin:0 auto;
+        display:block
+    }
+    .new_content_list{
+        display: inherit;
+        font-size: 9px;
+    }
+    .new_list_outer .new_list_con{
+        width: 100%;
+        padding: 0px;
+        line-height: 18px;
+    }
+    .new_list_img{
+        padding-top: 0px;
+    }
+    .new_list{
+        margin-bottom: 0px;
+        padding-bottom: 0px;
+    }
+.new_list-border h4{
+    margin: 10px 0 6px;
+    font-size: 14px;
+}
+    .new_title_list{
+        padding-bottom: 10px;
+    }
+    /* .new_content_list p {
+        margin-bottom: 20px;
+    } */
+    .aboutTitle_md{
+        padding: 15px 10px;
+    }
+
+.text-center h3{
+    margin: 20px 0;
+    font-size: 16px;
+}
+.text-center p{
+    font-size: 12px;
+}
+.text-center h2{
+    font-size: 14px;
+    margin: 10px 0;
+}
+.new_list_outer.text-center img{
+    margin: 10px 0;
+}
+.text-left h2{
+    padding-bottom: 16px;
+}
+/* .text-left .list5{
+    padding-top: 16px;
+} */
+.text-left .list5 h4{
+    font-size: 16px;
+}
+.text-left .list5 h5{
+    font-size: 14px;
+    padding: 16px;
+    margin: 10px
+}
+.list7 h2{
+    font-size: 16px;
+    padding-bottom: 12px;
+}
+.list7 div dl{
+    margin-top: 30px;
+    width: 42%;
+    margin-right: 8%;
+    float: left;
+}
+.list7-nav a{
+    display: inline-block;
+    padding: 3px 6px;
+    font-size: 16px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+}
+.list7 div dl{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.text-left .list9 ul li{
+    background: url(../a_images/public/icon.png) 0 8px no-repeat;
+    border: none;
+    padding: 0 16px 0 16px;
+}
+.list10 h2{
+    font-size: 16px;
+    padding-bottom: 10px;
+}
+.list10 .Report-Download img{
+    width: 40%;
+}
+.list10 .Report-Download{
+    padding: 10px 0;
+}
+.list10 .Report-Download .Report-DownloadR{
+    width: 58%;
+}
+.list10 h6{
+    padding: 0px 0 5px;
+}
+.list10 p{
+    padding-bottom: 10px;
+}
+.list10 table{
+    margin-bottom: 10px;
+}
+.list13R h6{
+    font-size: 14px;
+    padding: 0px 0 6px;
+    font-weight: bold;
+}
+  .list13R a.email {
+        color: #0989ec;
+        display: inline;
+        line-height: 28px;
+        text-decoration: underline;
+    }
+.list13R p{
+    line-height: 1.6em;
+    font-size: 13px;
+}
+.list14 h2{
+    font-size: 16px;
+    margin-top: 10px;
+    line-height: 30px;
+}
+.list14 h3{
+    font-size: 16px;
+    padding: 10px 0;
+}
+.list14 img{
+    margin: 10px 0;
+}
+.list14img p{
+    width: 100%;
+}
+.list14img img{
+    width: 30%;
+}
+.list11 h2{
+    padding-bottom: 10px;
+    font-size: 16px;
+}
+.Company-details a{
+    padding: 3px 10px;
+    font-size: 14px;
+    margin: 10px 8px 10px 0;
+}
+.Company-details-out div{
+    width: 48%;
+    padding-right: 2%;
+    margin-bottom: 18px;
+    font-size: 12px;
+}
+.Company-details h5{
+    font-size: 16px;
+    padding-bottom: 10px;
+}
+.text-left .list9 h4{
+    padding-bottom: 10px;
+}
+.text-left .img-top{
+    padding-bottom: 0px;
+}
+}
+.submenu a.active_nav{
+    color:#0989ec ;
+}
+.aboutEpson_wrapper .nav_Pics .new_list_outer ul li {
+    list-style: inherit;
+    display: list-item;
+    width: inherit;
+}
+.aboutEpson_wrapper .nav_Pics .new_list_outer ul {
+    width: 96%;
+}
+.aboutEpson_wrapper p img {
+    max-width: 100%;
+}
+.aboutEpson_wrapper .nav_Pics .new_list_outer ol li {
+    list-style: inherit;
+}
+/*.aboutEpson_wrapper .nav_Pics {*/
+    /*min-height: 1078px;*/
+/*}*/
+@media only screen and (max-width: 800px)
+{
+    .aboutEpson_wrapper .nav_Pics .new_list_outer ul li {
+        border:0px;
+        padding: 4px 0px;
+        font-size: 12px;
+        width: 100%;
+    }
+    .aboutEpson_wrapper .nav_Pics .new_list_outer ul {
+        width: 86%;
+    }
+}
+.new_list{
+    width: 100%;
+}
+.index_12_title{
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    padding-top: 30px;
+}
+.index_12_nav{
+    width: 100%;
+    text-align: center;
+}
+.aboutEpson_wrapper .nav_Pics .new_list_outer .index_12_nav ul{
+    list-style: none;
+    width: 100%;
+}
+.aboutEpson_wrapper .nav_Pics .new_list_outer .index_12_nav ul li{
+    width: 24.7%;
+    float: left;
+    margin: 0px;
+    margin-left: 1px;
+    text-align: center;
+}
+.aboutEpson_wrapper .nav_Pics .new_list_outer .index_12_nav ul li img{
+   width: 100%;
+    padding: 0px;
+    /*margin-left: 15px;*/
+}
+.nav_01,.nav_02,.nav_03,.nav_04{
+    font-size: 18px;
+    color: #fff;
+    /*padding: 10px 0px;*/
+    height: 42px;
+    line-height: 42px;
+}
+.nav_01{
+    background-color: #006699;
+}
+.nav_02{
+    background-color: #3399ff;
+}
+.nav_03{
+    background-color: #3399cc;
+}
+.nav_04{
+    background-color: #339999;
+    line-height: 14px;
+    padding: 5px 0px;
+    box-sizing: border-box;
+}
+.nav_04 span{
+    font-size: 12px;
+}
+.aboutEpson_wrapper .nav_Pics .new_list_outer .index_12_nav ul li .nav_04 img {
+    margin-top: -5px;
+    vertical-align: top;
+}
+.index_12_nav_footer{
+    font-size: 14px;
+    padding: 10px 0px;
+}
+.aboutEpson_wrapper img.arrow_down_big
+{
+    width: auto;
+    margin-top: 30px;
+}
+.index_12_title_01{
+    font-size: 12px;
+    color: #999999;
+    text-align: center;
+    padding-bottom: 20px;
+}
+.across_prm{
+    width: 20px;
+    height: 2px;
+    margin: auto;
+    background-color: #cc9966;
+    margin-top: 9px;
+    margin-bottom: 9px;
+}
+.aboutEpson_wrapper img.index_12_shop_01{
+    width: inherit;
+}
+.index_12{
+    text-align: center;
+    padding-top: 0px;
+    padding-bottom: 20px;
+}
+.aboutEpson_wrapper img.piezo_arrow_down_big
+{
+    width: auto;
+    margin-top: 5px;
+}
+.piezo_bottom{
+    padding-bottom: 10px;
+}
+.line_dashed{
+    height: 1px;
+    border-bottom:  1px dashed #bdbdbd;
+    width: 100%;
+    margin: 20px 0px;
+}
+.piezo_title{
+    text-align: left;
+}
+.piezo_btn{
+    margin: 0px;
+    padding: 0px;
+    text-align: left;
+    margin: 20px 0px;
+	line-height:40px;
+}
+.piezo_btn a{
+    padding: 10px 20px;
+    background-color: #094e9b;
+    color: #fff;
+    font-size: 14px;
+    margin-right: 15px;
+}
+.aboutEpson_wrapper .piezo_btn a img{
+    width: inherit;
+    margin-left: 10px;
+    vertical-align: text-top;
+}
+.piezo_table{
+}
+.piezo_table tr td{
+    width: 20%;
+    height: 135px;
+    border: 1px solid #e6e6e6;
+}
+.piezo_table tr td div{
+}
+.aboutEpson_wrapper .piezo_table tr td img{
+    width: auto;
+}
+.aboutEpson_wrapper{
+}
+.aboutEpson_wrapper img.display_03 {
+    width: auto;
+    display: initial;
+}
+.display_03_bottom tr td{
+    width: 25%;
+    padding-bottom: 15px;
+    color: #808080;
+}
+.sensing tr td {
+    font-size: 14px;
+    color: #808080;
+}
+.aboutEpson_wrappe .sensing tr td img {
+    width: auto;
+}
+.sensing_title{
+    padding: 0px 38px;
+    box-sizing: border-box;
+}
+.sensing_table tr{}
+.sensing_table tr td{
+    width: 25%;
+    border: 1px solid #e6e6e6;
+}
+.aboutEpson_wrapper img.circle_icon {
+    width: auto;
+}
+.sensing_table tr.sensing_text td{
+   border: 0px;
+    padding: 5px 0px;
+    position: relative;
+    color: #808080;
+}
+.aboutEpson_wrapper img.up_sensings{
+    position: absolute;
+    width: 50px;
+    right: -25px;
+}
+.sensing_table tr.sensing_text_01 td {
+    border: 0px;
+    padding: 5px 0px;
+    position: relative;
+    padding-bottom: 35px;
+}
+.robotics_table{
+    text-align: left;
+    width: 96%;
+    margin: auto;
+}
+.robotics_table tr td{
+    width: 50%;
+    padding-right: 20px;
+}
+.aboutEpson_wrapper .robotics_table tr td img {
+    width: 100%;
+}
+.robotics_table tr td{
+    width: 50%;
+    padding-right: 20px;
+}
+.robotics_table tr td h4{
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.robotics_table tr td div{
+    font-size: 12px;
+    color: #808080;
+}
+.robotics_table_01{
+    width: 90%;
+    margin: auto;
+}
+.robotics_table_01 tr td{
+padding-right: 10px;
+}
+.robotics_table_02{
+    width: 74%;
+    margin: auto;
+}
+.robotics_table_02 tr td{
+   width: 50%;
+    vertical-align: top;
+
+}
+.robotics_table_02 tr td div{
+    color: #4b4b4b;
+    font-size: 14px;
+}
+.robotics_table_02 tr td span{
+    font-size: 12px;
+}
+.aboutEpson_wrapper .robotics_table_02 img {
+
+}
+.robotics_table_03 tr td{
+    border-top: 4px solid #025db8;
+    padding-top: 2%;
+    vertical-align: top;
+}
+.robotics_table_03 tr th{
+    font-size: 16px;
+    color: #025db8;
+    padding: 5px 0px;
+}
+.robotics_table_03 tr td div{
+    padding-top: 5px;
+    color: #808080;
+}
+.aboutEpson_wrapper .nav_Pics .new_list_outer .index_12_nav ul li a:hover{
+    background: inherit;
+}
+/*12-index mb begin*/
+@media only screen and (max-width: 800px)
+{
+
+    .index_12_title{
+        font-size: 14px;
+    }
+    /*.aboutEpson_wrapper img.arrow_down_big{*/
+        /*width: 90%;*/
+    /*}*/
+    .nav_01, .nav_02, .nav_03, .nav_04 {
+        font-size: 10px;
+        color: #fff;
+        /* padding: 10px 0px; */
+        height: 25px;
+        line-height: 25px;
+    }
+    /*.aboutEpson_wrapper .nav_Pics .new_list_outer .index_12_nav ul li img {*/
+        /*padding: 0px;*/
+         /*margin-left: 5px;*/
+        /*position: absolute;*/
+        /*width: 9px;*/
+        /*top: 7px;*/
+    /*}*/
+    .aboutEpson_wrapper .nav_Pics .new_list_outer .index_12_nav ul li img {
+        margin-left: 0;
+    }
+    .aboutEpson_wrapper .nav_Pics .new_list_outer .index_12_nav ul li{
+        width: 24.5%;
+    }
+    .index_12_nav_footer{
+        font-size: 12px;
+    }
+    .index_12_nav_footer span{
+        font-size: 10px;
+    }
+    .nav_Pics .new_right{
+        padding-bottom: 20px;
+    }
+    .aboutEpson_wrapper img.index_12_shop_01{
+        width: 100%;
+    }
+    .aboutEpson_wrapper .piezo_table tr td img {
+       width: 100%;
+    }
+    .piezo_table tr td {
+        width: 20%;
+        height: inherit;
+        border: 1px solid #e6e6e6;
+        vertical-align: top;
+        padding: 5px 0px;
+    }
+    .aboutEpson_wrapper .piezo_table tr td img {
+        width: 90%;
+        margin: auto;
+    }
+    .piezo_table tr td div {
+        font-size: 12px;
+        text-align: center;
+    }
+    .piezo_arrow_down_big_outer{
+        text-align: center;
+    }
+    .aboutEpson_wrapper .piezo_arrow_down_big_outer img.piezo_arrow_down_big{
+        width: 35px;
+    }
+    .piezo_btn a {
+        padding: 7px 10px;
+        background-color: #094e9b;
+        color: #fff;
+        font-size: 12px;
+        margin-right: 3px;
+    }
+    .aboutEpson_wrapper img.display_03 {
+        width: 100%;
+    }
+    .display_03_bottom {
+        font-size: 12px;
+    }
+    .aboutEpson_wrapper img.up_sensings {
+        position: absolute;
+        width: 30px;
+        right: -15px;
+    }
+    .sensing_table tr.sensing_text_01 td {
+        font-size: 12px;
+        text-align: center;
+    }
+    .sensing_table tr.sensing_text_01 td {
+        padding-bottom: 15px;
+    }
+    .aboutEpson_wrapper img.circle_icon{
+        width: 100%;
+    }
+    .robotics_table tr td {
+        vertical-align: top;
+        padding-right:10px
+    }
+    .aboutEpson_wrapper .robotics_table tr td img{
+        width: 100%;
+    }
+    .robotics_table_01{
+        width: 100%;
+    }
+    .robotics_table_02{
+        width: 100%;
+        text-align: center;
+    }
+    .robotics_table_02 tr td div {
+        font-size: 12px;
+    }
+    .robotics_table_02 tr td span {
+        font-size: 10px;
+    }
+    .robotics_table_03 tr td{
+        border-top: 3px solid #025db8;
+        text-align: center;
+    }
+    .robotics_table_03 tr th{
+        font-size: 12px;
+        color: #025db8;
+        padding: 5px 0px;
+        text-align: center;
+    }
+    .robotics_table_03 tr td div{
+        padding-top: 5px;
+        color: #808080;
+        font-size: 10px;
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+    .index_12_title{
+        padding-top: 10px;
+    }
+    .piezo_table tr td{
+        text-align: center;
+    }
+    .aboutEpson_wrapper img.arrow_down_big{
+        width: 35px;
+    }
+    .new_list_outer p {
+        color: #333;
+        font-size: 14px;
+        line-height: 2em;
+        display:none;
+    }
+    .aboutTitle_md {
+        font-size: 16px;
+        font-weight: bold;
+    }
+}
+.aboutEpson_wrapper .nav_Pics_wrapper {
+    min-height: inherit;
+}
+
+
+@media only screen and (max-width : 767px){
+    .aboutEpson_wrapper p img {
+        width: 100%;
+    }
+}   

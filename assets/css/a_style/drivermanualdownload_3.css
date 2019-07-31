@@ -1,0 +1,128 @@
+﻿/*left*/
+ .relate{margin-top: 0;}
+ .Tab{ width:100%;  word-break: break-all;}
+ .Tab tr { background:#f7f7f7;}
+ .Tab tr.odd{ background:#efefef;}
+
+ .Tab tr td{ color:#000; font-size:14px; font-family: Helvetica, Arial, "微软雅黑", "黑体", sans-serif; height:36px; line-height:36px;  padding-left:15px;}
+ .tabTilte{ background:#737373; color:#FFF; font-size:18px; font-family: Helvetica, Arial, "微软雅黑", "黑体", sans-serif; height:36px; line-height:36px;  width:100%; font-weight:normal;}
+ .tabTilte .type{ padding-left:15px; display:inline-block;}
+ .title{background-color: transparent;}
+ 
+ .Tab tr td.title{ width:120px;  border-right:1px solid #CCC;  }
+ .Tab tr td.v_top{ vertical-align:top;}
+ .Tab .platform{line-height:33px;}
+ .Tab .downloadaGreement{ height:260px;}
+ .Tab .textarea{ resize:none;  height:180px; max-height:180px; overflow-y:scroll; margin:10px 0 0 0; width:90%; padding:12px; font-family:"微软雅黑"; font-size:14px; color:#000; background:#FFF; line-height:22px;}
+ .Tab .load{ width:100%; height:35px;  margin:20px 0; text-align:center;}
+ .Tab .load .btn{ cursor: pointer; width:128px; height:40px; line-height:30px; color:#FFF; font-size:18px; background:#1b8be9; font-family: Helvetica, Arial, "微软雅黑", "黑体", sans-serif; margin: 0 auto; letter-spacing:1px;}
+ .Tab .load .onlyLoad{ display:none;}
+ .Tab .installGuide{  vertical-align: top;}
+ .Tab .FQA{ width:92%; margin:0 15px;}
+ .Tab .FQA li{ border-bottom:1px solid #CCC; color:#000; font-family: Helvetica, Arial, "微软雅黑", "黑体", sans-serif; padding:5px 0;}
+ .Tab .FQA li.title{ border-bottom:2px solid #CCC; font-size:16px;}
+ .Tab .FQA li.last{ border-bottom:none;}
+ .Tab .FQA li a{ font-size:14px; color:#000;}
+ .Tab .FQA li.title a{ font-size:16px;}
+ .Tab .FQA li a:visited{ color:#505050;}
+ .Tab .FQA li a:hover ,  .Tab .FQA li a:active{ color:#073696;}
+ .Tab .FQA li a.active{ color:#073696;}
+
+.recommendEmail{ width:100%; margin:25px 0;}
+.recommendEmail h1{ font-family: Helvetica, Arial, "微软雅黑", "黑体", sans-serif; color:#10218b; font-size:24px; padding:15px 0;}
+.recommendEmail #myForm{ border:1px solid #e3e2e2;}
+.recommendEmail #myForm .frmInfo{ width:90%; padding:20px; }
+.recommendEmail #myForm .frmInfo .Wrap{margin-bottom:30px;}
+.recommendEmail #myForm .frmInfo .leftInfo{ display:inline-block; height:40px; line-height:40px; color:#000; font-size:14px; font-family:"微软雅黑"; width:140px;}
+.recommendEmail #myForm .frmInfo .leftInfo span{ color:#fd9751; display:inline-block; height:40px; line-height:40px; padding-right:5px;}
+.recommendEmail #myForm .frmInfo input{ border:1px solid #c0c0c0; padding-left:5px; height:40px; line-height:40px; width:280px;   }
+.recommendEmail #myForm .frmInfo .btn{ border:none; }
+.recommendEmail #myForm .frmInfo .submit{ background:#1b8be9; color:#FFF; font-size:18px; font-family: Helvetica, Arial, "微软雅黑", "黑体", sans-serif; width:115px; height:43px; line-height:43px; cursor:pointer; margin-left:316px; padding:0;}
+
+
+
+/*right*/
+ .rightWrapper h1{ font-size:18px; color:#FFF; background:#505050; height:40px; line-height:40px; font-weight:normal; padding-left:20px;}
+ .rightWrapper .leftNav{ width:100%; margin-top:5px;}
+ .rightWrapper .leftNav li{ border:1px solid #dadada; padding-left:20px; border-bottom:none;}
+ .rightWrapper .leftNav li.last{ border-bottom:1px solid #dadada;}
+ .rightWrapper .leftNav li a{ font-size:18px; color:#404040; height:32px; line-height:32px;}
+
+@media only screen and (max-width : 1460px) {
+.responseWidthW{ padding:0 30px;}
+}
+
+@media only screen and (max-width : 1280px) {
+.responseWidthW{ padding:0px;}
+.Tab .platform, .Tab tr td{ line-height:22px;}
+}
+
+@media only screen and (max-width : 1200px) {
+.responseWidthW{ padding:0 24px;}
+.printDisplayWrapper .printDisplay { width:664px;}
+
+.Tab .FQA{ width:96%;}
+.Tab .textarea{ width:94%;}
+
+
+}
+@media only screen and (max-width : 1024px) {
+.recommendEmail #myForm .frmInfo input{ line-height:16px; font-size:16px;}
+.Tab .FQA{ margin:0;}
+}
+@media only screen and (max-width : 900px) {
+.Tab tr td{ padding-left:10px; font-size:15px;}
+.Tab tr td.title{ width:15%; }
+.Tab .textarea{ margin:10px 15px 0 0px; padding:5px; width:94%; font-size:15px;}
+.Tab .load{ height:60px;}
+.Tab .load .btn{ width:156px; height:70px; line-height:60px;}
+
+.Tab .FQA li { color:#666;}
+.Tab .FQA li.title a{ font-size:18px; color:#000;}
+.Tab .FQA li a{ font-size:15px; color:#666;}
+
+.recommendEmail #myForm{ border:none;}
+.recommendEmail #myForm .frmInfo{ width:100%; margin:0; padding:0; }
+.recommendEmail #myForm .frmInfo .Wrap{ width:100%;}
+.recommendEmail #myForm .frmInfo .leftInfo{ font-size:18px; color:#666; width:25%; }
+.recommendEmail #myForm .frmInfo .leftInfo span{ padding-right:2px;}
+.recommendEmail #myForm .frmInfo input{ width:74%; height:50px;  margin:0; box-sizing:border-box; font-size:16px; line-height:16px;}
+.recommendEmail #myForm .frmInfo .submit{ width:148px; height:60px; margin:0 auto;}
+
+.rightWrapper h1 , .rightWrapper .leftNav li{ height:60px; line-height:60px;}
+
+
+.Tab .platform, .Tab tr td { line-height:22px;}
+.Tab .FQA li{ line-height:22px; padding:5px 0;}
+
+
+}
+
+@media only screen and (max-width : 600px) {
+.Tab tr td{ padding:0 5px; font-size:12px;}
+.Tab tr td.title{ width:25%; }
+.Tab .textarea{ margin:10px 0 0 0; font-size:12px;}
+.Tab .load{ height:60px;}
+.Tab .load .btn{ width:145px; height:45px; line-height:45px; }
+.Tab .FQA{ width:95%; margin:0 5px;}
+.Tab .FQA li.title a ,.Tab .FQA li a{ font-size:12px;}
+
+.recommendEmail #myForm{ border:none;}
+.recommendEmail #myForm .frmInfo{ width:100%;}
+.recommendEmail #myForm .frmInfo .leftInfo{ font-size:12px; color:#666; width:36%; }
+
+.recommendEmail #myForm .frmInfo input{ width:62%;  font-size:12px; line-height:12px;}
+.recommendEmail #myForm .frmInfo .submit{ width:108px; height:45px; line-height:45px;}
+.rightWrapper h1, .rightWrapper .leftNav li{ height:45px; line-height:45px; }
+.rightWrapper h1, .rightWrapper .leftNav li a{ font-size:16px;}
+
+}
+@media only screen and (max-width : 320px) {
+.Tab .load .btn, .recommendEmail #myForm .frmInfo .submit,.rightWrapper h1, .rightWrapper .leftNav li{ font-size:16px;}
+
+.recommendEmail #myForm .frmInfo .leftInfo{ width:41%;}
+.recommendEmail #myForm .frmInfo input{ width:57%; }
+
+
+
+}

@@ -1,0 +1,182 @@
+﻿
+ /*header css*/
+.searchWrapper{
+	width: 100%;
+	background:#dadada;
+}
+.searchInfo{
+	width: 1180px;
+	margin: 0 auto;
+	
+}
+.searchInfo h2{
+	font-size: 24px;
+	line-height: 70px;
+	color: #10218b;
+	/*background: url(../a_images/public/tellphone.png) no-repeat right 27px;*/
+}
+.searchInfo .gosearch{
+	width: 100%;
+	height: 40px;
+	padding-bottom:10px;
+}
+.searchInfo .selectbox{
+	display: block;
+	width: 355px;
+	height: 40px;
+	float: left;
+	line-height: 40px;
+	font-size: 18px;
+	color: #656565;
+	margin-right: 5px;
+	background: #ffffff url(../a_images/public/nameicon_blank.png) no-repeat 320px 9px;
+	cursor: pointer;
+	text-indent: 15px;
+	position: relative;
+}
+.searchInfo .selectbox.mini{
+	width: 265px;
+	background: #ffffff url(../a_images/public/nameicon_blank.png) no-repeat 230px 9px;
+}
+
+.searchInfo .selectbox .opts{
+	width: 355px;
+	line-height: 40px;
+	background: #ffffff;
+	position: absolute;
+	top:40px;
+	display: none;
+	max-height: 250px;
+	overflow-y: auto;
+	-webkit-overflow-scrolling: touch;
+	-webkit-transform: translateZ(0px);
+}
+.searchInfo .selectbox.special{
+	display: none;
+}
+.searchInfo .selectbox .opts.mini{
+	width:265px;
+}
+.searchInfo .selectbox .opts a{
+	display: block;
+	width: 100%;
+	color: #656565;
+	background: #ffffff;
+}
+.searchInfo .selectbox .opts a:hover{
+	background: #71b6ef;
+}
+.searchInfo .submit{
+	width: 100px;
+	height: 40px;
+	line-height: 40px;
+	font-size: 18px;
+	color: #ffffff;
+	text-align: center;
+	border:none;
+	background: #1b8be9;
+	font-family: Arial,"微软雅黑","黑体",sans-serif;
+	-webkit-appearance: none;
+	border-radius: 0;
+}
+.searchInfo .infoShow{
+	width: 100%;
+	margin-top: 12px;
+	position: relative;
+	top:0;left: 0;
+}
+.searchInfo .ulInfo >div{
+	display: none;
+}
+.searchInfo .ulInfo li{
+	display: table;
+}
+.searchInfo .ulInfo li span{
+	display: table-cell;
+}
+.searchInfo .infoShow .table_pc{
+	width: 100%;
+	line-height: 26px;
+	font-size: 16px;
+	border-collapse: collapse;
+}
+.searchInfo .infoShow .table_pc thead{
+	background: #737373;
+	color: #ffffff;	
+	text-align: left;
+}
+.searchInfo .infoShow .table_pc th{
+	font-weight: normal;
+	border-right: 1px solid #ffffff;
+	padding: 10px 15px;
+	white-space: nowrap;
+}
+.searchInfo .infoShow .table_pc td{
+	padding: 10px 15px;
+	background: #ffffff;
+	color: #000000;
+	vertical-align: middle;
+}
+.searchInfo .infoShow .table_pc tbody tr{
+	border-bottom: 1px solid #e3e3e3;
+}
+.searchInfo .infoShow .table_pc tbody span{
+	display: inline-block;
+	width: 15px;height: 13px;
+	margin-right: 5px;
+	background: url(../a_images/public/xin.png) no-repeat 0 0;
+}
+.searchInfo .infoShow .page{
+	text-align: center;
+	line-height: 55px;
+	color: #a09f9f;
+	font-size: 12px;
+	height: 55px;
+	min-height: 55px;
+}
+.searchInfo .infoShow .page span{
+	padding: 0 4px;
+	cursor: pointer;
+}
+.searchInfo .infoShow .page .pre,.searchInfo .infoShow .page .active,.searchInfo .infoShow .page .next{
+	color: #000000;
+}
+.goBug{
+	width: 1180px;
+	margin: 0 auto;
+	margin-bottom:50px
+}
+.goBug .mall{
+	width: 100%;
+	margin: 0px auto 25px;
+	overflow: hidden;
+}
+.goBug .mall a{
+	display: block;
+	float: left;
+	margin-right: 11px;
+}
+.goBug .yuyue{
+	width: 100%;
+	overflow: hidden;
+}
+.goBug .yuyue a{
+	display: block;
+	float: left;
+	margin-right:11px;
+}
+.goBug .yuyue > a + a{margin-right:0}
+
+#tbox { width:120px; bottom:82px; right:0px; position:fixed;_position:absolute; z-index:999;}
+#tbox .floatbox { float:left; width:120px; background:#c4c4c4;}
+#tbox .floatbox ul li { float:left; width:120px; margin-top:5px; font-family:"微软雅黑","黑体"; font-size:14px;}
+#tbox .floatbox ul li.ww { padding-left:12px; padding-bottom:8px; border-bottom:1px solid #ddd;}
+#tbox .floatbox ul li.qrcode { text-align: center; margin-top:10px; margin-bottom:10px;}
+#tbox .floatbox ul li.qrcode img { width:95px; height:95px;}
+#tbox .floatbox ul li a span { margin-left:15px;}
+#tbox .floatbox ul li.gotop {background:url(/a_images/float.png) 35px -100px no-repeat #006599; height:26px;margin-top:5px;cursor:pointer;overflow:hidden; }
+#tbox .floatbox ul li.gotop p{float:left;width:100%;background:#fff;border:1px solid #ddd;cursor:pointer;margin-top:25px;}
+#tbox .floatbox ul li.gotop a { display:block; width:120px; height:28px; color:#c8c8c8; text-align:center;}
+#tbox .floatbox ul li.gotop a:hover{ background:url(/a_images/float.png) 35px -100px no-repeat #006599; color:#fff;}
+
+#selJumpToPage { border:1px solid #ddd;}

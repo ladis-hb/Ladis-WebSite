@@ -1,0 +1,33 @@
+﻿
+/************middleNav ***************/
+.middleNavWrapper,.topPicWrapper,.productsClassWrapper{ background:#FFF; overflow:hidden; margin:margin:12px 5px;height:22px;}
+.middleNavWrapper .middleNav{ max-width:1180px; margin:0 auto; height:22px; font-size:14px; color:#757575; font-family: Arial,"微软雅黑","黑体",sans-serif;}
+
+.middleNavWrapper .middleNav li{ height:22px; line-height:22px; float:left;}
+.middleNavWrapper .middleNav li a { color:#757575;}
+.middleNavWrapper .middleNav .middleNav_active{ color:#0c0c0c;}
+/************middleNav topPic***************/
+.aboutEpson_wrapper img{max-width:100%;}
+/************epson 四张大图***************/
+.aboutEpson_wrapper .bigPics_wrapper{ max-width:1180px; margin:0 auto;}
+.aboutEpson_wrapper .bigPics_wrapper .epson_40years,.epson_news,.epson_us,.joinUs{   margin-top:25px;}
+.aboutEpson_wrapper .bigPics_wrapper .epson_us a.linkUs{ margin-right:14px;}
+.aboutEpson_wrapper .bigPics_wrapper .epson_us a{ width:49%; display:inline-block;}
+.aboutEpson_wrapper .bigPics_wrapper .epson_us a img{ padding:0px; margin:0px;}
+.aboutEpson_wrapper  .pd{ display:none;}
+.nav_Pics_wrapper_mb{ display:none;}
+.new_title.new_title_mb{ display:none;}
+@media(max-width:768px){
+	.middleNavWrapper{
+		display: none;
+	}
+	.new_left{
+		display: none;
+	}
+	.new_title.new_title_pc{
+		display: none;
+	}
+	.new_title.new_title_mb{
+		display: block;
+	}
+}	
