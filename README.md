@@ -1,4 +1,4 @@
-# nt_Koa
+# Ladis WebSite
 
 > My astounding Nuxt.js project
 

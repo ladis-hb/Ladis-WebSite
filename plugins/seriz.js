@@ -278,6 +278,56 @@ async function Html_Serialize_Json(url, table, type = 'products', query, title, 
       return result
       break
 
+    //获取销售服务中心页面
+    case 'buy_list':
+      query = query || ".new_list_outer"
+      let map = $(query).find('map area')
+      let list = $(query).find('.lxgd span')
+      let Array_map = []
+      let Array_list = []
+      map.each(function () {
+        var { alt = '', shape, coords, href } = $(this).attr()
+        Array_map.push({ alt, shape, coords, href })
+      })
+
+      list.each(async function () {
+        let lists = {
+          parentsUntil: $(this).find('strong').text(),
+          parent: '',
+          title: '',
+          href: '',
+          link: '',
+        }
+        await Promise.all(
+          $(this).find('a').each(async function (i) {
+            list.parent = $(this).text()
+            Html_Serialize_Json($(this).attr('href'),'','buy_list_li',null,'','').then(res=>{
+              for(let i of res){
+                Array_list.push(Object(lists,i))
+              }
+              return true
+            })
+
+          })
+        )
+
+      })
+      console.log(Array_list)
+      return Array_map
+      break
+
+    //获取销售服务中心页面省份子页面
+    case 'buy_list_li':
+      query = query || ".new_list_outer div"
+      let a = []
+      $(query).each(function () {
+        let title = $(this).find('strong').text()
+        let content = $(this).text()
+        a.push({ title, content })
+        return true
+      })
+      return a
+      break
     default:
       return false
       break
@@ -285,6 +335,7 @@ async function Html_Serialize_Json(url, table, type = 'products', query, title, 
   return true
 }
 
+Html_Serialize_Json('/about/node_37.shtml', '', 'buy_list', null, 'buy_list', 'buy')
 
 async function start() {
   var Pages = []
@@ -382,7 +433,7 @@ async function start() {
     })
   })
 }
-start()
+//start()
 
 
 /**

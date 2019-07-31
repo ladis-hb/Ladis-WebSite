@@ -1,7 +1,7 @@
 <template>
 <div>
    <b-navbar toggleable="lg" type="dark" variant="dark">
-    <b-navbar-brand href="#">
+    <b-navbar-brand href="/">
       <img src="/a_images/public/logo.png">
     </b-navbar-brand>
 
@@ -33,10 +33,10 @@
 
         <b-nav-item-dropdown right>
           <template slot="button-content"><em>购买指南</em></template>
-          <b-dropdown-item href="#">销售服务中心</b-dropdown-item>
-          <b-dropdown-item href="#">天猫旗舰店</b-dropdown-item>
-          <b-dropdown-item href="#">京东旗舰店</b-dropdown-item>
-          <b-dropdown-item href="#">蓝光数码专营店</b-dropdown-item>
+          <b-dropdown-item :to="{path:'/buy/'}">销售服务中心</b-dropdown-item>
+          <b-dropdown-item href="https://leidisi.tmall.com/" target="_blank">天猫旗舰店</b-dropdown-item>
+          <b-dropdown-item href="https://mall.jd.com/index-131620.html" target="_blank">京东旗舰店</b-dropdown-item>
+          <b-dropdown-item href="https://lgsm.tmall.com/" target="_blank">蓝光数码专营店</b-dropdown-item>
         </b-nav-item-dropdown>
 
         <b-nav-item href="">全景展示</b-nav-item>
