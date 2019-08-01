@@ -15,10 +15,12 @@ const Host = 'http://www.ladis.com.cn'
  * @param {string} [type='products'] 格式化类型，Products|
  * @param {string} table 存储的集合
  * @param {*} query 选择器条件 '#scroller .list li'
- * @param {*} title 返回对象名称
+ * @param {*} title 对象名称
+ * @param {*} parent 对象负极名称
+ * @param {*} arg 备用传参
  * @returns 返回序列化字面量对象
  */
-async function Html_Serialize_Json(url, table, type = 'products', query, title, parent) {
+async function Html_Serialize_Json(url, table, type = 'products', query, title, parent, arg) {
   console.log(Host + url)
   var file = await Axios.get(Host + url)
   var $ = cheerio.load(file.data)
@@ -285,46 +287,52 @@ async function Html_Serialize_Json(url, table, type = 'products', query, title, 
       let list = $(query).find('.lxgd span')
       let Array_map = []
       let Array_list = []
-      map.each(function () {
-        var { alt = '', shape, coords, href } = $(this).attr()
-        Array_map.push({ alt, shape, coords, href })
-      })
+      let pro = []
+      if (arg == 'map') {
+        map.each(function () {
+          var { alt = '', shape, coords, href } = $(this).attr()
+          Array_map.push({ alt, shape, coords, href })
+        })
+        result.data = Array_map
+        return result
+      }
+      else {
+        list.each(function () {
+          let parentsUntil = $(this).find('strong').text()
 
-      list.each(async function () {
-        let lists = {
-          parentsUntil: $(this).find('strong').text(),
-          parent: '',
-          title: '',
-          href: '',
-          link: '',
-        }
-        await Promise.all(
-          $(this).find('a').each(async function (i) {
-            list.parent = $(this).text()
-            Html_Serialize_Json($(this).attr('href'),'','buy_list_li',null,'','').then(res=>{
-              for(let i of res){
-                Array_list.push(Object(lists,i))
+          $(this).find('a').each(function (i) {
+            let parent = $(this).text()
+            let link = $(this).attr('href')
+            //console.log('link')
+            pro.push(Html_Serialize_Json(link, '', 'buy_list_li', null, '', '', { parentsUntil, link, parent }).then(res => {
+              for (let i of res) {
+                Array_list.push(i)
               }
               return true
             })
-
+            )
           })
-        )
-
-      })
-      console.log(Array_list)
-      return Array_map
+        })
+        await Promise.all(pro)
+        return Array_list
+      }
       break
 
     //获取销售服务中心页面省份子页面
     case 'buy_list_li':
+      let { parentsUntil, link, parent } = arg
       query = query || ".new_list_outer div"
       let a = []
+      let ts = []
       $(query).each(function () {
         let title = $(this).find('strong').text()
         let content = $(this).text()
-        a.push({ title, content })
-        return true
+        if (!ts.includes(title)) {
+          //console.log(title)
+          ts.push(title)
+          a.push({ parentsUntil, link, parent, title, content, table: 'buy_list' })
+        }
+
       })
       return a
       break
@@ -335,10 +343,10 @@ async function Html_Serialize_Json(url, table, type = 'products', query, title, 
   return true
 }
 
-Html_Serialize_Json('/about/node_37.shtml', '', 'buy_list', null, 'buy_list', 'buy')
+
 
 async function start() {
-  var Pages = []
+/*   var Pages = []
 
   //添加头部文件
   Pages.push(Html_Serialize_Json(`/support/index.shtml`, 'pages', 'head', '#pc_nav .new-down', 'head'))
@@ -410,10 +418,15 @@ async function start() {
   Support.push(await Html_Serialize_Json(`/support/node_95.shtml`, 'support', 'support_down', null, '精密空调相关', '证书资质'))
   Support.push(await Html_Serialize_Json(`/support/node_94.shtml`, 'support', 'support_down', null, '数据中心相关', '证书资质'))
   Support.push(await Html_Serialize_Json(`/support/node_93.shtml`, 'support', 'support_down', null, '公司相关', '证书资质'))
+ */
+  var Buy = []
+  Buy.push(await Html_Serialize_Json('/about/node_37.shtml', 'buy', 'buy_list', null, 'buy_map', 'buy', 'map'))
+
+
 
 
   await Promise.all(
-    [Support, Products, Pages].map(async val => {
+    [/* Support, Products, Pages, */ Buy].map(async val => {
       await val
       for (v of val) {
         await v
@@ -505,7 +518,14 @@ async function Get_support_problem_list_arg() {
   console.log(`db.${table}.find({title:'${title}'}).toArray()`)
 }
 
+async function list() {
+  var Buy_list = await Html_Serialize_Json('/about/node_37.shtml', 'buy_list', 'buy_list', null, 'buy_map', 'buy')
+  for (li of Buy_list){
+    await Save_Serialize_Json(li)
+  }
 
+}
+//list()
 
 
 

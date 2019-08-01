@@ -18,6 +18,10 @@
           <map name="Map">
             &nbsp;
             <area
+              v-for="(val,key) in map"
+              :key="key"
+              />
+            <area
               shape="poly"
               alt="雷迪司UPS江西省服务站
 南昌市销售服务中心
@@ -354,12 +358,15 @@
 
 <script>
 export default {
-  name: "",
-  data() {
-    return {};
+  async asyncData({$axios,params,payload}){
+    var map = await $axios.$get(`/api/Get_arg?table=buy&title=buy_map`)
+
+    return {map:map.data,}
   },
-  methods: {},
-  components: {}
+  created(){
+    console.log(this.map)
+  }
+
 };
 </script>
 
