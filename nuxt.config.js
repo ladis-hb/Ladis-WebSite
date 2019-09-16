@@ -5,6 +5,9 @@ module.exports = {
   /*
    ** Headers of the page
    */
+  server: {
+    port: 80
+  },
   head: {
     meta: [
       { charset: "utf-8" },

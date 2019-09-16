@@ -6,7 +6,7 @@ const router = require("./router/index");
 const bodyParser = require("koa-bodyparser");
 const mongo = require("koa-mongo");
 
-const app = new Koa(); 
+const app = new Koa();
 
 //注册mongo
 app.use(mongo({ db: "ladis" }));
@@ -28,7 +28,7 @@ async function start() {
 
   const {
     host = process.env.HOST || "127.0.0.1",
-    port = process.env.PORT || 80
+    port = process.env.PORT || 3000
   } = nuxt.options.server;
 
   // Build in development
