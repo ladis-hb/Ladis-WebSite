@@ -7,7 +7,7 @@ module.exports = {
    */
   server: {
     port: 80,
-    host: "127.0.0.1"
+    host:"116.62.48.175"
   },
   head: {
     meta: [
@@ -55,7 +55,19 @@ module.exports = {
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  axios: {},
+
+  axios: {
+    //proxy: true // Can be also an object with default options
+  },
+
+  proxy: {
+   /*  "/api": {
+      target: "http://116.62.48.175",
+      changeOrigin: true, // 表示是否跨域
+      pathRewrite: { "^/api/": "" }
+    } */
+  },
+
   /*
    ** Build configuration
    */
