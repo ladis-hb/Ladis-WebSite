@@ -6,7 +6,7 @@ module.exports = {
    ** Headers of the page
    */
   server: {
-    port: 9000,
+    port: 80,
     host: "127.0.0.1"
   },
   head: {
