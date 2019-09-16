@@ -7,7 +7,7 @@ module.exports = {
    */
   server: {
     port: 9000,
-    host: "0.0.0.0"
+    host: "116.62.48.175"
   },
   head: {
     meta: [
