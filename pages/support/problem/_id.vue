@@ -2,7 +2,7 @@
   <b-container>
     <b-row>
       <b-col cols="12">
-        <h4>{{arg.title}}</h4>
+        <h4>{{ arg.title }}</h4>
         <hr />
       </b-col>
       <b-col cols="12">
@@ -21,10 +21,6 @@ export default {
     );
     return { arg, title };
   },
-
-  created() {
-    console.log(this.arg);
-  },
   head() {
     return {
       title: this.arg.title
@@ -33,8 +29,8 @@ export default {
 };
 </script>
 
-<style lang='scss' scoped >
-h4{
+<style lang="scss" scoped>
+h4 {
   margin: 1rem 0;
 }
 </style>

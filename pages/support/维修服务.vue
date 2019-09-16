@@ -103,7 +103,8 @@
 export default {
   methods: {
     pic(p) {
-      return `http://www.ladis.com.cn/${p}`;
+       //return `http://www.ladis.com.cn/${p}`;
+      return p;
     }
   }
 };

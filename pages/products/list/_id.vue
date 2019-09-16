@@ -5,7 +5,7 @@
         <b-breadcrumb :items="items"></b-breadcrumb>
       </b-col>
       <b-col cols="12">
-        <h4 class="text-capitalize">{{title}}</h4>
+        <h4 class="text-capitalize">{{ title }}</h4>
       </b-col>
       <b-col cols="12" md="7" class="carousel">
         <b-carousel
@@ -18,29 +18,35 @@
           @sliding-start="onSlideStart"
           @sliding-end="onSlideEnd"
         >
-          <b-carousel-slide v-for="(val,key) in all.img" :key="key" :img-src="pic(val)"></b-carousel-slide>
+          <b-carousel-slide
+            v-for="(val, key) in all.img"
+            :key="key"
+            :img-src="pic(val)"
+          ></b-carousel-slide>
         </b-carousel>
       </b-col>
 
       <b-col cols="12" md="5" class="t1">
         <div v-html="all.t1.content" v-if="all.t1.type == 'html'" class></div>
         <!-- 自定义写入T1 -->
-        <div class="t1-a" v-else>
-
-        </div>
+        <div class="t1-a" v-else></div>
       </b-col>
       <b-col cols="12" class="t2">
-        <div v-html="all.t2.content" v-if="all.t2.type == 'html'" class="t2-s"></div>
+        <div
+          v-html="all.t2.content"
+          v-if="all.t2.type == 'html'"
+          class="t2-s"
+        ></div>
         <!-- 自定义写入T2 -->
-         <div class="t2-a" v-else>
-
-         </div>
+        <div class="t2-a" v-else></div>
       </b-col>
       <b-col cols="12" class="down" v-if="all.t2.type != 'html'">
         <h4>相关下载</h4>
         <b-list-group>
-          <b-list-group-item v-for="(val,key) in all.down" :key="key">
-            <b-link target="_blank" :href="pic(val.href)">{{val.title}}</b-link>
+          <b-list-group-item v-for="(val, key) in all.down" :key="key">
+            <b-link target="_blank" :href="pic(val.href)">{{
+              val.title
+            }}</b-link>
           </b-list-group-item>
         </b-list-group>
       </b-col>
@@ -88,7 +94,8 @@ export default {
     onSlideStart() {},
     onSlideEnd() {},
     pic(p) {
-      return `http://www.ladis.com.cn/${p}`;
+       //return `http://www.ladis.com.cn/${p}`;
+      return p;
     }
   },
 
@@ -104,7 +111,7 @@ export default {
 };
 </script>
 
-<style lang='scss' scoped >
+<style lang="scss" scoped>
 #products_345 {
   width: 100%;
   margin: 0;

@@ -11,12 +11,12 @@
                 <h3>产品分类</h3>
               </b-nav-item>
             </b-navbar-nav>
-            <div v-for="(val,key) in list" :key="key">
+            <div v-for="(val, key) in list" :key="key">
               <b-navbar-nav variant="dark">
-                <b-nav-item :href="val.href">{{val.title}}</b-nav-item>
+                <b-nav-item :href="val.href">{{ val.title }}</b-nav-item>
               </b-navbar-nav>
-              <b-navbar-nav v-for="(val1,key1) in val.args" :key="key1">
-                <b-nav-item :href="val1.href">{{val1.title}}</b-nav-item>
+              <b-navbar-nav v-for="(val1, key1) in val.args" :key="key1">
+                <b-nav-item :href="val1.href">{{ val1.title }}</b-nav-item>
               </b-navbar-nav>
             </div>
             <hr />
@@ -25,8 +25,8 @@
       </div>
       <b-col>
         <div class="main1">
-          <div v-for="(val,key) in all" :key="key">
-            <b-link :to="{path:val.href}">
+          <div v-for="(val, key) in all" :key="key">
+            <b-link :to="{ path: val.href }">
               <b-card
                 :sub-title="val.title"
                 :img-src="pig(val.img)"
@@ -80,13 +80,14 @@ export default {
 
   methods: {
     pig(p) {
-      return `http://www.ladis.com.cn/${p}`;
+      //return `http://www.ladis.com.cn/${p}`;
+      return p;
     }
   }
 };
 </script>
 
-<style lang='scss' scoped >
+<style lang="scss" scoped>
 @media screen and (max-width: 500px) {
   .container {
     margin: 0;
