@@ -51,18 +51,20 @@
             <div class=" d-flex flex-row my-4 px-4">
               <b-img-lazy
                 v-bind="mainProps"
-                :src="val.img"
-                :alt="val.text"
+                :src="val.data.img"
+                :alt="val.data.text"
                 class=" lazy-pic"
               ></b-img-lazy>
               <span class=" d-flex flex-column justify-content-center ml-4">
                 <span class=" my-1"
-                  ><b class=" text-primary font-weight-bold">{{ val.name }}</b
-                  ><i>{{ val.time }}</i></span
+                  ><b class=" text-primary font-weight-bold">{{
+                    val.data.name
+                  }}</b
+                  ><i>{{ val.data.time }}</i></span
                 >
-                <strong class=" my-1">{{ val.text }}</strong>
-                <b-link class="my-2" :to="{ path: val.href }">{{
-                  val.linkText
+                <strong class=" my-1">{{ val.data.text }}</strong>
+                <b-link class="my-2" :to="{ path: val.data.href }">{{
+                  val.data.linkText
                 }}</b-link>
               </span>
             </div>
@@ -106,11 +108,13 @@ export default {
       backListArray = [];
     if (payload) {
     } else {
-      list = await $axios.$get(`/api/Get_arg?table=news`);
+      listArray = await $axios.$get(`/api/Get_news_list`);
     }
-    list.forEach(element => {
-      listArray = [...listArray, ...element.data];
-    });
+    //Object.values(list).reverse();
+    /* list.forEach(element => {
+      listArray = [...element.data, ...listArray];
+    }); */
+    listArray = Object.values(listArray);
     backListArray = Array.from(new Set(listArray));
     return { list, listArray, backListArray };
   },
@@ -125,14 +129,9 @@ export default {
   },
   methods: {
     vrFilter(type) {
-      if (!type) this.backListArray = this.listArray;
-      else {
-        let list = [];
-        this.backListArray.forEach(el => {
-          if (el.name.includes(type)) list.push(el);
-        });
-        this.listArray = list;
-      }
+      this.listArray = this.backListArray.filter(el => {
+        return el.data.name.includes(type) || !type;
+      });
     }
   },
   mounted() {

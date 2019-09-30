@@ -5,18 +5,23 @@
         <div class=" my-4 border-bottom">
           <h5>{{ id }}</h5>
         </div>
-        <div id="text" class=" px-5">
-          <p v-for="(val, key) in list.text || []" :key="key">{{ val }}</p>
+        <div v-if="listNew">
+          <div id="newsText" class=" px-5 ctlimg" v-html="list"></div>
         </div>
-        <div id="pic" class=" px-5">
-          <b-img-lazy
-            v-for="(val, key) in list.pic || []"
-            :key="key"
-            v-bind="mainProps"
-            :src="val"
-            :alt="id"
-            class=" m-0 p-0 w-75 my-2"
-          ></b-img-lazy>
+        <div v-else>
+          <div id="newsText" class=" px-5 ctlimg">
+            <p v-for="(val, key) in list.text || []" :key="key">{{ val }}</p>
+          </div>
+          <div id="pic" class=" px-5">
+            <b-img-lazy
+              v-for="(val, key) in list.pic || []"
+              :key="key"
+              v-bind="mainProps"
+              :src="val"
+              :alt="id"
+              class=" m-0 p-0 w-75 my-2"
+            ></b-img-lazy>
+          </div>
         </div>
       </b-col>
     </b-row>
@@ -45,21 +50,24 @@ export default {
         `/api/Get_arg?table=news_list&title=${encodeURI(id)}`
       );
     }
-    return { id, list: list.data };
+    return { id, list: list.data, listNew: list.new };
   },
   head() {
     return {
       title: `${this.id}-雷迪司`,
       meta: [
         { name: "keywords", content: this.id },
-        { name: "description", content: this.list.text.slice(0, 5).join(",") }
+        { name: "description", content: this.id }
       ]
     };
-  },
-  created() {
-    //console.log(this.list);
   }
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss">
+#newsText img {
+  max-width: 100% !important;
+  height: auto;
+}
+
+</style>

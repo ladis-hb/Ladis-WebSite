@@ -46,17 +46,17 @@
         <h2>售后支持</h2>
       </div>
       <div class="sales-body">
-        <b-link href="" class="sales-li">
+        <b-link :to="{ path: '/support/监控软件下载' }" class="sales-li">
           <b-img-lazy
             src="/_CMS_NEWS_IMG_/2017-10/27/d71a90e4-b197-497b-80d6-abb20ac2a919.jpg"
           ></b-img-lazy>
         </b-link>
-        <b-link href="" class="sales-li">
+        <b-link :to="{ path: '/support/常见问题' }" class="sales-li">
           <b-img-lazy
             src="/_CMS_NEWS_IMG_/2017-10/27/581b3273-d44f-4f43-8b09-24fee8a37af9.jpg"
           ></b-img-lazy>
         </b-link>
-        <b-link href="" class="sales-li">
+        <b-link :to="{ path: '/buy' }" class="sales-li">
           <b-img-lazy
             src="/_CMS_NEWS_IMG_/2017-10/27/5ca0c263-3fd4-486f-923f-8f0762f1d161.jpg"
           ></b-img-lazy>

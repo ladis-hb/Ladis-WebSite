@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import ladisModal from "../../components/modal";
+
 export default {
   data() {
     return {
@@ -66,10 +66,6 @@ export default {
       currentPage: 1
     };
   },
-  components: {
-    ladisModal
-  },
-
   async asyncData({ $axios, params, error, payload }) {
     let support_asid = [];
     let support_list = [];

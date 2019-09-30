@@ -20,13 +20,13 @@
             <b-list-group>
               <b-list-group-item
                 v-for="(v1, k1) in fileTypeFilter(val.data, 'pdf')"
-                :key="k1+123"
+                :key="k1 + 123"
                 :href="v1.href"
                 >{{ v1.title }}</b-list-group-item
               >
               <b-list-group-item
                 v-for="(v1, k1) in fileTypeFilter(val.data, 'soft')"
-                :key="k1+678"
+                :key="k1 + 678"
               >
                 <b-button
                   variant="link"
@@ -63,7 +63,9 @@
 import { types } from "util";
 export default {
   async asyncData({ $axios, params, error, payload }) {
-    var support_asid = await $axios.$get("/api/Get_support_asid");
+    var support_asid = await $axios.$get("/api/Get_arg", {
+      params: { table: "pages", title: "support_asid" }
+    });
     if (payload) {
     } else {
       var downs = await $axios.$get(
@@ -80,7 +82,7 @@ export default {
   },
   methods: {
     pig(p) {
-       //return `http://www.ladis.com.cn/${p}`;
+      //return `http://www.ladis.com.cn/${p}`;
       return p;
     },
     fileTypeFilter(file, type) {

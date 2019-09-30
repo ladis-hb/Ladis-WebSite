@@ -21,10 +21,10 @@
               v-for="(val, key) in map"
               :key="key"
               shape="poly"
-              :alt="val.alt"
+              :alt="val.data.alt"
               target="_blank"
-              :coords="val.coords"
-              :href="val.href"
+              :coords="val.data.coords"
+              :href="val.data.href"
             />
           </map>
         </p>
@@ -62,11 +62,13 @@ export default {
       area = {};
     if (payload) {
     } else {
-      map = await $axios.$get(`/api/Get_arg?table=buy&title=buy_map`);
-      dealers = await $axios.$get(`/api/Get_arg?table=buy_list&title=buy_map`);
+      map = await $axios.$get(`/api/Get_arg?table=buy`);
+      dealers = await $axios.$get(`/api/Get_arg?table=buy_list`);
     }
-    map = map.data;
-    dealers = dealers.data;
+    dealers = dealers.map(el => {
+      return el.data;
+    });
+
     dealers.forEach(element => {
       let { parentsUntil, link, parent } = element;
       if (city.has(parent)) return;
@@ -77,16 +79,15 @@ export default {
     });
 
     map = Object.values(map).map(element => {
-      let key = element.href.split(".")[0] + ".shtml";
-      element.href = adrress.get(key);
+      element.data.href = adrress.get(
+        element.data.href.split(".")[0] + ".shtml"
+      );
       return element;
     });
 
     return { map, area };
   },
-  created() {
-   // console.log(this.map);
-  },
+
   head() {
     return {
       title: `销售服务中心-雷迪司`,

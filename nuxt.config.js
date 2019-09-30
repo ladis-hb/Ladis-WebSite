@@ -7,7 +7,9 @@ module.exports = {
    */
   server: {
     port: 80,
-    host:"116.62.48.175"
+    host: (process.env.NODE_MODE = "development"
+      ? "127.0.0.1"
+      : "116.62.48.175")
   },
   head: {
     meta: [
@@ -35,12 +37,22 @@ module.exports = {
   /*
    ** Global CSS
    */
-  css: [],
+  css: [
+    "@/assets/css/theme-chalk/icon.css",
+    "@/assets/css/theme-chalk/message-box.css",
+    "quill/dist/quill.snow.css",
+    "quill/dist/quill.bubble.css",
+    "quill/dist/quill.core.css",
+    "@/assets/main.css"
+  ],
   /*
   ** Plugins to load before mounting the App
 
   */
-  plugins: [],
+  plugins: [
+    { src: "~plugins/nuxt-quill-plugin.js", ssr: false },
+    { src: "~plugins/v-region.js", ssr: false }
+  ],
   /*
    ** Nuxt.js modules
    */
@@ -61,7 +73,7 @@ module.exports = {
   },
 
   proxy: {
-   /*  "/api": {
+    /*  "/api": {
       target: "http://116.62.48.175",
       changeOrigin: true, // 表示是否跨域
       pathRewrite: { "^/api/": "" }

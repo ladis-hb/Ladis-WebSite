@@ -1,21 +1,13 @@
 /* jshint esversion:8 */
 const Router = require("koa-router");
+const Admin = require("./admin");
+const Upload = require("./upload");
 
 const router = new Router();
-const Collection = {
-  head: "head",
-  router: "router",
-  products: "products",
-  pages: "pages",
-  buy: "buy",
-  buy_list: "buy_list",
-  users: "users",
-  Products_list: "Products_list",
-  support: "support",
-  support_list: "support_list",
-  news_list: "news_list"
-};
+const { Collection } = require("../config");
 
+router.get("/administrator/:id", Admin);
+router.all("/upload/:id", Upload);
 router.get("/api/:id", async ctx => {
   const { id } = ctx.params;
   console.log(id);
@@ -50,22 +42,51 @@ router.get("/api/:id", async ctx => {
         .findOne({ title: "All" }); // mongo_Products.findOne({ title: "All" });
       ctx.body = Products_all.data;
       break;
-    case "Get_support_asid":
-      let support_asid = await ctx.db
-        .collection(Collection.pages)
-        .findOne({ title: "support_asid" }); //mongo_page.findOne({ title: "support_asid" });
-      ctx.body = support_asid;
-      break;
+
     case "Get_support_down_list":
-      //console.log(ctx.query.table)
-      //let mongo_support = new Mongo(Server, DB, "support");
       let Get_support_down_list = await ctx.db
         .collection(Collection.support)
         .find({ parent: ctx.query.table })
         .toArray(); //mongo_support.find({        parent: ctx.query.table      });
       ctx.body = Get_support_down_list;
       break;
+    //获取新闻列表，按时间new->old排序
+    case "Get_news_list":
+      {
+        let result = await ctx.db
+          .collection(Collection.news)
+          .find()
+          .sort({ date: -1 })
+          .toArray();
 
+        ctx.body = result;
+      }
+      break;
+    //获取新闻列表，按时间new->old排序
+    case "Get_case_list":
+      {
+        let result = await ctx.db
+          .collection(Collection.case)
+          .find()
+          .sort({ date: -1 })
+          .toArray();
+
+        ctx.body = result;
+      }
+      break;
+    //获取经销商列表子类
+    case "Get_buy_li":
+      {
+        let city = ctx.query.city;
+        let result = await ctx.db
+          .collection(Collection.buy_list)
+          .find({ "data.parent": city })
+          //.sort({ date: -1 })
+          .toArray();
+
+        ctx.body = result;
+      }
+      break;
     //Generate 静态化时，路由表携带载荷
     case "GET_router":
       let i = 0;
@@ -147,15 +168,12 @@ router.get("/api/:id", async ctx => {
     case "Get_arg":
       var table = ctx.query.table;
       var title = ctx.query.title;
-      let result;
-      if (title) result = await ctx.db.collection(table).findOne({ title });
+      if (title) ctx.body = await ctx.db.collection(table).findOne({ title });
       else
-        result = await ctx.db
+        ctx.body = await ctx.db
           .collection(table)
           .find()
           .toArray();
-      ctx.body = result;
-
       break;
 
     // request Get_Products_head,当generate时，payload载荷正常加载，dev下payload失效

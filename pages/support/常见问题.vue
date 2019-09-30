@@ -58,16 +58,12 @@
 </template>
 
 <script>
-import ladisModal from "../../components/modal";
 export default {
   data() {
     return {
       perPage: 10,
       currentPage: 1
     };
-  },
-  components: {
-    ladisModal
   },
 
   async asyncData({ $axios, params, error, payload }) {
@@ -92,7 +88,7 @@ export default {
   },
   methods: {
     pig(p) {
-       //return `http://www.ladis.com.cn/${p}`;
+      //return `http://www.ladis.com.cn/${p}`;
       return p;
     },
     slic(title) {
@@ -100,7 +96,7 @@ export default {
         console.log(title);
         var ls = [];
         var list = this.list;
-        list.map(val => {
+        list.forEach(val => {
           if (val.parentsUntil == title || val.parent == title) ls.push(val);
         });
         this.support_list = ls;
