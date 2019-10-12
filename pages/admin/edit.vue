@@ -42,39 +42,39 @@
           <b-nav-item :to="{ name: 'admin-edit-buy' }">经销商管理</b-nav-item>
           <b-nav-item-dropdown text="服务支持">
             <b-dropdown-item
-              :to="{ path: '/admin/edit/down', query: { index: '0' } }"
+              :to="{ path: '/admin/edit/down', query: { index: 0 } }"
               >软件</b-dropdown-item
             >
             <b-dropdown-item
-              :to="{ path: '/admin/edit/down', query: { index: '1' } }"
+              :to="{ path: '/admin/edit/down', query: { index: 1 } }"
               >彩页</b-dropdown-item
             >
             <b-dropdown-item
-              :to="{ path: '/admin/edit/down', query: { index: '2' } }"
+              :to="{ path: '/admin/edit/down', query: { index: 2 } }"
               >视频教程</b-dropdown-item
             >
             <b-dropdown-item
-              :to="{ path: '/admin/edit/down', query: { index: '3' } }"
+              :to="{ path: '/admin/edit/down', query: { index: 3 } }"
               >常见问题</b-dropdown-item
             >
             <b-dropdown-item
-              :to="{ path: '/admin/edit/down', query: { index: '4' } }"
+              :to="{ path: '/admin/edit/down', query: { index: 4 } }"
               >资质</b-dropdown-item
             >
           </b-nav-item-dropdown>
-          <b-nav-item-dropdown text="产品分类">
-            <b-dropdown-item>ups电源</b-dropdown-item>
-            <b-dropdown-item>数据中心</b-dropdown-item>
-            <b-dropdown-item>机房空调</b-dropdown-item>
-          </b-nav-item-dropdown>
+          <b-nav-item :to="{ name: 'admin-edit-product' }">产品分类</b-nav-item>
           <b-nav-item-dropdown text="首页管理">
             <b-dropdown-item>轮播图</b-dropdown-item>
             <b-dropdown-item>。。。</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-nav>
       </b-col>
-      <b-col class="p-5 ">
-        <router-view></router-view>
+      <b-col class="p-5 overflow-auto">
+        <transition>
+          <keep-alive>
+            <router-view></router-view>
+          </keep-alive>
+        </transition>
       </b-col>
     </b-row>
   </b-container>

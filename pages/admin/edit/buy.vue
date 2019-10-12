@@ -92,7 +92,7 @@ export default {
                 详细地址：${address}；联系人：${linkman}|${tel}|${phone}；
                     备注：${remark}`;
       MessageBox.confirm(info, "核对信息").then(() => {
-        this.$axios.$get("/upload/dealers", {
+        this.$axios.$get("/uploads/dealers", {
           params: Object.assign(this.ad, { user: this.user, token: this.token })
         });
       });

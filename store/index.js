@@ -1,7 +1,8 @@
 /* jshint esversion:8 */
 export const state = () => ({
-  user: "",
-  token: ""
+  user: "nuss",
+  token: "",
+  carouselPics: null
 });
 
 export const mutations = {
@@ -10,5 +11,8 @@ export const mutations = {
   },
   setToken(state, payload) {
     state.token = payload;
+  },
+  carouselPic(state, payload) {
+    state.carouselPics = payload;
   }
 };

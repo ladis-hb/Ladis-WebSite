@@ -138,7 +138,7 @@ export default {
       data.append("token", this.token);
       data.append("inputType", id);
 
-      let result = await this.$axios.$put(`/upload/${id}`, data);
+      let result = await this.$axios.$put(`/uploads/${id}`, data);
       if (result.stat) {
         MessageBox.confirm(result.msg, "编辑成功").then(() => {
           this.$router.push({ path: result.href });

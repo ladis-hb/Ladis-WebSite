@@ -1,6 +1,9 @@
 /* jshint esversion:8 */
 const { Collection } = require("../config");
-const { formatMD5, validation_jwt_user } = require("../util/Format");
+const {
+  validation_jwt_user,
+  SerizeFilesArraytoString
+} = require("../util/Format");
 const Multiparty = require("../util/multiparty");
 
 module.exports = async (ctx, next) => {
@@ -9,12 +12,27 @@ module.exports = async (ctx, next) => {
   switch (ctx.method) {
     //put request
     case "PUT":
+      console.log(await Multiparty({ request: ctx.req }));
+
+      ctx.body = { data: "sdx d" };
       {
-        let { fields, files } = await Multiparty({ request: ctx.req });
+        //解构format,fields是附加数据，files是上传文件，嵌套解构files,取出文件实体
         let {
-          user: [user],
-          token: [token]
-        } = fields;
+          fields,
+          files: {
+            file: [file]
+          }
+        } = await Multiparty({ request: ctx.req });
+        //迭代fields，值是单个数组的替换为字符串
+        fields = SerizeFilesArraytoString(fields);
+        //解构files，
+        let { fieldName, originalFilename, path, headers, size } = file;
+        //转换上传文件路径
+        let filePath = path.split("/");
+        filePath.shift();
+        filePath = "/" + filePath.join("/");
+
+        let { user, token } = fields;
         if (!validation_jwt_user(user, token)) {
           return (ctx.body = {
             stat: false,
@@ -24,38 +42,69 @@ module.exports = async (ctx, next) => {
         }
 
         switch (id) {
+          case "product":
+            console.log();
+
+            ctx.body = { data: fields };
+            break;
           case "down":
             {
-              let [{ path, originalFilename, size }] = files;
-              let [type] = fields.type;
-              switch (type) {
-                case "soft":
-                  let {
-                    selectSystem: [selectSystem],
-                    title: [title],
-                    platform: [platform],
-                    selectLanguage: [selectLanguage],
-                    version: [version],
-                    update: [update]
-                  } = fields;
-                  break;
+              let {
+                selectSystem,
+                title,
+                platform,
+                selectLanguage,
+                version,
+                update
+              } = fields;
+              let obj = {};
+              if (originalFilename.includes(".pdf")) {
+                obj = {
+                  type: "pdf",
+                  title,
+                  href: filePath
+                };
+              } else {
+                obj = {
+                  type: "soft",
+                  title,
+                  date: new Date(),
+                  platform,
+                  language: selectLanguage,
+                  size: size / 1024 / 1024 + "MB",
+                  version,
+                  updateReason: update,
+                  down: filePath
+                };
               }
-              console.log(fields);
+              await ctx.db.collection(Collection.support).updateOne(
+                {
+                  title: selectSystem
+                },
+                { $pull: { data: { title } } }
+              );
+              let result = await ctx.db
+                .collection(Collection.support)
+                .updateOne(
+                  {
+                    title: selectSystem,
+                    "data.title": { $ne: title }
+                  },
+                  { $addToSet: { data: obj } }
+                );
 
-              ctx.body = { stat: true, msg: "已生成最新文档，是否查看" };
+              ctx.body = {
+                stat: true,
+                msg: "已保存文档，请查看记录",
+                result: result.result
+              };
             }
             break;
           case "news":
           case "case":
             {
-              let {
-                content: [content],
-                title: [title],
-                editType
-              } = fields;
-              let {
-                pic: [{ fieldName, path, size }]
-              } = files;
+              let { content, title, editType } = fields;
+
               //valition pic
               if (size > 20480000) return;
 
@@ -174,6 +223,54 @@ module.exports = async (ctx, next) => {
             break;
         }
         ctx.body = result;
+      }
+      break;
+    case "POST":
+      {
+        let { type, user, token } = ctx.request.body;
+        if (!validation_jwt_user(user, token)) {
+          return (ctx.body = {
+            stat: false,
+            error: "tokenValidationError",
+            msg: "效验错误，token已过期或错误，请重新登录已刷新Token"
+          });
+        }
+        let body = {
+          stat: true,
+          msg: "已保存文档，请查看记录",
+          result: {}
+        };
+        switch (type) {
+          case "problem":
+            {
+              let {
+                title,
+                movie,
+                html,
+                selectparentsUntil,
+                selectparent
+              } = ctx.request.body;
+              let obj = {
+                title,
+                href: `/support/problem/${title}`,
+                date: new Date(),
+                parentsUntil: selectparentsUntil,
+                parent: selectparent
+              };
+              if (html === "输入") obj.movie = movie;
+              else obj.html = html;
+              await ctx.db
+                .collection(Collection.support_list)
+                .deleteMany({ title });
+              let result = await ctx.db
+                .collection(Collection.support_list)
+                .insertOne(obj);
+
+              body.result = result.result;
+            }
+            break;
+        }
+        ctx.body = body;
       }
       break;
   }

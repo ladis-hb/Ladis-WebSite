@@ -80,7 +80,6 @@ export default {
 
   methods: {
     pig(p) {
-      //return `http://www.ladis.com.cn/${p}`;
       return p;
     }
   }

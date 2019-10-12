@@ -38,10 +38,7 @@
             )"
             :key="key"
           >
-            <b-link :href="val.movie" target="_blank" v-if="val.movie"
-              >{{ val.title }}/视频数据</b-link
-            >
-            <b-link :to="{ path: val.href }" v-else>{{ val.title }}</b-link>
+            <b-link :to="{ path: val.href }">{{ val.title }}</b-link>
           </b-list-group-item>
         </b-list-group>
 
@@ -62,44 +59,41 @@ export default {
   data() {
     return {
       perPage: 10,
-      currentPage: 1
+      currentPage: 1,
+      support_list: []
     };
   },
 
   async asyncData({ $axios, params, error, payload }) {
     let support_asid = [];
-    let support_list = [];
+    let list = [];
     if (payload) {
       support_asid = payload.asid.data;
-      support_list = payload.data;
+      list = payload.data;
     } else {
       let asid = await $axios.$get(
         `/api/Get_arg?table=pages&title=support_problem_asid`
       );
       support_asid = asid ? asid.data : [];
-      support_list = await $axios.$get(`/api/Get_arg?table=support_list`);
+      list = await $axios.$get(`/api/Get_arg?table=support_list`);
     }
-    return { support_asid, support_list, payload };
+    return { support_asid, list, payload };
   },
 
   created() {
-    //this.lists =  this.list
-    //console.log(this.list);
+    this.slic();
   },
   methods: {
     pig(p) {
-      //return `http://www.ladis.com.cn/${p}`;
       return p;
     },
     slic(title) {
       if (title) {
-        console.log(title);
-        var ls = [];
-        var list = this.list;
-        list.forEach(val => {
-          if (val.parentsUntil == title || val.parent == title) ls.push(val);
+        this.support_list = this.list.filter(val => {
+          return val.parentsUntil == title || val.parent == title;
         });
-        this.support_list = ls;
+      } else {
+        this.support_list = this.list;
       }
     }
   },

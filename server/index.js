@@ -3,7 +3,7 @@ const Koa = require("koa");
 const consola = require("consola");
 const { Nuxt, Builder } = require("nuxt");
 const router = require("./router/index");
-//const body = require("koa-body");
+const body = require("koa-body");
 const mongo = require("koa-mongo");
 
 const app = new Koa();
@@ -15,7 +15,7 @@ app.use(async (ctx, next) => {
   await next();
 });
 //注册router
-//app.use(body());
+app.use(body());
 app.use(router.routes()).use(router.allowedMethods());
 
 // Import and Set Nuxt.js options

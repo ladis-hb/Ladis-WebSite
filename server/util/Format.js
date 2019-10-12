@@ -1,5 +1,6 @@
 /* jshint esversion:8 */
 const crypto = require("crypto");
+const util = require("util");
 const { key } = require("../config");
 const mongodb = require("mongodb");
 const { JwtSign, JwtVerify } = require("../Secret");
@@ -10,6 +11,13 @@ const validation_jwt_user = (user, token) => {
   let { user: u } = JwtVerify(token);
   if (u === user) return true;
   else return false;
+};
+
+const SerizeFilesArraytoString = files => {
+  Object.keys(files).forEach(key => {
+    if (util.isArray(files[key]) && key !== "file") files[key] = files[key][0];
+  });
+  return files;
 };
 /**
  *
@@ -114,5 +122,6 @@ module.exports = {
   Validation_user,
   ObjectId,
   Validation_root_Group,
-  validation_jwt_user
+  validation_jwt_user,
+  SerizeFilesArraytoString
 };

@@ -7,7 +7,7 @@ const router = new Router();
 const { Collection } = require("../config");
 
 router.get("/administrator/:id", Admin);
-router.all("/upload/:id", Upload);
+router.all("/uploads/:id", Upload);
 router.get("/api/:id", async ctx => {
   const { id } = ctx.params;
   console.log(id);
