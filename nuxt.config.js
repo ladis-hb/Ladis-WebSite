@@ -7,7 +7,8 @@ module.exports = {
      */
     server: {
         port: 80,
-        /* host: (process.env.NODE_MODE = "development"
+        //host: "116.62.48.175"
+        /* (process.env.NODE_MODE = "development"
             ? "127.0.0.1"
             : "116.62.48.175") */
     },
@@ -96,9 +97,9 @@ module.exports = {
     //
     router: {
         //base: "./",
-        scrollBehavior: function(to, from, savedPosition) {
+        /* scrollBehavior: function(to, from, savedPosition) {
             return { x: 0, y: 0 };
-        }
+        } */
     },
     generate: {
         //subFolders: false,
