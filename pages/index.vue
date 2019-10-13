@@ -43,7 +43,7 @@
     <!-- after-sales -->
     <div class="after-sales">
       <div class="sales-title">
-        <h2>售后支持</h2>
+        <h2>{{ $t('index.1ev0o5') }}</h2>
       </div>
       <div class="sales-body">
         <b-link :to="{ path: '/support/监控软件下载' }" class="sales-li">

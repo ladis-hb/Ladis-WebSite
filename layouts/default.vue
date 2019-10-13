@@ -12,11 +12,7 @@
     </div>
 
     <!-- footer -->
-    <div
-      class="row afooter"
-      id="footer"
-      :class="{ afooter: collapse, afooterm: !collapse }"
-    >
+    <div class="row afooter" id="footer" :class="{ afooter: collapse, afooterm: !collapse }">
       <div class="section">
         <div class="collp" v-b-toggle.demo1 @mouseenter="hover">
           <a class="a-collp">
@@ -76,9 +72,12 @@ export default {
 </script>
 
 <style>
-html {
-  height: 100%;
+@media screen and (min-height: 700px) {
+  html {
+    height: 100%;
+  }
 }
+
 body,
 #__nuxt,
 #__layout,

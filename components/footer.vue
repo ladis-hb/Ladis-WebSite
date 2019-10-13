@@ -1,11 +1,11 @@
 <template>
   <div class="footer">
     <div class="footer1">
-      <a href="/map/index.shtml">网站地图</a>
-      <a href="/about/node_33.shtml">联系我们</a>
-      <a href="/join/node_34.shtml">加入我们</a>
-      <a href="/about/node_43.shtml">使用声明</a>
-      <a href="/about/node_42.shtml">隐私政策</a>
+      <a href="/map/index.shtml">{{ $t('footer.9c708c') }}</a>
+      <a href="/about/node_33.shtml">{{ $t('footer.fp5qvs') }}</a>
+      <a href="/join/node_34.shtml">{{ $t('footer.ce1e0h') }}</a>
+      <a href="/about/node_43.shtml">{{ $t('footer.amhzvr') }}</a>
+      <a href="/about/node_42.shtml">{{ $t('footer.5d7lkm') }}</a>
     </div>
 
     <div class="footer2">

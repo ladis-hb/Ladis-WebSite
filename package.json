@@ -41,6 +41,7 @@
     "spritespin": "^4.1.0",
     "v-region": "^2.1.3",
     "vue-awesome-swiper": "^3.1.3",
+    "vue-i18n": "^8.14.1",
     "vue-quill-editor": "^3.0.6"
   },
   "devDependencies": {

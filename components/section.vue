@@ -1,8 +1,8 @@
 <template>
-  <div class="section ">
+  <div class="section">
     <div class="col-12">
       <div class="row">
-        <div class="col-6 colsm-2 " v-for="(val, key) in list" :key="key">
+        <div class="col-6 colsm-2" v-for="(val, key) in list" :key="key">
           <ul>
             <li>
               <strong>{{ key }}</strong>
@@ -23,73 +23,73 @@ export default {
   data() {
     return {
       list: {
-        产品系列: [
+        [this.$t("section.gk11oe")]: [
           {
-            title: "UPS电源",
+            title: this.$t("section.4t9bzs"),
             href: "/products/UPS电源"
           },
           {
-            title: "数据中心",
+            title: this.$t("section.4r35dn"),
             href: "/products/数据中心"
           },
           {
-            title: "机房空调",
+            title: this.$t("section.f7h57b"),
             href: "/products/机房空调"
           }
         ],
-        服务支持: [
+        [this.$t("section.q5vjss")]: [
           {
-            title: "服务中心",
+            title: this.$t("section.ps0tuh"),
             href: "/buy"
           },
           {
-            title: "相关下载",
+            title: this.$t("section.y2a257"),
             href: "/support/"
           },
           {
-            title: "常见问题",
+            title: this.$t("section.o5n0th"),
             href: "/support/常见问题"
           }
         ],
-        购买指南: [
+        [this.$t("section.21ws8d")]: [
           {
-            title: "经销商查询",
+            title: this.$t("section.u7wjbw"),
             href: "/buy/"
           },
           {
-            title: "蓝光数码专营店",
+            title: this.$t("section.6v39gj"),
             href: "https://lgsm.tmall.com/",
             target: "_bank"
           },
           {
-            title: "雷迪司天猫旗舰店",
+            title: this.$t("section.k9mydj"),
             href: "https://leidisi.tmall.com/",
             target: "_bank"
           },
           {
-            title: "雷迪司京东旗舰店",
+            title: this.$t("section.pfuunc"),
             href: "https://leidisi.tmall.com/",
             target: "_bank"
           }
         ],
-        关于雷迪司: [
+        [this.$t("section.567cgp")]: [
           {
-            title: "公司简介",
+            title: this.$t("section.v0otza"),
             href: "/about/"
           },
           {
-            title: "新闻资讯",
+            title: this.$t("section.qis2vp"),
             href: "/news/"
           }
         ],
-        关联网站: [
+        [this.$t("section.ri1giq")]: [
           {
-            title: "云监控平台",
+            title: this.$t("section.l7qkwb"),
             href: "http://www.pesiv.com",
             target: "_bank"
           },
           {
-            title: "新版云监控平台",
+            title: this.$t("section.wkyimq"),
             href: "http://116.62.48.175:81",
             target: "_bank"
           }

@@ -1,12 +1,11 @@
 <template>
-  <div class=" overflow-auto">
+  <div class="overflow-auto">
     <b-card>
-      <b-card-header class=" bg-light">产品</b-card-header>
+      <b-card-header class="bg-light">产品</b-card-header>
       <b-card-body>
         <div id="editSelect">
           <b-form-group label="产品类型:" label-align="right" label-cols="2">
-            <b-form-select v-model="selectType" :options="type">
-            </b-form-select>
+            <b-form-select v-model="selectType" :options="type"></b-form-select>
           </b-form-group>
           <b-form-group label="产品标题:" label-align="right" label-cols="2">
             <b-form-input v-model.trim="title"></b-form-input>
@@ -29,7 +28,7 @@
             ></b-form-file>
           </b-form-group>
         </div>
-        <section id="editBody" class=" my-3">
+        <section id="editBody" class="my-3">
           <div
             class="quill-editor"
             :content="content"
@@ -39,17 +38,11 @@
         </section>
 
         <div id="editFooter">
-          <b-button variant="info" @click="Save_content_head"
-            >保存为说明</b-button
-          >
-          <b-button variant="info" @click="Save_content_body"
-            >保存为内容</b-button
-          >
-          <b-button class=" ml-5" @click="Preview">预览</b-button>
-          <b-button class=" ml-5" @click="test">test</b-button>
-          <b-button variant="success" class=" float-right" @click="SendEdit"
-            >确定</b-button
-          >
+          <b-button variant="info" @click="Save_content_head">保存为说明</b-button>
+          <b-button variant="info" @click="Save_content_body">保存为内容</b-button>
+          <b-button class="ml-5" @click="Preview">预览</b-button>
+          <b-button class="ml-5" @click="test">test</b-button>
+          <b-button variant="success" class="float-right" @click="SendEdit">确定</b-button>
         </div>
       </b-card-body>
     </b-card>
@@ -147,8 +140,11 @@ export default {
       data.append("title", this.title);
       data.append("content_head", this.content_head);
       data.append("content_body", this.content_body);
-      data.append("carouselPic", this.carouselPic);
+      //data.append("carouselPic", );
       data.append("indexPic", this.indexPic);
+      this.carouselPic.forEach(pic => {
+        data.append("files", pic);
+      });
 
       let result = await this.$axios.$put(`/uploads/product`, data);
     },
