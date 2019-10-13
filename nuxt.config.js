@@ -7,10 +7,9 @@ module.exports = {
      */
     server: {
         port: 80,
-        //host: "116.62.48.175"
-        /* (process.env.NODE_MODE = "development"
-            ? "127.0.0.1"
-            : "116.62.48.175") */
+         host: (process.env.NODE_ENV = "production"
+            ? "116.62.48.175"
+            : "localhost") 
     },
     head: {
         meta: [
@@ -105,7 +104,7 @@ module.exports = {
         //subFolders: false,
         routes: function() {
             return axios
-                .get("http://localhost:3000/api/GET_router")
+                .get("http://116.62.48.175/api/GET_router")
                 .then(res => {
                     return res.data;
                 });

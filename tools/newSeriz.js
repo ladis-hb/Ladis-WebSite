@@ -186,7 +186,7 @@ async function start() {
     );
   });
   //获取case案例网址链接
-   /*
+   
   let CaseList = dataArray.map(element => {
     return Html_Serialize_Json({
       url: element.link,
@@ -196,8 +196,8 @@ async function start() {
       parent: "case"
     });
   });
- */
-/* 
+ 
+
   //news
   const News = [];
   for (let i = 2; i < 261; i++) {
@@ -250,9 +250,9 @@ async function start() {
       })
     );
   }
- */
+ 
   Promise.all([
-    /* ...vr,*/ ...CaseObject,/* ...CaseList, ...NewsObject,  ...NewsList  */
+     ...vr, ...CaseObject, ...CaseList, ...NewsObject,  ...NewsList  
   ])
     .then(Rows => {
       console.log(`操作数据长度${Rows.length}`);

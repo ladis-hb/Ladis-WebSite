@@ -414,7 +414,7 @@ async function Html_Serialize_Json(
 }
 
 async function start() {
-  /* 
+  
   var Pages = [];
 
   //添加头部文件
@@ -779,7 +779,7 @@ async function start() {
       "证书资质"
     )
   );
- */
+ 
   //Buy
   let Buy = Html_Serialize_Json(
     "/about/node_37.shtml",
@@ -804,7 +804,7 @@ async function start() {
   //技术服务写入
   //await Get_support_problem_list_arg();
   //WriteRouter();
-  Promise.all([/* Destruction(Buy) */ Destruction(Buy_list)])
+  Promise.all([Destruction(Buy) , Destruction(Buy_list)])
     .then(Row => {
       let Rows = [];
       Row.forEach(el => {
