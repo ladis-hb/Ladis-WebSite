@@ -4,31 +4,31 @@
       <b-col cols="12" md="3">
         <b-list-group class=" my-4 text-light">
           <b-list-group-item class=" bg-dark rounded-0  my-1 text-light" button
-            >成功案例</b-list-group-item
+            >{{ $t('index.tqie7y') }}</b-list-group-item
           >
           <b-list-group-item
             class=" bg-dark rounded-0  my-1 text-light"
             button
             @click="vrFilter('UPS电源')"
-            >UPS电源</b-list-group-item
+            >{{ $t('index.a89hfi') }}</b-list-group-item
           >
           <b-list-group-item
             class=" bg-dark rounded-0  my-1 text-light"
             button
             @click="vrFilter('一体化机柜')"
-            >一体化机柜</b-list-group-item
+            >{{ $t('index.1gcuye') }}</b-list-group-item
           >
           <b-list-group-item
             class=" bg-dark rounded-0  my-1 text-light"
             button
             @click="vrFilter('数据中心')"
-            >数据中心</b-list-group-item
+            >{{ $t('index.6vnevq') }}</b-list-group-item
           >
           <b-list-group-item
             class=" bg-dark rounded-0  my-1 text-light"
             button
             @click="vrFilter('机房空调')"
-            >机房空调</b-list-group-item
+            >{{ $t('index.uns46v') }}</b-list-group-item
           >
         </b-list-group>
       </b-col>

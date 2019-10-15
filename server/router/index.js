@@ -2,12 +2,14 @@
 const Router = require("koa-router");
 const Admin = require("./admin");
 const Upload = require("./upload");
+const Edit = require("./edit")
 
 const router = new Router();
 const { Collection } = require("../config");
 
 router.get("/administrator/:id", Admin);
-router.all("/uploads/:id", Upload);
+router.put("/uploads/:id", Upload);
+router.get("/edit/:id",Edit)
 router.get("/api/:id", async ctx => {
   const { id } = ctx.params;
   console.log(id);

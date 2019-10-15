@@ -1,21 +1,20 @@
 <template>
   <div>
     <b-card>
-      <b-card-header class=" bg-light">{{ edit.title }}</b-card-header>
+      <b-card-header class="bg-light">{{ edit.title }}</b-card-header>
       <b-card-body>
         <div id="editSelect">
           <b-form-group label="新闻类型:" label-align="right" label-cols="2">
-            <b-form-select v-model="edit.editType" :options="edit.editOption">
-            </b-form-select>
+            <b-form-select v-model="edit.editType" :options="edit.editOption"></b-form-select>
           </b-form-group>
           <b-form-group label="新闻标题:" label-align="right" label-cols="2">
             <b-form-input v-model.trim="title"></b-form-input>
           </b-form-group>
           <b-form-group label="图片:" label-align="right" label-cols="2">
-            <b-form-select  v-model="file" :options="SourceFile"></b-form-select>
+            <b-form-select v-model="file" :options="SourceFile"></b-form-select>
           </b-form-group>
         </div>
-        <section id="editBody" class=" my-3">
+        <section id="editBody" class="my-3">
           <div
             class="quill-editor"
             :content="content"
@@ -24,10 +23,7 @@
           ></div>
         </section>
         <div id="editFooter">
-          <b-button @click="testRout">testRout</b-button>
-          <b-button variant="success" class=" float-right" @click="SendEdit"
-            >确定</b-button
-          >
+          <b-button variant="success" class="float-right" @click="SendEdit">确定</b-button>
         </div>
       </b-card-body>
     </b-card>
@@ -35,6 +31,7 @@
 </template>
 
 <script>
+import { SendNewCaseEdit } from "../../../api/axios";
 import { mapState } from "vuex";
 import { MessageBox } from "element-ui";
 export default {
@@ -75,8 +72,8 @@ export default {
     }
   },
   computed: {
-    ...mapState(["user", "token","SourceFile"]),
-    
+    ...mapState(["user", "token", "SourceFile"]),
+
     edit() {
       let id = this.$route.params.id;
       let result = {
@@ -113,9 +110,6 @@ export default {
   },
 
   methods: {
-    testRout() {
-      console.log(this.$route);
-    },
     async SendEdit() {
       let id = this.$route.params.id;
       let { file, content, title } = this.$data;
@@ -125,16 +119,15 @@ export default {
       if (title.length > 50) return MessageBox("标题长度过长", "输入错误");
       if (file.size > 2048000)
         return MessageBox("图片大大小不能超过2MB", "输入错误");
-      let data = new FormData();
-      data.append("pic", file);
-      data.append("content", content);
-      data.append("title", title);
-      data.append("editType", editType);
-      data.append("user", this.user);
-      data.append("token", this.token);
-      data.append("inputType", id);
+      let params = {
+        pic: file,
+        content,
+        title,
+        editType,
+        inputType: id
+      };
 
-      let result = await this.$axios.$put(`/uploads/${id}`, data);
+      let result = await SendNewCaseEdit(params);
       if (result.stat) {
         MessageBox.confirm(result.msg, "编辑成功").then(() => {
           this.$router.push({ path: result.href });

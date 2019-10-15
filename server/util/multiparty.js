@@ -29,12 +29,12 @@ module.exports = function(req) {
           originalFilename: file.originalFilename,
           name,
           path: link,
-          link: newpath
+          link: newpath,
+          size: file.size
         };
       });
       Object.keys(fields).forEach(key => {
-        if (util.isArray(fields[key]) && key !== "file")
-          fields[key] = fields[key][0];
+        if (util.isArray(fields[key]) && key !== "file") fields[key] = fields[key][0];
       });
 
       res({ fields, files });

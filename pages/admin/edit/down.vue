@@ -4,16 +4,9 @@
       <b-col cols="12">
         <b-tabs v-model="active" id="tabs">
           <b-tab title="软件上传">
-            <b-form class=" m-5">
-              <b-form-group
-                label="*软件平台:"
-                label-cols="2"
-                label-align="right"
-              >
-                <b-form-select
-                  :options="soft.system"
-                  v-model="soft.selectSystem"
-                ></b-form-select>
+            <b-form class="m-5">
+              <b-form-group label="*软件平台:" label-cols="2" label-align="right">
+                <b-form-select :options="soft.system" v-model="soft.selectSystem"></b-form-select>
               </b-form-group>
               <b-form-group label="*标题:" label-cols="2" label-align="right">
                 <b-form-input v-model="soft.title"></b-form-input>
@@ -22,120 +15,74 @@
                 <b-form-input v-model="soft.platform"></b-form-input>
               </b-form-group>
               <b-form-group label="*语言:" label-cols="2" label-align="right">
-                <b-form-select
-                  :options="soft.language"
-                  v-model="soft.selectLanguage"
-                ></b-form-select>
+                <b-form-select :options="soft.language" v-model="soft.selectLanguage"></b-form-select>
               </b-form-group>
               <b-form-group label="版本:" label-cols="2" label-align="right">
                 <b-form-input v-model="soft.version"></b-form-input>
               </b-form-group>
-              <b-form-group
-                label="更新说明:"
-                label-cols="2"
-                label-align="right"
-              >
+              <b-form-group label="更新说明:" label-cols="2" label-align="right">
                 <b-form-input v-model="soft.update"></b-form-input>
               </b-form-group>
               <b-form-group label="*文件:" label-cols="2" label-align="right">
-                <b-form-select  v-model="soft.file" :options="SourceFile"></b-form-select>
-               
+                <b-form-select v-model="soft.file" :options="SourceFile"></b-form-select>
               </b-form-group>
-              <b-button block @click="Submit('soft')" variant="success"
-                >提交</b-button
-              >
+              <b-button block @click="Submit('soft')" variant="success">提交</b-button>
             </b-form>
           </b-tab>
           <b-tab title="彩页上传">
-            <b-form class=" m-5">
-              <b-form-group
-                label="*彩页类型:"
-                label-cols="2"
-                label-align="right"
-              >
-                <b-form-select
-                  :options="cp.system"
-                  v-model="cp.selectSystem"
-                ></b-form-select>
+            <b-form class="m-5">
+              <b-form-group label="*彩页类型:" label-cols="2" label-align="right">
+                <b-form-select :options="cp.system" v-model="cp.selectSystem"></b-form-select>
               </b-form-group>
               <b-form-group label="*标题:" label-cols="2" label-align="right">
                 <b-form-input v-model="cp.title"></b-form-input>
               </b-form-group>
 
               <b-form-group label="*文件:" label-cols="2" label-align="right">
-                <b-form-select  v-model="cp.file" :options="SourceFile"></b-form-select>
+                <b-form-select v-model="cp.file" :options="SourceFile"></b-form-select>
               </b-form-group>
-              <b-button block @click="Submit('cp')" variant="success"
-                >提交</b-button
-              >
+              <b-button block @click="Submit('cp')" variant="success">提交</b-button>
             </b-form>
           </b-tab>
           <b-tab title="资质">
-            <b-form class=" m-5">
-              <b-form-group
-                label="*资质类型:"
-                label-cols="2"
-                label-align="right"
-              >
-                <b-form-select
-                  :options="zz.system"
-                  v-model="zz.selectSystem"
-                ></b-form-select>
+            <b-form class="m-5">
+              <b-form-group label="*资质类型:" label-cols="2" label-align="right">
+                <b-form-select :options="zz.system" v-model="zz.selectSystem"></b-form-select>
               </b-form-group>
               <b-form-group label="*标题:" label-cols="2" label-align="right">
                 <b-form-input v-model="zz.title"></b-form-input>
               </b-form-group>
 
               <b-form-group label="*文件:" label-cols="2" label-align="right">
-                <b-form-select  v-model="zz.file" :options="SourceFile"></b-form-select>
+                <b-form-select v-model="zz.file" :options="SourceFile"></b-form-select>
               </b-form-group>
-              <b-button block @click="Submit('zz')" variant="success"
-                >提交</b-button
-              >
+              <b-button block @click="Submit('zz')" variant="success">提交</b-button>
             </b-form>
           </b-tab>
           <b-tab title="视频教程">
-            <b-form class=" m-5">
+            <b-form class="m-5">
               <b-form-group label="*父类型:" label-cols="2" label-align="right">
-                <b-form-select
-                  :options="problem.parentsUntil"
-                  v-model="problem.selectparentsUntil"
-                ></b-form-select>
+                <b-form-select :options="problem.parentsUntil" v-model="problem.selectparentsUntil"></b-form-select>
               </b-form-group>
               <b-form-group label="*子类型:" label-cols="2" label-align="right">
-                <b-form-select
-                  :options="parent"
-                  v-model="problem.selectparent"
-                ></b-form-select>
+                <b-form-select :options="parent" v-model="problem.selectparent"></b-form-select>
               </b-form-group>
               <b-form-group label="*标题:" label-cols="2" label-align="right">
                 <b-form-input v-model="problem.title"></b-form-input>
               </b-form-group>
-              <b-form-group
-                label="*视频链接:"
-                label-cols="2"
-                label-align="right"
-              >
+              <b-form-group label="*视频链接:" label-cols="2" label-align="right">
                 <b-form-input v-model="problem.movie"></b-form-input>
               </b-form-group>
-              <b-button block @click="Submit('problem')" variant="success"
-                >提交</b-button
-              >
+              <b-button block @click="Submit('problem')" variant="success">提交</b-button>
             </b-form>
           </b-tab>
           <b-tab title="常见问题">
-            <b-form class=" m-5">
+            <b-form class="m-5">
               <b-form-group label="*父类型:" label-cols="2" label-align="right">
-                <b-form-select
-                  :options="problem.parentsUntil"
-                  v-model="problem.selectparentsUntil"
-                ></b-form-select>
+                <b-form-select :options="problem.parentsUntil" v-model="problem.selectparentsUntil"></b-form-select>
               </b-form-group>
               <b-form-group label="*子类型:" label-cols="2" label-align="right">
-                <b-form-select
-                  :options="parent"
-                  v-model="problem.selectparent"
-                ></b-form-select>
+                <b-form-select :options="parent" v-model="problem.selectparent"></b-form-select>
               </b-form-group>
               <b-form-group label="*标题:" label-cols="2" label-align="right">
                 <b-form-input v-model.trim="problem.title"></b-form-input>
@@ -146,9 +93,7 @@
                 @change="onEditorChange($event)"
                 v-quill:myQuillEditor="editorOption"
               ></div>
-              <b-button block @click="Submit('problem')" variant="success"
-                >提交</b-button
-              >
+              <b-button block @click="Submit('problem')" variant="success">提交</b-button>
             </b-form>
           </b-tab>
         </b-tabs>
@@ -158,6 +103,7 @@
 </template>
 
 <script>
+import { Add_Problem, Add_Soft } from "../../../api/axios";
 import { mapState } from "vuex";
 import { MessageBox, Loading } from "element-ui";
 export default {
@@ -173,20 +119,20 @@ export default {
         selectLanguage: "",
         version: "1.00",
         update: "test",
-        file: null,
+        file: "",
         Loading: true
       },
       cp: {
         title: "",
         system: ["其他产品彩页", "数据中心彩页", "机房空调彩页", "UPS电源彩页"],
         selectSystem: "",
-        file: null
+        file: ""
       },
       zz: {
         title: "",
         system: ["UPS相关", "精密空调相关", "数据中心相关", "公司相关"],
         selectSystem: "",
-        file: null
+        file: ""
       },
       problem: {
         title: "",
@@ -243,7 +189,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["user", "token","SourceFile"]),
+    ...mapState(["user", "token", "SourceFile"]),
     parent() {
       return this.problem.parent[this.problem.selectparentsUntil];
     }
@@ -265,33 +211,23 @@ export default {
                 return MessageBox.alert(`${key}不能为空`, "参数错误");
               }
             }
-            let format = Object.assign(
-              {
-                user: this.user,
-                token: this.token,
-                type: type
-              },
-              problem
-            );
-            respon = await this.$axios.$post("/uploads/down", format);
+            problem.type = type;
+            respon = await Add_Problem(problem);
           }
           break;
         default:
           {
-            let format = new FormData();
             let data = this.$data[type];
             let keys = Object.keys(data);
-            format.append("user", this.user);
-            format.append("token", this.token);
-            format.append("type", type);
+            let params = { type: type };
             for (let key of keys) {
               if (data[key] === "") {
                 LoadingTabs.close();
                 return MessageBox.alert(`${key}不能为空`, "参数错误");
               }
-              format.append(key, data[key]);
+              params[key] = data[key];
             }
-            respon = await this.$axios.$put("/uploads/down", format);
+            respon = await Add_Soft(params);
           }
           break;
       }

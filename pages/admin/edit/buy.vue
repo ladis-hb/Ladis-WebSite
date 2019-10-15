@@ -4,7 +4,7 @@
       <b-col cols="12">
         <b-card title="经销商Mg" sub-title="添加经销商">
           <b-card-body>
-            <div class=" mb-2">
+            <div class="mb-2">
               <p>选择地址:</p>
               <v-region @values="regionChange"></v-region>
             </div>
@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import { Add_Dealers } from "../../../api/axios";
 import { MessageBox } from "element-ui";
 import { mapState } from "vuex";
 export default {
@@ -92,9 +93,8 @@ export default {
                 详细地址：${address}；联系人：${linkman}|${tel}|${phone}；
                     备注：${remark}`;
       MessageBox.confirm(info, "核对信息").then(() => {
-        this.$axios.$get("/uploads/dealers", {
-          params: Object.assign(this.ad, { user: this.user, token: this.token })
-        });
+        Add_Dealers(this.ad);
+        MessageBox.alert("添加成功")
       });
     }
   }

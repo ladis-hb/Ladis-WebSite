@@ -1,8 +1,8 @@
 <template>
   <b-container fluid id="source">
     <b-row>
-      <b-col cols="12"
-        ><b-card title="上传素材">
+      <b-col cols="12">
+        <b-card title="上传素材">
           <b-card-body>
             <b-input-group prepend="选择文件" class="mt-3">
               <b-form-file
@@ -12,19 +12,14 @@
                 placeholder="可以多选"
               ></b-form-file>
               <b-input-group-append>
-                <b-button
-                  variant="info"
-                  @click="Put_file_Source"
-                  :disabled="!files"
-                  >上传</b-button
-                >
+                <b-button variant="info" @click="Put_file_Source" :disabled="!files">上传</b-button>
               </b-input-group-append>
             </b-input-group>
             <!-- <b-form-file
                 multiple
                 v-model="files"
                 :file-name-formatter="formatNames"
-              ></b-form-file> -->
+            ></b-form-file>-->
 
             <ul>
               <li v-for="(name, key) in fileList" :key="key">{{ name }}</li>
@@ -38,14 +33,9 @@
           <b-card-body>
             <div>
               <b-input-group prepend="关键字" class="mt-3">
-                <b-form-input
-                  v-model.trim="keyswords"
-                  placeholder="默认检索全部文件"
-                ></b-form-input>
+                <b-form-input v-model.trim="keyswords" placeholder="默认检索全部文件"></b-form-input>
                 <b-input-group-append>
-                  <b-button variant="info" @click="Get_pic_Source(keyswords)"
-                    >检索</b-button
-                  >
+                  <b-button variant="info" @click="Get_pic_Source(keyswords)">检索</b-button>
                 </b-input-group-append>
               </b-input-group>
             </div>
@@ -64,13 +54,9 @@
                       pill
                       class="ml-2 mb-2"
                       @click="selectSourceFile(file)"
-                      >选中素材</b-button
-                    >
+                    >选中素材</b-button>
                   </b-card-sub-title>
-                  <b-card-img-lazy
-                    v-if="file.filetype === 'img'"
-                    :src="file.path"
-                  ></b-card-img-lazy>
+                  <b-card-img-lazy v-if="file.filetype === 'img'" :src="file.path"></b-card-img-lazy>
                   <b-card-body v-else>
                     <b-link :href="file.path">{{ file.path }}</b-link>
                   </b-card-body>
@@ -85,6 +71,7 @@
 </template>
 
 <script>
+import { Get_pic_Source } from "../../../api/axios";
 import { mapState } from "vuex";
 import { format } from "path";
 import { MessageBox, Loading } from "element-ui";
@@ -139,13 +126,7 @@ export default {
       loading.close();
     },
     async Get_pic_Source(filter) {
-      let data = await this.$axios.$get("/uploads/Get_file_Source", {
-        params: {
-          user: sessionStorage.getItem("user"),
-          token: sessionStorage.getItem("token"),
-          filter: filter || ""
-        }
-      });
+      let data = await Get_pic_Source({ filter: filter || "" });
       this.sourceFile = data.data;
     },
     formatNames(files) {
