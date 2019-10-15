@@ -38,7 +38,8 @@
                 <b-form-input v-model="soft.update"></b-form-input>
               </b-form-group>
               <b-form-group label="*文件:" label-cols="2" label-align="right">
-                <b-form-file v-model="soft.file"></b-form-file>
+                <b-form-select  v-model="soft.file" :options="SourceFile"></b-form-select>
+               
               </b-form-group>
               <b-button block @click="Submit('soft')" variant="success"
                 >提交</b-button
@@ -62,7 +63,7 @@
               </b-form-group>
 
               <b-form-group label="*文件:" label-cols="2" label-align="right">
-                <b-form-file v-model="cp.file"></b-form-file>
+                <b-form-select  v-model="cp.file" :options="SourceFile"></b-form-select>
               </b-form-group>
               <b-button block @click="Submit('cp')" variant="success"
                 >提交</b-button
@@ -86,7 +87,7 @@
               </b-form-group>
 
               <b-form-group label="*文件:" label-cols="2" label-align="right">
-                <b-form-file v-model="zz.file"></b-form-file>
+                <b-form-select  v-model="zz.file" :options="SourceFile"></b-form-select>
               </b-form-group>
               <b-button block @click="Submit('zz')" variant="success"
                 >提交</b-button
@@ -242,7 +243,7 @@ export default {
   },
 
   computed: {
-    ...mapState(["user", "token"]),
+    ...mapState(["user", "token","SourceFile"]),
     parent() {
       return this.problem.parent[this.problem.selectparentsUntil];
     }

@@ -39,7 +39,7 @@
               >机房空调</b-dropdown-item
             >
           </b-nav-item-dropdown>
-          <b-nav-item :to="{ name: 'admin-edit-buy' }">经销商管理</b-nav-item>
+          <b-nav-item :to="{ path: '/admin/edit/buy' }">经销商管理</b-nav-item>
           <b-nav-item-dropdown text="服务支持">
             <b-dropdown-item
               :to="{ path: '/admin/edit/down', query: { index: 0 } }"
@@ -62,11 +62,17 @@
               >资质</b-dropdown-item
             >
           </b-nav-item-dropdown>
-          <b-nav-item :to="{ name: 'admin-edit-product' }">产品分类</b-nav-item>
+          <b-nav-item :to="{ path: '/admin/edit/product' }"
+            >产品分类</b-nav-item
+          >
           <b-nav-item-dropdown text="首页管理">
-            <b-dropdown-item>轮播图</b-dropdown-item>
-            <b-dropdown-item>。。。</b-dropdown-item>
+            <b-dropdown-item :to="{ path: '/admin/edit/carousel' }"
+              >轮播图</b-dropdown-item
+            >
           </b-nav-item-dropdown>
+          <b-nav-item :to="{ path: '/admin/edit/picSource' }"
+            >素材管理
+          </b-nav-item>
         </b-nav>
       </b-col>
       <b-col class="p-5 overflow-auto">
@@ -83,7 +89,7 @@
 <script>
 export default {
   layout: "login",
-
+  //nuxtI18n: false,
   mounted() {
     let user = sessionStorage.getItem("user");
     let token = sessionStorage.getItem("token");

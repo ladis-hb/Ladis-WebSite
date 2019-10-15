@@ -12,13 +12,7 @@
             <b-form-input v-model.trim="title"></b-form-input>
           </b-form-group>
           <b-form-group label="图片:" label-align="right" label-cols="2">
-            <b-form-file
-              v-model="file"
-              :state="Boolean(file)"
-              placeholder="Choose a file or drop it here..."
-              drop-placeholder="Drop file here..."
-              accept=".jpg, .png"
-            ></b-form-file>
+            <b-form-select  v-model="file" :options="SourceFile"></b-form-select>
           </b-form-group>
         </div>
         <section id="editBody" class=" my-3">
@@ -44,10 +38,11 @@
 import { mapState } from "vuex";
 import { MessageBox } from "element-ui";
 export default {
+  //nuxtI18n: false,
   data() {
     return {
       title: "",
-      file: null,
+      file: "",
       content: `<h2 class="ql-align-center"><span class="ql-font-serif">Text content loading..</span></h2>`,
       editorOption: {
         modules: {
@@ -80,7 +75,8 @@ export default {
     }
   },
   computed: {
-    ...mapState(["user", "token"]),
+    ...mapState(["user", "token","SourceFile"]),
+    
     edit() {
       let id = this.$route.params.id;
       let result = {

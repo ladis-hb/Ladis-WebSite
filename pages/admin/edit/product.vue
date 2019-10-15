@@ -2,8 +2,8 @@
   <div class="overflow-auto">
     <b-card>
       <b-card-header class="bg-light">产品</b-card-header>
-      <b-card-body>
-        <div id="editSelect">
+      <b-card-body id="editSelect">
+        <div >
           <b-form-group label="产品类型:" label-align="right" label-cols="2">
             <b-form-select v-model="selectType" :options="type"></b-form-select>
           </b-form-group>
@@ -11,21 +11,21 @@
             <b-form-input v-model.trim="title"></b-form-input>
           </b-form-group>
           <b-form-group label="产品图片:" label-align="right" label-cols="2">
-            <b-form-file
-              v-model="indexPic"
-              :state="Boolean(indexPic)"
-              placeholder="单选"
-              accept=".jpg, .png"
-            ></b-form-file>
+             <b-form-select  v-model="indexPic" :options="SourceFile"></b-form-select>
           </b-form-group>
           <b-form-group label="轮播图片:" label-align="right" label-cols="2">
-            <b-form-file
-              v-model="carouselPic"
-              :state="Boolean(carouselPic)"
-              placeholder="多选"
-              accept=".jpg, .png"
-              multiple
-            ></b-form-file>
+            <b-form-select  v-model="carouselPic" :options="SourceFile" multiple></b-form-select>
+            
+          </b-form-group>
+          <b-form-group label="产品介绍:" label-align="right" label-cols="2">
+            <b-form-input
+              disabled
+              v-model.trim="content_head"
+              @click="content = content_head"
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group label="产品详情:" label-align="right" label-cols="2">
+            <b-form-input disabled v-model.trim="content_body"></b-form-input>
           </b-form-group>
         </div>
         <section id="editBody" class="my-3">
@@ -38,11 +38,16 @@
         </section>
 
         <div id="editFooter">
-          <b-button variant="info" @click="Save_content_head">保存为说明</b-button>
-          <b-button variant="info" @click="Save_content_body">保存为内容</b-button>
+          <b-button variant="info" @click="Save_content_head"
+            >保存为说明</b-button
+          >
+          <b-button variant="info" @click="Save_content_body"
+            >保存为内容</b-button
+          >
           <b-button class="ml-5" @click="Preview">预览</b-button>
-          <b-button class="ml-5" @click="test">test</b-button>
-          <b-button variant="success" class="float-right" @click="SendEdit">确定</b-button>
+          <b-button variant="success" class="float-right" @click="SendEdit"
+            >确定</b-button
+          >
         </div>
       </b-card-body>
     </b-card>
@@ -51,7 +56,7 @@
 
 <script>
 import { mapState } from "vuex";
-import { MessageBox } from "element-ui";
+import { MessageBox, Loading } from "element-ui";
 export default {
   data() {
     return {
@@ -77,8 +82,8 @@ export default {
       ],
       selectType: "",
       title: "",
-      indexPic: null,
-      carouselPic: null,
+      indexPic: "",
+      carouselPic: [],
       content: `<h2 class="ql-align-center"><span class="ql-font-serif">
       Text content loading..</span></h2>`,
       content_head: "",
@@ -109,7 +114,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["user", "token", "carouselPics"])
+    ...mapState(["user", "token", "carouselPics","SourceFile"])
   },
   activated() {
     if (this.carouselPics) {
@@ -133,6 +138,7 @@ export default {
   },
   methods: {
     async SendEdit() {
+      let loading = Loading.service({ target: "#editSelect" });
       let data = new FormData();
       data.append("user", this.user);
       data.append("token", this.token);
@@ -147,6 +153,12 @@ export default {
       });
 
       let result = await this.$axios.$put(`/uploads/product`, data);
+      loading.close();
+      MessageBox.confirm("编辑成功，是否跳转到页面？", "edit success").then(
+        () => {
+          this.$router.push(result.href);
+        }
+      );
     },
     Save_content_head() {
       this.content_head = this.content;
@@ -166,7 +178,7 @@ export default {
         indexPic: this.indexPic
       });
       let routeData = this.$router.push({
-        name: "admin-prewive",
+        name: "admin-prewive___zh",
         params: {
           title: this.title,
           content_head: this.content_head,
@@ -177,15 +189,6 @@ export default {
     },
     onEditorChange({ html }) {
       this.content = html;
-    },
-    test() {
-      let pic = this.carouselPic[0];
-      let reader = new FileReader();
-      reader.readAsDataURL(pic);
-      reader.onload = function(e) {
-        let data = e.target.result;
-        console.log(data);
-      };
     }
   }
 };

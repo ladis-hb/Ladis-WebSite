@@ -4,6 +4,7 @@ const util = require("util");
 const { key } = require("../config");
 const mongodb = require("mongodb");
 const { JwtSign, JwtVerify } = require("../Secret");
+const Multiparty = require("../util/multiparty");
 
 const validation_jwt_user = (user, token) => {
   if (!user || user === "") return false;
@@ -12,7 +13,45 @@ const validation_jwt_user = (user, token) => {
   if (u === user) return true;
   else return false;
 };
+const SerizeFormattoObject = async ctx => {
+  //解构format,fields是附加数据，files是上传文件，嵌套解构files,取出文件实体
+  let { fields, files } = await Multiparty({ request: ctx.req });
+  //迭代fields，值是单个数组的替换为字符串
+  let field = SerizeFilesArraytoString(fields);
+  //解构files，
+  Object.entries(files).forEach(file => {
+    let [key, value] = file;
+    //console.log(value);
 
+    if (value.length < 2) {
+      value[0].path = pathto(value[0].path);
+      files[key] = value[0];
+    } else {
+      files[key] = value.map(f => {
+        //f.path = pathto(f.path);
+        return pathto(f.path);
+      });
+    }
+  });
+  return {
+    files,
+    fields: field
+  };
+
+  function pathto(path) {
+    let filePath = path.split("/");
+    filePath.shift();
+    filePath = "/" + filePath.join("/");
+    return filePath;
+  }
+};
+
+/**
+ *
+ *
+ * @param {*} files
+ * @returns
+ */
 const SerizeFilesArraytoString = files => {
   Object.keys(files).forEach(key => {
     if (util.isArray(files[key]) && key !== "file") files[key] = files[key][0];
@@ -123,5 +162,6 @@ module.exports = {
   ObjectId,
   Validation_root_Group,
   validation_jwt_user,
-  SerizeFilesArraytoString
+  //SerizeFilesArraytoString,
+  SerizeFormattoObject
 };

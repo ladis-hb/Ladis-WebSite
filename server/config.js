@@ -8,7 +8,7 @@ const Collection = {
   buy: "buy",
   buy_list: "buy_list",
   users: "users",
-  Products_list: "Products_list",
+  Products_list: "products_list",
   support: "support",
   support_list: "support_list",
   case: "case",

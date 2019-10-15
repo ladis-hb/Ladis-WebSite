@@ -1,9 +1,8 @@
 /* jshint esversion:8 */
 const { Collection } = require("../config");
-const {
-  validation_jwt_user,
-  SerizeFilesArraytoString
-} = require("../util/Format");
+const { validation_jwt_user, SerizeFormattoObject } = require("../util/Format");
+const fs = require("fs");
+const path = require("path");
 const Multiparty = require("../util/multiparty");
 
 module.exports = async (ctx, next) => {
@@ -12,40 +11,64 @@ module.exports = async (ctx, next) => {
   switch (ctx.method) {
     //put request
     case "PUT":
-      console.log(await Multiparty({ request: ctx.req }));
-
-      ctx.body = { data: "sdx d" };
       {
-        //解构format,fields是附加数据，files是上传文件，嵌套解构files,取出文件实体
-        let {
-          fields,
-          files: {
-            file: [file]
-          }
-        } = await Multiparty({ request: ctx.req });
-        //迭代fields，值是单个数组的替换为字符串
-        fields = SerizeFilesArraytoString(fields);
-        //解构files，
-        let { fieldName, originalFilename, path, headers, size } = file;
-        //转换上传文件路径
-        let filePath = path.split("/");
-        filePath.shift();
-        filePath = "/" + filePath.join("/");
-
-        let { user, token } = fields;
+        let UploadFile = await Multiparty(ctx.req);
+        let { user, token } = UploadFile.fields;
         if (!validation_jwt_user(user, token)) {
+          UploadFile.files.forEach(file => {
+            fs.unlinkSync(file.path);
+          });
           return (ctx.body = {
             stat: false,
             error: "tokenValidationError",
             msg: "效验错误，token已过期或错误，请重新登录已刷新Token"
           });
         }
+        ctx.body = {
+          code: 200,
+          data: UploadFile.files
+        };
 
-        switch (id) {
+        /* switch (id) {
           case "product":
-            console.log();
+            {
+              let {
+                content_body,
+                content_head,
+                selectType,
+                title
+              } = UploadFile.fields;
 
-            ctx.body = { data: fields };
+              let { files, indexPic } = UploadFile.files;
+              let href = `/products/list/${title}`;
+              let titles = {
+                title,
+                href,
+                img: indexPic.path
+              };
+              let content = {
+                parant: selectType,
+                title,
+                date: new Date(),
+                data: {
+                  content_head,
+                  content_body,
+                  img: files
+                }
+              };
+
+              ctx.db
+                .collection(Collection.products)
+                .updateOne(
+                  { title: selectType },
+                  { $addToSet: { data: titles } }
+                );
+              let { result } = await ctx.db
+                .collection(Collection.Products_list)
+                .insertOne(content);
+
+              ctx.body = { result, code: 200, href };
+            }
             break;
           case "down":
             {
@@ -56,7 +79,12 @@ module.exports = async (ctx, next) => {
                 selectLanguage,
                 version,
                 update
-              } = fields;
+              } = UploadFile.fields;
+              let {
+                originalFilename,
+                path: filePath,
+                size
+              } = UploadFile.fields.pic;
               let obj = {};
               if (originalFilename.includes(".pdf")) {
                 obj = {
@@ -103,17 +131,15 @@ module.exports = async (ctx, next) => {
           case "news":
           case "case":
             {
-              let { content, title, editType } = fields;
-
+              let { content, title, editType } = UploadFile.fields;
+              let {
+                originalFilename,
+                path: PicPath,
+                size
+              } = UploadFile.fields.pic;
               //valition pic
               if (size > 20480000) return;
-
               //格式化图片文件地址，去掉static
-
-              let PicPath = path.split("/");
-              PicPath.shift();
-              PicPath = "/" + PicPath.join("/");
-              //console.log(PicPath);
 
               let dates = new Date();
               let href = `/${id}/${title}`;
@@ -165,7 +191,7 @@ module.exports = async (ctx, next) => {
               ctx.body = { stat: true, msg: "已生成最新文档，是否查看", href };
             }
             break;
-        }
+        } */
       }
       break;
     case "GET":
@@ -180,6 +206,28 @@ module.exports = async (ctx, next) => {
         }
         let result = { stat: true, msg: "", data: null };
         switch (id) {
+          //获取图片素材
+          case "Get_file_Source":
+            {
+              /* let uploadPiclist = fs.readdirSync(
+                path.join(__dirname, "../../static/upload")
+              ); */
+              let pic = fs
+                .readdirSync(path.join(__dirname, "../../static/upload"))
+                .filter(source => {
+                  if (ctx.query.filter && ctx.query.filter !== "") {
+                    return source.includes(ctx.query.filter);
+                  } else {
+                    return source;
+                  }
+                });
+              let uploadPiclist = pic.map(img => {
+                return `/upload/${img}`;
+              });
+              result.data = uploadPiclist;
+            }
+            break;
+          //设置经销商列表
           case "dealers":
             let {
               daqu,

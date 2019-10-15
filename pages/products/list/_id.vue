@@ -2,12 +2,12 @@
   <b-container>
     <b-row id="products_345">
       <b-col cols="12" class="breadcrumb_345">
-        <b-breadcrumb :items="items"></b-breadcrumb>
+        <RouterRoad></RouterRoad>
       </b-col>
       <b-col cols="12">
         <h4 class="text-capitalize">{{ title }}</h4>
       </b-col>
-      <b-col cols="12" md="7" class="carousel">
+      <b-col cols="12" md="6" class="carousel">
         <b-carousel
           id="carousel-345"
           :interval="4000"
@@ -26,21 +26,15 @@
         </b-carousel>
       </b-col>
 
-      <b-col cols="12" md="5" class="t1">
-        <div v-html="all.t1.content" v-if="all.t1.type == 'html'" class></div>
-        <!-- 自定义写入T1 -->
-        <div class="t1-a" v-else></div>
+      <b-col cols="12" md="6" class="t1">
+        <div v-html="all.t1.content" v-if="all.t1"></div>
+        <div v-html="all.content_head" v-else></div>
       </b-col>
       <b-col cols="12" class="t2">
-        <div
-          v-html="all.t2.content"
-          v-if="all.t2.type == 'html'"
-          class="t2-s"
-        ></div>
-        <!-- 自定义写入T2 -->
-        <div class="t2-a" v-else></div>
+        <div v-html="all.t2.content" v-if="all.t2" class="t2-s"></div>
+        <div v-html="all.content_body" v-else></div>
       </b-col>
-      <b-col cols="12" class="down" v-if="all.t2.type != 'html'">
+      <b-col cols="12" class="down" v-if="all.t2 && all.t2.type != 'html'">
         <h4>相关下载</h4>
         <b-list-group>
           <b-list-group-item v-for="(val, key) in all.down" :key="key">
@@ -55,7 +49,7 @@
 </template>
 
 <script>
-import { type } from "os";
+import RouterRoad from "../../../components/RouterRoad";
 export default {
   data() {
     return {
@@ -64,6 +58,9 @@ export default {
         { text: "所有产品", href: "/products" }
       ]
     };
+  },
+  components: {
+    RouterRoad
   },
   computed: {
     t1() {
@@ -94,7 +91,7 @@ export default {
     onSlideStart() {},
     onSlideEnd() {},
     pic(p) {
-       //return `http://www.ladis.com.cn/${p}`;
+      //return `http://www.ladis.com.cn/${p}`;
       return p;
     }
   },
