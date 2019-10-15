@@ -2,14 +2,14 @@
 const Router = require("koa-router");
 const Admin = require("./admin");
 const Upload = require("./upload");
-const Edit = require("./edit")
+const Edit = require("./edit");
 
 const router = new Router();
 const { Collection } = require("../config");
 
 router.get("/administrator/:id", Admin);
 router.put("/uploads/:id", Upload);
-router.get("/edit/:id",Edit)
+router.get("/edit/:id", Edit);
 router.get("/api/:id", async ctx => {
   const { id } = ctx.params;
   console.log(id);
@@ -23,9 +23,7 @@ router.get("/api/:id", async ctx => {
       ctx.body = result1;
       break;
     case "Head":
-      let head = await ctx.db
-        .collection(Collection.head)
-        .findOne({ title: id }); //mongo.findOne({ title: id });
+      let head = await ctx.db.collection(Collection.head).findOne({ title: id }); //mongo.findOne({ title: id });
       Head = json2html(head.data);
       ctx.body = Head;
       break;
@@ -39,9 +37,7 @@ router.get("/api/:id", async ctx => {
       ctx.body = get_products_list.data;
       break;
     case "Products_all":
-      let Products_all = await ctx.db
-        .collection(Collection.products)
-        .findOne({ title: "All" }); // mongo_Products.findOne({ title: "All" });
+      let Products_all = await ctx.db.collection(Collection.products).findOne({ title: "All" }); // mongo_Products.findOne({ title: "All" });
       ctx.body = Products_all.data;
       break;
 
@@ -128,31 +124,23 @@ router.get("/api/:id", async ctx => {
                 .find()
                 .toArray()) || false;
 
-            asid.data =
-              (await ctx.db.collection(Collection.pages).findOne({ title })) ||
-              false;
+            asid.data = (await ctx.db.collection(Collection.pages).findOne({ title })) || false;
             break;
           case "case":
           case "news":
             tables = `${table}_list`;
             arg = { title, tables };
-            data.data =
-              (await ctx.db.collection(tables).findOne({ title })) || false;
+            data.data = (await ctx.db.collection(tables).findOne({ title })) || false;
             break;
 
           default:
             if (route_path.length > 1) {
-              data =
-                (await ctx.db.collection(table_list).findOne({ title })) ||
-                false;
+              data = (await ctx.db.collection(table_list).findOne({ title })) || false;
             } else {
-              data =
-                (await ctx.db.collection(table).findOne({ title })) || false;
+              data = (await ctx.db.collection(table).findOne({ title })) || false;
             }
 
-            head =
-              (await ctx.db.collection(Collection.head).findOne({ title })) ||
-              false;
+            head = (await ctx.db.collection(Collection.head).findOne({ title })) || false;
             break;
         }
         routers.payload.args = arg;
@@ -181,9 +169,7 @@ router.get("/api/:id", async ctx => {
     // request Get_Products_head,当generate时，payload载荷正常加载，dev下payload失效
     //转而使用Get_Products_Head请求
     case "Get_head":
-      ctx.body = await ctx.db
-        .collection(Collection.head)
-        .findOne({ title: ctx.query.title });
+      ctx.body = await ctx.db.collection(Collection.head).findOne({ title: ctx.query.title });
       break;
   }
 });

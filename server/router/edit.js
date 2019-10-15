@@ -1,3 +1,4 @@
+/* jshint esversion:8 */
 const { validation_jwt_user } = require("../util/Format");
 const { Collection } = require("../config");
 const fs = require("fs");

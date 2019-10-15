@@ -1,3 +1,4 @@
+/* jshint esversion:8 */
 import axios from "axios";
 
 async function ajax({ method = "get", url, baseURL, params }) {
@@ -32,8 +33,8 @@ export const Add_Product = params => {
 };
 
 export const Add_Problem = params => {
-    return ajax({ url: "/edit/problem", params });
-  };
-  export const Add_Soft = params => {
-    return ajax({ url: "/edit/soft", params });
-  };
+  return ajax({ url: "/edit/problem", params });
+};
+export const Add_Soft = params => {
+  return ajax({ url: "/edit/soft", params });
+};
