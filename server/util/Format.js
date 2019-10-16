@@ -153,6 +153,10 @@ ObjectId
 */
 const ObjectId = mongodb.ObjectId;
 
+const StrToUpperCase = str => {
+  return str.replace(str[0], str[0].toUpperCase());
+};
+
 module.exports = {
   formartBody,
   formatPasswd,
@@ -163,5 +167,6 @@ module.exports = {
   Validation_root_Group,
   validation_jwt_user,
   //SerizeFilesArraytoString,
-  SerizeFormattoObject
+  SerizeFormattoObject,
+  StrToUpperCase
 };

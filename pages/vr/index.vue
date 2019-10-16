@@ -56,7 +56,7 @@ export default {
       listArray = [];
     if (payload) {
     } else {
-      list = await $axios.$get(`/api/Get_arg?table=vr`);
+      list = await $axios.$get(`/api/Get_arg?table=VR`);
     }
     list.forEach(element => {
       listArray = [...listArray, ...element.data];

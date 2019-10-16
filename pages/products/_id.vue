@@ -52,7 +52,7 @@ export default {
       var head = payload.head;
     } else {
       var all = await $axios.$get(
-        `/api/Get_arg?title=${encodeURI(params.id)}&table=products`
+        `/api/Get_arg?title=${encodeURI(params.id)}&table=Product`
       );
       all = all.data;
       var head = await $axios.$get(

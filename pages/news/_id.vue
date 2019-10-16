@@ -47,7 +47,7 @@ export default {
       list = payload.data;
     } else {
       list = await $axios.$get(
-        `/api/Get_arg?table=news_list&title=${encodeURI(id)}`
+        `/api/Get_arg?table=News_list&title=${encodeURI(id)}`
       );
     }
     return { id, list: list.data, listNew: list.new };

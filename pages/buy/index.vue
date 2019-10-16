@@ -62,8 +62,8 @@ export default {
       area = {};
     if (payload) {
     } else {
-      map = await $axios.$get(`/api/Get_arg?table=buy`);
-      dealers = await $axios.$get(`/api/Get_arg?table=buy_list`);
+      map = await $axios.$get(`/api/Get_arg?table=Buy`);
+      dealers = await $axios.$get(`/api/Get_arg?table=Buy_list`);
     }
     dealers = dealers.map(el => {
       return el.data;

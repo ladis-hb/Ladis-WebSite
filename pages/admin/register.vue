@@ -136,7 +136,7 @@ export default {
           return MessageBox.confirm(result.msg, "注册成功")
             .then(() => {
               this.$router.push({
-                name: "admin-accont",
+                name: "admin-accont___zh",
                 params: { user: user, passwd: ck_passwd }
               });
             })

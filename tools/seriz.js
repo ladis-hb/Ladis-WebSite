@@ -1,12 +1,11 @@
 /* jshint esversion:8 */
-const fs = require("fs");
 const cheerio = require("cheerio");
 const Mongo = require("./MongoDB");
 const Axios = require("axios");
 const dbm = require("./DB_mongo")("ladis");
+const DB = require("../server/mongoose/content");
 
 const mongo_pages = new Mongo("", "ladis", "pages");
-const mongo_router = new Mongo("", "ladis", "router");
 
 const Router_Address = [];
 const Host = "http://www.ladis.com.cn";
@@ -226,19 +225,33 @@ async function Html_Serialize_Json(
         if (href.includes(".shtml")) {
           var down = Axios.get(Host + href).then(res => {
             var d = cheerio.load(res.data);
-            return {
+            let info = {
               type: "soft",
-              title: d("#Table .productName").text(),
-              date: d("#Table .publishDate").text(),
-              platform: d("#Table .platform").text(),
-              language: d("#Table .language").text(),
-              size: d("#Table .fileSize").text(),
+              title: d("#Table .productName")
+                .text()
+                .replace(/\n/g, ""),
+              date: d("#Table .publishDate")
+                .text()
+                .replace(/\n/g, ""),
+              platform: d("#Table .platform")
+                .text()
+                .replace(/\n/g, ""),
+              language: d("#Table .language")
+                .text()
+                .replace(/\n/g, ""),
+              size: d("#Table .fileSize")
+                .text()
+                .replace(/\n/g, ""),
               version: d("#Table .version")
                 .first()
-                .text(),
-              updateReason: d("#Table .updateReason").text(),
+                .text()
+                .replace(/\n/g, ""),
+              updateReason: d("#Table .updateReason")
+                .text()
+                .replace(/\n/g, ""),
               down: d("#Table .agreeLoad").attr("href")
             };
+            return info;
           });
           data.push(down);
         } else {
@@ -414,376 +427,76 @@ async function Html_Serialize_Json(
 }
 
 async function start() {
-  
-  var Pages = [];
-
   //添加头部文件
-  Pages.push(
-    Html_Serialize_Json(
-      `/support/index.shtml`,
-      "pages",
-      "head",
-      "#pc_nav .new-down",
-      "head"
-    )
-  );
-  //添加footer
-  //Pages.push(Html_Serialize_Json(`/support/index.shtml`, 'pages', 'head', '.foot-nav-pc ul li', 'footer'))
-  //添加products asid
-  Pages.push(
-    Html_Serialize_Json(
-      `/products/index.shtml`,
-      "pages",
-      "products_asid",
-      "#prodCateLeft ul",
-      "products_asid"
-    )
-  );
+  var Pages = [];
+  [
+    [`/support/index.shtml`, "head", "head"],
+    [`/products/index.shtml`, "products_asid", "products_asid"],
+    [`/support/node_27.shtml`, "support_problem", "support_asid"],
+    [`/support/node_25.shtml`, "support_problem_asid", "support_problem_asid"]
+  ].forEach(([path, type, title]) => {
+    Pages.push(Html_Serialize_Json(path, "Page", type, null, title, "support"));
+  });
 
-  Pages.push(
-    Html_Serialize_Json(
-      `/support/node_27.shtml`,
-      "pages",
-      "support_problem",
-      null,
-      "support_asid",
-      "support"
-    )
-  );
-  Pages.push(
-    Html_Serialize_Json(
-      `/support/node_25.shtml`,
-      "pages",
-      "support_problem_asid",
-      null,
-      "support_problem_asid",
-      "support"
-    )
-  );
-
-  var Products = [];
   //添加所有设备列表
-  Products.push(
-    await Html_Serialize_Json(
-      `/products/index.shtml`,
-      "products",
-      "products",
-      "#scroller .list li",
-      "All"
-    )
-  );
-  //添加UPS电源
-  Products.push(
-    await Html_Serialize_Json(
-      `/products/node_13.shtml`,
-      "products",
-      "products",
-      "#scroller .list li",
-      "UPS电源"
-    )
-  );
-  //添加/products/node_81.shtml 后备式UPS电源
-  Products.push(
-    await Html_Serialize_Json(
-      `/products/node_81.shtml`,
-      "products",
-      "products",
-      "#scroller .list li",
-      "后备式UPS电源"
-    )
-  );
-  //添加高频单相UPS电源
-  Products.push(
-    await Html_Serialize_Json(
-      `/products/node_82.shtml`,
-      "products",
-      "products",
-      "#scroller .list li",
-      "高频单相UPS电源"
-    )
-  );
-  //添加 高频三相UPS电源
-  Products.push(
-    await Html_Serialize_Json(
-      `/products/node_83.shtml`,
-      "products",
-      "products",
-      "#scroller .list li",
-      "高频三相UPS电源"
-    )
-  );
-  //添加/工频UPS电源
-  Products.push(
-    await Html_Serialize_Json(
-      `/products/node_85.shtml`,
-      "products",
-      "products",
-      "#scroller .list li",
-      "工频UPS电源"
-    )
-  );
-  //添加/机架式UPS电源
-  Products.push(
-    await Html_Serialize_Json(
-      `/products/node_84.shtml`,
-      "products",
-      "products",
-      "#scroller .list li",
-      "机架式UPS电源"
-    )
-  );
-  //添加/模块化UPS电源
-  Products.push(
-    await Html_Serialize_Json(
-      `/products/node_81.shtml`,
-      "products",
-      "products",
-      "#scroller .list li",
-      "模块化UPS电源"
-    )
-  );
-  //添加UPS蓄电池
-  Products.push(
-    await Html_Serialize_Json(
-      `/products/node_81.shtml`,
-      "products",
-      "products",
-      "#scroller .list li",
-      "UPS蓄电池"
-    )
-  );
-
-  //添加/数据中心
-  Products.push(
-    await Html_Serialize_Json(
-      `/products/node_10.shtml`,
-      "products",
-      "products",
-      "#scroller .list li",
-      "数据中心"
-    )
-  );
-  //添加/微模块机房
-  Products.push(
-    await Html_Serialize_Json(
-      `/products/node_143.shtml`,
-      "products",
-      "products",
-      "#scroller .list li",
-      "微模块机房"
-    )
-  );
-  //添加/一体化机柜
-  Products.push(
-    await Html_Serialize_Json(
-      `/products/node_135.shtml`,
-      "products",
-      "products",
-      "#scroller .list li",
-      "一体化机柜"
-    )
-  );
-  //添加配电PDU
-  Products.push(
-    await Html_Serialize_Json(
-      `/products/node_11.shtml`,
-      "products",
-      "products",
-      "#scroller .list li",
-      "配电PDU"
-    )
-  );
-  //添加/动环监控
-  Products.push(
-    await Html_Serialize_Json(
-      `/products/node_136.shtml`,
-      "products",
-      "products",
-      "#scroller .list li",
-      "动环监控"
-    )
-  );
-  //添加/网络机柜
-  Products.push(
-    await Html_Serialize_Json(
-      `/products/node_138.shtml`,
-      "products",
-      "products",
-      "#scroller .list li",
-      "网络机柜"
-    )
-  );
-
-  //机房空调
-  Products.push(
-    await Html_Serialize_Json(
-      `/products/node_145.shtml`,
-      "products",
-      "products",
-      "#scroller .list li",
-      "机房空调"
-    )
-  );
-  //添房间空调
-  Products.push(
-    await Html_Serialize_Json(
-      `/products/node_148.shtml`,
-      "products",
-      "products",
-      "#scroller .list li",
-      "房间空调"
-    )
-  );
-  //添加列间空调
-  Products.push(
-    await Html_Serialize_Json(
-      `/products/node_147.shtml`,
-      "products",
-      "products",
-      "#scroller .list li",
-      "列间空调"
-    )
-  );
-  //添加/机架空调
-  Products.push(
-    await Html_Serialize_Json(
-      `/products/node_146.shtml`,
-      "products",
-      "products",
-      "#scroller .list li",
-      "机架空调"
-    )
-  );
+  const Products = [];
+  [
+    [`/products/index.shtml`, "All"],
+    [`/products/node_13.shtml`, "UPS电源"],
+    [`/products/node_81.shtml`, "后备式UPS电源"],
+    [`/products/node_82.shtml`, "高频单相UPS电源"],
+    [`/products/node_83.shtml`, "高频三相UPS电源"],
+    [`/products/node_85.shtml`, "工频UPS电源"],
+    [`/products/node_84.shtml`, "机架式UPS电源"],
+    [`/products/node_81.shtml`, "模块化UPS电源"],
+    [`/products/node_81.shtml`, "UPS蓄电池"],
+    [`/products/node_10.shtml`, "数据中心"],
+    [`/products/node_143.shtml`, "微模块机房"],
+    [`/products/node_135.shtml`, "一体化机柜"],
+    [`/products/node_11.shtml`, "配电PDU"],
+    [`/products/node_136.shtml`, "动环监控"],
+    [`/products/node_138.shtml`, "网络机柜"],
+    [`/products/node_145.shtml`, "机房空调"],
+    [`/products/node_148.shtml`, "房间空调"],
+    [`/products/node_147.shtml`, "列间空调"],
+    [`/products/node_146.shtml`, "机架空调"]
+  ].forEach(([path, name]) => {
+    Products.push(
+      Html_Serialize_Json(
+        path,
+        "Product",
+        "products",
+        "#scroller .list li",
+        name
+      )
+    );
+  });
 
   //服务支持
   var Support = [];
-  Support.push(
-    await Html_Serialize_Json(
-      `/support/node_77.shtml`,
-      "support",
-      "support_down",
-      null,
-      "windows",
-      "监控软件下载"
-    )
-  );
-  Support.push(
-    await Html_Serialize_Json(
-      `/support/node_78.shtml`,
-      "support",
-      "support_down",
-      null,
-      "linux",
-      "监控软件下载"
-    )
-  );
-  Support.push(
-    await Html_Serialize_Json(
-      `/support/node_79.shtml`,
-      "support",
-      "support_down",
-      null,
-      "mac",
-      "监控软件下载"
-    )
-  );
-  Support.push(
-    await Html_Serialize_Json(
-      `/support/node_80.shtml`,
-      "support",
-      "support_down",
-      null,
-      "other",
-      "监控软件下载"
-    )
-  );
+  [
+    [`/support/node_77.shtml`, "windows", "监控软件下载"],
+    [`/support/node_78.shtml`, "linux", "监控软件下载"],
+    [`/support/node_79.shtml`, "mac", "监控软件下载"],
+    [`/support/node_80.shtml`, "other", "监控软件下载"],
+    [`/support/node_89.shtml`, "其他产品彩页", "产品彩页说明"],
+    [`/support/node_90.shtml`, "数据中心彩页", "产品彩页说明"],
+    [`/support/node_91.shtml`, "机房空调彩页", "产品彩页说明"],
+    [`/support/node_92.shtml`, "UPS电源彩页", "产品彩页说明"],
+    [`/support/node_96.shtml`, "UPS相关", "证书资质"],
+    [`/support/node_95.shtml`, "精密空调相关", "证书资质"],
+    [`/support/node_94.shtml`, "数据中心相关", "证书资质"],
+    [`/support/node_93.shtml`, "公司相关", "证书资质"]
+  ].forEach(([path, title, parent]) => {
+    Support.push(
+      Html_Serialize_Json(path, "Support", "support_down", null, title, parent)
+    );
+  });
 
-  Support.push(
-    await Html_Serialize_Json(
-      `/support/node_89.shtml`,
-      "support",
-      "support_down",
-      null,
-      "其他产品彩页",
-      "产品彩页说明"
-    )
-  );
-  Support.push(
-    await Html_Serialize_Json(
-      `/support/node_90.shtml`,
-      "support",
-      "support_down",
-      null,
-      "数据中心彩页",
-      "产品彩页说明"
-    )
-  );
-  Support.push(
-    await Html_Serialize_Json(
-      `/support/node_91.shtml`,
-      "support",
-      "support_down",
-      null,
-      "机房空调彩页",
-      "产品彩页说明"
-    )
-  );
-  Support.push(
-    await Html_Serialize_Json(
-      `/support/node_92.shtml`,
-      "support",
-      "support_down",
-      null,
-      "UPS电源彩页",
-      "产品彩页说明"
-    )
-  );
-
-  Support.push(
-    await Html_Serialize_Json(
-      `/support/node_96.shtml`,
-      "support",
-      "support_down",
-      null,
-      "UPS相关",
-      "证书资质"
-    )
-  );
-  Support.push(
-    await Html_Serialize_Json(
-      `/support/node_95.shtml`,
-      "support",
-      "support_down",
-      null,
-      "精密空调相关",
-      "证书资质"
-    )
-  );
-  Support.push(
-    await Html_Serialize_Json(
-      `/support/node_94.shtml`,
-      "support",
-      "support_down",
-      null,
-      "数据中心相关",
-      "证书资质"
-    )
-  );
-  Support.push(
-    await Html_Serialize_Json(
-      `/support/node_93.shtml`,
-      "support",
-      "support_down",
-      null,
-      "公司相关",
-      "证书资质"
-    )
-  );
- 
   //Buy
   let Buy = Html_Serialize_Json(
     "/about/node_37.shtml",
-    "buy",
+    "Buy",
     "buy_list",
     null,
     "buy_map",
@@ -793,7 +506,7 @@ async function start() {
   //buy_list
   let Buy_list = Html_Serialize_Json(
     "/about/node_37.shtml",
-    "buy_list",
+    "Buy_list",
     "buy_list",
     null,
     "buy_map",
@@ -801,32 +514,21 @@ async function start() {
     "child"
   );
 
-  //技术服务写入
-  //await Get_support_problem_list_arg();
-  //WriteRouter();
-  Promise.all([Destruction(Buy) , Destruction(Buy_list)])
-    .then(Row => {
-      let Rows = [];
-      Row.forEach(el => {
-        Rows = [...Rows, ...el];
-      });
+  /* Promise.all([Destruction(Buy), Destruction(Buy_list)]) */
+  Promise.all([/* ...Pages, ...Products, */ ...Support /*  Buy, Buy_list */])
+    .then(Rows => {
       console.log(`操作数据长度${Rows.length}`);
-
       Rows.forEach(element => {
         let { parent, title, date, table, data } = element;
-        if (!table) {
-          return console.log(element);
-        }
-        dbm
-          .then(db => {
-            db.collection(table).updateOne(
-              { title },
-              { $set: { parent, date, table, data } },
-              { upsert: true }
-            );
-          })
-          .catch(e => {
-            console.log(e);
+        if (!table) return console.log(element);
+        DB[table]
+          .updateOne(
+            { title },
+            { $set: { parent, date, table, data } },
+            { upsert: true }
+          )
+          .then(res => {
+            console.log(res);
           });
       });
     })
@@ -834,85 +536,102 @@ async function start() {
       console.log(e);
     });
 }
-start();
+//start();
+//技术服务写入
+//Get_support_problem_list_arg();
+Get_Product_list();
+//WriteRouter();
 
 /**
  *遍历support下面常见问题列表，存入support_list表
  *
  */
 async function Get_support_problem_list_arg() {
-  var support_problem_list = await mongo_pages.findOne({
-    title: "support_problem_list"
+  let support_problem_list = await DB.Page.findOne({
+    title: "support_problem_asid"
   });
-  let args = [];
+  //获取
+  let Support_list_linkArray = [];
+  support_problem_list.data.forEach(({ title, link, child }) => {
+    if (link && link !== "") Support_list_linkArray.push([title, link]);
+    if (child.length === 0) return;
+    child.forEach(({ title: name, link: chLink }) => {
+      Support_list_linkArray.push([name, chLink, title]);
+    });
+  });
+  let Support_list = Support_list_linkArray.map(([name, chLink, title]) => {
+    return Html_Serialize_Json(
+      chLink,
+      "support_list",
+      "support_problem_args",
+      null,
+      name,
+      title
+    );
+  });
 
-  await Promise.all(
-    support_problem_list.data.map(async val => {
-      let a = await Html_Serialize_Json(
-        val.link,
-        "support_list",
-        "support_problem_args",
-        null,
-        val.title,
-        val.title
-      );
-      for (let h of a.data) {
-        let { table, date } = a;
-        h.table = table;
-        h.date = date;
-        h.parentsUntil = val.title;
-        h.parent = a.title;
-        args.push(h);
-      }
-      if (val.child.length > 1) {
-        for (let arg of val.child) {
-          //         if(arg.title == '数据中心相关') console.log([arg.title,arg])
-          let i = await Html_Serialize_Json(
-            arg.link,
-            "support_list",
-            "support_problem_args",
-            null,
-            arg.title,
-            arg.title
-          );
-          for (let h of i.data) {
-            h.type = "child";
-            let { table, date } = i;
-            h.table = table;
-            h.date = date;
-            h.parentsUntil = val.title;
-            h.parent = arg.title;
-            args.push(h);
-          }
-        }
-      }
-      return true;
-    })
-  );
+  let supportArray = await Promise.all([...Support_list]);
+  let support_list_Array = supportArray.map(el => {
+    let { data, parent, table, title } = el;
+    return data.map(el => {
+      el.parent = title;
+      el.parentsUntil = parent;
+      el.table = table;
+      return el;
+    });
+  });
 
-  for (let arg of args) {
-    var { title, table } = await arg;
-    var db = new Mongo("", "ladis", table);
-    //
-    if (await db.findOne({ title: title })) {
-      await db.updateOne({ title: title }, { $set: { parent: arg.parent } });
-    } else await db.insert(arg);
-    console.log(`db.${table}.find({title:'${title}'}).toArray()`);
-  }
+  support_list_Array.forEach(el => {
+    el.forEach(e => {
+      DB.Support_list.updateOne(
+        { title: e.title },
+        { $set: e },
+        { upsert: true }
+      ).then(res => {
+        console.log(res);
+      });
+    });
+  });
 }
 
-//解构爬取的数据，组装成多数组条目
-async function Destruction(iter) {
-  let { data, date, parent, table, title } = await iter;
-  let arr = data.map((el, index) => {
-    return { data: el, date, parent, table, title: el.title || index };
+async function Get_Product_list() {
+  let Product = await DB.Product.find();
+  let Product_link_Array = Product.map(({ title: parent, data }) => {
+    return data.map(({ title, link }) => {
+      return { parent, title, link };
+    });
   });
-  return arr;
+  let Product_link = [];
+  Product_link_Array.forEach(el => {
+    Product_link = [...Product_link, ...el];
+  });
+
+  let Product_list_Promise = Product_link.map(({ parent, title, link }) => {
+    return Html_Serialize_Json(
+      link,
+      "Product_list",
+      "products_dev_arg",
+      null,
+      title,
+      parent
+    );
+  });
+
+  let Product_list = await Promise.all([...Product_list_Promise]);
+  Product_list.forEach(e => {
+    DB.Product_list.updateOne(
+      { title: e.title },
+      { $set: e },
+      { upsert: true }
+    ).then(res => {
+      console.log(res);
+    });
+  });
 }
 
 function WriteRouter() {
   //写入router记录
-  console.log(Router_Address);
+  console.log();
   let out = [
     "//天猫旗舰店",
     "//京东旗舰店",
@@ -935,12 +654,10 @@ function WriteRouter() {
 
   Router_Address.forEach(val => {
     if (out.includes(val)) return false;
-    dbm.then(db => {
-      db.collection("router").updateOne(
-        { rout: val },
-        { $set: { modifyTime: new Date() } },
-        { upsert: true }
-      );
-    });
+    DB.Router.updateOne(
+      { rout: val },
+      { $set: { rout: val } },
+      { upsert: true }
+    );
   });
 }

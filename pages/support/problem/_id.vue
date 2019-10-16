@@ -27,7 +27,7 @@ export default {
   async asyncData({ $axios, params, error, payload }) {
     var title = params.id;
     var arg = await $axios.$get(
-      "/api/Get_arg?table=support_list&title=" + encodeURI(title)
+      "/api/Get_arg?table=Support_list&title=" + encodeURI(title)
     );
     return { arg, title };
   },

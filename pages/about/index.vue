@@ -82,7 +82,7 @@ export default {
     };
   },
   async asyncData({ $axios }) {
-    let bodys = await $axios.$get(`/api/Get_arg?table=about`);
+    let bodys = await $axios.$get(`/api/Get_arg?table=About`);
     let bodyMap = new Map();
 
     bodys.forEach(Element => {
