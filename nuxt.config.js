@@ -55,7 +55,7 @@ module.exports = {
     { src: "~plugins/nuxt-quill-plugin.js", ssr: false },
     { src: "~plugins/v-region.js", ssr: false },
     { src: "~/plugins/Vue-i18n.js" },
-    { src: "~/plugins/axios" },
+    { src: "~/plugins/axios" }
     //{ src: "@/plugins/components.js" }
     //{ src: "~/plugins/router.js" }
   ],
@@ -105,7 +105,7 @@ module.exports = {
     },
     //路由配置
     strategy: "prefix_except_default",
-    defaultLocale: "zh",
+    defaultLocale: "zh"
     /* parsePages: false,
 
     pages: {
