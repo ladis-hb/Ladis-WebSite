@@ -64,7 +64,7 @@ import { types } from "util";
 export default {
   async asyncData({ $axios, params, error, payload }) {
     var support_asid = await $axios.$get("/api/Get_arg", {
-      params: { table: "pages", title: "support_asid" }
+      params: { table: "Page", title: "support_asid" }
     });
     if (payload) {
     } else {

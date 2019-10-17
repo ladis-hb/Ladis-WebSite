@@ -597,6 +597,7 @@ async function Get_support_problem_list_arg() {
       });
     });
   });
+  console.log("Get_support_problem_list_arg Success ++++++++++++++");
 }
 
 async function Get_Product_list() {
@@ -632,6 +633,7 @@ async function Get_Product_list() {
       console.log(res);
     });
   });
+  console.log("Get_Product_list Success ++++++++++++++");
 }
 
 function WriteRouter() {
@@ -657,12 +659,8 @@ function WriteRouter() {
     "/about/经销商列表"
   ];
 
-  Router_Address.forEach(val => {
+  Router_Address.forEach(rout => {
     if (out.includes(val)) return false;
-    DB.Router.updateOne(
-      { rout: val },
-      { $set: { rout: val } },
-      { upsert: true }
-    );
+    DB.Router.updateOne({ rout }, { $set: { rout } }, { upsert: true });
   });
 }

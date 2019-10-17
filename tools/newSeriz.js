@@ -281,12 +281,8 @@ async function start() {
 
   //写入router记录
 
-  Router_Address.forEach(val => {
-    DB.Router.updateOne(
-      { rout: val },
-      { $set: { rout: val } },
-      { upsert: true }
-    );
+  Router_Address.forEach(rout => {
+    DB.Router.updateOne({ rout }, { $set: { rout } }, { upsert: true });
   });
 }
 //start();
