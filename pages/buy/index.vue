@@ -2,7 +2,7 @@
   <b-container>
     <b-row>
       <b-col cols="12">
-        <h4 class="text-centerbg m-2">销售服务中心</h4>
+        <h4 class="text-centerbg m-2">{{ $t('index.yp93bk') }}</h4>
         <hr />
       </b-col>
       <b-col cols="12" class="overflow-auto">

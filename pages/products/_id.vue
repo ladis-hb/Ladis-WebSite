@@ -8,7 +8,7 @@
           <b-collapse id="list-collapse" is-nav>
             <b-navbar-nav>
               <b-nav-item>
-                <h3>产品分类</h3>
+                <h3>{{ $t('_id.b85q0o') }}</h3>
               </b-nav-item>
             </b-navbar-nav>
             <div v-for="(val, key) in list" :key="key">

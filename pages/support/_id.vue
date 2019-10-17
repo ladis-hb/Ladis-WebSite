@@ -4,7 +4,7 @@
       <b-col cols="12" md="4">
         <b-list-group class="list-group">
           <b-list-group-item class="list-head" variant="dark"
-            >常见热点问题</b-list-group-item
+            >{{ $t('_id.tgqqj4') }}</b-list-group-item
           >
           <b-list-group-item
             v-for="(val, key) in support_asid.data"
@@ -39,15 +39,15 @@
                   accordion="my-accordion"
                   role="tabpanel"
                 >
-                  <h5>软件名称: {{ v1.title }}</h5>
-                  <p>发布时间: {{ v1.date }}</p>
-                  <p>平台: {{ v1.platform }}</p>
-                  <p>语言: {{ v1.language }}</p>
-                  <p>文件大小: {{ v1.size }}</p>
-                  <p>版本: {{ v1.version }}</p>
-                  <p>版本更新原由: {{ v1.updateReason }}</p>
+                  <h5>{{ $t('_id.x9qyll') }}: {{ v1.title }}</h5>
+                  <p>{{ $t('_id.ef2ovw') }}: {{ v1.date }}</p>
+                  <p>{{ $t('_id.puz8nn') }}: {{ v1.platform }}</p>
+                  <p>{{ $t('_id.qi5zqr') }}: {{ v1.language }}</p>
+                  <p>{{ $t('_id.vysc3s') }}: {{ v1.size }}</p>
+                  <p>{{ $t('_id.t03jjv') }}: {{ v1.version }}</p>
+                  <p>{{ $t('_id.bwem5c') }}: {{ v1.updateReason }}</p>
                   <b-button :href="pig(v1.down)" variant="success"
-                    >下载</b-button
+                    >{{ $t('_id.e02jgq') }}</b-button
                   >
                 </b-collapse>
               </b-list-group-item>

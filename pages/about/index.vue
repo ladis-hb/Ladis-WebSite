@@ -7,46 +7,46 @@
             class=" bg-dark rounded-0  my-1 text-light"
             button
             @click="vrFilter('公司简介')"
-            >公司简介</b-list-group-item
+            >{{ $t('index.b8tcvn') }}</b-list-group-item
           >
           <b-list-group-item
             class=" bg-dark rounded-0  my-1 text-light"
             button
             @click="vrFilter('服务承诺')"
-            >服务承诺</b-list-group-item
+            >{{ $t('index.9rjbx5') }}</b-list-group-item
           >
           <b-list-group-item
             class=" bg-dark rounded-0  my-1 text-light"
             button
             @click="vrFilter('经营理念')"
-            >经营理念</b-list-group-item
+            >{{ $t('index.uqcwsg') }}</b-list-group-item
           >
           <b-list-group-item
             class=" bg-dark rounded-0  my-1 text-light"
             :to="{ path: '/buy/' }"
-            >经销商列表</b-list-group-item
+            >{{ $t('index.974lfm') }}</b-list-group-item
           >
           <b-list-group-item
             class=" bg-dark rounded-0  my-1 text-light"
             :to="{ path: '/buy/' }"
-            >销售服务中心</b-list-group-item
+            >{{ $t('index.n747ex') }}</b-list-group-item
           >
           <b-list-group-item
             class=" bg-dark rounded-0  my-1 text-light"
             :to="{ path: '/news/' }"
-            >新闻资讯</b-list-group-item
+            >{{ $t('index.lbgpnd') }}</b-list-group-item
           >
           <b-list-group-item
             class=" bg-dark rounded-0  my-1 text-light"
             button
             @click="vrFilter('加入我们')"
-            >加入我们</b-list-group-item
+            >{{ $t('index.al7aii') }}</b-list-group-item
           >
           <b-list-group-item
             class=" bg-dark rounded-0  my-1 text-light"
             button
             @click="vrFilter('联系我们')"
-            >联系我们</b-list-group-item
+            >{{ $t('index.cld4co') }}</b-list-group-item
           >
         </b-list-group>
       </b-col>

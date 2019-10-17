@@ -2,7 +2,7 @@
   <b-container>
     <b-row>
       <b-col cols="12" class=" py-2 border-bottom">
-        <h3>{{ id }} 销售服务中心</h3>
+        <h3>{{ id }} {{ $t('_id.ctksck') }}</h3>
       </b-col>
       <b-col cols="12">
         <b-row>
@@ -10,11 +10,11 @@
             <b-card :title="val.title" class="m-2">
               <b-card-body
                 ><div v-if="val.new">
-                  <p>电话：{{ val.tel }}</p>
-                  <p>联系人:{{ val.linkman }}</p>
-                  <p>手机：{{ val.phone }}</p>
-                  <p>地址：{{ val.address }}</p>
-                  <p>备注：{{ val.remark }}</p>
+                  <p>{{ $t('_id.sjrt39') }}：{{ val.tel }}</p>
+                  <p>{{ $t('_id.jqsbos') }}:{{ val.linkman }}</p>
+                  <p>{{ $t('_id.hssglh') }}：{{ val.phone }}</p>
+                  <p>{{ $t('_id.dprtu7') }}：{{ val.address }}</p>
+                  <p>{{ $t('_id.x7u8c6') }}：{{ val.remark }}</p>
                 </div>
                 <pre v-else>{{ val.content }}</pre></b-card-body
               >

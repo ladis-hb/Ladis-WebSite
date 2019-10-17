@@ -7,31 +7,31 @@
             class=" bg-dark rounded-0  my-1 text-light"
             button
             @click="vrFilter()"
-            >全部新闻</b-list-group-item
+            >{{ $t('index.59ij5u') }}</b-list-group-item
           >
           <b-list-group-item
             class=" bg-dark rounded-0  my-1 text-light"
             button
             @click="vrFilter('企业新闻')"
-            >企业新闻</b-list-group-item
+            >{{ $t('index.maq2tk') }}</b-list-group-item
           >
           <b-list-group-item
             class=" bg-dark rounded-0  my-1 text-light"
             button
             @click="vrFilter('产品新闻')"
-            >产品新闻</b-list-group-item
+            >{{ $t('index.lvd54v') }}</b-list-group-item
           >
           <b-list-group-item
             class=" bg-dark rounded-0  my-1 text-light"
             button
             @click="vrFilter('行业新闻')"
-            >行业新闻</b-list-group-item
+            >{{ $t('index.e2cbfj') }}</b-list-group-item
           >
           <b-list-group-item
             class=" bg-dark rounded-0  my-1 text-light"
             button
             @click="vrFilter('服务通告')"
-            >服务通告</b-list-group-item
+            >{{ $t('index.jpiy4n') }}</b-list-group-item
           >
         </b-list-group>
       </b-col>

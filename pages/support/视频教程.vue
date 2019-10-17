@@ -3,7 +3,7 @@
     <b-row>
       <b-col cols="12" md="4">
         <b-list-group class="asid">
-          <b-list-group-item variant="info">常见问题</b-list-group-item>
+          <b-list-group-item variant="info">{{ $t('视频教程.j3oloc') }}</b-list-group-item>
           <b-list-group-item v-for="(val, key) in support_asid" :key="key">
             <b-button pill size="sm" v-b-toggle="'asid' + key" variant="link"
               >+</b-button

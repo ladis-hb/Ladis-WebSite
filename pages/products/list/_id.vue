@@ -35,7 +35,7 @@
         <div v-html="all.content_body" v-else></div>
       </b-col>
       <b-col cols="12" class="down" v-if="all.t2 && all.t2.type != 'html'">
-        <h4>相关下载</h4>
+        <h4>{{ $t('list._id.q9xyoe') }}</h4>
         <b-list-group>
           <b-list-group-item v-for="(val, key) in all.down" :key="key">
             <b-link target="_blank" :href="pic(val.href)">{{

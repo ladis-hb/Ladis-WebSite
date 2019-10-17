@@ -4,19 +4,19 @@
       <b-col cols="12" md="3">
         <b-list-group class=" my-4 text-light">
           <b-list-group-item class=" bg-dark rounded-0 my-1"
-            >全景展示</b-list-group-item
+            >{{ $t('index.0twzes') }}</b-list-group-item
           >
           <b-list-group-item
             class=" bg-dark rounded-0  my-1 text-light"
             button
             @click="vrFilter('house')"
-            >机房全景展示</b-list-group-item
+            >{{ $t('index.sn1yip') }}</b-list-group-item
           >
           <b-list-group-item
             class=" bg-dark rounded-0  my-1 text-light"
             button
             @click="vrFilter('dev')"
-            >产品全景展示</b-list-group-item
+            >{{ $t('index.0ibgd6') }}</b-list-group-item
           >
         </b-list-group>
       </b-col>

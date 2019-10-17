@@ -5,7 +5,27 @@
     "a89hfi": "UPS power supply",
     "1gcuye": "Integrated cabinet",
     "6vnevq": "data center",
-    "uns46v": "Computer room air conditioner"
+    "uns46v": "Computer room air conditioner",
+    "7s0aiz": "\"UPS power supply _ uninterruptible power supply _ precision air conditioning _ machine room integration cabinet _ data center construction - Reddy\"",
+    "39kpec": "\"UPS power supply _ uninterruptible power supply _ precision air conditioning _ machine room integration cabinet _ data center construction - Reddy\"",
+    "0twzes": "panoramic display",
+    "sn1yip": "Computer room panorama display",
+    "0ibgd6": "Product panorama",
+    "j8it8b": "product category",
+    "59ij5u": "All news",
+    "maq2tk": "Corporate News",
+    "lvd54v": "product News",
+    "e2cbfj": "Industry news",
+    "jpiy4n": "Service notice",
+    "yp93bk": "Sales service center",
+    "b8tcvn": "Company Profile",
+    "9rjbx5": "Pledge",
+    "uqcwsg": "Business philosophy",
+    "974lfm": "Dealer list",
+    "n747ex": "Sales service center",
+    "lbgpnd": "news",
+    "al7aii": "join us",
+    "cld4co": "contact us"
   },
   "head": {
     "pneaqh": "product category",
@@ -73,5 +93,54 @@
     "ri1giq": "Associated website",
     "l7qkwb": "Cloud monitoring platform",
     "wkyimq": "New cloud monitoring platform"
+  },
+  "维修服务": {
+    "4o89za": "Service Policy",
+    "p53v8q": "Service Policy",
+    "ckeuuh": "Three-year warranty or replacement service is available for purchase of LADIS UPS and batteries purchased from Radis (LADIS)",
+    "dnmu7u": "One-year warranty is available for purchase of LADIS air-conditioning products",
+    "rb5lxn": "Three-year warranty is available for purchase of LADIS PDUs, power distribution, dynamic ring monitoring, cabinets, etc.",
+    "dasddg": "Customers who still exceed the warranty period can still enjoy the perfect after-sales service of LADIS.",
+    "q1xx1l": "Nationwide warranty",
+    "184qq8": "In order to provide timely and convenient after-sales service for users, LADIS products are nationwide.",
+    "hx7k7a": "LADIS has launched a 400 toll-free hotline to facilitate users' consultation on Redis' services, products, technology, and business issues. Users can call the Redis hotline at any time to solve the problem of product purchase and use.",
+    "my1fnu": "Purchase service",
+    "8icsmr": "Customers who have purchased the LADIS products beyond the warranty period can still enjoy the perfect after-sales service of the company, and can also purchase the extended warranty service. For the price of the extended product service, please call the Redis service hotline 400-6655-778.",
+    "l6ojyg": "Agent",
+    "abxuuv": "Reddy Service Center",
+    "ew1hnx": "Consultation.",
+    "2ix0t9": "You can also call the Redis service hotline 400-6655-778 for computer room products (including UPS power supply, battery, precision air conditioner, intelligent power distribution, dynamic ring monitoring, access control, video surveillance, etc.).",
+    "31jz7a": "Redis National Service Centers",
+    "81pdbb": "National chain",
+    "ionhkm": "In order to provide timely and convenient after-sales service for users, Reddy has established service centers in various provinces and cities across the country. No matter where you are, you can apply for the service from the nearest Redis service station."
+  },
+  "视频教程": {
+    "j3oloc": "common problem"
+  },
+  "常见问题": {
+    "w5qbf8": "common problem"
+  },
+  "_id": {
+    "tgqqj4": "Common hot issues",
+    "x9qyll": "name of software",
+    "ef2ovw": "release time",
+    "puz8nn": "platform",
+    "qi5zqr": "Language",
+    "vysc3s": "File size",
+    "t03jjv": "version",
+    "bwem5c": "Version update original reason",
+    "e02jgq": "download",
+    "b85q0o": "product category",
+    "ctksck": "Sales service center",
+    "sjrt39": "phone",
+    "jqsbos": "Contact",
+    "hssglh": "Mobile phone",
+    "dprtu7": "address",
+    "x7u8c6": "Remarks"
+  },
+  "list": {
+    "_id": {
+      "q9xyoe": "Related download"
+    }
   }
 }
