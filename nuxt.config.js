@@ -44,7 +44,8 @@ module.exports = {
     "quill/dist/quill.snow.css",
     "quill/dist/quill.bubble.css",
     "quill/dist/quill.core.css",
-    "@/assets/main.css"
+    "@/assets/main.css",
+    "normalize.css/normalize.css"
   ],
   /*
   ** Plugins to load before mounting the App
