@@ -1,17 +1,15 @@
 <template>
   <div class="footer">
     <div class="footer1">
-      <a href="/map/index.shtml">{{ $t('footer.9c708c') }}</a>
-      <a href="/about/node_33.shtml">{{ $t('footer.fp5qvs') }}</a>
-      <a href="/join/node_34.shtml">{{ $t('footer.ce1e0h') }}</a>
-      <a href="/about/node_43.shtml">{{ $t('footer.amhzvr') }}</a>
-      <a href="/about/node_42.shtml">{{ $t('footer.5d7lkm') }}</a>
+      <a href="/map/index.shtml">{{ $t("footer.9c708c") }}</a>
+      <a href="/about/">{{ $t("footer.fp5qvs") }}</a>
+      <a href="/about">{{ $t("footer.ce1e0h") }}</a>
+      <a href="/about">{{ $t("footer.amhzvr") }}</a>
+      <a href="/about">{{ $t("footer.5d7lkm") }}</a>
     </div>
 
     <div class="footer2">
-      <span>
-        <em>© 2019 All Rights Reserved</em> 雷迪司
-      </span>
+      <span> <em>© 2019 All Rights Reserved</em> 雷迪司 </span>
       <span>
         &nbsp; 浙
         <em>ICP</em>备

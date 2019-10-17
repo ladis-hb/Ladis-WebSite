@@ -2,13 +2,88 @@
   <div class="section">
     <div class="col-12">
       <div class="row">
-        <div class="col-6 colsm-2" v-for="(val, key) in list" :key="key">
+        <div class="col-6 colsm-2">
           <ul>
             <li>
-              <strong>{{ key }}</strong>
+              <strong>{{ $t("section.gk11oe") }}</strong>
             </li>
-            <li v-for="(val1, key1) in val" :key="key1">
-              <a :href="val1.href" :target="val1.target">{{ val1.title }}</a>
+            <li>
+              <a href="/products/UPS电源">{{ $t("section.4t9bzs") }}</a>
+            </li>
+            <li>
+              <a href="/products/数据中心">{{ $t("section.4r35dn") }}</a>
+            </li>
+            <li>
+              <a href="/products/机房空调">{{ $t("section.f7h57b") }}</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-6 colsm-2">
+          <ul>
+            <li>
+              <strong>{{ $t("section.q5vjss") }}</strong>
+            </li>
+            <li>
+              <a href="/buy">{{ $t("section.ps0tuh") }}</a>
+            </li>
+            <li>
+              <a href="/support/">{{ $t("section.y2a257") }}</a>
+            </li>
+            <li>
+              <a href="/support/常见问题">{{ $t("section.o5n0th") }}</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-6 colsm-2">
+          <ul>
+            <li>
+              <strong>{{ $t("section.21ws8d") }}</strong>
+            </li>
+            <li>
+              <a href="/buy">{{ $t("section.u7wjbw") }}</a>
+            </li>
+            <li>
+              <a href="https://lgsm.tmall.com/">{{ $t("section.6v39gj") }}</a>
+            </li>
+            <li>
+              <a href="https://leidisi.tmall.com/" target="_bank">{{
+                $t("section.k9mydj")
+              }}</a>
+            </li>
+            <li>
+              <a href="https://leidisi.tmall.com/" target="_bank">{{
+                $t("section.pfuunc")
+              }}</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-6 colsm-2">
+          <ul>
+            <li>
+              <strong>{{ $t("section.567cgp") }}</strong>
+            </li>
+            <li>
+              <a href="/about/">{{ $t("section.v0otza") }}</a>
+            </li>
+            <li>
+              <a href="/news/">{{ $t("section.qis2vp") }}</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-6 colsm-2">
+          <ul>
+            <li>
+              <strong>{{ $t("section.ri1giq") }}</strong>
+            </li>
+            <li>
+              <a href="http://www.pesiv.com" target="_bank">{{
+                $t("section.l7qkwb")
+              }}</a>
+            </li>
+            <li>
+              <a href="http://116.62.48.175:81" target="_bank">{{
+                $t("section.wkyimq")
+              }}</a>
             </li>
           </ul>
         </div>
@@ -21,81 +96,7 @@
 export default {
   name: "ladis-section",
   data() {
-    return {
-      list: {
-        [this.$t("section.gk11oe")]: [
-          {
-            title: this.$t("section.4t9bzs"),
-            href: "/products/UPS电源"
-          },
-          {
-            title: this.$t("section.4r35dn"),
-            href: "/products/数据中心"
-          },
-          {
-            title: this.$t("section.f7h57b"),
-            href: "/products/机房空调"
-          }
-        ],
-        [this.$t("section.q5vjss")]: [
-          {
-            title: this.$t("section.ps0tuh"),
-            href: "/buy"
-          },
-          {
-            title: this.$t("section.y2a257"),
-            href: "/support/"
-          },
-          {
-            title: this.$t("section.o5n0th"),
-            href: "/support/常见问题"
-          }
-        ],
-        [this.$t("section.21ws8d")]: [
-          {
-            title: this.$t("section.u7wjbw"),
-            href: "/buy/"
-          },
-          {
-            title: this.$t("section.6v39gj"),
-            href: "https://lgsm.tmall.com/",
-            target: "_bank"
-          },
-          {
-            title: this.$t("section.k9mydj"),
-            href: "https://leidisi.tmall.com/",
-            target: "_bank"
-          },
-          {
-            title: this.$t("section.pfuunc"),
-            href: "https://leidisi.tmall.com/",
-            target: "_bank"
-          }
-        ],
-        [this.$t("section.567cgp")]: [
-          {
-            title: this.$t("section.v0otza"),
-            href: "/about/"
-          },
-          {
-            title: this.$t("section.qis2vp"),
-            href: "/news/"
-          }
-        ],
-        [this.$t("section.ri1giq")]: [
-          {
-            title: this.$t("section.l7qkwb"),
-            href: "http://www.pesiv.com",
-            target: "_bank"
-          },
-          {
-            title: this.$t("section.wkyimq"),
-            href: "http://116.62.48.175:81",
-            target: "_bank"
-          }
-        ]
-      }
-    };
+    return {};
   }
 };
 </script>

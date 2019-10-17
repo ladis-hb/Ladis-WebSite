@@ -71,7 +71,7 @@ export default {
       list = payload.data;
     } else {
       let asid = await $axios.$get(
-        `/api/Get_arg?table=pages&title=Support_problem_asid`
+        `/api/Get_arg?table=Page&title=Support_problem_asid`
       );
       support_asid = asid ? asid.data : [];
       list = await $axios.$get(`/api/Get_arg?table=Support_list`);

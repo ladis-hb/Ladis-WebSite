@@ -113,7 +113,7 @@ module.exports = {
     }, */
     //SEO
     //baseUrl: 'https://my-nuxt-app.com',
-    seo: true
+    //seo: true
   },
   axios: {
     //proxy: true // Can be also an object with default options
