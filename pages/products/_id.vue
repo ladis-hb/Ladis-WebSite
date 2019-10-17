@@ -55,12 +55,12 @@ export default {
         `/api/Get_arg?title=${encodeURI(params.id)}&table=Product`
       );
       all = all.data;
-      var head = await $axios.$get(
+      /* var head = await $axios.$get(
         "/api/Get_head?title=" + encodeURI(params.id)
       );
-      head = head.data;
+      head = head.data; */
     }
-    return { list, params, all, head };
+    return { list, params, all };
   },
 
   created() {
@@ -70,10 +70,10 @@ export default {
 
   head() {
     return {
-      title: this.head.title,
+      title: this.params.id,
       meta: [
-        { name: "keywords", content: this.head.keywords },
-        { name: "description", content: this.head.description }
+        { name: "keywords", content: this.params.id },
+        { name: "description", content: this.params.id }
       ]
     };
   },

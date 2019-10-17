@@ -1,6 +1,6 @@
 /* jshint esversion:8 */
 const { validation_jwt_user } = require("../util/Format");
-const { Collection } = require("../config");
+const DB = require("../mongoose/content");
 const fs = require("fs");
 const path = require("path");
 module.exports = async (ctx, next) => {
@@ -15,86 +15,86 @@ module.exports = async (ctx, next) => {
     case "problem":
       {
         let { title, movie, html, selectparentsUntil, selectparent } = query;
+        let href = `/support/problem/${title}`;
+        DB.SaveRouter({ rout: href });
         let obj = {
           title,
-          href: `/support/problem/${title}`,
+          href,
           date: new Date(),
           parentsUntil: selectparentsUntil,
           parent: selectparent
         };
         if (html === "输入") obj.movie = movie;
         else obj.html = html;
-        await ctx.db.collection(Collection.support_list).deleteMany({ title });
-        let data = await ctx.db.collection(Collection.support_list).insertOne(obj);
-
-        result.result = data.result;
+        let support_list = new DB.Support_list(obj);
+        result.result = await support_list.save();
       }
       break;
     case "soft":
       {
-        let { selectSystem, title, platform, selectLanguage, version, update, file } = query;
-        let obj = {};
-        if (file.includes(".pdf")) {
-          obj = {
-            type: "pdf",
-            title,
-            href: file
-          };
-        } else {
-          let f = fs.statSync(path.join("static", file));
+        let {
+          selectSystem,
+          title,
+          platform,
+          selectLanguage,
+          version,
+          update,
+          file
+        } = query;
+        let fileType = "soft";
+        if (file.includes(".pdf")) fileType = "pdf";
+        let f = fs.statSync(path.join("static", file));
+        let obj = {
+          type: fileType,
+          title,
+          date: new Date(),
+          platform,
+          language: selectLanguage,
+          size: f.size / 1024 / 1024 + "MB",
+          version,
+          updateReason: update,
+          down: file,
+          href: file
+        };
 
-          obj = {
-            type: "soft",
-            title,
-            date: new Date(),
-            platform,
-            language: selectLanguage,
-            size: f.size / 1024 / 1024 + "MB",
-            version,
-            updateReason: update,
-            down: file
-          };
-        }
-        await ctx.db.collection(Collection.support).updateOne(
-          {
-            title: selectSystem
-          },
-          { $pull: { data: { title } } }
-        );
-        let data = await ctx.db.collection(Collection.support).updateOne(
-          {
-            title: selectSystem,
-            "data.title": { $ne: title }
-          },
+        let data = await DB.Support.updateOne(
+          { title: selectSystem },
           { $addToSet: { data: obj } }
         );
         result.msg = "已保存文档，请查看记录";
-        result.result = data.result;
+        result.result = data;
       }
       break;
     //产品
     case "product":
       {
-        let { selectType, title, content_head, content_body, indexPic, carouselPic } = query;
+        let {
+          selectType,
+          title,
+          content_head,
+          content_body,
+          indexPic,
+          carouselPic
+        } = query;
         let href = `/products/list/${title}`;
+        DB.SaveRouter({ rout: href });
         let titles = { title, href, img: indexPic };
-        let content = {
+        await DB.Product.updateOne(
+          { title: selectType },
+          { $addToSet: { data: titles } }
+        );
+        let product_list = new DB.Product_list({
           parant: selectType,
           title,
           date: new Date(),
           data: {
             content_head,
             content_body,
-            img: carouselPic
+            img: carouselPic.split("+")
           }
-        };
-
-        ctx.db
-          .collection(Collection.products)
-          .updateOne({ title: selectType }, { $addToSet: { data: titles } });
-        let { result: data } = await ctx.db.collection(Collection.Products_list).insertOne(content);
+        });
         result.href = href;
-        result.data = data;
+        result.result = await product_list.save();
       }
       break;
     //设置case
@@ -105,6 +105,7 @@ module.exports = async (ctx, next) => {
 
         let dates = new Date();
         let href = `/${inputType}/${title}`;
+        DB.SaveRouter({ rout: href });
         let route = { rout: href, modifyTime: dates };
         let type = {
           sv: "［服务通告］",
@@ -117,28 +118,41 @@ module.exports = async (ctx, next) => {
           ac: "[机房空调]"
         };
 
-        ctx.db
-          .collection(Collection.router)
-          .updateOne({ rout: route }, { $set: { modifyTime: dates } }, { upsert: true });
-        let li = {
-          name: type[editType],
-          time: `${dates.getFullYear()}年${dates.getMonth() + 1}月${dates.getDate()}日`,
-          text: title,
-          href,
-          img: pic,
-          linkText: "查看详情 >"
-        };
-        ctx.db
-          .collection(Collection[inputType])
-          .updateOne({ title }, { $set: { data: li, date: dates } }, { upsert: true });
+        DB.Router.updateOne(
+          { rout: route.rout },
+          { $set: route },
+          { upsert: true }
+        );
 
-        let cont = {
+        let collection = DB.News;
+        let collection_list = DB.News_list;
+        switch (inputType) {
+          case "case":
+            collection = DB.Case;
+            collection_list = DB.Case_list;
+            break;
+        }
+        let list = new collection({
+          title,
+          data: {
+            name: type[editType],
+            time: `${dates.getFullYear()}年${dates.getMonth() +
+              1}月${dates.getDate()}日`,
+            text: title,
+            href,
+            img: pic,
+            linkText: "查看详情 >"
+          }
+        });
+        list.save();
+
+        let cont = new collection_list({
           title,
           data: content,
           date: dates,
           new: true
-        };
-        ctx.db.collection(Collection[inputType + "_list"]).insertOne(cont);
+        });
+        cont.save();
         result.msg = "已生成最新文档，是否查看";
         result.href = href;
       }
@@ -146,13 +160,15 @@ module.exports = async (ctx, next) => {
     //获取图片素材
     case "Get_file_Source":
       {
-        let pic = fs.readdirSync(path.join(__dirname, "../../static/upload")).filter(source => {
-          if (ctx.query.filter && ctx.query.filter !== "") {
-            return source.includes(ctx.query.filter);
-          } else {
-            return source;
-          }
-        });
+        let pic = fs
+          .readdirSync(path.join(__dirname, "../../static/upload"))
+          .filter(source => {
+            if (ctx.query.filter && ctx.query.filter !== "") {
+              return source.includes(ctx.query.filter);
+            } else {
+              return source;
+            }
+          });
         let uploadPiclist = pic.map(img => {
           return `/upload/${img}`;
         });
@@ -161,7 +177,17 @@ module.exports = async (ctx, next) => {
       break;
     //设置经销商列表
     case "dealers":
-      let { daqu, province, city, area, address, tel, linkman, phone, remark } = ctx.query;
+      let {
+        daqu,
+        province,
+        city,
+        area,
+        address,
+        tel,
+        linkman,
+        phone,
+        remark
+      } = ctx.query;
       let stopn = 2;
       if (province === "黑龙江省") stopn = 3;
       province = province
@@ -169,25 +195,24 @@ module.exports = async (ctx, next) => {
         .slice(0, stopn)
         .join("");
       let site = {
+        parentsUntil: daqu,
+        parent: province,
         title: `${city} （${province}销售服务中心)`,
-        data: {
-          parentsUntil: daqu,
-          parent: province,
-          title: `${city} （${province}销售服务中心)`,
-          content: {
-            area,
-            address: province + city + area + address,
-            tel,
-            linkman,
-            phone,
-            remark
-          },
-          new: true
+        content: {
+          area,
+          address: province + city + area + address,
+          tel,
+          linkman,
+          phone,
+          remark
         },
-        date: new Date()
+        new: true
       };
       result.msg = "已写入数据";
-      result.data = await ctx.db.collection(Collection.buy_list).insertOne(site);
+      result.data = await DB.Buy_list.updateOne(
+        { title: "buy_map" },
+        { $push: { data: site } }
+      );
       break;
   }
   ctx.body = result;

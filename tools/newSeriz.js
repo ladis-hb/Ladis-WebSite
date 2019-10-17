@@ -213,6 +213,7 @@ async function start() {
   let NewsArray = await Promise.all(News);
   let NewsDataArray = [];
   NewsArray.forEach(element => {
+    if (!element.data.length) return;
     NewsDataArray = [...NewsDataArray, ...element.data];
   });
   //let NewsObject = [Object.assign(NewsArray[0], { data: NewsDataArray })];
@@ -255,41 +256,35 @@ async function start() {
     );
   }
 
-  await Promise.all([
+  let Rows = await Promise.all([
     ...vr,
     ...CaseObject,
     ...CaseList,
     ...NewsObject,
     ...NewsList
-  ])
-    .then(Rows => {
-      console.log(`操作数据长度${Rows.length}`);
-
-      Rows.forEach(element => {
-        let { parent, title, date, table, data } = element;
-        if (!table) return console.log(element);
-        //console.log(table);
-
-        DB[table]
-          .updateOne(
-            { title },
-            { $set: { parent, date, table, data } },
-            { upsert: true }
-          )
-          .then(res => {
-            console.log(res);
-          });
+  ]);
+  console.log(Router_Address);
+  console.log(`写入router记录`);
+  Router_Address.forEach(rout => {
+    DB.SaveRouter({ rout });
+  });
+  console.log(`操作数据长度${Rows.length}`);
+  for (let element of Rows) {
+    let { parent, title, date, table, data } = element;
+    if (!table) return console.log(element);
+    await DB[table]
+      .updateOne(
+        { title },
+        { $set: { parent, date, table, data } },
+        { upsert: true }
+      )
+      .then(res => {
+        console.log(res);
       });
-    })
-    .catch(e => {
-      console.log(e);
-    });
+  }
   console.log("New Serize Success ++++++++++++++");
   //写入router记录
-
-  Router_Address.forEach(rout => {
-    DB.Router.updateOne({ rout }, { $set: { rout } }, { upsert: true });
-  });
+ 
 }
 start();
 

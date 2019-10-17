@@ -135,7 +135,7 @@ export default {
         content_head: this.content_head,
         content_body: this.content_body,
         indexPic: this.indexPic,
-        carouselPic: this.carouselPic
+        carouselPic: this.carouselPic.join("+")
       };
 
       let result = await Add_Product(params)
@@ -152,7 +152,7 @@ export default {
     },
     Save_content_body() {
       this.content_body = this.content;
-      //this.content = "";
+      this.content = "";
     },
     Preview() {
       this.$store.commit("carouselPic", {

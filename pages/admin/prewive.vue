@@ -45,16 +45,12 @@ export default {
     };
   },
   mounted() {
+    
+    
     let query = this.$route.params;
-    let _self = this.carouselPics;
-    query.carouselPic.forEach((pic, index) => {
-      let reader = new FileReader();
-      reader.readAsDataURL(pic);
-      reader.onload = function(e) {
-        _self.push(e.target.result);
-      };
-    });
-
+    console.log(query);
+    this.title = query.title;
+    this.carouselPics = query.carouselPic;
     this.content_head = query.content_head;
     this.content_body = query.content_body;
   }

@@ -515,32 +515,35 @@ async function start() {
   );
 
   /* Promise.all([Destruction(Buy), Destruction(Buy_list)]) */
-  await Promise.all([...Pages, ...Products, ...Support, Buy, Buy_list])
-    .then(Rows => {
-      console.log(`操作数据长度${Rows.length}`);
-      Rows.forEach(element => {
-        let { parent, title, date, table, data } = element;
-        if (!table) return console.log(element);
-        DB[table]
-          .updateOne(
-            { title },
-            { $set: { parent, date, table, data } },
-            { upsert: true }
-          )
-          .then(res => {
-            console.log(res);
-          });
+  let Rows = await Promise.all([
+    ...Pages,
+    ...Products,
+    ...Support,
+    Buy,
+    Buy_list
+  ]);
+
+  console.log(`操作数据长度${Rows.length}`);
+  for (let element of Rows) {
+    let { parent, title, date, table, data } = element;
+    if (!table) return console.log(element);
+    await DB[table]
+      .updateOne(
+        { title },
+        { $set: { parent, date, table, data } },
+        { upsert: true }
+      )
+      .then(res => {
+        console.log(res);
       });
-    })
-    .catch(e => {
-      console.log(e);
-    });
+  }
+
   return true;
 }
-start().then(res => {
-  Get_support_problem_list_arg();
-  Get_Product_list();
-  WriteRouter();
+start().then(async res => {
+  await Get_support_problem_list_arg();
+  await Get_Product_list();
+  await WriteRouter();
 });
 //技术服务写入
 //Get_support_problem_list_arg();
@@ -586,17 +589,17 @@ async function Get_support_problem_list_arg() {
     });
   });
 
-  support_list_Array.forEach(el => {
-    el.forEach(e => {
-      DB.Support_list.updateOne(
+  for (let el of support_list_Array) {
+    for (let e of el) {
+      await DB.Support_list.updateOne(
         { title: e.title },
         { $set: e },
         { upsert: true }
       ).then(res => {
         console.log(res);
       });
-    });
-  });
+    }
+  }
   console.log("Get_support_problem_list_arg Success ++++++++++++++");
 }
 
@@ -624,21 +627,21 @@ async function Get_Product_list() {
   });
 
   let Product_list = await Promise.all([...Product_list_Promise]);
-  Product_list.forEach(e => {
-    DB.Product_list.updateOne(
+  for (let e of Product_list) {
+    await DB.Product_list.updateOne(
       { title: e.title },
       { $set: e },
       { upsert: true }
     ).then(res => {
       console.log(res);
     });
-  });
+  }
   console.log("Get_Product_list Success ++++++++++++++");
 }
 
-function WriteRouter() {
+async function WriteRouter() {
   //写入router记录
-  console.log();
+  console.log(`写入router记录`);
   let out = [
     "//天猫旗舰店",
     "//京东旗舰店",
@@ -660,7 +663,7 @@ function WriteRouter() {
   ];
 
   Router_Address.forEach(rout => {
-    if (out.includes(val)) return false;
-    DB.Router.updateOne({ rout }, { $set: { rout } }, { upsert: true });
+    if (out.includes(rout)) return false;
+    DB.SaveRouter({ rout });
   });
 }

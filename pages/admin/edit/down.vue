@@ -9,19 +9,19 @@
                 <b-form-select :options="soft.system" v-model="soft.selectSystem"></b-form-select>
               </b-form-group>
               <b-form-group label="*标题:" label-cols="2" label-align="right">
-                <b-form-input v-model="soft.title"></b-form-input>
+                <b-form-input v-model.trim="soft.title"></b-form-input>
               </b-form-group>
               <b-form-group label="说明:" label-cols="2" label-align="right">
-                <b-form-input v-model="soft.platform"></b-form-input>
+                <b-form-input v-model.trim="soft.platform"></b-form-input>
               </b-form-group>
               <b-form-group label="*语言:" label-cols="2" label-align="right">
                 <b-form-select :options="soft.language" v-model="soft.selectLanguage"></b-form-select>
               </b-form-group>
               <b-form-group label="版本:" label-cols="2" label-align="right">
-                <b-form-input v-model="soft.version"></b-form-input>
+                <b-form-input v-model.trim="soft.version"></b-form-input>
               </b-form-group>
               <b-form-group label="更新说明:" label-cols="2" label-align="right">
-                <b-form-input v-model="soft.update"></b-form-input>
+                <b-form-input v-model.trim="soft.update"></b-form-input>
               </b-form-group>
               <b-form-group label="*文件:" label-cols="2" label-align="right">
                 <b-form-select v-model="soft.file" :options="SourceFile"></b-form-select>
@@ -35,7 +35,7 @@
                 <b-form-select :options="cp.system" v-model="cp.selectSystem"></b-form-select>
               </b-form-group>
               <b-form-group label="*标题:" label-cols="2" label-align="right">
-                <b-form-input v-model="cp.title"></b-form-input>
+                <b-form-input v-model.trim="cp.title"></b-form-input>
               </b-form-group>
 
               <b-form-group label="*文件:" label-cols="2" label-align="right">
@@ -50,7 +50,7 @@
                 <b-form-select :options="zz.system" v-model="zz.selectSystem"></b-form-select>
               </b-form-group>
               <b-form-group label="*标题:" label-cols="2" label-align="right">
-                <b-form-input v-model="zz.title"></b-form-input>
+                <b-form-input v-model.trim="zz.title"></b-form-input>
               </b-form-group>
 
               <b-form-group label="*文件:" label-cols="2" label-align="right">
@@ -68,10 +68,10 @@
                 <b-form-select :options="parent" v-model="problem.selectparent"></b-form-select>
               </b-form-group>
               <b-form-group label="*标题:" label-cols="2" label-align="right">
-                <b-form-input v-model="problem.title"></b-form-input>
+                <b-form-input v-model.trim="problem.title"></b-form-input>
               </b-form-group>
               <b-form-group label="*视频链接:" label-cols="2" label-align="right">
-                <b-form-input v-model="problem.movie"></b-form-input>
+                <b-form-input v-model.trim="problem.movie"></b-form-input>
               </b-form-group>
               <b-button block @click="Submit('problem')" variant="success">提交</b-button>
             </b-form>
@@ -233,7 +233,7 @@ export default {
       }
       let { stat, msg, result } = respon;
       LoadingTabs.close();
-      if (stat && result.n > 0) return MessageBox.alert(msg, "Success");
+      if (stat) return MessageBox.alert(msg, "Success");
     }
   }
 };

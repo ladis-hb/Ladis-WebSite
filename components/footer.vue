@@ -1,7 +1,7 @@
 <template>
   <div class="footer">
     <div class="footer1">
-      <a href="/map/index.shtml">{{ $t("footer.9c708c") }}</a>
+      <a href="/sitemap">{{ $t("footer.9c708c") }}</a>
       <a href="/about/">{{ $t("footer.fp5qvs") }}</a>
       <a href="/about">{{ $t("footer.ce1e0h") }}</a>
       <a href="/about">{{ $t("footer.amhzvr") }}</a>

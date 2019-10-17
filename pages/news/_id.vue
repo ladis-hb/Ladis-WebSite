@@ -5,7 +5,7 @@
         <div class=" my-4 border-bottom">
           <h5>{{ id }}</h5>
         </div>
-        <div v-if="listNew">
+        <div v-if="typeof list === 'string'">
           <div id="newsText" class=" px-5 ctlimg" v-html="list"></div>
         </div>
         <div v-else>
@@ -69,5 +69,4 @@ export default {
   max-width: 100% !important;
   height: auto;
 }
-
 </style>

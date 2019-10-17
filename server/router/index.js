@@ -46,7 +46,7 @@ router.get("/api/:id", async ctx => {
     case "Get_news_list":
       {
         let result = await DB.News.find()
-          .sort({ date: -1 })
+          .sort({ "data.time": -1 })
           .exec();
         ctx.body = result;
       }
@@ -55,7 +55,7 @@ router.get("/api/:id", async ctx => {
     case "Get_case_list":
       {
         let result = await DB.Case.find()
-          .sort({ date: -1 })
+          .sort({ "data.time": -1 })
           .exec();
         ctx.body = result;
       }

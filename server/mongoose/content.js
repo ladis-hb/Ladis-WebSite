@@ -180,10 +180,19 @@ const Schema_Page = new Schema(
 );
 const Schema_Router = new Schema(
   {
-    rout: { type: String }
+    rout: { type: String },
+    title: String
   },
   { timestamps: true }
 );
+
+const SaveRouter = async ({ title, rout }) => {
+  if (!title) title = rout.split("/").pop();
+  let r = await Router.findOne({ rout });
+  if (r) return r;
+  let route = new Router({ title, rout });
+  return await route.save();
+};
 
 const Product = mongoose.model("Product", Schema_Product);
 const Product_list = mongoose.model("Product_list", Schema_Product_list);
@@ -216,5 +225,6 @@ module.exports = {
   About,
   Head,
   Page,
-  Router
+  Router,
+  SaveRouter
 };
