@@ -255,7 +255,13 @@ async function start() {
     );
   }
 
-  Promise.all([...vr, ...CaseObject, ...CaseList, ...NewsObject, ...NewsList])
+  await Promise.all([
+    ...vr,
+    ...CaseObject,
+    ...CaseList,
+    ...NewsObject,
+    ...NewsList
+  ])
     .then(Rows => {
       console.log(`操作数据长度${Rows.length}`);
 
@@ -278,14 +284,14 @@ async function start() {
     .catch(e => {
       console.log(e);
     });
-
+  console.log("New Serize Success ++++++++++++++");
   //写入router记录
 
   Router_Address.forEach(rout => {
     DB.Router.updateOne({ rout }, { $set: { rout } }, { upsert: true });
   });
 }
-//start();
+start();
 
 [
   {

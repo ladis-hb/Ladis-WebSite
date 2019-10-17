@@ -515,7 +515,7 @@ async function start() {
   );
 
   /* Promise.all([Destruction(Buy), Destruction(Buy_list)]) */
-  Promise.all([...Pages, ...Products, ...Support, Buy, Buy_list])
+  await Promise.all([...Pages, ...Products, ...Support, Buy, Buy_list])
     .then(Rows => {
       console.log(`操作数据长度${Rows.length}`);
       Rows.forEach(element => {
