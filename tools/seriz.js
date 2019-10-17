@@ -535,8 +535,13 @@ async function start() {
     .catch(e => {
       console.log(e);
     });
+  return true;
 }
-//start();
+start().then(res => {
+  Get_support_problem_list_arg();
+  Get_Product_list();
+  WriteRouter();
+});
 //技术服务写入
 //Get_support_problem_list_arg();
 Get_Product_list();
