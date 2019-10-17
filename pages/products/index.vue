@@ -26,15 +26,15 @@
       <b-col>
         <div class="main1">
           <div v-for="(val,key) in all" :key="key">
-            <b-link :to="{path:val.href}" >
+            <b-link :to="{path:val.href}">
               <b-card
-              :sub-title="val.title"
-              :img-src="val.img"
-              :img-alt="val.title"
-              img-top
-              tag="article"
-              class="mb-2 mw"
-            ></b-card>
+                :sub-title="val.title"
+                :img-src="val.img"
+                :img-alt="val.title"
+                img-top
+                tag="article"
+                class="mb-2 mw"
+              ></b-card>
             </b-link>
           </div>
         </div>
@@ -53,8 +53,13 @@ export default {
     var all = await $axios.$get("/api/Products_all");
     return { list, all };
   },
-  methods: {},
-  components: {}
+  head: {
+    title: "所有产品-雷迪司",
+    meta: [
+      { name: "keywords", content: "所有产品-雷迪司" },
+      { name: "description", content: "所有产品-雷迪司" }
+    ]
+  }
 };
 </script>
 

@@ -14,16 +14,9 @@
     <!-- footer -->
     <div class="row afooter" id="footer" :class="{ afooter: collapse, afooterm: !collapse }">
       <div class="section">
-        <div class="collp" v-b-toggle.demo1 @mouseenter="hover">
-          <a class="a-collp">
-            <i class="iconfont icon-icon_threeline_fill"></i>
-          </a>
-        </div>
-        <b-collapse visible id="demo1">
-          <ladis-section></ladis-section>
-        </b-collapse>
+        
+        <ladis-section></ladis-section>
       </div>
-
       <ladis-footer></ladis-footer>
     </div>
   </div>
@@ -54,25 +47,12 @@ export default {
       }
       /* {href:'@assets/css/index.scss',type:'text/css',rel:"stylesheet"} */
     ]
-  },
-  methods: {
-    hover() {
-      this.$root.$emit("bv::toggle::collapse", "demo1");
-    },
-    leave() {}
-  },
-  mounted() {
-    //注册监听折叠事件，collapseId折叠元素ID, isJustShown折叠事件boolean
-    this.$root.$on("bv::collapse::state", (collapseId, isJustShown) => {
-      this.collapse = isJustShown;
-    });
-    this.hover();
   }
 };
 </script>
 
 <style>
-@media screen and (min-height: 700px) {
+/* @media screen and (min-height: 700px) {
   html {
     height: 100%;
   }
@@ -83,7 +63,7 @@ body,
 #__layout,
 .ladis-body {
   height: 100%;
-}
+} */
 .ladis-body {
   display: flex;
   flex-flow: column wrap;
