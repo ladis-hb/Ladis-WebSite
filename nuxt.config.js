@@ -100,7 +100,7 @@ module.exports = {
     detectBrowserLanguage: {
       useCookie: true,
       alwaysRedirect: true,
-      cookieKey: "my_custom_cookie_name"
+      cookieKey: "Ladis_WebSite_I18n"
     },
     //路由配置
     strategy: "prefix_except_default",

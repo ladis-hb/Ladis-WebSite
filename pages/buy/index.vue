@@ -21,10 +21,10 @@
               v-for="(val, key) in map"
               :key="key"
               shape="poly"
-              :alt="val.data.alt"
+              :alt="val.alt"
               target="_blank"
-              :coords="val.data.coords"
-              :href="val.data.href"
+              :coords="val.coords"
+              :href="val.href"
             />
           </map>
         </p>
@@ -65,9 +65,7 @@ export default {
       map = await $axios.$get(`/api/Get_arg?table=Buy`);
       dealers = await $axios.$get(`/api/Get_arg?table=Buy_list`);
     }
-    dealers = dealers.map(el => {
-      return el.data;
-    });
+    dealers = dealers[0].data
 
     dealers.forEach(element => {
       let { parentsUntil, link, parent } = element;
@@ -78,9 +76,9 @@ export default {
       adrress.set(link, `/buy/${parent}`);
     });
 
-    map = Object.values(map).map(element => {
-      element.data.href = adrress.get(
-        element.data.href.split(".")[0] + ".shtml"
+    map = map[0].data.map(element => {
+      element.href = adrress.get(
+        element.href.split(".")[0] + ".shtml"
       );
       return element;
     });

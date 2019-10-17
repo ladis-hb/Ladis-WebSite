@@ -64,7 +64,8 @@ router.get("/api/:id", async ctx => {
     case "Get_buy_li":
       {
         let city = ctx.query.city;
-        let result = await DB.Buy_list.find({ "data.parent": city });
+        let { data } = await DB.Buy_list.findOne();
+        let result = data.filter(el => el.parent === city);
         ctx.body = result;
       }
       break;
