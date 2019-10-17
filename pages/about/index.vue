@@ -62,7 +62,7 @@
           >
         </b-list-group>
       </b-col>
-      <b-col cols="12" md="9">
+      <!-- <b-col cols="12" md="9">
         <div class=" pt-5 border-bottom">
           <h5>{{ title }}</h5>
         </div>
@@ -81,7 +81,7 @@
             <b-img></b-img>
           </b-collapse>
         </div>
-      </b-col>
+      </b-col> -->
     </b-row>
   </b-container>
 </template>
