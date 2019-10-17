@@ -63,7 +63,7 @@
               <strong>{{ $t("section.567cgp") }}</strong>
             </li>
             <li>
-              <a href="/about/">{{ $t("section.v0otza") }}</a>
+              <a href="/about/公司简介">{{ $t("section.v0otza") }}</a>
             </li>
             <li>
               <a href="/news/">{{ $t("section.qis2vp") }}</a>

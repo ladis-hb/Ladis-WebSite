@@ -2,10 +2,10 @@
   <div class="footer">
     <div class="footer1">
       <a href="/sitemap">{{ $t("footer.9c708c") }}</a>
-      <a href="/about/">{{ $t("footer.fp5qvs") }}</a>
-      <a href="/about">{{ $t("footer.ce1e0h") }}</a>
-      <a href="/about">{{ $t("footer.amhzvr") }}</a>
-      <a href="/about">{{ $t("footer.5d7lkm") }}</a>
+      <a href="/about/联系我们">{{ $t("footer.fp5qvs") }}</a>
+      <a href="/about/加入我们">{{ $t("footer.ce1e0h") }}</a>
+      <a href="/about/使用声明">{{ $t("footer.amhzvr") }}</a>
+      <a href="/about/隐私政策">{{ $t("footer.5d7lkm") }}</a>
     </div>
 
     <div class="footer2">

@@ -104,8 +104,7 @@ module.exports = {
       cookieKey: "Ladis_WebSite_I18n"
     },
     //路由配置
-    strategy: "prefix_except_default",
-    defaultLocale: "zh"
+    strategy: "prefix_except_default"
     /* parsePages: false,
 
     pages: {

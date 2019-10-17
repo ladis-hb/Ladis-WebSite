@@ -98,13 +98,13 @@
             <template slot="button-content">
               <em>{{ $t("head.n5tjum") }}</em>
             </template>
-            <b-dropdown-item :to="localePath({ path: '/about/' })">{{
+            <b-dropdown-item :to="localePath({ path: '/about/公司简介' })">{{
               $t("head.2mff1f")
             }}</b-dropdown-item>
-            <b-dropdown-item :to="{ path: '/about/' }">{{
+            <b-dropdown-item :to="{ path: '/about/服务承诺' }">{{
               $t("head.n4jshj")
             }}</b-dropdown-item>
-            <b-dropdown-item :to="{ path: '/about/' }">{{
+            <b-dropdown-item :to="{ path: '/about/经营理念' }">{{
               $t("head.aabk1p")
             }}</b-dropdown-item>
             <b-dropdown-item :to="{ path: '/buy/' }">{{
@@ -116,11 +116,17 @@
             <b-dropdown-item :to="{ path: '/news/' }">{{
               $t("head.t1vwuq")
             }}</b-dropdown-item>
-            <b-dropdown-item :to="{ path: '/about/' }">{{
+            <b-dropdown-item :to="{ path: '/about/联系我们' }">{{
               $t("head.i05srl")
             }}</b-dropdown-item>
-            <b-dropdown-item :to="{ path: '/about/' }">{{
+            <b-dropdown-item :to="{ path: '/about/加入我们' }">{{
               $t("head.yvtl7f")
+            }}</b-dropdown-item>
+            <b-dropdown-item :to="{ path: '/about/使用声明' }">{{
+              $t("footer.amhzvr")
+            }}</b-dropdown-item>
+            <b-dropdown-item :to="{ path: '/about/隐私政策' }">{{
+              $t("footer.5d7lkm")
             }}</b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown right>
