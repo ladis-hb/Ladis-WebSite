@@ -137,7 +137,6 @@ export default {
       }
     },
     selectSourceFile(file) {
-      console.log(file);
       this.sourceFile = this.sourceFile.filter(f => f !== file.path);
       this.$store.commit("setSourceFile", file);
     }

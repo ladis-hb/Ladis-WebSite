@@ -1,46 +1,50 @@
 <template>
-  <b-container>
-    <b-row>
-      <div class="list">
-        <b-navbar toggleable="lg" type="dark" variant="info" style="padding:0">
-          <b-navbar-toggle target="list-collapse"></b-navbar-toggle>
-
-          <b-collapse id="list-collapse" is-nav>
-            <b-navbar-nav>
-              <b-nav-item>
-                <h3>{{ $t('index.j8it8b') }}</h3>
-              </b-nav-item>
+  <b-row no-gutters class=" h-100">
+    <b-col cols="12" md="2" class="list bg-info ">
+      <b-navbar toggleable="lg" type="dark" variant="info" style="padding:0">
+        <b-navbar-toggle target="list-collapse"></b-navbar-toggle>
+        <b-collapse id="list-collapse" is-nav>
+          <b-navbar-nav vertical>
+            <b-nav-item>
+              <h3>{{ $t("index.j8it8b") }}</h3>
+            </b-nav-item>
+          </b-navbar-nav>
+          <div v-for="(val, key) in list" :key="key">
+            <b-navbar-nav variant="dark">
+              <b-nav-item :to="{ path: `/products/${val.title}` }">{{
+                val.title
+              }}</b-nav-item>
             </b-navbar-nav>
-            <div v-for="(val,key) in list" :key="key">
-              <b-navbar-nav variant="dark">
-                <b-nav-item :to="{path:`/products/${val.title}`}">{{val.title}}</b-nav-item>
-              </b-navbar-nav>
-              <b-navbar-nav v-for="(val1,key1) in val.args" :key="key1">
-                <b-nav-item :to="{path:`/products/${val1.title}`}">{{val1.title}}</b-nav-item>
-              </b-navbar-nav>
-            </div>
-            <hr />
-          </b-collapse>
-        </b-navbar>
-      </div>
-      <b-col>
-        <div class="main1">
-          <div v-for="(val,key) in all" :key="key">
-            <b-link :to="{path:val.href}">
-              <b-card
-                :sub-title="val.title"
-                :img-src="val.img"
-                :img-alt="val.title"
-                img-top
-                tag="article"
-                class="mb-2 mw"
-              ></b-card>
-            </b-link>
+            <b-navbar-nav v-for="(val1, key1) in val.args" :key="key1">
+              <b-nav-item :to="{ path: `/products/${val1.title}` }">{{
+                val1.title
+              }}</b-nav-item>
+            </b-navbar-nav>
           </div>
-        </div>
-      </b-col>
-    </b-row>
-  </b-container>
+          <hr />
+        </b-collapse>
+      </b-navbar>
+    </b-col>
+    <b-col cols="12" md="10" class=" h-100 overflow-auto">
+      <b-row no-gutters>
+        <b-col
+          cols="12"
+          md="4"
+          v-for="(val, key) in all"
+          :key="key"
+          class="p-4"
+        >
+          <b-card>
+            <b-card-img :src="val.img" :alt="val.title"></b-card-img>
+            <b-link :to="{ path: val.href }" class=" text-dark">{{
+              val.title
+            }}</b-link>
+          </b-card>
+        </b-col>
+      </b-row>
+    </b-col>
+  </b-row>
+  
 </template>
 
 <script>
@@ -63,7 +67,7 @@ export default {
 };
 </script>
 
-<style lang='scss' scoped >
+<style lang="scss" scoped>
 @media screen and (max-width: 500px) {
   .container {
     margin: 0;

@@ -1,7 +1,7 @@
 <template>
-  <b-container fluid class="h-100 m-0 p-0">
-    <b-row class="h-100 overflow-auto">
-      <b-col cols="12" md="2" class="h-100 bg-info border-top text-center p-3">
+  <b-container fluid class=" h-100  m-0 p-0">
+    <b-row class=" h-100">
+      <b-col cols="12" md="2" class="bg-info border-top text-center p-3">
         <b-nav vertical id="nav">
           <b-nav-item-dropdown text="新闻资讯">
             <b-dropdown-item
@@ -113,9 +113,9 @@
             >素材管理</b-nav-item
           >
           <b-nav-item>
-            已选素材
-            <b-button pill variant="dark">
-              {{ SourceFile.length }}
+            <b-button v-b-modal.modal-1 variant="info">
+              已选素材
+              <b-badge pill>{{ SourceFile.length }}</b-badge>
             </b-button>
           </b-nav-item>
         </b-nav>
@@ -128,6 +128,29 @@
         </transition>
       </b-col>
     </b-row>
+    <b-modal id="modal-1" title="已选素材">
+      <b-list-group>
+        <b-list-group-item
+          v-for="(img, key) in SourceFile"
+          :key="key"
+          v-b-toggle="'pic' + key"
+          >{{ img.text }}
+          <b-collapse
+            :id="'pic' + key"
+            visible
+            accordion="my-accordion2"
+            role="tabpanel"
+          >
+            <b-card>
+              <b-card-img-lazy
+                :src="img.value"
+                :alt="img.value"
+              ></b-card-img-lazy>
+            </b-card>
+          </b-collapse>
+        </b-list-group-item>
+      </b-list-group>
+    </b-modal>
   </b-container>
 </template>
 

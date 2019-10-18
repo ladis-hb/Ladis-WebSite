@@ -3,46 +3,46 @@
     <b-row>
       <b-col cols="12" md="3">
         <b-list-group class=" my-4 text-light">
-          <b-list-group-item class=" bg-dark rounded-0 my-1"
-            >{{ $t('index.0twzes') }}</b-list-group-item
-          >
+          <b-list-group-item class=" bg-dark rounded-0 my-1">{{
+            $t("index.0twzes")
+          }}</b-list-group-item>
           <b-list-group-item
             class=" bg-dark rounded-0  my-1 text-light"
             button
             @click="vrFilter('house')"
-            >{{ $t('index.sn1yip') }}</b-list-group-item
+            >{{ $t("index.sn1yip") }}</b-list-group-item
           >
           <b-list-group-item
             class=" bg-dark rounded-0  my-1 text-light"
             button
             @click="vrFilter('dev')"
-            >{{ $t('index.0ibgd6') }}</b-list-group-item
+            >{{ $t("index.0ibgd6") }}</b-list-group-item
           >
         </b-list-group>
       </b-col>
       <b-col cols="12" md="9" class=" mt-3 mb-5">
-        <div
-          class=" d-flex flex-row"
-          v-for="(val, key) in backListArray"
-          :key="key"
-        >
-          <b-img :src="val.img" fluid class=" w-25"></b-img>
-          <span class=" d-flex flex-column justify-content-center ml-4">
-            <span class=" my-1"
-              ><b class=" text-primary font-weight-bold">{{ val.name }}</b
-              ><i>{{ val.time }}</i></span
-            >
-            <strong class=" my-1">{{ val.text }}</strong>
-            <b-link class="my-2" :href="val.link" target="_blank">{{ val.linkText }}</b-link>
-          </span>
-        </div>
+        <b-list-group>
+          <b-list-group-item v-for="(val, key) in backListArray" :key="key">
+            <card-copy
+              :img="val.img"
+              :text="val.text"
+              :title="val.name"
+              :time="val.time"
+              :href="Serize(val.link)"
+            ></card-copy>
+          </b-list-group-item>
+        </b-list-group>
       </b-col>
     </b-row>
   </b-container>
 </template>
 
 <script>
+import CardCopy from "../../components/CardCopy";
 export default {
+  components: {
+    CardCopy
+  },
   data() {
     return {
       backListArray: this.listArray
@@ -91,6 +91,9 @@ export default {
         }
         this.backListArray = list;
       }
+    },
+    Serize(href) {
+      return `http://116.62.48.175${href}`;
     }
   },
   mounted() {

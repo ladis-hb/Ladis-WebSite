@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<!--[if IE 9]><html lang="en-US" class="lt-ie9 ie9" {{ HTML_ATTRS }}><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html {{ HTML_ATTRS }}>
+<!--<![endif]-->
+
+<head {{ HEAD_ATTRS }}>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    {{ HEAD }}
+    <!--[if IE 9]>
+  <link href="https://cdn.jsdelivr.net/gh/coliff/bootstrap-ie8/css/bootstrap-ie9.min.css" rel="stylesheet">
+  <![endif]-->
+    <!--[if lte IE 8]>
+  <link href="https://cdn.jsdelivr.net/gh/coliff/bootstrap-ie8/css/bootstrap-ie8.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/g/html5shiv@3.7.3"></script>
+<![endif]-->
+</head>
+
+<body {{ BODY_ATTRS }}>
+    {{ APP }}
+</body>
+
+</html>

@@ -19,7 +19,7 @@ export const mutations = {
   setSourceFile(state, payload) {
     state.SourceFile = [
       ...state.SourceFile,
-      { value: payload.path, text: payload.name }
+      { value: payload.path, text: payload.name, fileType: payload.fileType }
     ];
   }
 };

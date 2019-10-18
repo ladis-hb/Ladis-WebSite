@@ -1,7 +1,6 @@
 <template>
-  <div class="carousel-main">
-    <!-- carousel -->
-    <div class="carousel">
+  <b-row no-gutters>
+    <b-col cols="12">
       <b-carousel
         id="carousel-1"
         v-model="slide"
@@ -11,7 +10,7 @@
         indicators
         background="#ababab"
         img-width="1024"
-        img-height="480"
+        img-height="580"
         style="text-shadow: 1px 1px 2px #333;"
         @sliding-start="onSlideStart"
         @sliding-end="onSlideEnd"
@@ -24,47 +23,68 @@
           :img-src="val.src"
         ></b-carousel-slide>
       </b-carousel>
+    </b-col>
+    <b-col cols="12" class=" bg-dark p-2">
+      <b-row no-gutters>
+        <b-col cols="12" md="2" class="d-none d-sm-block d-md-block">
+          <b-link :to="{ path: '/news/' }">
+            <b-img :src="news.title.src" />
+          </b-link>
+        </b-col>
+        <b-col>
+          <b-link
+            :to="{ path: `/news/${news.newo.title}` }"
+            class=" text-light"
+            >{{ news.newo.title }}</b-link
+          >
+        </b-col>
+      </b-row>
+    </b-col>
+    <b-col cols="12">
+      <b-row class=" mb-4" no-gutters>
+        <b-col cols="12" md="4" class="px-5">
+          <b-link :to="{ path: '/support/监控软件下载' }" class="sales-li">
+            <b-img-lazy
+              src="/_CMS_NEWS_IMG_/2017-10/27/d71a90e4-b197-497b-80d6-abb20ac2a919.jpg"
+            ></b-img-lazy>
+          </b-link>
+        </b-col>
+        <b-col cols="12" md="4" class="px-5">
+          <b-link :to="{ path: '/support/常见问题' }" class="sales-li">
+            <b-img-lazy
+              src="/_CMS_NEWS_IMG_/2017-10/27/581b3273-d44f-4f43-8b09-24fee8a37af9.jpg"
+            ></b-img-lazy>
+          </b-link>
+        </b-col>
+        <b-col cols="12" md="4" class="px-5">
+          <b-link :to="{ path: '/support/监控软件下载' }" class="sales-li">
+            <b-img-lazy
+              src="/_CMS_NEWS_IMG_/2017-10/27/d71a90e4-b197-497b-80d6-abb20ac2a919.jpg"
+            ></b-img-lazy>
+          </b-link>
+        </b-col>
+      </b-row>
+    </b-col>
+  </b-row>
+  <!-- <div class="carousel-main">
+   
+    <div class="carousel">
+      
     </div>
 
-    <!--  -->
+    
     <div class="news">
-      <b-link :to="{ path: '/news/' }">
-        <b-img-lazy :src="news.title.src" />
-      </b-link>
-
-      <div class="news1">
-        <!-- <a :href="news.newo.src">{{ news.newo.date }}{{ news.newo.text }}</a> -->
-        <b-link :to="{ path: `/news/${news.newo.title}` }"
-          >{{ news.newo.date }}{{ news.newo.title }}</b-link
-        >
-      </div>
+      
     </div>
 
-    <!-- after-sales -->
     <div class="after-sales">
       <div class="sales-title">
-        <h2>{{ $t('index.1ev0o5') }}</h2>
+        <h2 class=" m-0">{{ $t("index.1ev0o5") }}</h2>
       </div>
-      <div class="sales-body">
-        <b-link :to="{ path: '/support/监控软件下载' }" class="sales-li">
-          <b-img-lazy
-            src="/_CMS_NEWS_IMG_/2017-10/27/d71a90e4-b197-497b-80d6-abb20ac2a919.jpg"
-          ></b-img-lazy>
-        </b-link>
-        <b-link :to="{ path: '/support/常见问题' }" class="sales-li">
-          <b-img-lazy
-            src="/_CMS_NEWS_IMG_/2017-10/27/581b3273-d44f-4f43-8b09-24fee8a37af9.jpg"
-          ></b-img-lazy>
-        </b-link>
-        <b-link :to="{ path: '/buy' }" class="sales-li">
-          <b-img-lazy
-            src="/_CMS_NEWS_IMG_/2017-10/27/5ca0c263-3fd4-486f-923f-8f0762f1d161.jpg"
-          ></b-img-lazy>
-        </b-link>
-      </div>
+      
     </div>
   </div>
-
+ -->
   <!--  -->
 </template>
 
@@ -191,7 +211,7 @@ a:hover {
 }
 .sales-title {
   width: 100%;
-  padding: 1rem;
+  padding-top: 1rem;
   text-align: center;
   color: dodgerblue;
 }

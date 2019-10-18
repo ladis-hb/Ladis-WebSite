@@ -65,6 +65,10 @@ export default {
 </script>
 
 <style lang="scss">
+.content-img img {
+  max-width: 100%;
+  margin: 10px;
+}
 #newsText img {
   max-width: 100% !important;
   height: auto;

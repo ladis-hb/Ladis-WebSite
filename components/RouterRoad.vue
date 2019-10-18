@@ -1,5 +1,5 @@
 <template>
-  <b-breadcrumb :items="item"></b-breadcrumb>
+  <b-breadcrumb :items="item" class=" bg-light"></b-breadcrumb>
 </template>
 
 <script>

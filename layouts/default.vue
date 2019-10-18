@@ -1,25 +1,18 @@
 <template>
-  <div class="container-fluid ladis-body">
-    <!-- head -->
-    <div class="row" id="head">
-      <div class="col-12 head-backcolor">
+  <b-container fluid class="m-0 p-0 ladis-body">
+    <b-row no-gutters class="ladis-body d-flex flex-row ">
+      <b-col cols="12">
         <ladis-head></ladis-head>
-      </div>
-    </div>
-    <!-- main -->
-    <div class="main" id="main">
-      <nuxt />
-    </div>
-
-    <!-- footer -->
-    <div class="row afooter" id="footer" :class="{ afooter: collapse, afooterm: !collapse }">
-      <div class="section">
-        
+      </b-col>
+      <b-col cols="12" id="main" class="h-100 cdsxc">
+        <nuxt class=" h-100"></nuxt>
+      </b-col>
+      <b-col cols="12" id="footer" class=" mt-auto">
         <ladis-section></ladis-section>
-      </div>
-      <ladis-footer></ladis-footer>
-    </div>
-  </div>
+        <ladis-footer></ladis-footer>
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <script>
@@ -52,73 +45,20 @@ export default {
 </script>
 
 <style>
-/* @media screen and (min-height: 700px) {
-  html {
-    height: 100%;
-  }
+/* html {
+  height: 100%;
 }
-
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+} */
+html,
 body,
 #__nuxt,
 #__layout,
 .ladis-body {
-  height: 100%;
-} */
-.ladis-body {
-  display: flex;
-  flex-flow: column wrap;
-  margin: 0px;
-  padding: 0px;
+  min-height: 100%;
 }
 
-#head {
-  display: flex;
-  flex-direction: row;
-  height: 76px;
-  margin: 0px;
-}
-.head-backcolor {
-  background-color: #343a40;
-  z-index: 99;
-}
-
-.main {
-  width: 100%;
-  height: auto;
-  flex: 1;
-  margin: 0;
-  display: flex;
-  overflow: auto;
-}
-#footer {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  margin: 0;
-}
-/* #section{
-    width: 100%;
-    height: 100px;
-    bottom: 50;
-    background-color: #333;
-  } */
-#demo1 {
-  width: 100%;
-}
-.afooter {
-  width: 100%;
-  bottom: 0;
-}
-.afooterm {
-  width: 100%;
-  bottom: 0;
-}
-.collp {
-  background-color: #343a40;
-  width: 100%;
-}
-
-.section {
-  width: 100%;
-}
 </style>

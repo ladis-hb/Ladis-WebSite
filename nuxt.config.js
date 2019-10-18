@@ -23,12 +23,21 @@ module.exports = {
       }
     ],
     link: [
-      { rel: "icon", type: "image/x-icon", href: "/favicon.ico" }
-      //{ rel:"stylesheet",type:'stylesheet',href:"https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css"}
+      { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
+      /* {
+        rel: "stylesheet",
+        type: "stylesheet",
+        href: "@/assets/css/bootstrap-ie8.css"
+      },
+      {
+        rel: "stylesheet",
+        type: "stylesheet",
+        href: "@/assets/css/bootstrap-ie9.css"
+      } */
     ],
     script: [
-      //{src:"https://cdn.staticfile.org/jquery/3.3.1/jquery.js"},
-      //{src:"https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"}
+      /* { src: "@/assets/js/bootstrap-ie8.js" },
+      { src: "@/assets/js/bootstrap-ie9.js" } */
     ]
   },
   /*
@@ -39,13 +48,12 @@ module.exports = {
    ** Global CSS
    */
   css: [
-    "@/assets/css/theme-chalk/icon.css",
+    //"@/assets/css/theme-chalk/icon.css",
     "@/assets/css/theme-chalk/message-box.css",
     "quill/dist/quill.snow.css",
     "quill/dist/quill.bubble.css",
     "quill/dist/quill.core.css",
-    "@/assets/main.css",
-    "normalize.css/normalize.css"
+    "@/assets/main.css"
   ],
   /*
   ** Plugins to load before mounting the App
