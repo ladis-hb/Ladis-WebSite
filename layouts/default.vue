@@ -1,8 +1,9 @@
 <template>
   <b-container fluid class="p-0 m-0 ladis-body">
+    <ladis-head></ladis-head>
     <b-row no-gutters id="main" class="ladis-body flex-grow-1 d-flex flex-row">
       <b-col cols="12">
-        <ladis-head></ladis-head>
+        
         <nuxt class="ladis-body"></nuxt>
       </b-col>
       <b-col cols="12" id="footer" class=" d-flex flex-column-reverse">
