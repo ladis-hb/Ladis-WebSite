@@ -1,72 +1,61 @@
 <template>
-  <b-row no-gutters class=" min-vh-100 overflow-auto">
-    <b-col cols="12">
-      <RouterRoad></RouterRoad>
-    </b-col>
-    <b-col cols="12" class=" border-bottom">
-      <h4 class="text-capitalize">{{ title }}</h4>
-    </b-col>
-    <b-col cols="12">
-      <b-row no-gutters class=" p-4">
-        <b-col cols="12" md="6" class="carousel px-2">
-          <b-carousel
-            id="carousel-345"
-            :interval="4000"
-            controls
-            indicators
-            background="#ababab"
-            style="text-shadow: 1px 1px 2px #333;"
-            @sliding-start="onSlideStart"
-            @sliding-end="onSlideEnd"
-          >
-            <b-carousel-slide
-              v-for="(val, key) in all.img"
-              :key="key"
-              :img-src="pic(val)"
-            ></b-carousel-slide>
-          </b-carousel>
-        </b-col>
-        <b-col cols="12" md="6" class="t1 px-2">
-          <div v-html="all.t1.content" v-if="all.t1"></div>
-          <div v-html="all.content_head" v-else></div>
-        </b-col>
-      </b-row>
-    </b-col>
-    <b-col cols="12" class=" p-5 border-top">
-      <b-row>
-        <b-col cols="12" class=" mb-3">
-          <strong>产品特点</strong>
-        </b-col>
-        <b-col cols="12" class="t2">
-          <div v-html="all.t2.content" v-if="all.t2" class="t2-s"></div>
-          <div v-html="all.content_body" v-else class="content-img"></div>
-        </b-col>
-        <b-col cols="12" class="down" v-if="all.t2 && all.t2.type != 'html'">
-          <h4>{{ $t("list._id.q9xyoe") }}</h4>
-          <b-list-group>
-            <b-list-group-item v-for="(val, key) in all.down" :key="key">
-              <b-link target="_blank" :href="pic(val.href)">{{
-                val.title
-              }}</b-link>
-            </b-list-group-item>
-          </b-list-group>
-        </b-col>
-      </b-row>
-    </b-col>
-  </b-row>
-  <!-- <b-container>
-    <b-row id="products_345">
-      <b-col cols="12" class="breadcrumb_345">
+  <b-container>
+    <b-row no-gutters class=" min-vh-100 overflow-auto">
+      <b-col cols="12">
         <RouterRoad></RouterRoad>
       </b-col>
-      <b-col cols="12">
-        
+      <b-col cols="12" class=" border-bottom">
+        <h4 class="text-capitalize">{{ title }}</h4>
       </b-col>
-      
-
-      
+      <b-col cols="12">
+        <b-row no-gutters class=" p-4">
+          <b-col cols="12" md="6" class="carousel px-2">
+            <b-carousel
+              id="carousel-345"
+              :interval="4000"
+              controls
+              indicators
+              background="#ababab"
+              style="text-shadow: 1px 1px 2px #333;"
+              @sliding-start="onSlideStart"
+              @sliding-end="onSlideEnd"
+            >
+              <b-carousel-slide
+                v-for="(val, key) in all.img"
+                :key="key"
+                :img-src="pic(val)"
+              ></b-carousel-slide>
+            </b-carousel>
+          </b-col>
+          <b-col cols="12" md="6" class="t1 px-2">
+            <div v-html="all.t1.content" v-if="all.t1"></div>
+            <div v-html="all.content_head" v-else></div>
+          </b-col>
+        </b-row>
+      </b-col>
+      <b-col cols="12" class=" p-5 border-top">
+        <b-row>
+          <b-col cols="12" class=" mb-3">
+            <strong>产品特点</strong>
+          </b-col>
+          <b-col cols="12" class="t2">
+            <div v-html="all.t2.content" v-if="all.t2" class="t2-s"></div>
+            <div v-html="all.content_body" v-else class="content-img"></div>
+          </b-col>
+          <b-col cols="12" class="down" v-if="all.t2 && all.t2.type != 'html'">
+            <h4>{{ $t("list._id.q9xyoe") }}</h4>
+            <b-list-group>
+              <b-list-group-item v-for="(val, key) in all.down" :key="key">
+                <b-link target="_blank" :href="pic(val.href)">{{
+                  val.title
+                }}</b-link>
+              </b-list-group-item>
+            </b-list-group>
+          </b-col>
+        </b-row>
+      </b-col>
     </b-row>
-  </b-container> -->
+  </b-container>
 </template>
 
 <script>

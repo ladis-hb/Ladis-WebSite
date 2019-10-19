@@ -1,17 +1,20 @@
 <template>
-  <b-container fluid class="m-0 p-0 ladis-body">
-    <b-row no-gutters class="ladis-body d-flex flex-row ">
+  <b-container fluid class="p-0 m-0 ladis-body">
+    <b-row no-gutters id="main" class="ladis-body flex-grow-1 d-flex flex-row">
       <b-col cols="12">
         <ladis-head></ladis-head>
+        <nuxt class="ladis-body"></nuxt>
       </b-col>
-      <b-col cols="12" id="main" class="h-100 cdsxc">
-        <nuxt class=" h-100"></nuxt>
-      </b-col>
-      <b-col cols="12" id="footer" class=" mt-auto">
+      <b-col cols="12" id="footer" class=" d-flex flex-column-reverse">
+        <ladis-footer></ladis-footer>
+        <ladis-section></ladis-section>
+      </b-col> </b-row
+    ><!-- <b-row no-gutters class=" mt-auto">
+      <b-col cols="12" id="footer">
         <ladis-section></ladis-section>
         <ladis-footer></ladis-footer>
       </b-col>
-    </b-row>
+    </b-row> -->
   </b-container>
 </template>
 
@@ -44,7 +47,7 @@ export default {
 };
 </script>
 
-<style>
+<style scss>
 /* html {
   height: 100%;
 }
@@ -53,12 +56,16 @@ body {
   flex-direction: column;
   min-height: 100%;
 } */
-html,
+html {
+  height: 100%;
+}
 body,
 #__nuxt,
-#__layout,
-.ladis-body {
-  min-height: 100%;
+#__layout {
+  height: 100%;
 }
 
+.ladis-body {
+  height: 100%;
+}
 </style>

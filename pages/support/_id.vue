@@ -2,17 +2,17 @@
   <b-container>
     <b-row>
       <b-col cols="12" md="4">
-        <b-list-group class="list-group">
-          <b-list-group-item class="list-head" variant="dark"
-            >{{ $t('_id.tgqqj4') }}</b-list-group-item
-          >
-          <b-list-group-item
-            v-for="(val, key) in support_asid.data"
-            :key="key"
-            :to="{ path: val.href }"
-            >{{ val.title }}</b-list-group-item
-          >
-        </b-list-group>
+        <b-button v-b-toggle.collapse-1 block class=" mt-3">{{ $t("_id.tgqqj4") }}</b-button>
+        <b-collapse id="collapse-1" visible>
+          <b-list-group class="list-group">
+            <b-list-group-item
+              v-for="(val, key) in support_asid.data"
+              :key="key"
+              :to="{ path: val.href }"
+              >{{ val.title }}</b-list-group-item
+            >
+          </b-list-group>
+        </b-collapse>
       </b-col>
       <b-col cols="12" md="8">
         <b-tabs content-class="mt-3" justified>
@@ -39,16 +39,16 @@
                   accordion="my-accordion"
                   role="tabpanel"
                 >
-                  <h5>{{ $t('_id.x9qyll') }}: {{ v1.title }}</h5>
-                  <p>{{ $t('_id.ef2ovw') }}: {{ v1.date }}</p>
-                  <p>{{ $t('_id.puz8nn') }}: {{ v1.platform }}</p>
-                  <p>{{ $t('_id.qi5zqr') }}: {{ v1.language }}</p>
-                  <p>{{ $t('_id.vysc3s') }}: {{ v1.size }}</p>
-                  <p>{{ $t('_id.t03jjv') }}: {{ v1.version }}</p>
-                  <p>{{ $t('_id.bwem5c') }}: {{ v1.updateReason }}</p>
-                  <b-button :href="pig(v1.down)" variant="success"
-                    >{{ $t('_id.e02jgq') }}</b-button
-                  >
+                  <h5>{{ $t("_id.x9qyll") }}: {{ v1.title }}</h5>
+                  <p>{{ $t("_id.ef2ovw") }}: {{ v1.date }}</p>
+                  <p>{{ $t("_id.puz8nn") }}: {{ v1.platform }}</p>
+                  <p>{{ $t("_id.qi5zqr") }}: {{ v1.language }}</p>
+                  <p>{{ $t("_id.vysc3s") }}: {{ v1.size }}</p>
+                  <p>{{ $t("_id.t03jjv") }}: {{ v1.version }}</p>
+                  <p>{{ $t("_id.bwem5c") }}: {{ v1.updateReason }}</p>
+                  <b-button :href="pig(v1.down)" variant="success">{{
+                    $t("_id.e02jgq")
+                  }}</b-button>
                 </b-collapse>
               </b-list-group-item>
             </b-list-group>
