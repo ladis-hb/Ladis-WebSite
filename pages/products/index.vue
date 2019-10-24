@@ -12,12 +12,12 @@
             </b-navbar-nav>
             <div v-for="(val, key) in list" :key="key">
               <b-navbar-nav variant="dark">
-                <b-nav-item :to="{ path: `/products/${val.title}` }">{{
+                <b-nav-item :href="`/products/${val.title}`">{{
                   val.title
                 }}</b-nav-item>
               </b-navbar-nav>
               <b-navbar-nav v-for="(val1, key1) in val.args" :key="key1">
-                <b-nav-item :to="{ path: `/products/${val1.title}` }">{{
+                <b-nav-item :href="`/products/${val1.title}`">{{
                   val1.title
                 }}</b-nav-item>
               </b-navbar-nav>
@@ -37,7 +37,7 @@
           >
             <b-card>
               <b-card-img :src="val.img" :alt="val.title"></b-card-img>
-              <b-link :to="{ path: val.href }" class=" text-dark">{{
+              <b-link :href="val.href" class=" text-dark">{{
                 val.title
               }}</b-link>
             </b-card>

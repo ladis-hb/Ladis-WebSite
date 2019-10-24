@@ -41,7 +41,7 @@
             <b-card :title="key">
               <b-card-body>
                 <span v-for="(i1, k1) in val" :key="k1" class="mx-1"
-                  ><b-link :to="i1.href">{{ i1.title }}</b-link></span
+                  ><b-link :href="i1.href">{{ i1.title }}</b-link></span
                 >
               </b-card-body>
             </b-card>

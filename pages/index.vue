@@ -4,13 +4,12 @@
       <b-carousel
         id="carousel-1"
         v-model="slide"
-        :interval="4000"
+        :interval="3000"
         fade
         controls
         indicators
         background="#ababab"
         img-width="1024"
-        img-height="580"
         style="text-shadow: 1px 1px 2px #333;"
         @sliding-start="onSlideStart"
         @sliding-end="onSlideEnd"
@@ -24,8 +23,8 @@
         ></b-carousel-slide>
       </b-carousel>
     </b-col>
-    <b-col cols="12" class=" bg-dark p-2">
-      <b-row no-gutters>
+    <b-col cols="12" class=" bg-dark p-1">
+      <b-row no-gutters class="">
         <b-col cols="12" md="2" class="d-none d-sm-block d-md-block">
           <b-link :to="{ path: '/news/' }">
             <b-img :src="news.title.src" />
@@ -57,35 +56,15 @@
           </b-link>
         </b-col>
         <b-col cols="12" md="4" class="px-5">
-          <b-link :to="{ path: '/support/监控软件下载' }" class="sales-li">
+          <b-link :to="{ path: '/buy/' }" class="sales-li">
             <b-img-lazy
-              src="/_CMS_NEWS_IMG_/2017-10/27/d71a90e4-b197-497b-80d6-abb20ac2a919.jpg"
+              src="/_CMS_NEWS_IMG_/2017-10/27/5ca0c263-3fd4-486f-923f-8f0762f1d161.jpg"
             ></b-img-lazy>
           </b-link>
         </b-col>
       </b-row>
     </b-col>
   </b-row>
-  <!-- <div class="carousel-main">
-   
-    <div class="carousel">
-      
-    </div>
-
-    
-    <div class="news">
-      
-    </div>
-
-    <div class="after-sales">
-      <div class="sales-title">
-        <h2 class=" m-0">{{ $t("index.1ev0o5") }}</h2>
-      </div>
-      
-    </div>
-  </div>
- -->
-  <!--  -->
 </template>
 
 <script>

@@ -1,32 +1,20 @@
 <template>
-  <b-container fluid class="p-0 m-0 ladis-body">
+  <b-container fluid class="p-0 m-0 ladis-body d-flex flex-column">
+    <!-- head头 -->
     <ladis-head></ladis-head>
-    <b-row no-gutters id="main" class="ladis-body flex-grow-1 d-flex flex-row">
-      <b-col cols="12">
-        
-        <nuxt class="ladis-body"></nuxt>
-      </b-col>
-      <b-col cols="12" id="footer" class=" d-flex flex-column-reverse">
-        <ladis-footer></ladis-footer>
-        <ladis-section></ladis-section>
-      </b-col> </b-row
-    ><!-- <b-row no-gutters class=" mt-auto">
-      <b-col cols="12" id="footer">
-        <ladis-section></ladis-section>
-        <ladis-footer></ladis-footer>
-      </b-col>
-    </b-row> -->
+    <!-- main主体 -->
+    <nuxt class="main-default "></nuxt>
+    <!-- footer -->
+    <ladis-footer class=" mt-auto"></ladis-footer>
   </b-container>
 </template>
 
 <script>
 import ladisHead from "../components/head";
-import ladisSection from "../components/section";
 import ladisFooter from "../components/footer";
 export default {
   components: {
     ladisHead,
-    ladisSection,
     ladisFooter
   },
   data() {
@@ -49,24 +37,16 @@ export default {
 </script>
 
 <style scss>
-/* html {
-  height: 100%;
-}
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100%;
-} */
 html {
   height: 100%;
 }
 body,
 #__nuxt,
-#__layout {
-  height: 100%;
-}
-
+#__layout,
 .ladis-body {
   height: 100%;
+}
+.main-default {
+  flex: 1 0 auto;
 }
 </style>
