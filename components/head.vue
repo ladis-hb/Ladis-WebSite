@@ -1,4 +1,7 @@
 <template>
+  <!-- <div class=" head-h">
+
+  </div> -->
   <b-navbar toggleable="lg" type="dark" variant="dark">
     <b-navbar-brand href="/">
       <img src="/a_images/public/logo.png" />
@@ -7,7 +10,6 @@
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
     <b-collapse id="nav-collapse" is-nav>
-      <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto">
         <b-nav-item-dropdown right>
           <template slot="button-content">
@@ -132,7 +134,7 @@
         >
       </b-navbar-nav>
     </b-collapse>
-  </b-navbar>
+  </b-navbar> 
 </template>
 <script>
 export default {
@@ -151,3 +153,12 @@ export default {
   }
 };
 </script>
+<style scoped>
+.nav-h {
+  height: 56px;
+  z-index: 100;
+}
+.head-h {
+  height: 56px;
+}
+</style>

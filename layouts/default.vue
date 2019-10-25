@@ -1,9 +1,12 @@
 <template>
   <b-container fluid class="p-0 m-0 ladis-body d-flex flex-column">
-    <!-- head头 -->
-    <ladis-head></ladis-head>
-    <!-- main主体 -->
-    <nuxt class="main-default "></nuxt>
+    <div class="main-default">
+      <!-- head头 -->
+      <ladis-head></ladis-head>
+      <!-- main主体 -->
+      <nuxt></nuxt>
+    </div>
+
     <!-- footer -->
     <ladis-footer class=" mt-auto"></ladis-footer>
   </b-container>
@@ -37,16 +40,22 @@ export default {
 </script>
 
 <style scss>
-html {
-  height: 100%;
+@media screen and (min-width: 768px) {
+  .main-default {
+    flex: 1 0 auto;
+  }
 }
+/* @media screen and (max-width: 989px) {
+  .footer-default {
+    margin-top: auto;
+  }
+} */
+
+html,
 body,
 #__nuxt,
 #__layout,
 .ladis-body {
   height: 100%;
-}
-.main-default {
-  flex: 1 0 auto;
 }
 </style>

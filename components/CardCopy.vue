@@ -12,8 +12,8 @@
               ><i>{{ time }}</i></span
             >
             <strong>{{ text }}</strong>
-            <b-link class="my-4 mt-auto card-link" :href="href"
-              >查看详情></b-link
+            <a class="my-4 mt-auto card-link" :href="href" target="_blank"
+              >查看详情></a
             >
           </span>
         </b-card-body>

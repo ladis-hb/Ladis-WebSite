@@ -26,37 +26,35 @@
     <b-col cols="12" class=" bg-dark p-1">
       <b-row no-gutters class="">
         <b-col cols="12" md="2" class="d-none d-sm-block d-md-block">
-          <b-link :to="{ path: '/news/' }">
+          <b-link :href="'/news/'">
             <b-img :src="news.title.src" />
           </b-link>
         </b-col>
         <b-col>
-          <b-link
-            :to="{ path: `/news/${news.newo.title}` }"
-            class=" text-light"
-            >{{ news.newo.title }}</b-link
-          >
+          <b-link :href="`/news/${news.newo.title}`" class=" text-light">{{
+            news.newo.title
+          }}</b-link>
         </b-col>
       </b-row>
     </b-col>
     <b-col cols="12">
       <b-row class=" mb-4" no-gutters>
         <b-col cols="12" md="4" class="px-5">
-          <b-link :to="{ path: '/support/监控软件下载' }" class="sales-li">
+          <b-link :href="'/support/监控软件下载'" class="sales-li">
             <b-img-lazy
               src="/_CMS_NEWS_IMG_/2017-10/27/d71a90e4-b197-497b-80d6-abb20ac2a919.jpg"
             ></b-img-lazy>
           </b-link>
         </b-col>
         <b-col cols="12" md="4" class="px-5">
-          <b-link :to="{ path: '/support/常见问题' }" class="sales-li">
+          <b-link :href="'/support/常见问题'" class="sales-li">
             <b-img-lazy
               src="/_CMS_NEWS_IMG_/2017-10/27/581b3273-d44f-4f43-8b09-24fee8a37af9.jpg"
             ></b-img-lazy>
           </b-link>
         </b-col>
         <b-col cols="12" md="4" class="px-5">
-          <b-link :to="{ path: '/buy/' }" class="sales-li">
+          <b-link :href="'/buy/'" class="sales-li">
             <b-img-lazy
               src="/_CMS_NEWS_IMG_/2017-10/27/5ca0c263-3fd4-486f-923f-8f0762f1d161.jpg"
             ></b-img-lazy>

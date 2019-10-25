@@ -93,6 +93,8 @@ export default {
       }
     },
     Serize(href) {
+      if (href.includes("http://www.ladis.com.cn"))
+        href = href.replace("http://www.ladis.com.cn", "");
       return `http://116.62.48.175${href}`;
     }
   },
