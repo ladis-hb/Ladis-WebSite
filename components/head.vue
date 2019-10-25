@@ -130,7 +130,7 @@
         <b-nav-item
           href="https://cschat-ccs.aliyun.com/index.htm?tntInstId=_1DER4Qq&scene=SCE00003943#/"
           target="_blank"
-          >客服咨询</b-nav-item
+          >{{ $t('head.vnvsqr') }}</b-nav-item
         >
       </b-navbar-nav>
     </b-collapse>
