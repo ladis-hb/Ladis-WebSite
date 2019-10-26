@@ -16,7 +16,7 @@ module.exports = async (ctx, next) => {
       let imgs = query.imgs;
       let rs = await DB.Head.updateOne(
         { title: "Carousel" },
-        { $set: { data: imgs } },
+        { $set: { data: imgs.split("+") } },
         { upsert: true }
       );
       result.msg = "carousel use success";
@@ -43,7 +43,15 @@ module.exports = async (ctx, next) => {
       break;
     case "soft":
       {
-        let { selectSystem, title, platform, selectLanguage, version, update, file } = query;
+        let {
+          selectSystem,
+          title,
+          platform,
+          selectLanguage,
+          version,
+          update,
+          file
+        } = query;
         let fileType = "soft";
         if (file.includes(".pdf")) fileType = "pdf";
         let f = fs.statSync(path.join("static", file));
@@ -71,11 +79,21 @@ module.exports = async (ctx, next) => {
     //产品
     case "product":
       {
-        let { selectType, title, content_head, content_body, indexPic, carouselPic } = query;
+        let {
+          selectType,
+          title,
+          content_head,
+          content_body,
+          indexPic,
+          carouselPic
+        } = query;
         let href = `/products/list/${title}`;
         DB.SaveRouter({ rout: href });
         let titles = { title, href, img: indexPic };
-        await DB.Product.updateOne({ title: selectType }, { $addToSet: { data: titles } });
+        await DB.Product.updateOne(
+          { title: selectType },
+          { $addToSet: { data: titles } }
+        );
         let product_list = new DB.Product_list({
           parant: selectType,
           title,
@@ -111,7 +129,11 @@ module.exports = async (ctx, next) => {
           ac: "[机房空调]"
         };
 
-        DB.Router.updateOne({ rout: route.rout }, { $set: route }, { upsert: true });
+        DB.Router.updateOne(
+          { rout: route.rout },
+          { $set: route },
+          { upsert: true }
+        );
 
         let collection = DB.News;
         let collection_list = DB.News_list;
@@ -125,7 +147,8 @@ module.exports = async (ctx, next) => {
           title,
           data: {
             name: type[editType],
-            time: `${dates.getFullYear()}年${dates.getMonth() + 1}月${dates.getDate()}日`,
+            time: `${dates.getFullYear()}年${dates.getMonth() +
+              1}月${dates.getDate()}日`,
             text: title,
             href,
             img: pic,
@@ -148,13 +171,15 @@ module.exports = async (ctx, next) => {
     //获取图片素材
     case "Get_file_Source":
       {
-        let pic = fs.readdirSync(path.join(__dirname, "../../static/upload")).filter(source => {
-          if (ctx.query.filter && ctx.query.filter !== "") {
-            return source.includes(ctx.query.filter);
-          } else {
-            return source;
-          }
-        });
+        let pic = fs
+          .readdirSync(path.join(__dirname, "../../static/upload"))
+          .filter(source => {
+            if (ctx.query.filter && ctx.query.filter !== "") {
+              return source.includes(ctx.query.filter);
+            } else {
+              return source;
+            }
+          });
         let uploadPiclist = pic.map(img => {
           return `/upload/${img}`;
         });
@@ -163,7 +188,17 @@ module.exports = async (ctx, next) => {
       break;
     //设置经销商列表
     case "dealers":
-      let { daqu, province, city, area, address, tel, linkman, phone, remark } = ctx.query;
+      let {
+        daqu,
+        province,
+        city,
+        area,
+        address,
+        tel,
+        linkman,
+        phone,
+        remark
+      } = ctx.query;
       let stopn = 2;
       if (province === "黑龙江省") stopn = 3;
       province = province
@@ -185,7 +220,10 @@ module.exports = async (ctx, next) => {
         new: true
       };
       result.msg = "已写入数据";
-      result.data = await DB.Buy_list.updateOne({ title: "buy_map" }, { $push: { data: site } });
+      result.data = await DB.Buy_list.updateOne(
+        { title: "buy_map" },
+        { $push: { data: site } }
+      );
       break;
   }
   ctx.body = result;

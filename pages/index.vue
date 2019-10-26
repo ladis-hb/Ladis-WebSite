@@ -27,25 +27,30 @@
           </b-link>
         </b-col>
         <b-col class="d-flex align-items-center">
-          <b-link :href="`/news/${problemTitle}`" class="text-light stretched-link">
-            {{
-            problemTitle
-            }}
+          <b-link
+            :href="`/news/${problemTitle}`"
+            class="text-light stretched-link"
+          >
+            {{ problemTitle }}
           </b-link>
         </b-col>
       </b-row>
     </b-col>
-    <b-col cols="12" md="4" v-for="(val,key) in imgLinks" :key="key">
+    <b-col cols="12" md="4" v-for="(val, key) in imgLinks" :key="key">
       <b-link :href="val.href" class="text-decoration-none">
         <div class="d-flex flex-row">
           <b-img :src="val.src" :alt="val.title" class="w-50 d-inline"></b-img>
           <span class="d-flex flex-column p-4">
-            <h5 class="text-primary">{{val.title}}</h5>
+            <h5 class="text-primary">{{ val.title }}</h5>
             <span class="flex-grow-1 text-dark">
-              <p class="m-0 p-0" v-for="(text,key) in val.content" :key="key">{{text.join('/')}}</p>
+              <p class="m-0 p-0" v-for="(text, key) in val.content" :key="key">
+                {{ text.join("/") }}
+              </p>
             </span>
             <span>
-              <i class="px-2 py-1 rounded-pill bg-secondary text-light">点击进入>></i>
+              <i class="px-2 py-1 rounded-pill bg-secondary text-light"
+                >点击进入>></i
+              >
             </span>
           </span>
         </div>
@@ -58,12 +63,6 @@
 export default {
   data() {
     return {
-      carousel: [
-        "a_images/banner/banner01-pc.jpg",
-        "a_images/banner/banner02-pc.jpg",
-        "a_images/banner/banner03-pc.jpg",
-        "a_images/banner/banner04-pc.jpg"
-      ],
       problemsrc: "a_images/public/information.png",
       problemNum: 0,
       problemTitle: `室外一体化机柜的组成`,
@@ -101,7 +100,19 @@ export default {
     GetNews = GetNews.map(el => {
       return el.title;
     });
-    return { GetNews };
+    let carousel = await $axios.$get(`/api/Get_arg?title=Carousel&table=Head`);
+    console.log(carousel);
+    if (!carousel) {
+      carousel = [
+        "a_images/banner/banner01-pc.jpg",
+        "a_images/banner/banner02-pc.jpg",
+        "a_images/banner/banner03-pc.jpg",
+        "a_images/banner/banner04-pc.jpg"
+      ];
+    } else {
+      carousel =carousel.data;
+    }    
+    return { GetNews, carousel };
   },
   computed: {
     newsNum() {
@@ -139,5 +150,4 @@ export default {
 };
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>
