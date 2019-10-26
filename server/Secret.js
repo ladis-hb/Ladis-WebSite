@@ -4,8 +4,8 @@ const secret = "ladisWebSite";
 const tokenExpiresTime = 1000 * 60 * 60 * 5;
 
 /**
- *
- *
+ *加密函数
+ *payload为加密的数据，数据类型string or object
  * @param {*} { payload, option }
  * @returns
  */
@@ -17,7 +17,7 @@ const JwtSign = ({ payload, option = {} }) => {
 };
 
 /**
- *
+ *解密函数
  *
  * @param {*} { token }
  * @returns

@@ -15,9 +15,7 @@
         <b-carousel-slide
           v-for="(val, key) in carousel"
           :key="key"
-          :caption="val.caption"
-          :text="val.text"
-          :img-src="val.src"
+          :img-src="val"
         ></b-carousel-slide>
       </b-carousel>
     </b-col>
@@ -38,13 +36,13 @@
       </b-row>
     </b-col>
     <b-col cols="12" md="4" v-for="(val,key) in imgLinks" :key="key">
-      <b-link :href="val.href" class=" text-decoration-none">
+      <b-link :href="val.href" class="text-decoration-none">
         <div class="d-flex flex-row">
           <b-img :src="val.src" :alt="val.title" class="w-50 d-inline"></b-img>
           <span class="d-flex flex-column p-4">
             <h5 class="text-primary">{{val.title}}</h5>
             <span class="flex-grow-1 text-dark">
-              <p class=" m-0 p-0" v-for="(text,key) in val.content" :key="key">{{text.join('/')}}</p>
+              <p class="m-0 p-0" v-for="(text,key) in val.content" :key="key">{{text.join('/')}}</p>
             </span>
             <span>
               <i class="px-2 py-1 rounded-pill bg-secondary text-light">点击进入>></i>
@@ -61,27 +59,10 @@ export default {
   data() {
     return {
       carousel: [
-        //text 文字内容 caption 标题
-        {
-          text: "",
-          ption: "",
-          src: "a_images/banner/banner01-pc.jpg"
-        },
-        {
-          text: "",
-          caption: "",
-          src: "a_images/banner/banner02-pc.jpg"
-        },
-        {
-          text: "",
-          caption: "",
-          src: "a_images/banner/banner03-pc.jpg"
-        },
-        {
-          text: "",
-          caption: "",
-          src: "a_images/banner/banner04-pc.jpg"
-        }
+        "a_images/banner/banner01-pc.jpg",
+        "a_images/banner/banner02-pc.jpg",
+        "a_images/banner/banner03-pc.jpg",
+        "a_images/banner/banner04-pc.jpg"
       ],
       problemsrc: "a_images/public/information.png",
       problemNum: 0,

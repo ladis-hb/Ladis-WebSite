@@ -38,3 +38,7 @@ export const Add_Problem = params => {
 export const Add_Soft = params => {
   return ajax({ url: "/edit/soft", params });
 };
+
+export const setCarousel = params => {
+  return ajax({ url: "/edit/setCarousel", params });
+};

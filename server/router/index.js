@@ -15,27 +15,30 @@ router.get("/api/:id", async ctx => {
   const { id } = ctx.params;
   console.log(id);
   switch (id) {
+    //获取官网主页轮播的新闻列表
     case "Get_index_news_list":
       let result1 = await DB.News_list.find()
-        .limit(5)
+        .limit(10)
         .exec();
       ctx.body = result1;
       break;
+      //获取page头文件
     case "Head":
       let head = await DB.Head.findOne({ title: id }); //mongo.findOne({ title: id });
       Head = json2html(head.data);
       ctx.body = Head;
       break;
-
+    //获取产品信息分类列表
     case "Products_list":
       let get_products_list = await DB.Page.findOne({ title: "products_asid" });
       ctx.body = get_products_list.data;
       break;
+      //获取所有产品信息
     case "Products_all":
       let Products_all = await DB.Product.findOne({ title: "All" }); // mongo_Products.findOne({ title: "All" });
       ctx.body = Products_all.data;
       break;
-
+    //获取软件下载列表
     case "Get_support_down_list":
       let Get_support_down_list = await DB.Support.find({
         parent: ctx.query.table

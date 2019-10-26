@@ -1,3 +1,4 @@
+/* jshint esversion:8 */
 const { mongoose, Schema } = require("./momgoose");
 
 const Schema_Product = new Schema(
