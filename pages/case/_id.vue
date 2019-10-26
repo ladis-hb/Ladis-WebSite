@@ -8,7 +8,7 @@
         <div v-if="typeof list === 'string'">
           <div
             id="newsText"
-            class=" px-5 ctlimg content-img"
+            class=" px-5 ctlimg content-img ql-editor"
             v-html="list"
           ></div>
         </div>

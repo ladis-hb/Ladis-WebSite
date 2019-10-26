@@ -25,10 +25,10 @@
       </b-col>
 
       <b-col cols="12" md="5" class="t1">
-        <div v-html="content_head"></div>
+        <div class="ql-editor" v-html="content_head"></div>
       </b-col>
       <b-col cols="12 border-top mt-5">
-        <div v-html="content_body"></div>
+        <div class="ql-editor" v-html="content_body"></div>
       </b-col>
     </b-row>
   </b-container>

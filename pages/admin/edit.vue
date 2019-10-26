@@ -3,6 +3,9 @@
     <b-row class=" h-100">
       <b-col cols="12" md="2" class="bg-info border-top text-center p-3">
         <b-nav vertical id="nav">
+          <b-nav-item :to="{
+                path: '/admin/readme'
+              }">使用说明</b-nav-item>
           <b-nav-item-dropdown text="新闻资讯">
             <b-dropdown-item
               :to="{

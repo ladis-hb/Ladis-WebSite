@@ -28,8 +28,8 @@
             </b-carousel>
           </b-col>
           <b-col cols="12" md="6" class="t1 px-2">
-            <div v-html="all.t1.content" v-if="all.t1"></div>
-            <div v-html="all.content_head" v-else></div>
+            <div  class="ql-editor" v-html="all.t1.content" v-if="all.t1"></div>
+            <div  class="ql-editor" v-html="all.content_head" v-else></div>
           </b-col>
         </b-row>
       </b-col>
