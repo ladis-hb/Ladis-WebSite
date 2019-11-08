@@ -3,7 +3,9 @@ export const state = () => ({
   user: "nuss",
   token: "",
   carouselPics: null,
-  SourceFile: []
+  SourceFile: [],
+  localUrl:"",
+  localSite:true,
 });
 
 export const mutations = {
@@ -21,18 +23,29 @@ export const mutations = {
       ...state.SourceFile,
       { value: payload.path, text: payload.name, fileType: payload.fileType }
     ];
+  },
+  setHost(state,payload){
+    state.localUrl = payload.localUrl;
+    state.localSite = payload.localSite;
   }
 };
 
-/* export const actions = {
+ export const actions = {
   nuxtServerInit({ commit }, { req }) {
     if (req) {
-      console.log("store-------------------------------------");
-      
-      if (req.headers["accept-language"].split(",")[0].includes("en")) {
-        commit("SET_LANG", "en-US");
+      let localUrl = req.headers.host
+      let localSite = true;
+      switch(localUrl){
+        case "localhost":
+        case "www.ladis.com.cn":
+          localSite = true;
+        break;
+        default:
+          localSite = false;
+        break
       }
+      commit("setHost",{localUrl,localSite});      
     }
   }
 };
- */
+ 

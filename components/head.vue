@@ -61,8 +61,8 @@
           <template slot="button-content">
             <em>{{ $t("head.pku7s6") }}</em>
           </template>
-          <b-dropdown-item href="/buy">{{ $t("head.azg9np") }}</b-dropdown-item>
-          <b-dropdown-divider></b-dropdown-divider>
+          <b-dropdown-item href="/buy" v-if="localSite">{{ $t("head.azg9np") }}</b-dropdown-item>
+          <b-dropdown-divider  v-if="localSite"></b-dropdown-divider>
           <b-dropdown-item href="https://leidisi.tmall.com/" target="_blank">{{
             $t("head.1cufnl")
           }}</b-dropdown-item>
@@ -83,10 +83,10 @@
             <em>{{ $t("head.n5tjum") }}</em>
           </template>
 
-          <b-dropdown-item href="/buy/">{{
+          <b-dropdown-item href="/buy/" v-if="localSite">{{
             $t("head.028ccn")
           }}</b-dropdown-item>
-          <b-dropdown-item href="/buy/">{{
+          <b-dropdown-item href="/buy/" v-if="localSite">{{
             $t("head.vy3lqf")
           }}</b-dropdown-item>
           <b-dropdown-item href="/news/">{{
@@ -139,6 +139,7 @@
 <script>
 export default {
   name: "ladis-head",
+  
   methods: {
     Setlang(lang) {
       this.$i18n.setLocaleCookie(lang);
@@ -147,6 +148,9 @@ export default {
     }
   },
   computed: {
+    localSite() {
+      return this.$store.state.localSite 
+    },
     availableLocales() {
       return this.$i18n.locales.filter(i => i.code !== this.$i18n.locale);
     }

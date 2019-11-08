@@ -23,8 +23,8 @@
             <li>
               <strong>{{ $t("section.q5vjss") }}</strong>
             </li>
-            <li>
-              <a href="/buy">{{ $t("section.ps0tuh") }}</a>
+            <li v-if="localSite">
+              <a href="/buy" v-if="localSite">{{ $t("section.ps0tuh") }}</a>
             </li>
             <li>
               <a href="/support/">{{ $t("section.y2a257") }}</a>
@@ -39,8 +39,8 @@
             <li>
               <strong>{{ $t("section.21ws8d") }}</strong>
             </li>
-            <li>
-              <a href="/buy">{{ $t("section.u7wjbw") }}</a>
+            <li v-if="localSite">
+              <a href="/buy" >{{ $t("section.u7wjbw") }}</a>
             </li>
             <li>
               <a href="https://lgsm.tmall.com/">{{ $t("section.6v39gj") }}</a>
@@ -112,7 +112,12 @@
 
 <script>
 export default {
-  name: "ladis-footer"
+  name: "ladis-footer",
+  computed: {
+    localSite() {
+      return this.$store.state.localSite;
+    }
+  }
 };
 </script>
 
