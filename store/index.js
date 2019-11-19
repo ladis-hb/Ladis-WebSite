@@ -37,12 +37,13 @@ export const mutations = {
       let localSite = true;
       switch(localUrl){
         case "localhost":
+        case "116.62.48.175":
         case "www.ladis.com.cn":
           localSite = true;
         break;
         default:
           localSite = false;
-        break
+        break;
       }
       commit("setHost",{localUrl,localSite});      
     }
