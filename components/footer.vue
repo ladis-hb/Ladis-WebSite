@@ -42,7 +42,7 @@
             <li v-if="localSite">
               <a href="/buy" >{{ $t("section.u7wjbw") }}</a>
             </li>
-            <li>
+            <li  v-if="localSite">
               <a href="https://lgsm.tmall.com/">{{ $t("section.6v39gj") }}</a>
             </li>
             <li>
@@ -50,7 +50,7 @@
                 $t("section.k9mydj")
               }}</a>
             </li>
-            <li>
+            <li  v-if="localSite">
               <a href="https://leidisi.tmall.com/" target="_bank">{{
                 $t("section.pfuunc")
               }}</a>

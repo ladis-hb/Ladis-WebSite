@@ -34,7 +34,7 @@
     <b-col cols="12" md="4">
       <b-link :href="imgLinks[0].href" class="text-decoration-none">
         <div class="d-flex flex-row">
-          <b-img :src="imgLinks[0].src" :alt="imgLinks[0].title" class="w-50 d-inline"></b-img>
+          <b-img :src="imgLinks[0].src" :alt="imgLinks[0].title" class="w-50 d-inline h-50"></b-img>
           <span class="d-flex flex-column p-4">
             <h5 class="text-primary">{{ imgLinks[0].title }}</h5>
             <span class="flex-grow-1 text-dark">
@@ -54,7 +54,7 @@
     <b-col cols="12" md="4">
       <b-link :href="imgLinks[1].href" class="text-decoration-none">
         <div class="d-flex flex-row">
-          <b-img :src="imgLinks[1].src" :alt="imgLinks[1].title" class="w-50 d-inline"></b-img>
+          <b-img :src="imgLinks[1].src" :alt="imgLinks[1].title" class="w-50 d-inline h-50"></b-img>
           <span class="d-flex flex-column p-4">
             <h5 class="text-primary">{{ imgLinks[1].title }}</h5>
             <span class="flex-grow-1 text-dark">
@@ -72,22 +72,26 @@
       </b-link>
     </b-col>
     <b-col cols="12" md="4">
-      <b-link
+      <!-- <b-link
         :href="localSite?imgLinks[2].href:'https://cschat-ccs.aliyun.com/index.htm?tntInstId=_1DER4Qq&scene=SCE00003943#/'"
+        class="text-decoration-none"
+      > -->
+      <b-link
+        :href="localSite?imgLinks[2].href:''"
         class="text-decoration-none"
       >
         <div class="d-flex flex-row">
           <b-img
             :src="imgLinks[2].src"
             :alt="localSite?imgLinks[2].title:'服务咨询'"
-            class="w-50 d-inline"
+            class="w-50 d-inline h-50"
           ></b-img>
           <span class="d-flex flex-column p-4">
             <h5 class="text-primary">{{ localSite?imgLinks[2].title:'服务咨询'}}</h5>
             <span class="flex-grow-1 text-dark">
               <p
                 class="m-0 p-0"
-                v-for="(text, key) in localSite?imgLinks[2].content:[['客服咨询']]"
+                v-for="(text, key) in localSite?imgLinks[2].content:[['QQ:15713024']]"
                 :key="key"
               >{{ text.join("/") }}</p>
             </span>
