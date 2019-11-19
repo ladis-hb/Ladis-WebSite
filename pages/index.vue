@@ -13,11 +13,7 @@
         style="text-shadow: 1px 1px 2px #333;"
         @sliding-end="swithProblem"
       >
-        <b-carousel-slide
-          v-for="(val, key) in carousel"
-          :key="key"
-          :img-src="val"
-        ></b-carousel-slide>
+        <b-carousel-slide v-for="(val, key) in carousel" :key="key" :img-src="val"></b-carousel-slide>
       </b-carousel>
     </b-col>
     <b-col cols="12" class="bg-dark p-1">
@@ -31,27 +27,72 @@
           <b-link
             :href="`/news/${problemTitle}`"
             class="text-light stretched-link"
-          >
-            {{ problemTitle }}
-          </b-link>
+          >{{ problemTitle }}</b-link>
         </b-col>
       </b-row>
     </b-col>
-    <b-col cols="12" md="4" v-for="(val, key) in imgLinks" :key="key" >
-      <b-link :href="val.href" class="text-decoration-none">
+    <b-col cols="12" md="4">
+      <b-link :href="imgLinks[0].href" class="text-decoration-none">
         <div class="d-flex flex-row">
-          <b-img :src="val.src" :alt="val.title" class="w-50 d-inline"></b-img>
+          <b-img :src="imgLinks[0].src" :alt="imgLinks[0].title" class="w-50 d-inline"></b-img>
           <span class="d-flex flex-column p-4">
-            <h5 class="text-primary">{{ val.title }}</h5>
+            <h5 class="text-primary">{{ imgLinks[0].title }}</h5>
             <span class="flex-grow-1 text-dark">
-              <p class="m-0 p-0" v-for="(text, key) in val.content" :key="key">
-                {{ text.join("/") }}
-              </p>
+              <p
+                class="m-0 p-0"
+                v-for="(text, key) in imgLinks[0].content"
+                :key="key"
+              >{{ text.join("/") }}</p>
             </span>
             <span>
-              <i class="px-2 py-1 rounded-pill bg-secondary text-light"
-                >点击进入>></i
-              >
+              <i class="px-2 py-1 rounded-pill bg-secondary text-light">点击进入>></i>
+            </span>
+          </span>
+        </div>
+      </b-link>
+    </b-col>
+    <b-col cols="12" md="4">
+      <b-link :href="imgLinks[1].href" class="text-decoration-none">
+        <div class="d-flex flex-row">
+          <b-img :src="imgLinks[1].src" :alt="imgLinks[1].title" class="w-50 d-inline"></b-img>
+          <span class="d-flex flex-column p-4">
+            <h5 class="text-primary">{{ imgLinks[1].title }}</h5>
+            <span class="flex-grow-1 text-dark">
+              <p
+                class="m-0 p-0"
+                v-for="(text, key) in imgLinks[1].content"
+                :key="key"
+              >{{ text.join("/") }}</p>
+            </span>
+            <span>
+              <i class="px-2 py-1 rounded-pill bg-secondary text-light">点击进入>></i>
+            </span>
+          </span>
+        </div>
+      </b-link>
+    </b-col>
+    <b-col cols="12" md="4">
+      <b-link
+        :href="localSite?imgLinks[2].href:'https://cschat-ccs.aliyun.com/index.htm?tntInstId=_1DER4Qq&scene=SCE00003943#/'"
+        class="text-decoration-none"
+      >
+        <div class="d-flex flex-row">
+          <b-img
+            :src="imgLinks[2].src"
+            :alt="localSite?imgLinks[2].title:'服务咨询'"
+            class="w-50 d-inline"
+          ></b-img>
+          <span class="d-flex flex-column p-4">
+            <h5 class="text-primary">{{ localSite?imgLinks[2].title:'服务咨询'}}</h5>
+            <span class="flex-grow-1 text-dark">
+              <p
+                class="m-0 p-0"
+                v-for="(text, key) in localSite?imgLinks[2].content:[['客服咨询']]"
+                :key="key"
+              >{{ text.join("/") }}</p>
+            </span>
+            <span>
+              <i class="px-2 py-1 rounded-pill bg-secondary text-light">点击进入>></i>
             </span>
           </span>
         </div>
@@ -61,7 +102,7 @@
 </template>
 
 <script>
-import picSourec from "../assets/picSourec.json"
+import picSourec from "../assets/picSourec.json";
 export default {
   data() {
     return {
@@ -70,14 +111,14 @@ export default {
       problemTitle: `室外一体化机柜的组成`,
       imgLinks: [
         {
-          src:picSourec.ziliaoxizao,
-            
+          src: picSourec.ziliaoxizao,
+
           href: "/support/监控软件下载",
           title: "资料下载",
           content: [["软件下载", "资质下载"], ["彩页下载", "产品维修"]]
         },
         {
-          src:picSourec.changjianwenti,
+          src: picSourec.changjianwenti,
           href: "/support/常见问题",
           title: "常见问题",
           content: [
@@ -87,11 +128,11 @@ export default {
           ]
         },
         {
-          src:picSourec.fuwuwangdian,
-            
-          href: this.localSite?"/buy/":"https://cschat-ccs.aliyun.com/index.htm?tntInstId=_1DER4Qq&scene=SCE00003943#/",
-          title: this.localSite?"服务网点":"服务咨询",
-          content: this.localSite?[["全国服务网点"]]:[["客服咨询"]]
+          src: picSourec.fuwuwangdian,
+
+          href: "/buy/",
+          title: "服务网点",
+          content: [["全国服务网点"]]
         }
       ]
     };
@@ -111,8 +152,8 @@ export default {
         "a_images/banner/banner04-pc.jpg"
       ];
     } else {
-      carousel =carousel.data;
-    }    
+      carousel = carousel.data;
+    }
     return { GetNews, carousel };
   },
   computed: {
@@ -120,8 +161,8 @@ export default {
       return this.GetNews.length || 0;
     },
     localSite() {
-      return this.$store.state.localSite 
-    },
+      return this.$store.state.localSite;
+    }
   },
   methods: {
     swithProblem() {
@@ -155,7 +196,7 @@ export default {
 </script>
 
 <style lang="scss">
-#carousel-1{
+#carousel-1 {
   min-height: 100%;
 }
 </style>

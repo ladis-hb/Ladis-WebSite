@@ -33,7 +33,7 @@ export const mutations = {
  export const actions = {
   nuxtServerInit({ commit }, { req }) {
     if (req) {
-      let localUrl = req.headers.host
+      let localUrl = req.headers.host;
       let localSite = true;
       switch(localUrl){
         case "localhost":
