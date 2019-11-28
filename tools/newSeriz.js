@@ -213,7 +213,7 @@ async function start() {
   let NewsArray = await Promise.all(News);
   let NewsDataArray = [];
   NewsArray.forEach(element => {
-    if (!element.data.length) return;
+    if (element.data && !element.data.length) return;
     NewsDataArray = [...NewsDataArray, ...element.data];
   });
   //let NewsObject = [Object.assign(NewsArray[0], { data: NewsDataArray })];
