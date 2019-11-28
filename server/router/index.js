@@ -136,6 +136,8 @@ router.get("/api/:id", async ctx => {
     case "Get_arg":
       var table = StrToUpperCase(ctx.query.table);
       var title = ctx.query.title;
+      //console.log(table);
+      
       if (title) ctx.body = await DB[table].findOne({ title });
       else ctx.body = DB[table] ? await DB[table].find() : {};
       break;

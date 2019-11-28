@@ -242,12 +242,10 @@ async function start() {
     );
   }
   //NewsObject是news页面的标题列表,NewsList是详细内容content async
-  let { NewsObject} = await Promise.all(News).then(el => {
-    let NewsObject = el
+  let  NewsObject = await Promise.all(News).then(el => {
+    return el
       .reduce((pre, cu) => {
-        if(!cu) return pre
-        console.log(pre);
-        
+        if(!cu) return pre        
         if (Array.isArray(pre)) return [...pre, ...cu.data];
         return [...cu.data];
       })
@@ -266,7 +264,6 @@ async function start() {
         };
       });
     
-    return { NewsObject };
   });
   let NewsList = [] 
   console.log(`NewsList并发数太高，使用同步策略`);
@@ -274,10 +271,10 @@ async function start() {
   for (const {data} of NewsObject) {
     NewsList.push(await Html_Serialize_Json({
       url: data.link,
-      table: "Case_list",
-      type: "case_list",
+      table: "News_list",
+      type: "news_list",
       title: data.text,
-      parent: "case"
+      parent: "news"
     }))
     console.log("NewsList"+data.text);
     
@@ -286,56 +283,37 @@ async function start() {
     `迭代new success==NewsObject：${NewsObject.length}, NewsList:${NewsList.length}`
   );
 
-  //获取news案例网址链接
-  //下面请求并发数太高，使用同步写法
-  /* let newLength = NewsDataArray.length;
-  let ni = 1;
-  console.log(`new_list迭代数据长度${newLength}`);
-  let NewsList = [];
-  for (let element of NewsDataArray) {
-    console.log(
-      ni >= newLength
-        ? `new_list已迭戈完成`
-        : `当前迭代${ni++}/${newLength},迭代位：${element.text}`
-    );
-    NewsList.push(
-      await Html_Serialize_Json({
-        url: element.link,
-        table: "News_list",
-        type: "news_list",
-        title: element.text,
-        parent: "news"
-      })
-    );
-  } */
   console.log(`进入处理流程，统计数据长度，...vr：${vr.length},
   ...CaseObject：${CaseObject.length},
   ...CaseList：${CaseList.length},
   ...NewsObject：${NewsObject.length},
   ...NewsList：${NewsList.length},`);
 
-  let Rows = [...vr, ...CaseObject, ...CaseList, ...NewsObject, ...NewsList];
-
-  console.log(`操作数据长度${Rows.length}`);
-  for (let i = 0; i < Rows.length; i++) {
-    await update( Rows[i],i)
+  for(let obj of [vr,CaseObject,CaseList,NewsObject, NewsList]){
+    console.log(`开始迭代，操作数据长度${obj.length}`);
+    for(let a of obj){
+      await update(a)
+    }
   }
+
   console.log(`操作success`);
-  async function update(row,i){
+  async function update(row){
     let { parent, title, date, table, data } = await row;
-    if (!table) return console.log(Rows[i]);
-    console.log(i + "/"+table + title);
+    if (!table) return console.log({row,a:"test"});
+    if(title == "精密空调的检测项目都有什么？") console.log(row);
+    
     await DB[table].updateOne(
       { title },
       { $set: { parent, date, table, data } },
       { upsert: true }
     ).then(res=>{
-      console.log(res);
+      //console.log(res);
       
     }).catch(err=>{
       console.log(err);
       
     })
+    return
   }
   //
   Router_Address.forEach(rout => {

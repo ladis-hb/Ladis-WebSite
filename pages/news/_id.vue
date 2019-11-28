@@ -42,15 +42,15 @@ export default {
   },
   async asyncData({ $axios, params, payload }) {
     let id = params.id;
-    let list;
-    if (payload) {
-      list = payload.data;
-    } else {
-      list = await $axios.$get(
-        `/api/Get_arg?table=News_list&title=${encodeURI(id)}`
-      );
-    }
-    return { id, list: list.data, listNew: list.new };
+    let list = await $axios.$get(
+      `/api/Get_arg?table=news_list&title=${encodeURI(id)}`
+    );
+
+    console.log(id);
+    console.log(list);
+    
+
+    return { id,  list: list.data, listNew: list.new };
   },
   head() {
     return {
@@ -60,7 +60,7 @@ export default {
         { name: "description", content: this.id }
       ]
     };
-  }
+  },
 };
 </script>
 
