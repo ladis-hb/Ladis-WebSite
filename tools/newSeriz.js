@@ -35,7 +35,7 @@ async function Html_Serialize_Json({
     file = await Axios.get(Host + url);
   } catch (error) {
     //console.log(error.Error || error);
-    return true;
+    return false;
   }
 
   var $ = cheerio.load(file.data);
@@ -93,7 +93,7 @@ async function Html_Serialize_Json({
     //case list
     case "case_list":
     case "news_list":
-      console.log(`start ${type}/${title}`);
+      // console.log(`start ${type}/${title}`);
 
       let dock = { text: [], pic: [] };
       let list = $(".MsoNormal");
@@ -119,7 +119,26 @@ async function Html_Serialize_Json({
       });
       result.data = dock;
       break;
+    //获取news页面数量
+    /* case "news_lenght":
+      let text = ""
+      let li = $("#CMS_TX_PageDown").text();
+      console.log(li);
+      
+      li.each(function(){
+        text=$(this).text()
+      }).text();
+      let texts = [...text.split("/")[1]];
+      texts.pop();
+      result.data = Number(texts.join("")) + 1;
+      break; */
   }
+  /* setTimeout(() => {
+    
+    console.log(`处理超时，${result.title}++${result.type}`);
+
+    return result;
+  }, 2000); */
   return result;
 }
 
@@ -164,42 +183,54 @@ async function start() {
       })
     );
   }
-  let CaseArray = await Promise.all(Case);
-  let dataArray = [];
-  CaseArray.forEach(element => {
-    dataArray = [...dataArray, ...element.data];
-  });
-  //let CaseObject = [Object.assign(CaseArray[0], { data: dataArray })];
-  let CaseObject = dataArray.map(data => {
-    let timeString = data.time;
-    timeString = timeString.replace("年", "/");
-    timeString = timeString.replace("月", "/");
-    timeString = timeString.replace("日", "/");
-    return Object.assign(
-      {
-        table: "Case",
-        date: new Date(timeString),
+  //等待解析
+  //CaseObject是case页面的标题列表,CaseList是详细内容content async
+  let { CaseObject, CaseList } = await Promise.all(Case).then(el => {
+    let CaseObject = el
+      .reduce((pre, cu) => {
+        if (Array.isArray(pre)) return [...pre, ...cu.data];
+        return [...cu.data];
+      })
+      .map(data => {
+        return {
+          table: "Case",
+          date: new Date(
+            data.time
+              .replace("年", "/")
+              .replace("月", "/")
+              .replace("日", "/")
+          ),
+          title: data.text,
+          parent: "home",
+          data
+        };
+      });
+    let CaseList = CaseObject.map(({ data }) =>
+      Html_Serialize_Json({
+        url: data.link,
+        table: "Case_list",
+        type: "case_list",
         title: data.text,
-        parent: "home"
-      },
-      { data }
+        parent: "case"
+      })
     );
-  });
-  //获取case案例网址链接
 
-  let CaseList = dataArray.map(element => {
-    return Html_Serialize_Json({
-      url: element.link,
-      table: "Case_list",
-      type: "case_list",
-      title: element.text,
-      parent: "case"
-    });
+    return { CaseObject, CaseList };
   });
-
+  console.log(
+    `迭代case success==CaseObject：${CaseObject.length}, CaseList:${CaseList.length}`
+  );
   //news
   const News = [];
-  for (let i = 2; i < 261; i++) {
+  /* let newlenght = await Html_Serialize_Json({
+    url: `/news/index_2_332.shtml`,
+    table: "News",
+    type: "news_lenght",
+    title: "news_list",
+    parent: "home"
+  }); */
+  //页数是js前端渲染的，无法获取，手动指定
+  for (let i = 2; i < 333; i++) {
     News.push(
       Html_Serialize_Json({
         url: `/news/index_2_${i}.shtml`,
@@ -210,32 +241,51 @@ async function start() {
       })
     );
   }
-  let NewsArray = await Promise.all(News);
-  let NewsDataArray = [];
-  NewsArray.forEach(element => {
-    if (element.data && !element.data.length) return;
-    NewsDataArray = [...NewsDataArray, ...element.data];
+  //NewsObject是news页面的标题列表,NewsList是详细内容content async
+  let { NewsObject} = await Promise.all(News).then(el => {
+    let NewsObject = el
+      .reduce((pre, cu) => {
+        if (Array.isArray(pre)) return [...pre, ...cu.data];
+        return [...cu.data];
+      })
+      .map(data => {
+        return {
+          table: "News",
+          date: new Date(
+            data.time
+              .replace("年", "/")
+              .replace("月", "/")
+              .replace("日", "/")
+          ),
+          title: data.text,
+          parent: "home",
+          data
+        };
+      });
+    
+    return { NewsObject };
   });
-  //let NewsObject = [Object.assign(NewsArray[0], { data: NewsDataArray })];
-  let NewsObject = NewsDataArray.map(data => {
-    let timeString = data.time;
-    timeString = timeString.replace("年", "/");
-    timeString = timeString.replace("月", "/");
-    timeString = timeString.replace("日", "/");
-    return Object.assign(
-      {
-        table: "News",
-        date: new Date(timeString),
-        title: data.text,
-        parent: "home"
-      },
-      { data }
-    );
-  });
+  let NewsList = [] 
+  console.log(`NewsList并发数太高，使用同步策略`);
+  
+  for (const {data} of NewsObject) {
+    NewsList.push(await Html_Serialize_Json({
+      url: data.link,
+      table: "Case_list",
+      type: "case_list",
+      title: data.text,
+      parent: "case"
+    }))
+    console.log("NewsList"+data.text);
+    
+  }
+  console.log(
+    `迭代new success==NewsObject：${NewsObject.length}, NewsList:${NewsList.length}`
+  );
 
   //获取news案例网址链接
   //下面请求并发数太高，使用同步写法
-  let newLength = NewsDataArray.length;
+  /* let newLength = NewsDataArray.length;
   let ni = 1;
   console.log(`new_list迭代数据长度${newLength}`);
   let NewsList = [];
@@ -254,37 +304,36 @@ async function start() {
         parent: "news"
       })
     );
-  }
+  } */
+  console.log(`进入处理流程，统计数据长度，...vr：${vr.length},
+  ...CaseObject：${CaseObject.length},
+  ...CaseList：${CaseList.length},
+  ...NewsObject：${NewsObject.length},
+  ...NewsList：${NewsList.length},`);
 
-  let Rows = await Promise.all([
-    ...vr,
-    ...CaseObject,
-    ...CaseList,
-    ...NewsObject,
-    ...NewsList
-  ]);
-  console.log(Router_Address);
-  console.log(`写入router记录`);
+  let Rows = [...vr, ...CaseObject, ...CaseList, ...NewsObject, ...NewsList];
+
+  console.log(`操作数据长度${Rows.length}`);
+  for (let i = 0; i < Rows.length; i++) {
+    update(await Rows[i],i)
+  }
+  console.log(`操作success`);
+  function update(row,i){
+    let { parent, title, date, table, data } =  row;
+    if (!table) return console.log(Rows[i]);
+    console.log(i + "/"+table + title);
+    DB[table].updateOne(
+      { title },
+      { $set: { parent, date, table, data } },
+      { upsert: true }
+    );
+  }
+  //
   Router_Address.forEach(rout => {
+    console.log(`写入router记录${rout}`);
     DB.SaveRouter({ rout });
   });
-  console.log(`操作数据长度${Rows.length}`);
-  for (let element of Rows) {
-    let { parent, title, date, table, data } = element;
-    if (!table) return console.log(element);
-    await DB[table]
-      .updateOne(
-        { title },
-        { $set: { parent, date, table, data } },
-        { upsert: true }
-      )
-      .then(res => {
-        console.log(res);
-      });
-  }
   console.log("New Serize Success ++++++++++++++");
-  //写入router记录
- 
 }
 start();
 
@@ -418,9 +467,13 @@ start();
     ]
   }
 ].forEach(el => {
-  DB.About.updateOne({ title: el.title }, { $set: el }, { upsert: true }).then(
+  DB.About.updateOne(
+    { title: el.title },
+    { $set: el },
+    { upsert: true }
+  ); /* .then(
     res => {
       console.log(res);
     }
-  );
+  ); */
 });
