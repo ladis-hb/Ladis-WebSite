@@ -315,18 +315,24 @@ async function start() {
 
   console.log(`操作数据长度${Rows.length}`);
   for (let i = 0; i < Rows.length; i++) {
-    update(await Rows[i],i)
+    await update( Rows[i],i)
   }
   console.log(`操作success`);
-  function update(row,i){
-    let { parent, title, date, table, data } =  row;
+  async function update(row,i){
+    let { parent, title, date, table, data } = await row;
     if (!table) return console.log(Rows[i]);
     console.log(i + "/"+table + title);
-    DB[table].updateOne(
+    await DB[table].updateOne(
       { title },
       { $set: { parent, date, table, data } },
       { upsert: true }
-    );
+    ).then(res=>{
+      console.log(res);
+      
+    }).catch(err=>{
+      console.log(err);
+      
+    })
   }
   //
   Router_Address.forEach(rout => {
