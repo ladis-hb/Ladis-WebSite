@@ -245,6 +245,9 @@ async function start() {
   let { NewsObject} = await Promise.all(News).then(el => {
     let NewsObject = el
       .reduce((pre, cu) => {
+        if(!cu) return pre
+        console.log(pre);
+        
         if (Array.isArray(pre)) return [...pre, ...cu.data];
         return [...cu.data];
       })
