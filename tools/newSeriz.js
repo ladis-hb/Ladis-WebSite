@@ -162,6 +162,10 @@ async function start() {
       parent: "home"
     })
   );
+  //迭代vr
+  for (const iterator of vr) {
+    await update(iterator);
+  }
   const Case = [];
   Case.push(
     Html_Serialize_Json({
@@ -217,103 +221,70 @@ async function start() {
 
     return { CaseObject, CaseList };
   });
+  for (const iterator of [...CaseObject, ...CaseList]) {
+    await update(iterator);
+  }
   console.log(
     `迭代case success==CaseObject：${CaseObject.length}, CaseList:${CaseList.length}`
   );
-  //news
-  const News = [];
-  /* let newlenght = await Html_Serialize_Json({
-    url: `/news/index_2_332.shtml`,
-    table: "News",
-    type: "news_lenght",
-    title: "news_list",
-    parent: "home"
-  }); */
-  //页数是js前端渲染的，无法获取，手动指定
+
   for (let i = 2; i < 333; i++) {
-    News.push(
-      Html_Serialize_Json({
-        url: `/news/index_2_${i}.shtml`,
+    let NewsObjects = await Html_Serialize_Json({
+      url: `/news/index_2_${i}.shtml`,
+      table: "News",
+      type: "news",
+      title: "news_list",
+      parent: "home"
+    });
+    if (!NewsObjects) continue;
+    for (const NewsObject of NewsObjects.data) {
+      let obj = {
         table: "News",
-        type: "news",
-        title: "news_list",
-        parent: "home"
-      })
-    );
-  }
-  //NewsObject是news页面的标题列表,NewsList是详细内容content async
-  let  NewsObject = await Promise.all(News).then(el => {
-    return el
-      .reduce((pre, cu) => {
-        if(!cu) return pre        
-        if (Array.isArray(pre)) return [...pre, ...cu.data];
-        return [...cu.data];
-      })
-      .map(data => {
-        return {
-          table: "News",
-          date: new Date(
-            data.time
-              .replace("年", "/")
-              .replace("月", "/")
-              .replace("日", "/")
-          ),
-          title: data.text,
-          parent: "home",
-          data
-        };
+        date: new Date(
+          NewsObject.time
+            .replace("年", "/")
+            .replace("月", "/")
+            .replace("日", "/")
+        ),
+        title: NewsObject.text,
+        parent: "home",
+        data: NewsObject
+      };
+      await update(obj);
+      //
+      let NewsList = await Html_Serialize_Json({
+        url: NewsObject.link,
+        table: "News_list",
+        type: "news_list",
+        title: NewsObject.text,
+        parent: "news"
       });
-    
-  });
-  let NewsList = [] 
-  console.log(`NewsList并发数太高，使用同步策略`);
-  
-  for (const {data} of NewsObject) {
-    NewsList.push(await Html_Serialize_Json({
-      url: data.link,
-      table: "News_list",
-      type: "news_list",
-      title: data.text,
-      parent: "news"
-    }))
-    console.log("NewsList"+data.text);
-    
-  }
-  console.log(
-    `迭代new success==NewsObject：${NewsObject.length}, NewsList:${NewsList.length}`
-  );
-
-  console.log(`进入处理流程，统计数据长度，...vr：${vr.length},
-  ...CaseObject：${CaseObject.length},
-  ...CaseList：${CaseList.length},
-  ...NewsObject：${NewsObject.length},
-  ...NewsList：${NewsList.length},`);
-
-  for(let obj of [vr,CaseObject,CaseList,NewsObject, NewsList]){
-    console.log(`开始迭代，操作数据长度${obj.length}`);
-    for(let a of obj){
-      await update(a)
+      if (!NewsList) continue;
+      await update(NewsList);
     }
   }
+  console.log(`迭代new success==NewsObject, NewsList`);
 
   console.log(`操作success`);
-  async function update(row){
+  async function update(row) {
     let { parent, title, date, table, data } = await row;
-    if (!table) return console.log({row,a:"test"});
-    if(title == "精密空调的检测项目都有什么？") console.log(row);
-    
-    await DB[table].updateOne(
-      { title },
-      { $set: { parent, date, table, data } },
-      { upsert: true }
-    ).then(res=>{
-      //console.log(res);
-      
-    }).catch(err=>{
-      console.log(err);
-      
-    })
-    return
+    console.log(`开始迭代，写入表：${table},操作title:${title}`);
+    if (!table) return console.log({ row, a: "test" });
+    if (title == "精密空调的检测项目都有什么？") console.log(row);
+
+    await DB[table]
+      .updateOne(
+        { title },
+        { $set: { parent, date, table, data } },
+        { upsert: true }
+      )
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    return;
   }
   //
   Router_Address.forEach(rout => {

@@ -45,11 +45,6 @@ export default {
     let list = await $axios.$get(
       `/api/Get_arg?table=news_list&title=${encodeURI(id)}`
     );
-
-    console.log(id);
-    console.log(list);
-    
-
     return { id,  list: list.data, listNew: list.new };
   },
   head() {

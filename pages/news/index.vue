@@ -94,20 +94,11 @@ export default {
     }
   },
   async asyncData({ $axios, payload }) {
-    let list = [],
-      listArray = [],
-      backListArray = [];
-    if (payload) {
-    } else {
-      listArray = await $axios.$get(`/api/Get_news_list`);
-    }
-    //Object.values(list).reverse();
-    /* list.forEach(element => {
-      listArray = [...element.data, ...listArray];
-    }); */
+    let backListArray = [];
+    let listArray = await $axios.$get(`/api/Get_news_list`);
     listArray = Object.values(listArray);
     backListArray = Array.from(new Set(listArray));
-    return { list, listArray, backListArray };
+    return { listArray, backListArray };
   },
   head() {
     return {
@@ -120,6 +111,7 @@ export default {
   },
   methods: {
     vrFilter(type) {
+      this.currentPage = 1
       this.listArray = this.backListArray.filter(el => {
         return el.data.name.includes(type) || !type;
       });
