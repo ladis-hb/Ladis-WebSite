@@ -39,7 +39,7 @@
             <strong>产品特点</strong>
           </b-col>
           <b-col cols="12" class="t2">
-            <div v-html="all.t2.content" v-if="all.t2" class="t2-s"></div>
+            <div v-html="all.t2.content" v-if="all.t2" class="t2-s content-img"></div>
             <div v-html="all.content_body" v-else class="content-img"></div>
           </b-col>
           <b-col cols="12" class="down" v-if="all.t2 && all.t2.type != 'html'">
@@ -119,6 +119,10 @@ export default {
 </script>
 
 <style lang="scss">
+img{
+  max-width: 100%;
+  height: auto;
+}
 .content-img img {
   max-width: 100%;
   margin: 10px;

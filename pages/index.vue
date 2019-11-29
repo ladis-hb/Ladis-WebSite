@@ -8,12 +8,16 @@
         controls
         indicators
         background="#ababab"
-        img-width="1024"
-        img-height="480"
         style="text-shadow: 1px 1px 2px #333;"
         @sliding-end="swithProblem"
       >
-        <b-carousel-slide v-for="(val, key) in carousel" :key="key" :img-src="val"></b-carousel-slide>
+        <b-carousel-slide
+          img-width="1024"
+          img-height="480"
+          v-for="(val, key) in carousel"
+          :key="key"
+          :img-src="val"
+        ></b-carousel-slide>
       </b-carousel>
     </b-col>
     <b-col cols="12" class="bg-dark p-1">
@@ -27,14 +31,19 @@
           <b-link
             :href="`/news/${problemTitle}`"
             class="text-light stretched-link"
-          >{{ problemTitle }}</b-link>
+            >{{ problemTitle }}</b-link
+          >
         </b-col>
       </b-row>
     </b-col>
     <b-col cols="12" md="4">
       <b-link :href="imgLinks[0].href" class="text-decoration-none">
         <div class="d-flex flex-row">
-          <b-img :src="imgLinks[0].src" :alt="imgLinks[0].title" class="w-50 d-inline h-50"></b-img>
+          <b-img
+            :src="imgLinks[0].src"
+            :alt="imgLinks[0].title"
+            class="w-50 d-inline h-50"
+          ></b-img>
           <span class="d-flex flex-column p-4">
             <h5 class="text-primary">{{ imgLinks[0].title }}</h5>
             <span class="flex-grow-1 text-dark">
@@ -42,10 +51,14 @@
                 class="m-0 p-0"
                 v-for="(text, key) in imgLinks[0].content"
                 :key="key"
-              >{{ text.join("/") }}</p>
+              >
+                {{ text.join("/") }}
+              </p>
             </span>
             <span>
-              <i class="px-2 py-1 rounded-pill bg-secondary text-light">点击进入>></i>
+              <i class="px-2 py-1 rounded-pill bg-secondary text-light"
+                >点击进入>></i
+              >
             </span>
           </span>
         </div>
@@ -54,7 +67,11 @@
     <b-col cols="12" md="4">
       <b-link :href="imgLinks[1].href" class="text-decoration-none">
         <div class="d-flex flex-row">
-          <b-img :src="imgLinks[1].src" :alt="imgLinks[1].title" class="w-50 d-inline h-50"></b-img>
+          <b-img
+            :src="imgLinks[1].src"
+            :alt="imgLinks[1].title"
+            class="w-50 d-inline h-50"
+          ></b-img>
           <span class="d-flex flex-column p-4">
             <h5 class="text-primary">{{ imgLinks[1].title }}</h5>
             <span class="flex-grow-1 text-dark">
@@ -62,10 +79,14 @@
                 class="m-0 p-0"
                 v-for="(text, key) in imgLinks[1].content"
                 :key="key"
-              >{{ text.join("/") }}</p>
+              >
+                {{ text.join("/") }}
+              </p>
             </span>
             <span>
-              <i class="px-2 py-1 rounded-pill bg-secondary text-light">点击进入>></i>
+              <i class="px-2 py-1 rounded-pill bg-secondary text-light"
+                >点击进入>></i
+              >
             </span>
           </span>
         </div>
@@ -77,26 +98,34 @@
         class="text-decoration-none"
       > -->
       <b-link
-        :href="localSite?imgLinks[2].href:''"
+        :href="localSite ? imgLinks[2].href : ''"
         class="text-decoration-none"
       >
         <div class="d-flex flex-row">
           <b-img
             :src="imgLinks[2].src"
-            :alt="localSite?imgLinks[2].title:'服务咨询'"
+            :alt="localSite ? imgLinks[2].title : '服务咨询'"
             class="w-50 d-inline h-50"
           ></b-img>
           <span class="d-flex flex-column p-4">
-            <h5 class="text-primary">{{ localSite?imgLinks[2].title:'服务咨询'}}</h5>
+            <h5 class="text-primary">
+              {{ localSite ? imgLinks[2].title : "服务咨询" }}
+            </h5>
             <span class="flex-grow-1 text-dark">
               <p
                 class="m-0 p-0"
-                v-for="(text, key) in localSite?imgLinks[2].content:[['QQ:15713024']]"
+                v-for="(text, key) in localSite
+                  ? imgLinks[2].content
+                  : [['QQ:15713024']]"
                 :key="key"
-              >{{ text.join("/") }}</p>
+              >
+                {{ text.join("/") }}
+              </p>
             </span>
             <span>
-              <i class="px-2 py-1 rounded-pill bg-secondary text-light">点击进入>></i>
+              <i class="px-2 py-1 rounded-pill bg-secondary text-light"
+                >点击进入>></i
+              >
             </span>
           </span>
         </div>
@@ -119,7 +148,10 @@ export default {
 
           href: "/support/监控软件下载",
           title: "资料下载",
-          content: [["软件下载", "资质下载"], ["彩页下载", "产品维修"]]
+          content: [
+            ["软件下载", "资质下载"],
+            ["彩页下载", "产品维修"]
+          ]
         },
         {
           src: picSourec.changjianwenti,
