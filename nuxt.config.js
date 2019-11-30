@@ -77,12 +77,17 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     "@nuxtjs/axios",
     //
-    "nuxt-i18n"
+    "nuxt-i18n",
+    //优化图像加载
+    '@bazzite/nuxt-optimized-images',
   ],
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
+  optimizedImages: {
+    optimizeImages: true
+  },
   i18n: {
     locales: [
       {
