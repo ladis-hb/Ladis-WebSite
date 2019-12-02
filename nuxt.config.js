@@ -73,20 +73,37 @@ module.exports = {
   modules: [
     // Doc: https://bootstrap-vue.js.org/docs/
     "bootstrap-vue/nuxt",
-
     // Doc: https://axios.nuxtjs.org/usage
     "@nuxtjs/axios",
     //
     "nuxt-i18n",
     //优化图像加载
+    //https://www.bazzite.com/docs/nuxt-optimized-images/
     '@bazzite/nuxt-optimized-images',
+    //网站地图
+    '@nuxtjs/sitemap'
   ],
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
+  sitemap: {
+    hostname: 'http://www.ladishb.com',
+    gzip: true,
+    exclude: [
+      '/admin/**',
+      '/en/admin/**',
+      '/zh/admin/**'
+    ],
+    routes: async () => {
+      const {data} = await axios.get(`http://116.62.48.175/api/Get_arg?table=router`);  
+      return data.map(router => router.rout)
+    }
+  },
   optimizedImages: {
+    //优化的图像类型
     handleImages: ['jpeg', 'png', 'svg', 'webp', 'gif','jpg'],
+    //开启优化
     optimizeImages: true
   },
   i18n: {
@@ -157,12 +174,12 @@ module.exports = {
             return { x: 0, y: 0 };
         } */
   },
-  generate: {
+  /* generate: {
     //subFolders: false,
     routes: function() {
       return axios.get("http://116.62.48.175/api/GET_router").then(res => {
         return res.data;
       });
     }
-  }
+  } */
 };
