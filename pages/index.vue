@@ -16,7 +16,7 @@
           img-height="480"
           v-for="(val, key) in carousel"
           :key="key"
-          :img-src="val"
+          :img-src="val+'?lqip'"
         ></b-carousel-slide>
       </b-carousel>
     </b-col>

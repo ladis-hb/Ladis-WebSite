@@ -86,6 +86,7 @@ module.exports = {
    ** See https://axios.nuxtjs.org/options
    */
   optimizedImages: {
+    handleImages: ['jpeg', 'png', 'svg', 'webp', 'gif','jpg'],
     optimizeImages: true
   },
   i18n: {
