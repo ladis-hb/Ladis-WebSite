@@ -15,16 +15,7 @@
             >
               <b-form-input id="user" v-model.trim="accont.user"></b-form-input>
             </b-form-group>
-            <b-form-group
-              label="*昵称："
-              label-align="left"
-              label-align-md="right"
-              label-for="name"
-              label-cols="12"
-              label-cols-md="2"
-            >
-              <b-form-input id="name" v-model.trim="accont.name"></b-form-input>
-            </b-form-group>
+           
             <b-form-group
               label="*密码："
               label-align="left"
@@ -54,16 +45,7 @@
                 type="password"
               ></b-form-input>
             </b-form-group>
-            <b-form-group
-              label="电话："
-              label-align="left"
-              label-align-md="right"
-              label-for="tel"
-              label-cols="12"
-              label-cols-md="2"
-            >
-              <b-form-input id="tel" v-model.trim="accont.tel"></b-form-input>
-            </b-form-group>
+           
             <b-form-group
               label="邮箱："
               label-align="left"
@@ -98,12 +80,10 @@ export default {
   data() {
     return {
       accont: {
-        user: "test",
-        name: "测试",
-        passwd: "test123",
-        ck_passwd: "test123",
-        tel: "110",
-        mail: "test@ladis.com"
+        user: "",
+        passwd: "",
+        ck_passwd: "",
+        mail: ""
       },
       ckPW: true
     };

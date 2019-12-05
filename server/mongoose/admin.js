@@ -7,7 +7,7 @@ const Schema_User = new Schema(
     tel: Number,
     mail: String,
     DateTime: { type: Date, default: new Date() },
-    stat: { type: Boolean, default: true },
+    stat: { type: Boolean, default: false },
     Group: { type: String, default: "user" },
     IP: String
   },

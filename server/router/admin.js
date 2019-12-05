@@ -42,7 +42,7 @@ module.exports = async (ctx, next) => {
       {
         let { user, mail, passwd } = ctx.query;
         let scUser = await User.findOne({ $or: [{ user }, { mail }] });
-        if (scUser) ctx.body = { stat: false, msg: "账号名或邮箱重复" };
+        if (scUser) return ctx.body = { stat: false, msg: "账号名或邮箱重复" };
         let userInfo = Object.assign(ctx.query, {
           passwd: formatMD5(passwd),
           IP: ctx.ip
