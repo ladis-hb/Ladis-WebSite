@@ -169,6 +169,8 @@ module.exports = {
   axios: {
     //proxy: true // Can be also an object with default options
     //baseURL: process.env.NODE_ENV === "production" ? "116.62.48.175" : "localhost"
+    proxy:true,
+    credentials:true
   },
 
   proxy: {
