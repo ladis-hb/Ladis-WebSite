@@ -1,6 +1,7 @@
 /* jshint esversion:8 */
 const Router = require("koa-router");
 const Admin = require("./admin");
+const Auth = require("./auth")
 const Upload = require("./upload");
 const Edit = require("./edit");
 const { StrToUpperCase } = require("../util/Format");
@@ -9,6 +10,8 @@ const router = new Router();
 const DB = require("../mongoose/content");
 
 router.get("/administrator/:id", Admin);
+router.post("/api/auth/:id",Auth)
+router.get("/api/auth/:id",Auth)
 router.put("/uploads/:id", Upload);
 router.get("/edit/:id", Edit);
 router.get("/api/:id", async ctx => {

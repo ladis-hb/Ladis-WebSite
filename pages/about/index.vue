@@ -20,11 +20,13 @@
           >
           <b-list-group-item
             class="bg-dark rounded-0 my-1 text-light"
+            v-if="localSite"
             href="/buy/"
             >{{ $t("index.974lfm") }}</b-list-group-item
           >
           <b-list-group-item
             class="bg-dark rounded-0 my-1 text-light"
+            v-if="localSite"
             href="/buy/"
             >{{ $t("index.n747ex") }}</b-list-group-item
           >
@@ -68,6 +70,11 @@ export default {
     return {
       title: `关于我们-雷迪司`
     };
+  },
+  computed: {
+    localSite() {
+      return this.$store.state.localSite;
+    }
   }
 };
 </script>

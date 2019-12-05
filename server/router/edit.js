@@ -225,7 +225,17 @@ module.exports = async (ctx, next) => {
         { $push: { data: site } }
       );
       break;
+    //setAbout
+    case "setAbout":
+      {
+        let { selectType, webSite, content } = ctx.query;
+        result.data = await DB.About.updateOne(
+          { title: selectType },
+          { $set: { webSite, body: content } },
+          {upsert:true}
+        );
+      }
+      break;
   }
   ctx.body = result;
-  await next;
 };

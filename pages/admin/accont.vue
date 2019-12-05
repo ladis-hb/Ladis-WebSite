@@ -38,20 +38,7 @@
                 v-model="accont.passwd"
               ></b-form-input>
             </b-form-group>
-            <b-form-group
-              label="保持登录:"
-              label-cols="12"
-              label-cols-md="4"
-              label-for="keepLogin"
-              label-align="left"
-              label-align-md="right"
-            >
-              <b-form-checkbox
-                id="keepLogin"
-                class=" pt-2"
-                v-model="accont.keep"
-              ></b-form-checkbox>
-            </b-form-group>
+            
             <b-button block variant="info" @click="login">登录</b-button>
           </b-form>
         </div>
@@ -69,15 +56,23 @@ export default {
     return {
       accont: {
         user: this.$route.params.user || "",
-        passwd: this.$route.params.passwd || "",
-        keep: false
+        passwd: this.$route.params.passwd || ""
       }
     };
   },
   methods: {
     async login() {
-      let { user, passwd, keep } = this.$data.accont;
-      if (user == "") {
+      let { user, passwd } = this.$data.accont;
+      if (user == "" || passwd == "")
+        return MessageBox.alert("用户名不能为空或非法字符", "格式错误");
+
+      await this.$auth
+        .loginWith("local", { data: { user, password: md5(passwd) } })
+        .catch(() => {
+          MessageBox.alert("请确认账号或密码是否正确?", "login error");
+        });
+
+      /* if (user == "") {
         return MessageBox.alert("用户名不能为空或非法字符", "格式错误");
       }
       if (passwd == "") {
@@ -106,15 +101,15 @@ export default {
       }
       {
         this.$router.push({ path: "/admin/edit/news", query: { type: "hy" } });
-      }
+      } */
     }
   },
   head() {
     return {
-      title: "官网资讯发布-登录"
+      title: "官网资讯发布"
     };
   },
-  mounted() {
+  /* mounted() {
     let { params } = this.$route;
     if (params.user) return;
     if (Boolean(localStorage.getItem("keep")) || false) {
@@ -122,7 +117,7 @@ export default {
       this.accont.passwd = localStorage.getItem("passwd");
       this.accont.keep = Boolean(localStorage.getItem("keep"));
     }
-  }
+  } */
 };
 </script>
 

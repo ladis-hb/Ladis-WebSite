@@ -3,9 +3,12 @@
     <b-row class=" h-100">
       <b-col cols="12" md="2" class="bg-info border-top text-center p-3">
         <b-nav vertical id="nav">
-          <b-nav-item :to="{
-                path: '/admin/readme'
-              }">使用说明</b-nav-item>
+          <b-nav-item
+            :to="{
+              path: '/admin/readme'
+            }"
+            >使用说明</b-nav-item
+          >
           <b-nav-item-dropdown text="新闻资讯">
             <b-dropdown-item
               :to="{
@@ -67,6 +70,7 @@
             >
           </b-nav-item-dropdown>
           <b-nav-item :to="{ path: '/admin/edit/buy' }">经销商管理</b-nav-item>
+          <b-nav-item :to="{ path: '/admin/edit/about' }">相关管理</b-nav-item>
           <b-nav-item-dropdown text="服务支持">
             <b-dropdown-item
               :to="{
@@ -159,6 +163,7 @@
 
 <script>
 export default {
+  middleware: ['auth'],
   layout: "login",
   //nuxtI18n: false,
   computed: {
@@ -166,7 +171,7 @@ export default {
       return this.$store.state.SourceFile;
     }
   },
-  mounted() {
+ /*  mounted() {
     let user = sessionStorage.getItem("user");
     let token = sessionStorage.getItem("token");
     //console.log({ user, token });
@@ -176,7 +181,7 @@ export default {
       this.$store.commit("setUser", user);
       this.$store.commit("setToken", token);
     }
-  }
+  } */
 };
 </script>
 

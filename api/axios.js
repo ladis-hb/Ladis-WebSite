@@ -42,3 +42,7 @@ export const Add_Soft = params => {
 export const setCarousel = params => {
   return ajax({ url: "/edit/setCarousel", params });
 };
+
+export const setAbout = params =>{
+  return ajax({url:"/edit/setAbout",params})
+}

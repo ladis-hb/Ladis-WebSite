@@ -4,16 +4,18 @@ const consola = require("consola");
 const { Nuxt, Builder } = require("nuxt");
 const router = require("./router/index");
 const body = require("koa-body");
-const mongo = require("koa-mongo");
+//const mongo = require("koa-mongo");
+const error = require("koa-error");
 
 const app = new Koa();
 
 //注册mongo
-app.use(mongo({ db: "ladis" }));
+//app.use(mongo({ db: "ladis" }));
 app.use(async (ctx, next) => {
   ctx.set("Access-Control-Allow-Origin", "*");
-  await next();
+  await next();  
 });
+app.use(error());
 //注册router
 app.use(body());
 app.use(router.routes()).use(router.allowedMethods());

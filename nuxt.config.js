@@ -81,12 +81,32 @@ module.exports = {
     //https://www.bazzite.com/docs/nuxt-optimized-images/
     '@bazzite/nuxt-optimized-images',
     //网站地图
-    '@nuxtjs/sitemap'
+    '@nuxtjs/sitemap',
+    '@nuxtjs/auth'
   ],
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: '/api/auth/login', method: 'post', propertyName: 'token' },
+          logout: { url: '/api/auth/logout', method: 'post' },
+          user: { url: '/api/auth/user', method: 'get', propertyName: 'user' }
+        },
+         tokenRequired: true,
+         tokenType: 'bearer'
+      }
+    },
+    redirect: {
+      login: '/admin/accont',
+      logout: '/admin/accont',
+      //callback: '/admin/edit',
+      home: '/admin/edit'
+    }
+  },
   sitemap: {
     hostname: 'http://www.ladishb.com',
     gzip: true,
@@ -169,6 +189,7 @@ module.exports = {
   },
   //
   router: {
+    //middleware: ['auth']
     //base: "./",
     /* scrollBehavior: function(to, from, savedPosition) {
             return { x: 0, y: 0 };
