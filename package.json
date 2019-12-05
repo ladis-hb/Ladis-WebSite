@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@bazzite/nuxt-optimized-images": "^0.2.2",
+    "@koa/cors": "^3.0.0",
     "@nuxtjs/auth": "^4.8.4",
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/sitemap": "^2.0.1",
