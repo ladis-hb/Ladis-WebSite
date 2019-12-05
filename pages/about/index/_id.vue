@@ -3,8 +3,8 @@
     <div class="pt-5 border-bottom">
       <h5>{{ bodys.title }}</h5>
     </div>
-    <div class="p-5">
-      <p v-for="(val, key) in bodys.body" :key="key" style="text-indent:2em">{{ val }}</p>
+    <div>
+      <b v-html="bodys.body" class=" px-5 ctlimg content-img ql-editor"></b>
     </div>
   </div>
 </template>
@@ -19,6 +19,13 @@ export default {
   }
 };
 </script>
-
-<style>
+<style lang="scss">
+.content-img img {
+  max-width: 100%;
+  margin: 10px;
+}
+#newsText img {
+  max-width: 100% !important;
+  height: auto;
+}
 </style>
