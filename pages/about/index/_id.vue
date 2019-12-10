@@ -13,7 +13,6 @@
 </template>
 
 <script>
-import { getAbout } from "../../../api/axios";
 export default {
   computed: {
     webSite() {
