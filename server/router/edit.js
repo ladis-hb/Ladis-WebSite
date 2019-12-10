@@ -3,7 +3,7 @@ const { validation_jwt_user } = require("../util/Format");
 const DB = require("../mongoose/content");
 const fs = require("fs");
 const path = require("path");
-module.exports = async (ctx, next) => {
+module.exports = async ctx => {
   let id = ctx.params.id;
   let query = ctx.query;
   if (!validation_jwt_user(query.user, query.token)) {
@@ -229,11 +229,34 @@ module.exports = async (ctx, next) => {
     case "setAbout":
       {
         let { selectType, webSite, content } = ctx.query;
-        result.data = await DB.About.updateOne(
-          { title: selectType },
-          { $set: { webSite, body: content } },
-          {upsert:true}
-        );
+        let st = await DB.About.findOne({
+          title: selectType,
+          "content.webSite": webSite
+        });
+        if (st) {
+          result.data = await DB.About.updateOne(
+            { title: selectType, "content.webSite": webSite },
+            { $set: { "content.$.body": content } }
+          );
+        } else {
+          result.data = await DB.About.updateOne(
+            { title: selectType },
+            { $push: { content: { body:content, webSite } } },
+            { upsert: true }
+          );
+        }
+      }
+      break;
+    case "getAbout":
+      {
+        let { selectType, webSite } = ctx.query;
+        result.data = await DB.About.findOne({
+          title: selectType
+        }).then(res => {
+          if (!res) return "";
+          let result = res.content.filter(el => el.webSite == webSite);
+          return result.length > 0 ? result[0].body : "";
+        });
       }
       break;
   }

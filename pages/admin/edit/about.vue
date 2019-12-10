@@ -7,13 +7,11 @@
           <b-form-group label="类型:" label-align="right" label-cols="2">
             <b-form-select v-model="selectType" :options="type"></b-form-select>
           </b-form-group>
-          <b-form-group
-            v-if="selectType == '联系我们'"
-            label="区域网址:"
-            label-align="right"
-            label-cols="2"
-          >
-            <b-form-input v-model.trim="webSite"></b-form-input>
+          <b-form-group label="区域网址:" label-align="right" label-cols="2">
+            <b-form-select
+              v-model="webSite"
+              :options="webSites"
+            ></b-form-select>
           </b-form-group>
         </div>
         <section id="editBody" class="my-3">
@@ -36,7 +34,7 @@
 </template>
 
 <script>
-import { setAbout } from "../../../api/axios";
+import { setAbout, getAbout } from "../../../api/axios";
 import { MessageBox } from "element-ui";
 export default {
   data() {
@@ -50,8 +48,9 @@ export default {
         "使用声明",
         "隐私政策"
       ],
-      selectType: "",
-      webSite: "",
+      selectType: "联系我们",
+      webSites: ["localhost", "www.ladis.com.cn", "www.ladishb.com"],
+      webSite: "localhost",
       content: `<h2 class="ql-align-center"><span class="ql-font-serif">
       Text content loading..</span></h2>`,
 
@@ -74,18 +73,28 @@ export default {
             ["link", "image"] //, "video"]
           ],
           syntax: {
-            highlight: text => hljs.highlightAuto(text).value
+            highlight: text => this.highlightAuto(text).value
           }
         }
       }
     };
+  },
+  watch: {
+    selectType: function(val) {
+      let { selectType, webSite } = this.$data;
+      getAbout({ selectType, webSite }).then(el => (this.content = el.data));
+    },
+    webSite: function(val) {
+      let { selectType, webSite } = this.$data;
+      getAbout({ selectType, webSite }).then(el => (this.content = el.data));
+    }
   },
 
   methods: {
     async SendEdit() {
       let { selectType, webSite, content } = this.$data;
       if (selectType == "") return;
-      setAbout({ selectType, webSite,  content });
+      setAbout({ selectType, webSite, content });
       MessageBox.alert("操作成功");
     },
 

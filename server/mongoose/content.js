@@ -153,10 +153,16 @@ const Schema_CaseNews_list = new Schema(
   },
   { timestamps: true }
 );
+//about
+
 const Schema_About = new Schema({
   title: String,
-  webSite:String,
-  body: String
+  content: [
+    new Schema({
+      webSite: String,
+      body: String
+    })
+  ]
 });
 const Schema_Head = new Schema(
   {

@@ -46,3 +46,7 @@ export const setCarousel = params => {
 export const setAbout = params =>{
   return ajax({url:"/edit/setAbout",params})
 }
+
+export const getAbout = params =>{
+  return ajax({url:"/edit/getAbout",params})
+}

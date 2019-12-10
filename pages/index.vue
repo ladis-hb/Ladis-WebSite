@@ -16,7 +16,7 @@
           img-height="480"
           v-for="(val, key) in carousel"
           :key="key"
-          :img-src="val+'?lqip'"
+          :img-src="val + '?lqip'"
         ></b-carousel-slide>
       </b-carousel>
     </b-col>
@@ -97,39 +97,33 @@
         :href="localSite?imgLinks[2].href:'https://cschat-ccs.aliyun.com/index.htm?tntInstId=_1DER4Qq&scene=SCE00003943#/'"
         class="text-decoration-none"
       > -->
-      <b-link
-        :href="localSite ? imgLinks[2].href : ''"
-        class="text-decoration-none"
-      >
-        <div class="d-flex flex-row">
-          <b-img
-            :src="imgLinks[2].src"
-            :alt="localSite ? imgLinks[2].title : '服务咨询'"
-            class="w-50 d-inline h-50"
-          ></b-img>
-          <span class="d-flex flex-column p-4">
-            <h5 class="text-primary">
-              {{ localSite ? imgLinks[2].title : "服务咨询" }}
-            </h5>
-            <span class="flex-grow-1 text-dark">
-              <p
-                class="m-0 p-0"
-                v-for="(text, key) in localSite
-                  ? imgLinks[2].content
-                  : [['QQ:15713024']]"
-                :key="key"
-              >
-                {{ text.join("/") }}
-              </p>
-            </span>
-            <span>
-              <i class="px-2 py-1 rounded-pill bg-secondary text-light"
-                >点击进入>></i
-              >
-            </span>
+
+      <div class="d-flex flex-row">
+        <b-img
+          :src="imgLinks[2][localUrl].src"
+          class="w-50 d-inline h-50"
+        ></b-img>
+        <span class="d-flex flex-column p-4">
+          <h5 class="text-primary">
+            {{ imgLinks[2][localUrl].title }}
+          </h5>
+          <span class="flex-grow-1 ">
+            <b-link
+              v-for="(sl, key) in imgLinks[2][localUrl]['content']"
+              :key="key"
+              class="text-decoration-none d-block text-dark"
+              :href="sl.src"
+              target="_blank"
+              >{{ sl.text }}</b-link
+            >
           </span>
-        </div>
-      </b-link>
+          <span>
+            <i class="px-2 py-1 rounded-pill bg-secondary text-light"
+              >点击进入>></i
+            >
+          </span>
+        </span>
+      </div>
     </b-col>
   </b-row>
 </template>
@@ -164,11 +158,41 @@ export default {
           ]
         },
         {
-          src: picSourec.fuwuwangdian,
+          localhost: {
+            src: picSourec.fuwuwangdian,
 
-          href: "/buy/",
-          title: "服务网点",
-          content: [["全国服务网点"]]
+            href: "/buy/",
+            title: "服务网点",
+            content: [
+              {
+                text: "全国服务网点",
+                src: "/buy/"
+              }
+            ]
+          },
+          "www.ladis.com.cn": {
+            src: picSourec.fuwuwangdian,
+
+            href: "/buy/",
+            title: "服务网点",
+            content: [
+              {
+                text: "全国服务网点",
+                src: "/buy/"
+              }
+            ]
+          },
+          "www.ladishb.com": {
+            src: picSourec.fuwuwangdian,
+            title: "客户咨询",
+            content: [
+              {
+                text: "QQ:15713024",
+                src: "tencent://message/?Site=baidu.com&uin=15713024&Menu=yes"
+              },
+              { text: "18271826065张先生", src: "#" }
+            ]
+          }
         }
       ]
     };
@@ -198,6 +222,9 @@ export default {
     },
     localSite() {
       return this.$store.state.localSite;
+    },
+    localUrl() {
+      return this.$store.state.localUrl;
     }
   },
   methods: {

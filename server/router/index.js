@@ -1,7 +1,7 @@
 /* jshint esversion:8 */
 const Router = require("koa-router");
 const Admin = require("./admin");
-const Auth = require("./auth")
+const Auth = require("./auth");
 const Upload = require("./upload");
 const Edit = require("./edit");
 const { StrToUpperCase } = require("../util/Format");
@@ -10,8 +10,8 @@ const router = new Router();
 const DB = require("../mongoose/content");
 
 router.get("/administrator/:id", Admin);
-router.post("/api/auth/:id",Auth)
-router.get("/api/auth/:id",Auth)
+router.post("/api/auth/:id", Auth);
+router.get("/api/auth/:id", Auth);
 router.put("/uploads/:id", Upload);
 router.get("/edit/:id", Edit);
 router.get("/api/:id", async ctx => {
@@ -25,7 +25,7 @@ router.get("/api/:id", async ctx => {
         .exec();
       ctx.body = result1;
       break;
-      //获取page头文件
+    //获取page头文件
     case "Head":
       let head = await DB.Head.findOne({ title: id }); //mongo.findOne({ title: id });
       Head = json2html(head.data);
@@ -36,7 +36,7 @@ router.get("/api/:id", async ctx => {
       let get_products_list = await DB.Page.findOne({ title: "products_asid" });
       ctx.body = get_products_list.data;
       break;
-      //获取所有产品信息
+    //获取所有产品信息
     case "Products_all":
       let Products_all = await DB.Product.findOne({ title: "All" }); // mongo_Products.findOne({ title: "All" });
       ctx.body = Products_all.data;
@@ -139,8 +139,6 @@ router.get("/api/:id", async ctx => {
     case "Get_arg":
       var table = StrToUpperCase(ctx.query.table);
       var title = ctx.query.title;
-      //console.log(table);
-      
       if (title) ctx.body = await DB[table].findOne({ title });
       else ctx.body = DB[table] ? await DB[table].find() : {};
       break;
