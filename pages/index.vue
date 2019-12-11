@@ -194,7 +194,7 @@ export default {
                 text: "QQ:15713024",
                 src: "tencent://message/?Site=baidu.com&uin=15713024&Menu=yes"
               },
-              { text: "张先生:18271826065张先生", src: "#" }
+              { text: "张先生:18271826065", src: "#" }
             ]
           }
         }
