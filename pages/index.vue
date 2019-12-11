@@ -111,15 +111,18 @@
             <b-link
               v-for="(sl, key) in imgLinks[2][localUrl]['content']"
               :key="key"
-              class="text-decoration-none d-block text-dark"
+              class="text-decoration-none d-block text-dark mb-1"
               :href="sl.src"
               target="_blank"
               >{{ sl.text }}</b-link
             >
           </span>
           <span>
-            <i class="px-2 py-1 rounded-pill bg-secondary text-light"
-              >点击进入>></i
+            <b-link
+              class="px-2 py-1 rounded-pill bg-secondary text-light"
+              :href="imgLinks[2][localUrl].href"
+              target="_blank"
+              >点击进入>></b-link
             >
           </span>
         </span>
@@ -185,12 +188,13 @@ export default {
           "www.ladishb.com": {
             src: picSourec.fuwuwangdian,
             title: "客户咨询",
+            href: "tencent://message/?Site=baidu.com&uin=15713024&Menu=yes",
             content: [
               {
                 text: "QQ:15713024",
                 src: "tencent://message/?Site=baidu.com&uin=15713024&Menu=yes"
               },
-              { text: "18271826065张先生", src: "#" }
+              { text: "张先生:18271826065张先生", src: "#" }
             ]
           }
         }
