@@ -11,13 +11,15 @@
         style="text-shadow: 1px 1px 2px #333;"
         @sliding-end="swithProblem"
       >
-        <b-carousel-slide
-          img-width="1024"
-          img-height="480"
-          v-for="(val, key) in carousel"
-          :key="key"
-          :img-src="val + '?lqip'"
-        ></b-carousel-slide>
+        <b-carousel-slide v-for="(val, key) in carousel" :key="key">
+          <template v-slot:img>
+            <b-img-lazy
+              v-bind="mainProps"
+              :src="val"
+              alt="Image 1"
+            ></b-img-lazy>
+          </template>
+        </b-carousel-slide>
       </b-carousel>
     </b-col>
     <b-col cols="12" class="bg-dark p-1">
@@ -136,6 +138,14 @@ import picSourec from "../assets/picSourec.json";
 export default {
   data() {
     return {
+      mainProps: {
+        center: true,
+        fluidGrow: true,
+        blank: true,
+        blankColor: "#bbb",
+        width: 600,
+        height: 200
+      },
       problemsrc: "a_images/public/information.png",
       problemNum: 0,
       problemTitle: `室外一体化机柜的组成`,
