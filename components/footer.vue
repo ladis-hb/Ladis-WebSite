@@ -40,9 +40,9 @@
               <strong>{{ $t("section.21ws8d") }}</strong>
             </li>
             <li v-if="localSite">
-              <a href="/buy" >{{ $t("section.u7wjbw") }}</a>
+              <a href="/buy">{{ $t("section.u7wjbw") }}</a>
             </li>
-            <li  v-if="localSite">
+            <li v-if="localSite">
               <a href="https://lgsm.tmall.com/">{{ $t("section.6v39gj") }}</a>
             </li>
             <li>
@@ -50,7 +50,7 @@
                 $t("section.k9mydj")
               }}</a>
             </li>
-            <li  v-if="localSite">
+            <li v-if="localSite">
               <a href="https://leidisi.tmall.com/" target="_bank">{{
                 $t("section.pfuunc")
               }}</a>
@@ -92,16 +92,24 @@
     <b-col cols="12">
       <div class=" bg-dark p-2 d-flex flex-row flex-wrap">
         <b-link href="/sitemap" class=" pr-1">{{ $t("footer.9c708c") }}</b-link>
-        <b-link href="/about/联系我们" class=" pr-1">{{ $t("footer.fp5qvs") }}</b-link>
-        <b-link href="/about/加入我们" class=" pr-1">{{ $t("footer.ce1e0h") }}</b-link>
-        <b-link href="/about/使用声明" class=" pr-1">{{ $t("footer.amhzvr") }}</b-link>
-        <b-link href="/about/隐私政策" class=" pr-1">{{ $t("footer.5d7lkm") }}</b-link>
+        <b-link href="/about/联系我们" class=" pr-1">{{
+          $t("footer.fp5qvs")
+        }}</b-link>
+        <b-link href="/about/加入我们" class=" pr-1">{{
+          $t("footer.ce1e0h")
+        }}</b-link>
+        <b-link href="/about/使用声明" class=" pr-1">{{
+          $t("footer.amhzvr")
+        }}</b-link>
+        <b-link href="/about/隐私政策" class=" pr-1">{{
+          $t("footer.5d7lkm")
+        }}</b-link>
         <span class=" ml-auto">
           <span> <em>© 2019 All Rights Reserved</em> 雷迪司 </span>
           <span>
-            &nbsp; 浙
-            <em>ICP</em>备
-            <em>09040710号</em>
+            <b-link target="_blank" href="http://www.beian.miit.gov.cn">{{
+              ICP[localUrl]
+            }}</b-link>
           </span>
         </span>
       </div>
@@ -113,9 +121,22 @@
 <script>
 export default {
   name: "ladis-footer",
+  data() {
+    return {
+      ICP: {
+        "116.62.48.175": "浙ICP备09040710号",
+        localhost: "浙ICP备09040710号",
+        "www.ladis.com.cn": "浙ICP备09040710号",
+        "www.ladishb.com": "鄂ICP备19029626号-1"
+      }
+    };
+  },
   computed: {
     localSite() {
       return this.$store.state.localSite;
+    },
+    localUrl() {
+      return this.$store.state.localUrl;
     }
   }
 };
