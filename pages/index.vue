@@ -7,6 +7,7 @@
         fade
         controls
         indicators
+        img-height="200"
         background="#ababab"
         style="text-shadow: 1px 1px 2px #333;"
         @sliding-end="swithProblem"
