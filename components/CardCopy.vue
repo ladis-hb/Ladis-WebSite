@@ -2,19 +2,17 @@
   <b-card>
     <b-row no-gutters>
       <b-col cols="12" md="3">
-        <b-card-img-lazy :src="img" :alt="text" class="pic-1"></b-card-img-lazy>
+        <b-card-img-lazy :src="pic" :alt="text" class="pic-1" :onerror="onPic()"></b-card-img-lazy>
       </b-col>
       <b-col cols="12" md="9">
         <b-card-body>
-          <span class=" d-flex flex-column justify-content-center ml-4">
-            <span class=" my-1"
-              ><b class=" text-primary font-weight-bold">{{ title }}</b
-              ><i>{{ time }}</i></span
-            >
+          <span class="d-flex flex-column justify-content-center ml-4">
+            <span class="my-1">
+              <b class="text-primary font-weight-bold">{{ title }}</b>
+              <i>{{ time }}</i>
+            </span>
             <strong>{{ text }}</strong>
-            <a class="my-4 mt-auto card-link" :href="href" target="_blank"
-              >查看详情></a
-            >
+            <a class="my-4 mt-auto card-link" :href="href" target="_blank">查看详情></a>
           </span>
         </b-card-body>
       </b-col>
@@ -31,6 +29,16 @@ export default {
     title: { type: String },
     time: { type: String },
     href: { type: String }
+  },
+  data() {
+    return {
+      pic: this.img
+    };
+  },
+  methods: {
+    onPic() {
+      this.pic = "http://www.ladis.com.cn" + this.img;
+    }
   }
 };
 </script>

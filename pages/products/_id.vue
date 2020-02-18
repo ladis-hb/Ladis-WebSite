@@ -1,6 +1,6 @@
 <template>
   <b-container>
-    <b-row no-gutters class=" h-100">
+    <b-row no-gutters class="h-100">
       <b-col cols="12" md="2" class="list bg-info">
         <b-navbar toggleable="lg" type="dark" variant="info" style="padding:0">
           <b-navbar-toggle target="list-collapse"></b-navbar-toggle>
@@ -12,34 +12,35 @@
             </b-navbar-nav>
             <div v-for="(val, key) in list" :key="key">
               <b-navbar-nav variant="dark">
-                <b-nav-item :to="{ path: `/products/${val.title}` }">{{
+                <b-nav-item :to="{ path: `/products/${val.title}` }">
+                  {{
                   val.title
-                }}</b-nav-item>
+                  }}
+                </b-nav-item>
               </b-navbar-nav>
               <b-navbar-nav v-for="(val1, key1) in val.args" :key="key1">
-                <b-nav-item :to="{ path: `/products/${val1.title}` }">{{
+                <b-nav-item :to="{ path: `/products/${val1.title}` }">
+                  {{
                   val1.title
-                }}</b-nav-item>
+                  }}
+                </b-nav-item>
               </b-navbar-nav>
             </div>
             <hr />
           </b-collapse>
         </b-navbar>
       </b-col>
-      <b-col cols="12" md="10" class=" h-100 overflow-auto">
+      <b-col cols="12" md="10" class="h-100 overflow-auto">
         <b-row no-gutters>
-          <b-col
-            cols="12"
-            md="4"
-            v-for="(val, key) in all"
-            :key="key"
-            class="p-4"
-          >
+          <b-col cols="12" md="4" v-for="(val, key) in all" :key="key" class="p-4">
             <b-card>
-              <b-card-img :src="val.img" :alt="val.title"></b-card-img>
-              <b-link :to="{ path: val.href }" class=" text-dark">{{
+              <my-img :src="val.img" :alt="val.title"></my-img>
+              <!-- <b-card-img :src="val.img" :alt="val.title"></b-card-img> -->
+              <b-link :to="{ path: val.href }" class="text-dark">
+                {{
                 val.title
-              }}</b-link>
+                }}
+              </b-link>
             </b-card>
           </b-col>
         </b-row>
@@ -49,7 +50,9 @@
 </template>
 
 <script>
+import MyImg from "../../components/MyImg";
 export default {
+  components: { MyImg },
   async asyncData({ $axios, params, error, payload }) {
     var list = await $axios.$get("/api/Products_list");
     if (payload) {
