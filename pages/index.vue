@@ -1,5 +1,6 @@
 <template>
   <b-row no-gutters>
+    <!-- 轮播图 -->
     <b-col cols="12">
       <b-carousel
         id="carousel-1"
@@ -23,6 +24,7 @@
         </b-carousel-slide>
       </b-carousel>
     </b-col>
+    <!-- 轮播消息 -->
     <b-col cols="12" class="bg-dark p-1">
       <b-row no-gutters class>
         <b-col md="6" class="d-none d-sm-block d-md-block px-3">
@@ -39,6 +41,7 @@
         </b-col>
       </b-row>
     </b-col>
+    <!-- 3大链接 -->
     <b-col cols="12" md="4">
       <b-link :href="imgLinks[0].href" class="text-decoration-none">
         <div class="d-flex flex-row">
@@ -145,7 +148,7 @@ export default {
         blank: true,
         blankColor: "#bbb",
         width: 600,
-        height: 200
+        height: 100
       },
       problemsrc: "a_images/public/information.png",
       problemNum: 0,
@@ -153,7 +156,6 @@ export default {
       imgLinks: [
         {
           src: picSourec.ziliaoxizao,
-
           href: "/support/监控软件下载",
           title: "资料下载",
           content: [
