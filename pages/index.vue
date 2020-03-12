@@ -355,13 +355,10 @@ export default {
       const Mobile = Img;
       const Pad = Img.replace("mobile", "pad");
       const Pc = Img.replace("mobile", "pc");
-      const ImgStrings = `${Mobile} 320w,
-             ${Pad} 480w,http://localhost/a_images/banner/banner01-mobile.jpg
-             ${Pc} 800w`;
       return [
-        `http://localhost/${Mobile} 320w`,
-        `http://localhost/${Pad} 480w`,
-        `http://localhost/${Pc} 800w`
+        `${Mobile} 320w`,
+        `${Pad} 480w`,
+        `${Pc} 800w`
       ];
     },
     swithProblem() {
