@@ -24,7 +24,6 @@
 <script>
 import { setCarousel } from "../../../api/axios";
 import { mapState } from "vuex";
-import { MessageBox } from "element-ui";
 export default {
   data() {
     return {
@@ -40,9 +39,9 @@ export default {
     async setCarousel() {
       let { data } = await setCarousel({ imgs: this.imgs.join("+") });
       if (data.n === 1) {
-        MessageBox("已成功替换轮播图", "success");
+        this.$bvModal.msgBoxOk("已成功替换轮播图", { title: "success" });
       } else {
-        MessageBox("操作失败，请重试", "error");
+        this.$bvModal.msgBoxOk("操作失败，请重试", { title: "error" });
       }
     }
   }

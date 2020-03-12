@@ -49,7 +49,6 @@
 
 <script>
 import md5 from "md5";
-import { MessageBox } from "element-ui";
 export default {
   layout: "login",
   data() {
@@ -64,44 +63,13 @@ export default {
     async login() {
       let { user, passwd } = this.$data.accont;
       if (user == "" || passwd == "")
-        return MessageBox.alert("用户名不能为空或非法字符", "格式错误");
+        return this.$bvModal.msgBoxOk("用户名不能为空或非法字符",{title:"login error",buttonSize:"sm"})
 
       await this.$auth
         .loginWith("local", { data: { user, password: md5(passwd) } })
         .catch(() => {
-          MessageBox.alert("请确认账号或密码是否正确?", "login error");
+          this.$bvModal.msgBoxOk("请确认账号或密码是否正确?",{title:"login error",buttonSize:"sm"})
         });
-
-      /* if (user == "") {
-        return MessageBox.alert("用户名不能为空或非法字符", "格式错误");
-      }
-      if (passwd == "") {
-        return MessageBox.alert("密码不能为空", "格式错误");
-      }
-      let result = await this.$axios.$get("/administrator/login", {
-        params: { user, passwd: md5(passwd) }
-      });
-      if (result.code !== 5) return MessageBox(result.msg, "login error");
-      sessionStorage.setItem("token", result.data.token);
-      sessionStorage.setItem("user", result.data.user);
-      {
-        if (keep) {
-          localStorage.setItem("user", user);
-          localStorage.setItem("passwd", passwd);
-          localStorage.setItem("keep", "true");
-        } else {
-          localStorage.removeItem("user");
-          localStorage.removeItem("passwd");
-          localStorage.removeItem("keep");
-        }
-      }
-      {
-        this.$store.commit("setUser", result.data.user);
-        this.$store.commit("setToken", result.data.token);
-      }
-      {
-        this.$router.push({ path: "/admin/edit/news", query: { type: "hy" } });
-      } */
     }
   },
   head() {
@@ -109,15 +77,6 @@ export default {
       title: "官网资讯发布"
     };
   },
-  /* mounted() {
-    let { params } = this.$route;
-    if (params.user) return;
-    if (Boolean(localStorage.getItem("keep")) || false) {
-      this.accont.user = localStorage.getItem("user");
-      this.accont.passwd = localStorage.getItem("passwd");
-      this.accont.keep = Boolean(localStorage.getItem("keep"));
-    }
-  } */
 };
 </script>
 

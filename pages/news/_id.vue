@@ -3,7 +3,7 @@
     <b-row>
       <b-col cols="12">
         <div class="my-4 border-bottom">
-          <h5>{{ id }}</h5>
+          <h5 class=" text-center">{{ id }}</h5>
         </div>
         <div v-if="typeof list === 'string'">
           <div id="newsText" class="px-5 ctlimg ql-editor" v-html="list"></div>
@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import MyImg from "../../components/MyImg";
+import MyImg from "@/components/MyImg";
 export default {
   components: {
     MyImg
@@ -52,7 +52,7 @@ export default {
       }
     };
   },
-  async asyncData({ $axios, params, payload }) {
+  async asyncData({ $axios, params }) {
     let id = params.id;
     let list = await $axios.$get(
       `/api/Get_arg?table=news_list&title=${encodeURI(id)}`

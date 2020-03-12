@@ -35,7 +35,6 @@
 
 <script>
 import { setAbout, getAbout } from "../../../api/axios";
-import { MessageBox } from "element-ui";
 export default {
   data() {
     return {
@@ -95,7 +94,7 @@ export default {
       let { selectType, webSite, content } = this.$data;
       if (selectType == "") return;
       setAbout({ selectType, webSite, content });
-      MessageBox.alert("操作成功");
+      this.$bvModal.msgBoxOk("操作成功", { buttonSize: "sm" });
     },
 
     onEditorChange({ html }) {

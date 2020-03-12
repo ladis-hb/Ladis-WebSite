@@ -3,7 +3,7 @@
     <b-row>
       <b-col cols="12">
         <div class="my-4 border-bottom">
-          <h5>{{ id }}</h5>
+          <h5 class=" text-center">{{ id }}</h5>
         </div>
         <div v-if="typeof list === 'string'">
           <div id="newsText" class="px-5 ctlimg content-img ql-editor" v-html="list"></div>
@@ -28,7 +28,11 @@
 </template>
 
 <script>
+import MyImg from "@/components/MyImg";
 export default {
+  components: {
+    MyImg
+  },
   data() {
     return {
       mainProps: {

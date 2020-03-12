@@ -37,7 +37,6 @@
 
 <script>
 import { Add_Dealers } from "../../../api/axios";
-import { MessageBox } from "element-ui";
 import { mapState } from "vuex";
 export default {
   data() {
@@ -77,7 +76,7 @@ export default {
       this.ad.city = city ? city.value : "";
       this.ad.province = province ? province.value : "";
     },
-    Submit() {
+    async Submit() {
       let {
         daqu,
         province,
@@ -92,10 +91,13 @@ export default {
       let info = `区域：${daqu}；省市县(区)：${province}|${city}|${area}；
                 详细地址：${address}；联系人：${linkman}|${tel}|${phone}；
                     备注：${remark}`;
-      MessageBox.confirm(info, "核对信息").then(() => {
-        Add_Dealers(this.ad);
-        MessageBox.alert("添加成功")
+
+      const isQ = await this.$bvModal.msgBoxConfirm(info, {
+        title: "核对信息"
       });
+      if (isQ) {
+        this.$bvModal.msgBoxOk("添加成功");
+      }
     }
   }
 };

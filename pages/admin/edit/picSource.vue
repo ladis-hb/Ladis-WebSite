@@ -12,7 +12,12 @@
                 placeholder="可以多选"
               ></b-form-file>
               <b-input-group-append>
-                <b-button variant="info" @click="Put_file_Source" :disabled="!files">上传</b-button>
+                <b-button
+                  variant="info"
+                  @click="Put_file_Source"
+                  :disabled="!files"
+                  >上传</b-button
+                >
               </b-input-group-append>
             </b-input-group>
             <!-- <b-form-file
@@ -33,9 +38,14 @@
           <b-card-body>
             <div>
               <b-input-group prepend="关键字" class="mt-3">
-                <b-form-input v-model.trim="keyswords" placeholder="默认检索全部文件"></b-form-input>
+                <b-form-input
+                  v-model.trim="keyswords"
+                  placeholder="默认检索全部文件"
+                ></b-form-input>
                 <b-input-group-append>
-                  <b-button variant="info" @click="Get_pic_Source(keyswords)">检索</b-button>
+                  <b-button variant="info" @click="Get_pic_Source(keyswords)"
+                    >检索</b-button
+                  >
                 </b-input-group-append>
               </b-input-group>
             </div>
@@ -54,9 +64,13 @@
                       pill
                       class="ml-2 mb-2"
                       @click="selectSourceFile(file)"
-                    >选中素材</b-button>
+                      >选中素材</b-button
+                    >
                   </b-card-sub-title>
-                  <b-card-img-lazy v-if="file.filetype === 'img'" :src="file.path"></b-card-img-lazy>
+                  <b-card-img-lazy
+                    v-if="file.filetype === 'img'"
+                    :src="file.path"
+                  ></b-card-img-lazy>
                   <b-card-body v-else>
                     <b-link :href="file.path">{{ file.path }}</b-link>
                   </b-card-body>
@@ -74,7 +88,6 @@
 import { Get_pic_Source } from "../../../api/axios";
 import { mapState } from "vuex";
 import { format } from "path";
-import { MessageBox, Loading } from "element-ui";
 export default {
   data() {
     return {
@@ -108,7 +121,6 @@ export default {
 
   methods: {
     Put_file_Source() {
-      let loading = Loading.service({ target: "#source" });
       let data = new FormData();
       data.append("user", sessionStorage.getItem("user"));
       data.append("token", sessionStorage.getItem("token"));
@@ -116,14 +128,12 @@ export default {
         data.append("files", file);
       });
       this.$axios.$put("/uploads/files", data).then(result => {
-        loading.close();
-        MessageBox("上传已完成");
+        this.$bvModal.msgBoxOk("上传已完成");
         this.files = null;
         result.data.forEach(file => {
           this.$store.commit("setSourceFile", file);
         });
       });
-      loading.close();
     },
     async Get_pic_Source(filter) {
       let data = await Get_pic_Source({ filter: filter || "" });

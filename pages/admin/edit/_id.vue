@@ -5,7 +5,10 @@
       <b-card-body>
         <div id="editSelect">
           <b-form-group label="新闻类型:" label-align="right" label-cols="2">
-            <b-form-select v-model="edit.editType" :options="edit.editOption"></b-form-select>
+            <b-form-select
+              v-model="edit.editType"
+              :options="edit.editOption"
+            ></b-form-select>
           </b-form-group>
           <b-form-group label="新闻标题:" label-align="right" label-cols="2">
             <b-form-input v-model.trim="title"></b-form-input>
@@ -23,7 +26,9 @@
           ></div>
         </section>
         <div id="editFooter">
-          <b-button variant="success" class="float-right" @click="SendEdit">确定</b-button>
+          <b-button variant="success" class="float-right" @click="SendEdit"
+            >确定</b-button
+          >
         </div>
       </b-card-body>
     </b-card>
@@ -33,7 +38,6 @@
 <script>
 import { SendNewCaseEdit } from "../../../api/axios";
 import { mapState } from "vuex";
-import { MessageBox } from "element-ui";
 export default {
   //nuxtI18n: false,
   data() {
@@ -115,10 +119,13 @@ export default {
       let { file, content, title } = this.$data;
       let editType = this.edit.editType;
       if (!file || !content || !title || !editType)
-        return MessageBox("参数不能为空", "输入错误");
-      if (title.length > 50) return MessageBox("标题长度过长", "输入错误");
+        return this.$bvModal.msgBoxOk("参数不能为空", { title: "输入错误" });
+      if (title.length > 50)
+        return this.$bvModal.msgBoxOk("标题长度过长", { title: "输入错误" });
       if (file.size > 2048000)
-        return MessageBox("图片大大小不能超过2MB", "输入错误");
+        return this.$bvModal.msgBoxOk("图片大大小不能超过2MB", {
+          title: "输入错误"
+        });
       let params = {
         pic: file,
         content,
@@ -129,19 +136,24 @@ export default {
 
       let result = await SendNewCaseEdit(params);
       if (result.stat) {
-        MessageBox.confirm(result.msg, "编辑成功").then(() => {
-          this.$router.push({ path: result.href });
+        const isQ = await this.$bvModal.msgBoxConfirm(result.msg, {
+          title: "编辑成功"
         });
+        if (isQ) {
+          this.$router.push({ path: result.href });
+        }
       } else {
         switch (result.error) {
           case "tokenValidationError":
-            MessageBox.confirm(result.msg, "提交错误")
-              .then(() => {
-                this.$router.push({ path: "/admin/accont" });
-              })
-              .catch(() => {
-                this.$router.push({ path: "/admin/accont" });
-              });
+            const isQ = await this.$bvModal.msgBoxConfirm(result.msg, {
+              title: "提交错误"
+            });
+            if (isQ) {
+              this.$router.push({ path: "/admin/accont" });
+            } else {
+              this.$router.push({ path: "/admin/accont" });
+            }
+
             break;
         }
       }

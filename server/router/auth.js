@@ -24,8 +24,13 @@ module.exports = async ctx => {
       break;
     case "user":
       let token = ctx.cookies.get("auth._token.local");
-      let { user } = JwtVerify(token.slice(9, token.length));
-      ctx.body = { user };
+      let Users;
+      try {
+        Users = JwtVerify(token.slice(9, token.length));
+      } catch (error) {
+        ctx.body = "token error";
+      }
+      ctx.body = Users;
       break;
     case "logout":
       ctx.body = { stat: true, msg: "success" };

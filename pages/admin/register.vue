@@ -15,7 +15,7 @@
             >
               <b-form-input id="user" v-model.trim="accont.user"></b-form-input>
             </b-form-group>
-           
+
             <b-form-group
               label="*密码："
               label-align="left"
@@ -45,7 +45,7 @@
                 type="password"
               ></b-form-input>
             </b-form-group>
-           
+
             <b-form-group
               label="邮箱："
               label-align="left"
@@ -74,7 +74,6 @@
 
 <script>
 import md5 from "md5";
-import { MessageBox } from "element-ui";
 export default {
   layout: "login",
   data() {
@@ -103,24 +102,38 @@ export default {
     async Register() {
       let validation = this.validation();
       if (validation) {
-        MessageBox.alert(`${validation.key}:带星号为必填`, "输入错误");
+        this.$bvModal.msgBoxOk(`${validation.key}:带星号为必填`, {
+          title: "输入错误",
+          buttonSize: "sm"
+        });
       } else {
         let { user, passwd, ck_passwd } = this.$data.accont;
         if (passwd !== ck_passwd)
-          return MessageBox.alert("密码不一致", "密码错误");
+          return this.$bvModal.msgBoxOk("密码不一致", {
+            title: "输入错误",
+            buttonSize: "sm"
+          });
         let result = await this.$axios.$get("/administrator/register", {
           params: Object.assign(this.$data.accont, { passwd: md5(passwd) })
         });
-        if (!result.stat) return MessageBox.alert(result.msg, "注册错误");
-        else
-          return MessageBox.confirm(result.msg, "注册成功")
-            .then(() => {
-              this.$router.push({
-                name: "admin-accont___zh",
-                params: { user: user, passwd: ck_passwd }
-              });
-            })
-            .catch();
+        if (!result.stat)
+          return this.$bvModal.msgBoxOk(result.msg, {
+            title: "注册错误",
+            buttonSize: "sm"
+          });
+        else {
+          const isQ = await this.$bvModal.msgBoxConfirm(result.msg, {
+            title: "注册成功",
+            buttonSize: "sm"
+          });
+          if (isQ) {
+            this.$router.push({
+              name: "admin-accont___zh",
+              params: { user: user, passwd: ck_passwd }
+            });
+            return;
+          }
+        }
       }
     },
     validation() {

@@ -1,11 +1,55 @@
 /* jshint esversion:8 */
 const { validation_jwt_user } = require("../util/Format");
-const DB = require("../mongoose/content");
+const DBs = require("../mongoose/content");
 const fs = require("fs");
 const path = require("path");
 module.exports = async ctx => {
-  let id = ctx.params.id;
-  let query = ctx.query;
+  // 检查客户端语言环境
+  const isZH = ctx.cookies.get("Ladis_WebSite_I18n") === "zh";
+
+  const DB = (() => {
+    if (isZH) {
+      return {
+        Product: DBs.Product,
+        Product_list: DBs.Product_list,
+        Support: DBs.Support,
+        Support_list: DBs.Support_list,
+        Buy_list: DBs.Buy_list,
+        Buy: DBs.Buy,
+        VR: DBs.VR,
+        Case: DBs.Case,
+        Case_list: DBs.Case_list,
+        News: DBs.News,
+        News_list: DBs.News_list,
+        About: DBs.About,
+        Head: DBs.Head,
+        Page: DBs.Page,
+        Router: DBs.Router,
+        SaveRouter: DBs.SaveRouter
+      };
+    } else {
+      return {
+        Product: DBs.EnProduct,
+        Product_list: DBs.EnProduct_list,
+        Support: DBs.EnSupport,
+        Support_list: DBs.EnSupport_list,
+        Buy_list: DBs.EnBuy_list,
+        Buy: DBs.EnBuy,
+        VR: DBs.EnVR,
+        Case: DBs.EnCase,
+        Case_list: DBs.EnCase_list,
+        News: DBs.EnNews,
+        News_list: DBs.EnNews_list,
+        About: DBs.EnAbout,
+        Head: DBs.Head,
+        Page: DBs.Page,
+        Router: DBs.Router,
+        SaveRouter: DBs.SaveRouter
+      };
+    }
+  })();
+  const id = ctx.params.id;
+  const query = ctx.query;
   if (!validation_jwt_user(query.user, query.token)) {
     ctx.body = { stst: false, code: 0, msg: "tokon erroe" };
   }
@@ -241,7 +285,7 @@ module.exports = async ctx => {
         } else {
           result.data = await DB.About.updateOne(
             { title: selectType },
-            { $push: { content: { body:content, webSite } } },
+            { $push: { content: { body: content, webSite } } },
             { upsert: true }
           );
         }

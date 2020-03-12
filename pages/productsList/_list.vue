@@ -40,17 +40,19 @@
             <strong>产品特点</strong>
           </b-col>
           <b-col cols="12" class="t2">
-            <div v-html="all.t2.content" v-if="all.t2" class="t2-s content-img"></div>
+            <div
+              v-html="all.t2.content"
+              v-if="all.t2"
+              class="t2-s content-img"
+            ></div>
             <div v-html="all.content_body" v-else class="content-img"></div>
           </b-col>
           <b-col cols="12" class="down" v-if="all.t2 && all.t2.type != 'html'">
             <h4>{{ $t("list._id.q9xyoe") }}</h4>
             <b-list-group>
               <b-list-group-item v-for="(val, key) in all.down" :key="key">
-                <b-link target="_blank" :href="pic(val.href)">
-                  {{
-                  val.title
-                  }}
+                <b-link target="_blank" :href="val.href">
+                  {{ val.title }}
                 </b-link>
               </b-list-group-item>
             </b-list-group>
@@ -62,9 +64,12 @@
 </template>
 
 <script>
-import RouterRoad from "../../../components/RouterRoad";
-import MyImg from "../../../components/MyImg";
+import RouterRoad from "@/components/RouterRoad";
+import MyImg from "@/components/MyImg";
 export default {
+ /*  validate ({ params }) {
+    return this.title
+  }, */
   data() {
     return {
       items: [
@@ -85,32 +90,17 @@ export default {
       if (typeof this.all.html.t2 == "string") return true;
     }
   },
-  async asyncData({ $axios, params, error, payload }) {
-    if (payload) {
-      var all = payload.data;
-      var head = payload.head;
-    } else {
-      var all = await $axios.$get(
-        `/api/Get_arg?title=${encodeURI(params.id)}&table=Product_list`
-      );
-      var title = all.title;
-      all = all.data;
-    }
+  async asyncData({ $axios, params }) {
+    const { title, data: all } = await $axios.$get(
+      `/api/Get_arg?title=${encodeURI(params.list)}&table=Product_list`
+    );
+
     return { params, title, all };
   },
-  created() {
-    //console.log(this.all);
-  },
-
   methods: {
     onSlideStart() {},
-    onSlideEnd() {},
-    pic(p) {
-      //return `http://www.ladis.com.cn/${p}`;
-      return p;
-    }
+    onSlideEnd() {}
   },
-
   head() {
     return {
       title: this.title,

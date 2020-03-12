@@ -217,6 +217,20 @@ const About = mongoose.model("about", Schema_About);
 const Head = mongoose.model("Head", Schema_Head);
 const Page = mongoose.model("Page", Schema_Page);
 const Router = mongoose.model("Router", Schema_Router);
+// 英文版
+const EnProduct = mongoose.model("EnProduct", Schema_Product);
+const EnProduct_list = mongoose.model("EnProduct_list", Schema_Product_list);
+const EnSupport = mongoose.model("EnSupport", Schema_Support);
+const EnSupport_list = mongoose.model("EnSupport_list", Schema_Support_list);
+const EnBuy = mongoose.model("EnBuy", Schema_Buy);
+const EnBuy_list = mongoose.model("EnBuy_list", Schema_Buy_list);
+const EnVR = mongoose.model("EnVR", Schema_VR);
+const EnCase = mongoose.model("EnCase", Schema_CaseNews);
+const EnCase_list = mongoose.model("EnCase_list", Schema_CaseNews_list);
+const EnNews = mongoose.model("EnNew", Schema_CaseNews);
+const EnNews_list = mongoose.model("EnNews_list", Schema_CaseNews_list);
+const EnAbout = mongoose.model("Enabout", Schema_About);
+
 
 module.exports = {
   Product,
@@ -234,5 +248,20 @@ module.exports = {
   Head,
   Page,
   Router,
-  SaveRouter
+  SaveRouter,
+  
+  EnProduct,
+  EnProduct_list,
+  EnSupport,
+  EnSupport_list,
+  EnBuy_list,
+  EnBuy,
+  EnVR,
+  EnCase,
+  EnCase_list,
+  EnNews,
+  EnNews_list,
+  EnAbout,
+
+  
 };

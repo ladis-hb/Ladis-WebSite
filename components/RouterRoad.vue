@@ -12,19 +12,24 @@ export default {
       let item = [];
       let rout = "";
       item.push({
-        text: "Home",
+        text: "主页",
         href: "/"
       });
       routers.forEach(r => {
-        rout += "/" + r;
-        item.push({ text: r, href: rout });
+        if(r == "en") return
+        rout += "/" + (r == "productsList" ? "products" : r);
+        item.push({ text: r == "productsList" ? "所有产品" : r, href: rout });
       });
-      console.log(item);
-
       return item;
     }
   }
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.breadcrumb-item {
+  a {
+    color: black;
+  }
+}
+</style>

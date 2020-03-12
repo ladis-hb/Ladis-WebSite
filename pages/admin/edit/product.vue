@@ -11,13 +11,24 @@
             <b-form-input v-model.trim="title"></b-form-input>
           </b-form-group>
           <b-form-group label="产品图片:" label-align="right" label-cols="2">
-            <b-form-select v-model="indexPic" :options="SourceFile"></b-form-select>
+            <b-form-select
+              v-model="indexPic"
+              :options="SourceFile"
+            ></b-form-select>
           </b-form-group>
           <b-form-group label="轮播图片:" label-align="right" label-cols="2">
-            <b-form-select v-model="carouselPic" :options="SourceFile" multiple></b-form-select>
+            <b-form-select
+              v-model="carouselPic"
+              :options="SourceFile"
+              multiple
+            ></b-form-select>
           </b-form-group>
           <b-form-group label="产品介绍:" label-align="right" label-cols="2">
-            <b-form-input disabled v-model.trim="content_head" @click="content = content_head"></b-form-input>
+            <b-form-input
+              disabled
+              v-model.trim="content_head"
+              @click="content = content_head"
+            ></b-form-input>
           </b-form-group>
           <b-form-group label="产品详情:" label-align="right" label-cols="2">
             <b-form-input disabled v-model.trim="content_body"></b-form-input>
@@ -33,10 +44,16 @@
         </section>
 
         <div id="editFooter">
-          <b-button variant="info" @click="Save_content_head">保存为说明</b-button>
-          <b-button variant="info" @click="Save_content_body">保存为内容</b-button>
+          <b-button variant="info" @click="Save_content_head"
+            >保存为说明</b-button
+          >
+          <b-button variant="info" @click="Save_content_body"
+            >保存为内容</b-button
+          >
           <b-button class="ml-5" @click="Preview">预览</b-button>
-          <b-button variant="success" class="float-right" @click="SendEdit">确定</b-button>
+          <b-button variant="success" class="float-right" @click="SendEdit"
+            >确定</b-button
+          >
         </div>
       </b-card-body>
     </b-card>
@@ -46,7 +63,6 @@
 <script>
 import { Add_Product } from "../../../api/axios";
 import { mapState } from "vuex";
-import { MessageBox, Loading } from "element-ui";
 export default {
   data() {
     return {
@@ -128,7 +144,6 @@ export default {
   },
   methods: {
     async SendEdit() {
-      let loading = Loading.service({ target: "#editSelect" });
       let params = {
         selectType: this.selectType,
         title: this.title,
@@ -138,13 +153,14 @@ export default {
         carouselPic: this.carouselPic.join("+")
       };
 
-      let result = await Add_Product(params)
-      loading.close();
-      MessageBox.confirm("编辑成功，是否跳转到页面？", "edit success").then(
-        () => {
-          this.$router.push(result.href);
-        }
+      let result = await Add_Product(params);
+      const isQ = await this.$bvModal.msgBoxConfirm(
+        "编辑成功，是否跳转到页面？",
+        { title: "edit success" }
       );
+      if (isQ) {
+        this.$router.push(result.href);
+      }
     },
     Save_content_head() {
       this.content_head = this.content;

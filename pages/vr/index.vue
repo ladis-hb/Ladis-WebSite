@@ -51,13 +51,9 @@ export default {
   computed: {
     show() {}
   },
-  async asyncData({ $axios, payload }) {
-    let list = [],
-      listArray = [];
-    if (payload) {
-    } else {
-      list = await $axios.$get(`/api/Get_arg?table=VR`);
-    }
+  async asyncData({ $axios }) {
+    const list = await $axios.$get(`/api/Get_arg?table=VR`);
+    let listArray = []
     list.forEach(element => {
       listArray = [...listArray, ...element.data];
     });

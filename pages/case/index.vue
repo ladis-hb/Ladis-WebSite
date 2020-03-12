@@ -92,21 +92,12 @@ export default {
       return this.listArray.length;
     }
   },
-  async asyncData({ $axios, payload }) {
-    let list = [],
-      listArray = [],
-      backListArray = [];
-    if (payload) {
-    } else {
-      listArray = await $axios.$get(`/api/Get_case_list`);
-    }
-    //Object.values(list).reverse();
-    /* list.forEach(element => {
-      listArray = [...element.data, ...listArray];
-    }); */
+  async asyncData({ $axios }) {
+    let listArray = await $axios.$get(`/api/Get_case_list`);
     listArray = Object.values(listArray);
-    backListArray = Array.from(new Set(listArray));
-    return { list, listArray, backListArray };
+    let backListArray = Array.from(new Set(listArray));
+
+    return { listArray, backListArray };
   },
   head() {
     return {

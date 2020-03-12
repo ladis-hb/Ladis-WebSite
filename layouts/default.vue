@@ -1,14 +1,29 @@
 <template>
   <b-container fluid class="p-0 m-0 ladis-body d-flex flex-column">
-    <div class="main-default">
-      <!-- head头 -->
+    <b-row class="main-default" no-gutters>
+      <b-col cols="12">
+        <!-- head头 -->
+        <ladis-head></ladis-head>
+      </b-col>
+    </b-row>
+    <b-row class=" flex-grow-1" no-gutters>
+      <b-col>
+        <nuxt  class=" p-0"></nuxt>
+      </b-col>
+    </b-row>
+
+    <!-- <div class="main-default">
       <ladis-head></ladis-head>
-      <!-- main主体 -->
       <nuxt></nuxt>
     </div>
-
+ -->
     <!-- footer -->
-    <ladis-footer class=" mt-auto"></ladis-footer>
+    <!-- <ladis-footer class=" mt-auto"></ladis-footer> -->
+    <b-row class=" mt-auto" no-gutters>
+      <b-col>
+        <ladis-footer class=" mt-auto"></ladis-footer>
+      </b-col>
+    </b-row>
   </b-container>
 </template>
 
@@ -42,7 +57,7 @@ export default {
 <style scss>
 @media screen and (min-width: 768px) {
   .main-default {
-    flex: 1 0 auto;
+    /* flex: 1 0 auto; */
   }
 }
 /* @media screen and (max-width: 989px) {
