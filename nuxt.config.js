@@ -22,23 +22,8 @@ module.exports = {
         content: process.env.npm_package_description || ""
       }
     ],
-    link: [
-      { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
-      /* {
-        rel: "stylesheet",
-        type: "stylesheet",
-        href: "@/assets/css/bootstrap-ie8.css"
-      },
-      {
-        rel: "stylesheet",
-        type: "stylesheet",
-        href: "@/assets/css/bootstrap-ie9.css"
-      } */
-    ],
-    script: [
-      /* { src: "@/assets/js/bootstrap-ie8.js" },
-      { src: "@/assets/js/bootstrap-ie9.js" } */
-    ]
+    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+    script: []
   },
   /*
    ** Customize the progress-bar color
@@ -79,10 +64,10 @@ module.exports = {
     "nuxt-i18n",
     //优化图像加载
     //https://www.bazzite.com/docs/nuxt-optimized-images/
-    '@bazzite/nuxt-optimized-images',
+    "@bazzite/nuxt-optimized-images",
     //网站地图
-    '@nuxtjs/sitemap',
-    '@nuxtjs/auth'
+    "@nuxtjs/sitemap",
+    "@nuxtjs/auth"
   ],
   /*
    ** Axios module configuration
@@ -92,37 +77,39 @@ module.exports = {
     strategies: {
       local: {
         endpoints: {
-          login: { url: '/api/auth/login', method: 'post', propertyName: 'token' },
-          logout: { url: '/api/auth/logout', method: 'post' },
-          user: { url: '/api/auth/user', method: 'get', propertyName: 'user' }
+          login: {
+            url: "/api/auth/login",
+            method: "post",
+            propertyName: "token"
+          },
+          logout: { url: "/api/auth/logout", method: "post" },
+          user: { url: "/api/auth/user", method: "get", propertyName: "user" }
         },
-         tokenRequired: true,
-         tokenType: 'bearer'
+        tokenRequired: true,
+        tokenType: "bearer"
       }
     },
     redirect: {
-      login: '/admin/accont',
-      logout: '/admin/accont',
+      login: "/admin/accont",
+      logout: "/admin/accont",
       //callback: '/admin/edit',
-      home: '/admin/edit'
+      home: "/admin/edit"
     }
   },
   sitemap: {
-    hostname: 'http://www.ladishb.com',
+    hostname: "http://www.ladishb.com",
     gzip: true,
-    exclude: [
-      '/admin/**',
-      '/en/admin/**',
-      '/zh/admin/**'
-    ],
+    exclude: ["/admin/**", "/en/admin/**", "/zh/admin/**"],
     routes: async () => {
-      const {data} = await axios.get(`http://116.62.48.175/api/Get_arg?table=router`);  
-      return data.map(router => router.rout)
+      const { data } = await axios.get(
+        `http://${this.server.host}:${this.server.port}/api/Get_arg?table=router`
+      );
+      return data.map(router => router.rout);
     }
   },
   optimizedImages: {
     //优化的图像类型
-    handleImages: ['jpeg', 'png', 'svg', 'webp', 'gif','jpg'],
+    handleImages: ["jpeg", "png", "svg", "webp", "gif", "jpg"],
     //开启优化
     optimizeImages: true
   },
@@ -169,8 +156,8 @@ module.exports = {
   axios: {
     //proxy: true // Can be also an object with default options
     //baseURL: process.env.NODE_ENV === "production" ? "116.62.48.175" : "localhost"
-    proxy:true,
-    credentials:true
+    proxy: true,
+    credentials: true
   },
 
   proxy: {
@@ -197,7 +184,7 @@ module.exports = {
     /* scrollBehavior: function(to, from, savedPosition) {
             return { x: 0, y: 0 };
         } */
-  },
+  }
   /* generate: {
     //subFolders: false,
     routes: function() {
