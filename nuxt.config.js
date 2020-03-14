@@ -102,7 +102,7 @@ module.exports = {
     exclude: ["/admin/**", "/en/admin/**", "/zh/admin/**"],
     routes: async () => {
       const { data } = await axios.get(
-        `http://${this.server.host}:${this.server.port}/api/Get_arg?table=router`
+        `http://www.ladishb.com:9005/api/Get_arg?table=router`
       );
       return data.map(router => router.rout);
     }

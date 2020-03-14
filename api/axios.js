@@ -1,11 +1,12 @@
 /* jshint esversion:8 */
 import axios from "axios";
-import config from "../nuxt.config";
 async function ajax({ method = "get", url, baseURL, params }) {
+  console.log(process.env.NODE_ENV);
+  
   let { data } = await axios({
     method: method,
     url: url,
-    baseURL: baseURL || "http://www.ladishb.com:" + config.server.port,
+    baseURL: baseURL || "http://www.ladishb.com:9005",
 
     params: Object.assign(getToken(), params || {})
   });
