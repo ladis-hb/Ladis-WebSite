@@ -32,8 +32,12 @@ export const mutations = {
 
  export const actions = {
   nuxtServerInit({ commit }, { req }) {
+    const forwardedHost = req.headers["x-forwarded-host"]
+    const host = req.headers.host
+    // console.log({forwardedHost,host});
+    
     if (req) {
-      let localUrl = req.headers.host;
+      let localUrl = forwardedHost || host
       let localSite = true;
       switch(localUrl){
         case "localhost":
