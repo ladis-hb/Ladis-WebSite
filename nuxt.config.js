@@ -7,7 +7,7 @@ module.exports = {
    */
   server: {
     port: 9005,
-    host: process.env.NODE_ENV === "production" ? "116.62.48.175" : "localhost"
+    host: process.env.NODE_ENV === "production" ? "0.0.0.0" : "localhost"
   },
   head: {
     meta: [
