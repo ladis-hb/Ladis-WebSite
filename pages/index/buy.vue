@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { Add_Dealers } from "../../../api/axios";
+import { Add_Dealers } from "../../api/axios";
 import { mapState } from "vuex";
 export default {
   data() {

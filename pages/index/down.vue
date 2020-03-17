@@ -166,7 +166,7 @@
 </template>
 
 <script>
-import { Add_Problem, Add_Soft } from "../../../api/axios";
+import { Add_Problem, Add_Soft } from "../../api/axios";
 import { mapState } from "vuex";
 export default {
   data() {

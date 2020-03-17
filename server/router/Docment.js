@@ -4,9 +4,8 @@ const DBs = require("../mongoose/content");
 module.exports = async ctx => {
   // 检查客户端语言环境
   const I18n = ctx.cookies.get("Ladis_WebSite_I18n");
-  console.log(I18n);
-
   const isZH = I18n === "zh";
+  console.log({I18n,isZH,time:new Date().toLocaleTimeString()});
 
   const DB = (() => {
     if (isZH) {

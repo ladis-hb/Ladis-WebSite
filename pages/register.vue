@@ -75,6 +75,7 @@
 <script>
 import md5 from "md5";
 export default {
+  auth:false,
   layout: "login",
   data() {
     return {

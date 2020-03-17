@@ -1,16 +1,11 @@
-/* jshint esversion:8 */
-const axios = require("axios");
-const port = process.env.NODE_ENV === "production" ? 9005 : 9005;
-const host = process.env.NODE_ENV === "production" ? "0.0.0.0" : "localhost";
-const ServerHost = "http://www.ladishb.com";
 module.exports = {
-  mode: "universal",
+  mode: "spa",
   /*
    ** Headers of the page
    */
   server: {
-    port,
-    host
+    port: 9005,
+    host: process.env.NODE_ENV === "production" ? "0.0.0.0" : "localhost"
   },
   head: {
     meta: [
@@ -56,13 +51,6 @@ module.exports = {
     "bootstrap-vue/nuxt",
     // Doc: https://axios.nuxtjs.org/usage
     "@nuxtjs/axios",
-    //
-    "nuxt-i18n",
-    //优化图像加载
-    //https://www.bazzite.com/docs/nuxt-optimized-images/
-    "@bazzite/nuxt-optimized-images",
-    //网站地图
-    "@nuxtjs/sitemap",
     "@nuxtjs/auth"
   ],
   /*
@@ -86,69 +74,13 @@ module.exports = {
       }
     },
     redirect: {
-      login: "/admin/accont",
-      logout: "/admin/accont",
+      login: "/login",
+      logout: "/login",
       //callback: '/admin/edit',
-      home: "/admin/edit"
+      home: "/"
     }
   },
-  sitemap: {
-    hostname: "http://www.ladishb.com",
-    gzip: true,
-    exclude: ["/admin/**", "/en/admin/**", "/zh/admin/**"],
-    routes: async () => {
-      const { data } = await axios.get(
-        `${ServerHost}/api/Get_arg?table=router`
-      );
-      return data.map(router => router.rout);
-    }
-  },
-  optimizedImages: {
-    //优化的图像类型
-    handleImages: ["jpeg", "png", "svg", "webp", "gif", "jpg"],
-    //开启优化
-    optimizeImages: true
-  },
-  i18n: {
-    locales: [
-      {
-        code: "en",
-        name: "English",
-        iso: "en-US"
-      },
-      {
-        code: "zh",
-        name: "简体中文",
-        iso: "zh-CN"
-      }
-    ],
-    defaultLocale: "zh",
-    //翻译文件
-    vueI18n: {
-      fallbackLocale: "zh",
-      messages: {
-        en: require("./locales/en.json"),
-        zh: require("./locales/zh.json")
-      }
-    },
-    //持久化语言
-    detectBrowserLanguage: {
-      useCookie: true,
-      alwaysRedirect: true,
-      cookieKey: "Ladis_WebSite_I18n"
-    },
-    //路由配置
-    strategy: "prefix_except_default"
-    /* parsePages: false,
 
-    pages: {
-      "admin/edit": false,
-      "admin/edit/:id?": false
-    }, */
-    //SEO
-    //baseUrl: 'https://my-nuxt-app.com',
-    //seo: true
-  },
   axios: {
     //proxy: true // Can be also an object with default options
     //baseURL: ServerHost,
@@ -156,13 +88,7 @@ module.exports = {
     credentials: true
   },
 
-  proxy: {
-    /*  "/api": {
-      target: "http://116.62.48.175",
-      changeOrigin: true, // 表示是否跨域
-      pathRewrite: { "^/api/": "" }
-    } */
-  },
+  proxy: {},
 
   /*
    ** Build configuration
@@ -175,18 +101,6 @@ module.exports = {
   },
   //
   router: {
-    //middleware: ['auth']
-    //base: "./",
-    /* scrollBehavior: function(to, from, savedPosition) {
-            return { x: 0, y: 0 };
-        } */
+    middleware: ["auth"]
   }
-  /* generate: {
-    //subFolders: false,
-    routes: function() {
-      return axios.get("http://116.62.48.175/api/GET_router").then(res => {
-        return res.data;
-      });
-    }
-  } */
 };

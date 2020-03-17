@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { setCarousel } from "../../../api/axios";
+import { setCarousel } from "../../api/axios";
 import { mapState } from "vuex";
 export default {
   data() {

@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { setAbout, getAbout } from "../../../api/axios";
+import { setAbout, getAbout } from "../../api/axios";
 export default {
   data() {
     return {

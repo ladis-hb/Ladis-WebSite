@@ -85,7 +85,7 @@
 </template>
 
 <script>
-import { Get_pic_Source } from "../../../api/axios";
+import { Get_pic_Source } from "../../api/axios";
 import { mapState } from "vuex";
 import { format } from "path";
 export default {

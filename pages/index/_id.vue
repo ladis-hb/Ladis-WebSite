@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { SendNewCaseEdit } from "../../../api/axios";
+import { SendNewCaseEdit } from "../../api/axios";
 import { mapState } from "vuex";
 export default {
   //nuxtI18n: false,

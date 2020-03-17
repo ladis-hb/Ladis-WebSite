@@ -12,7 +12,7 @@ const app = new Koa();
 
 //注册mongo
 //app.use(mongo({ db: "ladis" }));
-app.use(cors());
+app.use(cors({}));
 app.use(error());
 //注册router
 app.use(body());

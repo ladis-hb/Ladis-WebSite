@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import { Add_Product } from "../../../api/axios";
+import { Add_Product } from "../../api/axios";
 import { mapState } from "vuex";
 export default {
   data() {
