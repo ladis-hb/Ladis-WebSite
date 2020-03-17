@@ -2,7 +2,8 @@
   <b-card>
     <b-row no-gutters>
       <b-col cols="12" md="3">
-        <b-card-img-lazy :src="pic" :alt="text" class="pic-1" :onerror="onPic()"></b-card-img-lazy>
+        <my-img  :src="pic" :alt="text" class="pic-1"></my-img>
+        <!-- <b-card-img-lazy :src="pic" :alt="text" class="pic-1"></b-card-img-lazy> -->
       </b-col>
       <b-col cols="12" md="9">
         <b-card-body>
@@ -21,7 +22,9 @@
 </template>
 
 <script>
+import MyImg from "@/components/MyImg";
 export default {
+  components:{MyImg},
   name: "CardCopy",
   props: {
     img: { type: String },
@@ -34,11 +37,6 @@ export default {
     return {
       pic: this.img
     };
-  },
-  methods: {
-    onPic() {
-      this.pic = "http://www.ladis.com.cn" + this.img;
-    }
   }
 };
 </script>

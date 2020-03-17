@@ -1,8 +1,10 @@
 <template>
   <b-container>
-    <b-row>
-      <b-col cols="12" md="4">
-        <b-button v-b-toggle.collapse-1 block class=" mt-3">{{ $t("_id.tgqqj4") }}</b-button>
+    <b-row no-gutters>
+      <b-col md="4" class="d-none d-sm-block">
+        <b-button v-b-toggle.collapse-1 block class=" mt-3">{{
+          $t("_id.tgqqj4")
+        }}</b-button>
         <b-collapse id="collapse-1" visible>
           <b-list-group class="list-group">
             <b-list-group-item
@@ -14,7 +16,7 @@
           </b-list-group>
         </b-collapse>
       </b-col>
-      <b-col cols="12" md="8">
+      <b-col md="8">
         <b-tabs content-class="mt-3" justified>
           <b-tab v-for="(val, key) in downs" :key="key" :title="val.title">
             <b-list-group>
@@ -46,7 +48,7 @@
                   <p>{{ $t("_id.vysc3s") }}: {{ v1.size }}</p>
                   <p>{{ $t("_id.t03jjv") }}: {{ v1.version }}</p>
                   <p>{{ $t("_id.bwem5c") }}: {{ v1.updateReason }}</p>
-                  <b-button :href="pig(v1.down)" variant="success">{{
+                  <b-button :href="v1.down" variant="success">{{
                     $t("_id.e02jgq")
                   }}</b-button>
                 </b-collapse>
@@ -60,31 +62,22 @@
 </template>
 
 <script>
-import { types } from "util";
+import { GeneralGetInfo } from "../../api/axios";
 export default {
-  async asyncData({ $axios, params, error, payload }) {
-    var support_asid = await $axios.$get("/api/Get_arg", {
-      params: { table: "Page", title: "support_asid" }
+  async asyncData({ $axios, params }) {
+    const title = params.id;
+    const support_asid = await GeneralGetInfo($axios, {
+      table: "Page",
+      title: "support_asid"
     });
-    if (payload) {
-    } else {
-      var downs = await $axios.$get(
-        `/api/Get_support_down_list?table=${encodeURI(params.id)}`
-      );
-    }
-    var title = params.id;
+    const downs = await GeneralGetInfo($axios, {
+      table: "Support",
+      parent: title
+    });
 
     return { support_asid, downs, title };
   },
-
-  created() {
-    console.log(this.title);
-  },
   methods: {
-    pig(p) {
-      //return `http://www.ladis.com.cn/${p}`;
-      return p;
-    },
     fileTypeFilter(file, type) {
       let result = [];
       for (let i of file) {

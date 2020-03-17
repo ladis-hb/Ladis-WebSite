@@ -4,7 +4,7 @@
       <b-col>
         <b-container>
           <b-row class="mb-5">
-            <b-col cols="12" sm="4" md="2">
+            <b-col cols="6" sm="4" md="2">
               <ul>
                 <li>
                   <strong>{{ $t("section.gk11oe") }}</strong>
@@ -20,7 +20,7 @@
                 </li>
               </ul>
             </b-col>
-            <b-col cols="12" sm="4" md="2">
+            <b-col cols="6" sm="4" md="2">
               <ul>
                 <li>
                   <strong>{{ $t("section.q5vjss") }}</strong>
@@ -36,7 +36,7 @@
                 </li>
               </ul>
             </b-col>
-            <b-col cols="12" sm="4" md="3">
+            <b-col cols="6" sm="4" md="3">
               <ul>
                 <li>
                   <strong>{{ $t("section.21ws8d") }}</strong>
@@ -61,7 +61,7 @@
                 </li>
               </ul>
             </b-col>
-            <b-col cols="12" sm="4" md="2">
+            <b-col cols="6" sm="4" md="2">
               <ul>
                 <li>
                   <strong>{{ $t("section.567cgp") }}</strong>
@@ -74,7 +74,7 @@
                 </li>
               </ul>
             </b-col>
-            <b-col cols="12" sm="4" md="2">
+            <b-col cols="6" sm="4" md="2">
               <ul>
                 <li>
                   <strong>{{ $t("section.ri1giq") }}</strong>
@@ -110,7 +110,7 @@
           <b-link href="/about/使用声明" class=" pr-1">{{
             $t("footer.amhzvr")
           }}</b-link>
-          <b-link href="/about/隐私政策" class=" pr-1">{{
+          <b-link href="/about" class=" pr-1">{{
             $t("footer.5d7lkm")
           }}</b-link>
           <span class=" ml-auto">
@@ -158,7 +158,17 @@ export default {
     max-width: 20%;
     height: fit-content;
   }
+  ul{
+    list-style: inside;
+    padding-left: 2rem;
+  }
+  
 }
+
+ul{
+    list-style: none;
+    padding-left: 0;
+  }
 
 * {
   color: rgba(255, 255, 255, 0.5);

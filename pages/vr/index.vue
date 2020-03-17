@@ -1,6 +1,6 @@
 <template>
   <b-container>
-    <b-row>
+    <b-row no-gutters>
       <b-col cols="12" md="3">
         <b-list-group class=" my-4 text-light">
           <b-list-group-item class=" bg-dark rounded-0 my-1">{{
@@ -39,6 +39,7 @@
 
 <script>
 import CardCopy from "../../components/CardCopy";
+import { GeneralGetInfo } from "../../api/axios";
 export default {
   components: {
     CardCopy
@@ -52,8 +53,8 @@ export default {
     show() {}
   },
   async asyncData({ $axios }) {
-    const list = await $axios.$get(`/api/Get_arg?table=VR`);
-    let listArray = []
+    const list = await GeneralGetInfo($axios, { table: "VR" }); //$axios.$get(`/api/Get_arg?table=VR`);
+    let listArray = [];
     list.forEach(element => {
       listArray = [...listArray, ...element.data];
     });

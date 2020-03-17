@@ -48,11 +48,11 @@ module.exports = async ctx => {
       };
     }
   })();
+  // validation
+  console.log(ctx.cookies);
+  
+  // api
   const id = ctx.params.id;
-  const query = ctx.query;
-  if (!validation_jwt_user(query.user, query.token)) {
-    ctx.body = { stst: false, code: 0, msg: "tokon erroe" };
-  }
   let result = { code: 200, msg: "success", stat: true, data: query };
   switch (id) {
     //set Carousel

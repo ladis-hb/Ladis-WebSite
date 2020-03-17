@@ -66,8 +66,9 @@
 <script>
 import RouterRoad from "@/components/RouterRoad";
 import MyImg from "@/components/MyImg";
+import { GeneralGetInfo } from "../../api/axios";
 export default {
- /*  validate ({ params }) {
+  /*  validate ({ params }) {
     return this.title
   }, */
   data() {
@@ -91,9 +92,10 @@ export default {
     }
   },
   async asyncData({ $axios, params }) {
-    const { title, data: all } = await $axios.$get(
-      `/api/Get_arg?title=${encodeURI(params.list)}&table=Product_list`
-    );
+    const { title, data: all } = await GeneralGetInfo($axios, {
+      table: "Product_list",
+      title: params.list
+    });
 
     return { params, title, all };
   },

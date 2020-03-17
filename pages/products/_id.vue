@@ -4,7 +4,10 @@
       <b-card class=" h-100">
         <my-img :src="val.img" :alt="val.title"></my-img>
         <!-- <b-card-img :src="val.img" :alt="val.title"></b-card-img> -->
-        <b-link :to="{ path: `/productsList/${val.title}` }" class="text-dark stretched-link text-decoration-none">
+        <b-link
+          :to="{ path: `/productsList/${val.title}` }"
+          class="text-dark stretched-link text-decoration-none"
+        >
           {{ val.title }}
         </b-link>
       </b-card>
@@ -14,12 +17,11 @@
 
 <script>
 import MyImg from "@/components/MyImg";
+import { GeneralGetInfo } from "../../api/axios";
 export default {
   components: { MyImg },
   async asyncData({ $axios, params }) {
-    const { data } = await $axios.$get(
-      `/api/Get_arg?title=${encodeURI(params.id)}&table=Product`
-    );
+    const { data } = await GeneralGetInfo($axios, { table: "Product",title:params.id });
     return { data, params };
   },
 

@@ -8,14 +8,18 @@
           fade
           controls
           indicators
-          img-height="200"
           background="#ababab"
           style="text-shadow: 1px 1px 2px #333;"
           @sliding-end="swithProblem"
         >
           <b-carousel-slide v-for="(val, key) in carousel" :key="key">
             <template v-slot:img>
-              <b-img :srcset="generateImgsString(val)" :src="val" fluid></b-img>
+              <b-img
+              class=" w-100"
+                :src="val"
+                :srcset="generateImgsString(val)"
+                @onerror="error"
+              ></b-img>
             </template>
           </b-carousel-slide>
         </b-carousel>
@@ -23,20 +27,13 @@
     </b-row>
     <b-row no-gutters>
       <b-col cols="12" class="bg-dark p-1">
-        <b-row no-gutters class>
-          <b-col md="6" class="d-none d-md-block px-3">
-            <b-link :href="'/news/'" class="float-right">
-              <b-img :src="problemsrc" />
-            </b-link>
-          </b-col>
-          <b-col class="d-flex align-items-center">
-            <b-link
-              :href="`/news/${problemTitle}`"
-              class="text-light stretched-link"
-              >{{ problemTitle }}</b-link
-            >
-          </b-col>
-        </b-row>
+        <div class="d-flex justify-content-center ">
+          <b-link
+            :href="`/news/${problemTitle}`"
+            class="text-light stretched-link m-1 text-decoration-none"
+            >{{ problemTitle }}</b-link
+          >
+        </div>
       </b-col>
     </b-row>
     <b-row no-gutters class=" p-4">
@@ -45,7 +42,7 @@
         <b-container>
           <b-row>
             <b-col
-              cols="12"
+              cols="6"
               sm="4"
               v-for="(val, key) of [down, problem]"
               :key="key"
@@ -79,7 +76,7 @@
                 </div>
               </b-link>
             </b-col>
-            <b-col cols="12" sm="4">
+            <b-col cols="6" sm="4">
               <div class="d-flex flex-row">
                 <div class=" d-none d-lg-block">
                   <b-img
@@ -118,119 +115,13 @@
       </b-col>
     </b-row>
   </b-container>
-  <!-- <b-row no-gutters class=" flex-grow-1">
-    <b-col cols="12">
-      <b-carousel
-        id="carousel-1"
-        :interval="3000"
-        fade
-        controls
-        indicators
-        img-height="200"
-        background="#ababab"
-        style="text-shadow: 1px 1px 2px #333;"
-        @sliding-end="swithProblem"
-      >
-        <b-carousel-slide v-for="(val, key) in carousel" :key="key">
-          <template v-slot:img>
-            <my-img :src="val"></my-img>
-          </template>
-        </b-carousel-slide>
-      </b-carousel>
-    </b-col>
-    <b-col cols="12" class="bg-dark p-1">
-      <b-row no-gutters class>
-        <b-col md="6" class="d-none d-sm-block d-md-block px-3">
-          <b-link :href="'/news/'" class="float-right">
-            <b-img :src="problemsrc" />
-          </b-link>
-        </b-col>
-        <b-col class="d-flex align-items-center">
-          <b-link
-            :href="`/news/${problemTitle}`"
-            class="text-light stretched-link"
-            >{{ problemTitle }}</b-link
-          >
-        </b-col>
-      </b-row>
-    </b-col>
-    <b-col>
-      <b-container>
-        <b-row>
-          <b-col
-            cols="12"
-            md="4"
-            v-for="(val, key) of [down, problem]"
-            :key="key"
-          >
-            <b-link :href="val.href" class="text-decoration-none">
-              <div class="d-flex flex-row">
-                <b-img
-                  :src="val.src"
-                  :alt="val.title"
-                  class="w-50 d-inline h-50"
-                ></b-img>
-                <span class="d-flex flex-column py-3 px-2">
-                  <h5 class="text-primary">{{ val.title }}</h5>
-                  <span class="flex-grow-1 text-dark">
-                    <p
-                      class="m-0 p-0 show-p"
-                      v-for="(text, key) in val.content"
-                      :key="key"
-                    >
-                      {{ text.join("/") }}
-                    </p>
-                  </span>
-                  <span>
-                    <i class="px-2 py-1 rounded-pill bg-secondary text-light"
-                      >点击进入>></i
-                    >
-                  </span>
-                </span>
-              </div>
-            </b-link>
-          </b-col>
-          <b-col cols="12" md="4">
-            <div class="d-flex flex-row">
-              <b-img
-                :src="serve[localUrl].src"
-                class="w-50 d-inline h-50"
-              ></b-img>
-              <span class="d-flex flex-column p-4">
-                <h5 class="text-primary">
-                  {{ serve[localUrl].title }}
-                </h5>
-                <span class="flex-grow-1 ">
-                  <b-link
-                    v-for="(sl, key) in serve[localUrl]['content']"
-                    :key="key"
-                    class="text-decoration-none d-block text-dark mb-1 show-p"
-                    :href="sl.src"
-                    target="_blank"
-                    >{{ sl.text }}</b-link
-                  >
-                </span>
-                <span>
-                  <b-link
-                    class="px-2 py-1 rounded-pill bg-secondary text-light"
-                    :href="serve[localUrl].href"
-                    target="_blank"
-                    >点击进入>></b-link
-                  >
-                </span>
-              </span>
-            </div>
-          </b-col>
-        </b-row>
-      </b-container>
-    </b-col>
-  </b-row> -->
 </template>
 
 <script>
 import picSourec from "@/assets/picSourec.json";
 import MyImg from "@/components/MyImg";
 import { mapState } from "vuex";
+import { GetHomeNews } from '../api/axios';
 export default {
   components: { MyImg },
   data() {
@@ -248,33 +139,13 @@ export default {
     };
   },
   async asyncData({ $axios }) {
-    let GetNews = await $axios.$get("/api/Get_index_news_list");
-    GetNews = GetNews.map(el => {
-      return el.title;
-    });
-    let carousel = [
-        "a_images/banner/banner01-mobile.jpg",
-        "a_images/banner/banner02-mobile.jpg",
-        "a_images/banner/banner03-mobile.jpg",
-        "a_images/banner/banner04-mobile.jpg"
-      ];
-      /* await $axios.$get(`/api/Get_arg?title=Carousel&table=Head`);
-    if (!carousel) {
-      carousel = [
-        "a_images/banner/banner01-pc.jpg",
-        "a_images/banner/banner02-pc.jpg",
-        "a_images/banner/banner03-pc.jpg",
-        "a_images/banner/banner04-pc.jpg"
-      ];
-    } else {
-      //carousel = carousel.data;
-      carousel = [
-        "a_images/banner/banner01-mobile.jpg",
-        "a_images/banner/banner02-mobile.jpg",
-        "a_images/banner/banner03-mobile.jpg",
-        "a_images/banner/banner04-mobile.jpg"
-      ];
-    } */
+    const GetNews = await GetHomeNews($axios).then(el=>el.map(em=>em.title))
+    const carousel = [
+      "a_images/banner/banner01-mobile.jpg",
+      "a_images/banner/banner02-mobile.jpg",
+      "a_images/banner/banner03-mobile.jpg",
+      "a_images/banner/banner04-mobile.jpg"
+    ];
     return { GetNews, carousel };
   },
   computed: {
@@ -355,16 +226,15 @@ export default {
       const Mobile = Img;
       const Pad = Img.replace("mobile", "pad");
       const Pc = Img.replace("mobile", "pc");
-      return [
-        `${Mobile} 320w`,
-        `${Pad} 480w`,
-        `${Pc} 800w`
-      ];
+      return [ `${Mobile} 760w`,`${Pad} 1200w`, `${Pc}`];
     },
     swithProblem() {
       if (this.problemNum === this.newsNum) this.problemNum = 1;
       else this.problemNum++;
       this.problemTitle = this.GetNews[this.problemNum - 1];
+    },
+    error(e) {
+      console.log(e);
     }
   },
 

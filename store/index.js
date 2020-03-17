@@ -46,7 +46,8 @@ export const mutations = {
           localSite = true;
         break;
         default:
-          localSite = false;
+          localUrl = "localhost"
+          localSite = true;
         break;
       }
       commit("setHost",{localUrl,localSite});      

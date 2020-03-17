@@ -1,54 +1,62 @@
 /* jshint esversion:8 */
-import axios from "axios";
-async function ajax({ method = "get", url, baseURL, params }) {
-  console.log(process.env.NODE_ENV);
-  
-  let { data } = await axios({
-    method: method,
+async function ajax(axios, { url, params }) {
+  const { data } = await axios({
+    method: "get",
     url: url,
-    baseURL: baseURL || "http://www.ladishb.com:9005",
-
-    params: Object.assign(getToken(), params || {})
+    baseURL: "http://www.ladishb.com",
+    params
   });
   return data;
 }
-
-function getToken() {
-  return {
-    user: sessionStorage.getItem("user") || "",
-    token: sessionStorage.getItem("token") || ""
-  };
-}
-export const SendNewCaseEdit = params => {
-  return ajax({ url: "/edit/SendNewCaseEdit", params });
+//
+export const GetHomeNews = axios => {
+  return ajax(axios, { url: "/api/GetHomeNews" });
+};
+// //获取经销商列表子类
+export const GetBuyList = (axios, { city }) => {
+  return ajax(axios, { url: "/api/Get_buy_li", params: { city } });
+};
+// 获取信息
+export const GeneralGetInfo = (
+  axios,
+  { table, title, parent, isNews = false }
+) => {
+  return ajax(axios, {
+    url: "/api/Get_arg",
+    params: { table, title, parent, isNews }
+  });
+};
+// 配置编辑
+export const SendNewCaseEdit = (axios, params) => {
+  return ajax(axios, { url: "/edit/SendNewCaseEdit", params });
 };
 
-export const Get_pic_Source = params => {
-  return ajax({ url: "/edit/Get_file_Source", params });
+export const Get_pic_Source = (axios, params) => {
+  return ajax(axios, { url: "/edit/Get_file_Source", params });
 };
-export const Add_Dealers = params => {
-  return ajax({ url: "/edit/dealers", params });
-};
-
-export const Add_Product = params => {
-  return ajax({ url: "/edit/product", params });
+export const Add_Dealers = (axios, params) => {
+  return ajax(axios, { url: "/edit/dealers", params });
 };
 
-export const Add_Problem = params => {
-  return ajax({ url: "/edit/problem", params });
-};
-export const Add_Soft = params => {
-  return ajax({ url: "/edit/soft", params });
+export const Add_Product = (axios, params) => {
+  return ajax(axios, { url: "/edit/product", params });
 };
 
-export const setCarousel = params => {
-  return ajax({ url: "/edit/setCarousel", params });
+export const Add_Problem = (axios, params) => {
+  return ajax(axios, { url: "/edit/problem", params });
+};
+export const Add_Soft = (axios, params) => {
+  return ajax(axios, { url: "/edit/soft", params });
 };
 
-export const setAbout = params => {
-  return ajax({ url: "/edit/setAbout", params });
+export const setCarousel = (axios, params) => {
+  return ajax(axios, { url: "/edit/setCarousel", params });
 };
 
-export const getAbout = params => {
-  return ajax({ url: "/edit/getAbout", params });
+export const setAbout = (axios, params) => {
+  return ajax(axios, { url: "/edit/setAbout", params });
+};
+
+export const getAbout = (axios, params) => {
+  return ajax(axios, { url: "/edit/getAbout", params });
 };

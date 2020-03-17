@@ -3,7 +3,9 @@
     <b-row>
       <b-col cols="12" md="4">
         <b-list-group class="asid">
-          <b-list-group-item variant="info">{{ $t('视频教程.j3oloc') }}</b-list-group-item>
+          <b-list-group-item variant="info">{{
+            $t("视频教程.j3oloc")
+          }}</b-list-group-item>
           <b-list-group-item v-for="(val, key) in support_asid" :key="key">
             <b-button pill size="sm" v-b-toggle="'asid' + key" variant="link"
               >+</b-button
@@ -47,7 +49,7 @@
           :per-page="perPage"
           :total-rows="support_list.length"
           aria-controls="support_list"
-          class="pagination1"
+          class="d-flex justify-content-center"
         ></b-pagination>
       </b-col>
     </b-row>
@@ -55,6 +57,7 @@
 </template>
 
 <script>
+import { GeneralGetInfo } from "../../api/axios";
 export default {
   data() {
     return {
@@ -63,20 +66,14 @@ export default {
       support_list: []
     };
   },
-  async asyncData({ $axios, params, error, payload }) {
-    let support_asid = [];
-    let list = [];
-    if (payload) {
-      support_asid = payload.asid.data;
-      list = payload.data;
-    } else {
-      let asid = await $axios.$get(
-        `/api/Get_arg?table=Page&title=support_problem_asid`
-      );
-      support_asid = asid ? asid.data : [];
-      list = await $axios.$get(`/api/Get_arg?table=Support_list`);
-    }
-    return { support_asid, list, payload };
+  async asyncData({ $axios, params }) {
+    const support_asid = await GeneralGetInfo($axios, {
+      table: "page",
+      title: "support_problem_asid"
+    }).then(el => el.data);
+    const list = await GeneralGetInfo($axios, { table: "Support_list" }); //$axios.$get(`/api/Get_arg?table=Support_list`);
+
+    return { support_asid, list };
   },
   created() {
     this.slic();
@@ -115,10 +112,5 @@ export default {
 }
 .list-group1 {
   margin: 1rem 0.5rem;
-}
-.pagination1 {
-  margin: 1rem 0.5rem;
-  align-items: center;
-  justify-content: center;
 }
 </style>

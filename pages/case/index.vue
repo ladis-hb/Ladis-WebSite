@@ -1,6 +1,6 @@
 <template>
   <b-container>
-    <b-row>
+    <b-row no-gutters>
       <b-col cols="12" md="3">
         <b-list-group class=" my-4 text-light">
           <b-list-group-item
@@ -57,6 +57,7 @@
           </b-list-group-item>
         </b-list-group>
         <b-pagination
+          class=" d-flex justify-content-center"
           v-model="currentPage"
           :total-rows="rows"
           :per-page="perPage"
@@ -70,6 +71,7 @@
 
 <script>
 import CardCopy from "../../components/CardCopy";
+import { GetCases, GeneralGetInfo } from "../../api/axios";
 export default {
   components: {
     CardCopy
@@ -93,7 +95,7 @@ export default {
     }
   },
   async asyncData({ $axios }) {
-    let listArray = await $axios.$get(`/api/Get_case_list`);
+    let listArray = await GeneralGetInfo($axios,{table:"Case",isNews:true})// GetCases($axios);
     listArray = Object.values(listArray);
     let backListArray = Array.from(new Set(listArray));
 

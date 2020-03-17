@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     onPic() {
-      this.img = "http://www.ladis.com.cn" + this.src;
+       this.img = "http://www.ladis.com.cn" + this.src;
     }
   }
 };

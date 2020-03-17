@@ -1,13 +1,16 @@
 /* jshint esversion:8 */
 const axios = require("axios");
+const port = process.env.NODE_ENV === "production" ? 9005 : 9005;
+const host = process.env.NODE_ENV === "production" ? "0.0.0.0" : "localhost";
+const ServerHost = "http://www.ladishb.com";
 module.exports = {
   mode: "universal",
   /*
    ** Headers of the page
    */
   server: {
-    port: 9005,
-    host: process.env.NODE_ENV === "production" ? "0.0.0.0" : "localhost"
+    port,
+    host
   },
   head: {
     meta: [
@@ -33,12 +36,9 @@ module.exports = {
    ** Global CSS
    */
   css: [
-    //"@/assets/css/theme-chalk/icon.css",
-    "@/assets/css/theme-chalk/message-box.css",
     "quill/dist/quill.snow.css",
     "quill/dist/quill.bubble.css",
-    "quill/dist/quill.core.css",
-    "@/assets/main.css"
+    "quill/dist/quill.core.css"
   ],
   /*
   ** Plugins to load before mounting the App
@@ -46,11 +46,7 @@ module.exports = {
   */
   plugins: [
     { src: "~plugins/nuxt-quill-plugin.js", ssr: false },
-    { src: "~plugins/v-region.js", ssr: false },
-    { src: "~/plugins/Vue-i18n.js" },
-    { src: "~/plugins/axios" }
-    //{ src: "@/plugins/components.js" }
-    //{ src: "~/plugins/router.js" }
+    { src: "~plugins/v-region.js", ssr: false }
   ],
   /*
    ** Nuxt.js modules
@@ -78,12 +74,12 @@ module.exports = {
       local: {
         endpoints: {
           login: {
-            url: "/api/auth/login",
+            url: "/auth/login",
             method: "post",
             propertyName: "token"
           },
-          logout: { url: "/api/auth/logout", method: "post" },
-          user: { url: "/api/auth/user", method: "get", propertyName: "user" }
+          logout: { url: "/auth/logout", method: "post" },
+          user: { url: "/auth/user", method: "post", propertyName: "user" }
         },
         tokenRequired: true,
         tokenType: "bearer"
@@ -102,7 +98,7 @@ module.exports = {
     exclude: ["/admin/**", "/en/admin/**", "/zh/admin/**"],
     routes: async () => {
       const { data } = await axios.get(
-        `http://www.ladishb.com:9005/api/Get_arg?table=router`
+        `${ServerHost}/api/Get_arg?table=router`
       );
       return data.map(router => router.rout);
     }
@@ -155,7 +151,7 @@ module.exports = {
   },
   axios: {
     //proxy: true // Can be also an object with default options
-    //baseURL: process.env.NODE_ENV === "production" ? "116.62.48.175" : "localhost"
+    //baseURL: ServerHost,
     proxy: true,
     credentials: true
   },

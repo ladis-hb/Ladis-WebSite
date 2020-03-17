@@ -1,11 +1,13 @@
 <template>
   <b-container>
-    <b-row>
-      <b-col cols="12">
+    <b-row no-gutters>
+      <b-col cols="12" class=" text-center">
         <h4>{{ arg.title }}</h4>
         <hr />
       </b-col>
-      <b-col cols="12">
+    </b-row>
+    <b-row no-gutters>
+      <b-col cols="12" class=" px-2">
         <div v-html="arg.html" v-if="!arg.movie"></div>
         <div v-else>
           <iframe
@@ -23,12 +25,11 @@
 </template>
 
 <script>
+import { GeneralGetInfo } from "../../../api/axios";
 export default {
-  async asyncData({ $axios, params, error, payload }) {
-    var title = params.id;
-    var arg = await $axios.$get(
-      "/api/Get_arg?table=Support_list&title=" + encodeURI(title)
-    );
+  async asyncData({ $axios, params }) {
+    const title = params.id;
+    const arg = await GeneralGetInfo($axios, { table: "Support_list", title });
     return { arg, title };
   },
   head() {

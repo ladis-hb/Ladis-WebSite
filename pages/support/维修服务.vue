@@ -1,14 +1,15 @@
 <template>
   <b-container>
-    <b-row>
+    <b-row no-gutters>
       <b-col>
-        <b-img :src="pic('/a_images/guarantee/policy_banner.png')"></b-img>
+        <b-img src="/a_images/guarantee/policy_banner.png" fluid></b-img>
       </b-col>
-
+    </b-row>
+    <b-row no-gutters>
       <b-col class=" my-5">
-        <b-tabs vertical>
-          <b-tab :title="$t('维修服务.4o89za')" active>
-            <h4 class=" border-bottom">
+        <b-tabs >
+          <b-tab :title="$t('维修服务.4o89za')" active class=" p-3">
+            <h4 class=" border-bottom text-center">
               服务政策
             </h4>
             <p>
@@ -33,8 +34,8 @@
               雷迪司（LADIS)开通了400免付费热线电话，方便用户对雷迪司的服务、产品、技术、业务等问题进行咨询；用户可随时拨通雷迪司热线，解决在产品选购、使用维护等过程中遇到的相关问题。
             </p>
           </b-tab>
-          <b-tab title="购买服务">
-            <h4 class=" border-bottom">
+          <b-tab title="购买服务" class=" p-3">
+            <h4 class=" border-bottom text-center">
               雷迪司服务购买
             </h4>
             <p>
@@ -53,8 +54,8 @@
               雷迪司开通了400免付费热线电话，方便用户对机房产品的服务、技术、解决方案等问题进行咨询；用户可随时拨通雷迪司热线，解决在机房产品的选购、使用维护等过程中遇到的相关问题。
             </p>
           </b-tab>
-          <b-tab title="返修流程">
-            <h4 class=" border-bottom">
+          <b-tab title="返修流程" class=" p-3">
+            <h4 class=" border-bottom text-center">
               返修流程
             </h4>
             <p>
@@ -75,17 +76,6 @@
     </b-row>
   </b-container>
 </template>
-
-<script>
-export default {
-  methods: {
-    pic(p) {
-      //return `http://www.ladis.com.cn/${p}`;
-      return p;
-    }
-  }
-};
-</script>
 
 <style lang="scss" scoped>
 .main {

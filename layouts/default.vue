@@ -1,27 +1,19 @@
 <template>
-  <b-container fluid class="p-0 m-0 ladis-body d-flex flex-column">
+  <b-container fluid id="ladis-body" class="p-0 m-0 d-flex flex-column">
     <b-row class="main-default" no-gutters>
       <b-col cols="12">
         <!-- head头 -->
         <ladis-head></ladis-head>
       </b-col>
     </b-row>
-    <b-row class=" flex-grow-1" no-gutters>
+    <b-row class="flex-grow-1" no-gutters>
       <b-col>
-        <nuxt  class=" p-0"></nuxt>
+        <nuxt class=" p-0"></nuxt>
       </b-col>
     </b-row>
-
-    <!-- <div class="main-default">
-      <ladis-head></ladis-head>
-      <nuxt></nuxt>
-    </div>
- -->
-    <!-- footer -->
-    <!-- <ladis-footer class=" mt-auto"></ladis-footer> -->
-    <b-row class=" mt-auto" no-gutters>
+    <b-row no-gutters class=" ">
       <b-col>
-        <ladis-footer class=" mt-auto"></ladis-footer>
+        <ladis-footer></ladis-footer>
       </b-col>
     </b-row>
   </b-container>
@@ -35,12 +27,6 @@ export default {
     ladisHead,
     ladisFooter
   },
-  data() {
-    return {
-      collapse: true
-    };
-  },
-
   head: {
     link: [
       {
@@ -48,29 +34,21 @@ export default {
         type: "text/css",
         rel: "stylesheet"
       }
-      /* {href:'@assets/css/index.scss',type:'text/css',rel:"stylesheet"} */
     ]
   }
 };
 </script>
 
 <style scss>
-@media screen and (min-width: 768px) {
-  .main-default {
-    /* flex: 1 0 auto; */
-  }
+html{
+  height: 100%;
 }
-/* @media screen and (max-width: 989px) {
-  .footer-default {
-    margin-top: auto;
-  }
-} */
-
-html,
 body,
 #__nuxt,
 #__layout,
-.ladis-body {
-  height: 100%;
+#ladis-body{
+  min-height: 100%;
+  display: flex;
+  width: 100%;
 }
 </style>

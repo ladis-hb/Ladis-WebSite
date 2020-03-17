@@ -1,6 +1,6 @@
 <template>
   <b-container>
-    <b-row>
+    <b-row no-gutters>
       <b-col cols="12">
         <div class="my-4 border-bottom">
           <h5 class=" text-center">{{ id }}</h5>
@@ -38,6 +38,7 @@
 
 <script>
 import MyImg from "@/components/MyImg";
+import { GeneralGetInfo } from "../../api/axios";
 export default {
   components: {
     MyImg
@@ -53,11 +54,9 @@ export default {
     };
   },
   async asyncData({ $axios, params }) {
-    let id = params.id;
-    let list = await $axios.$get(
-      `/api/Get_arg?table=news_list&title=${encodeURI(id)}`
-    );
-    return { id, list: list.data, listNew: list.new };
+    const title = params.id;
+    const list = await GeneralGetInfo($axios, { table: "news_list", title });
+    return { id: title, list: list.data, listNew: list.new };
   },
   head() {
     return {

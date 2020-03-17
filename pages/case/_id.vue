@@ -3,10 +3,14 @@
     <b-row>
       <b-col cols="12">
         <div class="my-4 border-bottom">
-          <h5 class=" text-center">{{ id }}</h5>
+          <h5 class=" text-center">{{ title }}</h5>
         </div>
         <div v-if="typeof list === 'string'">
-          <div id="newsText" class="px-5 ctlimg content-img ql-editor" v-html="list"></div>
+          <div
+            id="newsText"
+            class="px-5 ctlimg content-img ql-editor"
+            v-html="list"
+          ></div>
         </div>
         <div v-else>
           <div id="newsText" class="px-5 ctlimg">
@@ -17,7 +21,7 @@
               v-for="(val, key) in list.pic || []"
               :key="key"
               :src="val"
-              :alt="id"
+              :alt="title"
               class="m-0 p-0 w-75 my-2"
             ></my-img>
           </div>
@@ -28,6 +32,7 @@
 </template>
 
 <script>
+import { GeneralGetInfo } from "../../api/axios";
 import MyImg from "@/components/MyImg";
 export default {
   components: {
@@ -43,24 +48,17 @@ export default {
       }
     };
   },
-  async asyncData({ $axios, params, payload }) {
-    let id = params.id;
-    let list;
-    if (payload) {
-      list = payload.data;
-    } else {
-      list = await $axios.$get(
-        `/api/Get_arg?table=Case_list&title=${encodeURI(id)}`
-      );
-    }
-    return { id, list: list.data, listNew: list.new };
+  async asyncData({ $axios, params }) {
+    const title = params.id;
+    let list = await GeneralGetInfo($axios, { table: "Case_list", title });
+    return { title, list: list.data, listNew: list.new };
   },
   head() {
     return {
-      title: `${this.id}-雷迪司`,
+      title: `${this.title}-雷迪司`,
       meta: [
-        { name: "keywords", content: this.id },
-        { name: "description", content: this.id }
+        { name: "keywords", content: this.title },
+        { name: "description", content: this.title }
       ]
     };
   }

@@ -3,7 +3,7 @@
     <b-container>
       <b-navbar toggleable="lg" type="dark" variant="dark">
         <b-navbar-brand href="/">
-          <img src="/a_images/public/logo.png" />
+          <img src="/a_images/public/logo.png" height="40" />
         </b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -14,7 +14,7 @@
               <template slot="button-content">
                 <em>{{ $t("head.pneaqh") }}</em>
               </template>
-              <b-dropdown-item href="/products/">
+              <b-dropdown-item href="/products">
                 {{ $t("head.spa5wv") }}
               </b-dropdown-item>
               <b-dropdown-item href="/products/UPS电源">
@@ -121,7 +121,7 @@
               <b-dropdown-item href="/about/使用声明">
                 {{ $t("footer.amhzvr") }}
               </b-dropdown-item>
-              <b-dropdown-item href="/about/隐私政策">
+              <b-dropdown-item href="/about">
                 {{ $t("footer.5d7lkm") }}
               </b-dropdown-item>
             </b-nav-item-dropdown>
@@ -138,7 +138,7 @@
             </b-nav-item-dropdown>
             <b-nav-item
               href="https://cschat-ccs.aliyun.com/index.htm?tntInstId=_1DER4Qq&scene=SCE00003943#/"
-              target="_blank"
+              target="framename	"
               v-if="localSite"
               >{{ $t("head.vnvsqr") }}</b-nav-item
             >

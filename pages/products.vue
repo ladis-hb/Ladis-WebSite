@@ -32,7 +32,7 @@
           </b-collapse>
         </b-navbar>
       </b-col>
-      <b-col class="h-100 overflow-auto">
+      <b-col>
         <nuxt-child />
       </b-col>
     </b-row>

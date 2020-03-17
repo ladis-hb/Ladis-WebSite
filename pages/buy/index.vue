@@ -1,11 +1,13 @@
 <template>
   <b-container>
-    <b-row>
+    <b-row no-gutters>
       <b-col cols="12">
-        <h4 class="text-centerbg m-2">{{ $t('index.yp93bk') }}</h4>
+        <h4 class="text-center m-2">{{ $t("index.yp93bk") }}</h4>
         <hr />
       </b-col>
-      <b-col cols="12" class="overflow-auto">
+    </b-row>
+    <b-row no-gutters>
+      <b-col>
         <p style="text-align: center">
           <b-img
             border="0"
@@ -14,6 +16,7 @@
             height="523"
             usemap="#Map"
             src="/_CMS_NEWS_IMG_/cms_images/fck/2017-03/18/14a73101-61f3-4ce5-8e99-7f389bec67d5.jpg"
+            fluid
           />&nbsp;
           <map name="Map">
             &nbsp;
@@ -29,44 +32,35 @@
           </map>
         </p>
       </b-col>
-      <b-col cols="12">
-        <b-row>
-          <b-col
-            cols="12"
-            md="6"
-            v-for="(val, key) in area"
-            :key="key"
-            class="my-2"
-          >
-            <b-card :title="key">
-              <b-card-body>
-                <span v-for="(i1, k1) in val" :key="k1" class="mx-1"
-                  ><b-link :href="i1.href">{{ i1.title }}</b-link></span
-                >
-              </b-card-body>
-            </b-card>
-          </b-col>
-        </b-row>
+    </b-row>
+    <b-row no-gutters class=" p-2">
+      <b-col cols="12" md="6" v-for="(val, key) in area" :key="key">
+        <div class=" p-2">
+          <b-card :title="key">
+            <b-card-body>
+              <span v-for="(i1, k1) in val" :key="k1" class="mx-1"
+                ><b-link :href="i1.href">{{ i1.title }}</b-link></span
+              >
+            </b-card-body>
+          </b-card>
+        </div>
       </b-col>
     </b-row>
   </b-container>
 </template>
 
 <script>
+import { GeneralGetInfo } from "../../api/axios";
 export default {
-  async asyncData({ $axios, params, payload }) {
-    let map,
-      dealers,
-      adrress = new Map(),
-      city = new Set(),
-      area = {};
-    if (payload) {
-    } else {
-      map = await $axios.$get(`/api/Get_arg?table=Buy`);
-      dealers = await $axios.$get(`/api/Get_arg?table=Buy_list`);
-    }
-    dealers = dealers[0].data
+  async asyncData({ $axios,params}) {
+    let adrress = new Map();
+    let city = new Set();
+    let area = {};
 
+    
+    const dealers = await GeneralGetInfo( $axios,{ table: "Buy_list" }).then(
+      el => el[0].data
+    );
     dealers.forEach(element => {
       let { parentsUntil, link, parent } = element;
       if (city.has(parent)) return;
@@ -76,13 +70,12 @@ export default {
       adrress.set(link, `/buy/${parent}`);
     });
 
-    map = map[0].data.map(element => {
-      element.href = adrress.get(
-        element.href.split(".")[0] + ".shtml"
-      );
-      return element;
+    const map = await GeneralGetInfo( $axios,{ table: "Buy" }).then(el => {
+      return el[0].data.map(element => {
+        element.href = adrress.get(element.href.split(".")[0] + ".shtml");
+        return element;
+      });
     });
-
     return { map, area };
   },
 
