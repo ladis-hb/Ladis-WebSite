@@ -4,7 +4,7 @@ module.exports = {
    ** Headers of the page
    */
   server: {
-    port: 9005,
+    port: 9006,
     host: process.env.NODE_ENV === "production" ? "0.0.0.0" : "localhost"
   },
   head: {
