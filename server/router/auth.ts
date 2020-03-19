@@ -1,16 +1,17 @@
 /* jshint esversion:8 */
-const { JwtSign, JwtVerify } = require("../Secret");
-const { formatMD5 } = require("../util/Format");
-const { User } = require("../mongoose/admin");
+import { JwtSign, JwtVerify } from "../Secret";
+import { formatMD5 } from "../util/Format";
+import { User } from "../mongoose/admin";
+import { ParameterizedContext } from "koa";
 
-module.exports = async ctx => {
+export default async (ctx:ParameterizedContext) => {
   switch (ctx.params.id) {
     case "login":
       {
         //ctx.body = { token: JwtSign({ payload: ctx.request.body }) };
 
         let { user, password: passwd } = ctx.request.body;
-        let result = await User.findOne({ $or: [{ user }, { mail: user }] });
+        let result = await User.findOne({ $or: [{ user }, { mail: user }] }) as any;
         if (!result) throw new Error("用户未注册");
         if (result.passwd !== formatMD5(passwd))
           throw new Error("密码错误，请核对密码");
@@ -23,7 +24,7 @@ module.exports = async ctx => {
       }
       break;
     case "user":
-      let token = ctx.cookies.get("auth._token.local");
+      let token = <string>ctx.cookies.get("auth._token.local");
       let Users;
       try {
         Users = JwtVerify(token.slice(9, token.length));

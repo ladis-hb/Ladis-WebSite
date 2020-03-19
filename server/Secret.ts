@@ -1,6 +1,6 @@
 /* jshint esversion:8 */
-const jsonwebtoken = require("jsonwebtoken");
-const secret = "ladisWebSite";
+import jsonwebtoken from "jsonwebtoken";
+export const secret = "ladisWebSite";
 const tokenExpiresTime = 1000 * 60 * 60 * 5;
 
 /**
@@ -9,7 +9,7 @@ const tokenExpiresTime = 1000 * 60 * 60 * 5;
  * @param {*} { payload, option }
  * @returns
  */
-const JwtSign = ({ payload, option = {} }) => {
+export const JwtSign = ({ payload, option = {} }: any) => {
   if (typeof option != "object") option = {};
   option = Object.assign({ expiresIn: tokenExpiresTime }, option);
   let token = jsonwebtoken.sign(payload, secret, option);
@@ -22,8 +22,6 @@ const JwtSign = ({ payload, option = {} }) => {
  * @param {*} { token }
  * @returns
  */
-const JwtVerify = token => {
+export const JwtVerify = (token: string) => {
   return jsonwebtoken.verify(token, secret);
 };
-
-module.exports = { JwtSign, JwtVerify, secret };

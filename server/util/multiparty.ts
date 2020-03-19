@@ -1,25 +1,24 @@
-/* jshint esversion:8 */
-const multiparty = require("multiparty");
-const Path = require("path");
-const fs = require("fs");
-const util = require("util");
+import multiparty from "multiparty";
+import Path from "path";
+import fs from "fs";
+import util from "util";
 
-module.exports = function(req) {
+export default (req:any) =>{
   let uploadPath = Path.join("static", "upload");
   if (!fs.existsSync(uploadPath)) {
     fs.mkdirSync(uploadPath);
   }
   let form = new multiparty.Form({ uploadDir: uploadPath });
   return new Promise((res, rej) => {
-    form.parse(req, (err, fields, files) => {
+    form.parse(req, (err: any, fields: { [x: string]: any[]; }, files: ArrayLike<unknown> | { [s: string]: unknown; }) => {
       if (err) rej(err);
 
-      files = Object.values(files)[0].map(file => {
+      files = (Object.values(files)[0] as any).map((file: { path: any; originalFilename: number; size: any; }) => {
         let oldpath = file.path;
         let newpath = oldpath.split("/");
         let name = Date.now() + file.originalFilename;
         newpath.pop();
-        newpath = Path.join(newpath.join("/"), name);
+        newpath = Path.join(newpath.join("/"), name.toString());
         let link = newpath.split("/");
         link.shift();
         link = link.join("/");

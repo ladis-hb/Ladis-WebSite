@@ -1,5 +1,5 @@
 /* jshint esversion:8 */
-const { mongoose, Schema } = require("./momgoose");
+import { mongooses as mongoose, Schema } from "./momgoose"
 
 const Schema_Product = new Schema(
   {
@@ -20,8 +20,8 @@ const Schema_Product_list = new Schema(
   {
     parent: String,
     title: String,
-    data:
-      "Mixed" /* {
+    data: {type:"Mixed"}
+      /* {
       t1: { type: "Mixed" },
       t2: { type: "Mixed" },
       img: [String],
@@ -63,7 +63,7 @@ const Schema_Support_list = new Schema(
     date: { type: Date, default: new Date() },
     parentsUntil: { type: String },
     parent: { type: String },
-    data: "Mixed"
+    data: {type:"Mixed"}
   },
   { timestamps: true }
 );
@@ -71,8 +71,8 @@ const Schema_Support_list = new Schema(
 const Schema_Buy = new Schema(
   {
     title: { type: String },
-    data:
-      "Mixed" /* {
+    data:{type:"Mixed"}
+       /* {
       alt: { type: String },
       shape: { type: String },
       coords: { type: String },
@@ -87,8 +87,8 @@ const Schema_Buy = new Schema(
 const Schema_Buy_list = new Schema(
   {
     title: { type: String },
-    data:
-      "Mixed" /* {
+    data:{type:"Mixed"}
+       /* {
       parentsUntil: { type: String },
       link: { type: String },
       parent: { type: String },
@@ -125,8 +125,8 @@ const Schema_VR = new Schema(
 const Schema_CaseNews = new Schema(
   {
     title: { type: String },
-    data:
-      "Mixed" /* {
+    data:{type:"Mixed"}
+       /* {
       img: { type: String },
       name: { type: String },
       time: { type: String },
@@ -146,7 +146,7 @@ const Schema_CaseNews_list = new Schema(
     parent: { type: String },
     title: { type: String },
     date: { type: Date, default: new Date() },
-    data: "Mixed" /* {
+    data:{type:"Mixed"} /* {
       text: [String],
       pic: [String]
     } */
@@ -167,8 +167,7 @@ const Schema_About = new Schema({
 const Schema_Head = new Schema(
   {
     title: { type: String },
-    data:
-      "Mixed" /*  {
+    data:{type:"Mixed"} /*  {
       title: { type: String },
       keywords: { type: String },
       description: { type: String }
@@ -194,8 +193,8 @@ const Schema_Router = new Schema(
   { timestamps: true }
 );
 
-const SaveRouter = async ({ title, rout }) => {
-  if (!title) title = rout.split("/").pop();
+const SaveRouter = async ({ title, rout }:{title:string,rout:string}) => {
+  if (!title) title = rout.split("/").pop() as string;
   let r = await Router.findOne({ rout });
   if (r) return r;
   let route = new Router({ title, rout });
@@ -232,7 +231,7 @@ const EnNews_list = mongoose.model("EnNews_list", Schema_CaseNews_list);
 const EnAbout = mongoose.model("Enabout", Schema_About);
 
 
-module.exports = {
+export default {
   Product,
   Product_list,
   Support,

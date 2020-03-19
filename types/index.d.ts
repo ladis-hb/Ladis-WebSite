@@ -3,6 +3,11 @@ import Vue from "vue";
 import { Auth } from "nuxtjs__auth";
 import { BvModal, BvToast } from "bootstrap-vue";
 
+declare module "koa"{
+  interface Request{
+    body?:any
+  }
+}
 
 // 2. 定制一个文件，设置你想要补充的类型
 //    在 types/vue.d.ts 里 Vue 有构造函数类型

@@ -1,4 +1,4 @@
-let { mongoose, Schema } = require("./momgoose");
+import { mongooses as mongoose, Schema } from "./momgoose"
 const Schema_User = new Schema(
   {
     user: { type: String, required: true },
@@ -14,6 +14,4 @@ const Schema_User = new Schema(
   { timestamps: true }
 );
 
-const User = mongoose.model("User", Schema_User);
-
-module.exports = { User };
+export const User = mongoose.model("User", Schema_User);

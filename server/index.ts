@@ -1,19 +1,15 @@
-/* jshint esversion:8 */
-const Koa = require("koa");
-const consola = require("consola");
+import Koa from "koa";
+import consola from "consola";
 const { Nuxt, Builder } = require("nuxt");
-const router = require("./router/index");
-const body = require("koa-body");
-//const mongo = require("koa-mongo");
-const error = require("koa-error");
-const cors = require('@koa/cors');
+import router from "./router/index";
+import body from "koa-body";
+import cors from '@koa/cors';
 
 const app = new Koa();
 
 //注册mongo
 //app.use(mongo({ db: "ladis" }));
 app.use(cors({}));
-app.use(error());
 //注册router
 app.use(body());
 app.use(router.routes()).use(router.allowedMethods());
@@ -42,7 +38,7 @@ async function start() {
   app.use(ctx => {
     ctx.status = 200;
     ctx.respond = false; // 绕过Koa的内置响应处理
-    ctx.req.ctx = ctx; // 这在以后可能会有用，例如在nuxtServerInit或nuxt-stash中
+    ctx.request.ctx = ctx; // 这在以后可能会有用，例如在nuxtServerInit或nuxt-stash中
     nuxt.render(ctx.req, ctx.res);
   });
 

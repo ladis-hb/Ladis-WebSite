@@ -1,9 +1,10 @@
 /* jshint esversion:8 */
-const { JwtSign } = require("../Secret");
-const { formatMD5 } = require("../util/Format");
+import { JwtSign } from "../Secret";
+import { formatMD5 } from "../util/Format";
 const { User } = require("../mongoose/admin");
+import { ParameterizedContext } from "koa";
 
-module.exports = async (ctx, next) => {
+export default async (ctx:ParameterizedContext) => {
   switch (ctx.params.id) {
     case "login":
       {
@@ -53,5 +54,4 @@ module.exports = async (ctx, next) => {
       }
       break;
   }
-  await next;
 };

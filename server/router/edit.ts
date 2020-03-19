@@ -1,9 +1,10 @@
 /* jshint esversion:8 */
-const { validation_jwt_user } = require("../util/Format");
-const DBs = require("../mongoose/content");
-const fs = require("fs");
-const path = require("path");
-module.exports = async ctx => {
+import { validation_jwt_user } from "../util/Format"
+import DBs from "../mongoose/content";
+import fs from "fs";
+import path from "path";
+import { ParameterizedContext } from "koa";
+export default async (ctx:ParameterizedContext) => {
   // 检查客户端语言环境
   const isZH = ctx.cookies.get("Ladis_WebSite_I18n") === "zh";
 
@@ -50,10 +51,10 @@ module.exports = async ctx => {
   })();
   // validation
   console.log(ctx.cookies);
-  
+  const query = ctx.query
   // api
   const id = ctx.params.id;
-  let result = { code: 200, msg: "success", stat: true, data: query };
+  let result = { code: 200, msg: "success", stat: true, data: query ,result:null,href:''};
   switch (id) {
     //set Carousel
     case "setCarousel":
@@ -71,18 +72,20 @@ module.exports = async ctx => {
       {
         let { title, movie, html, selectparentsUntil, selectparent } = query;
         let href = `/support/problem/${title}`;
-        DB.SaveRouter({ rout: href });
+        DB.SaveRouter({ rout: href,title });
         let obj = {
           title,
           href,
           date: new Date(),
           parentsUntil: selectparentsUntil,
-          parent: selectparent
+          parent: selectparent,
+          movie,
+          html
         };
         if (html === "输入") obj.movie = movie;
         else obj.html = html;
         let support_list = new DB.Support_list(obj);
-        result.result = await support_list.save();
+        result.data = await support_list.save();
       }
       break;
     case "soft":
@@ -117,7 +120,7 @@ module.exports = async ctx => {
           { $addToSet: { data: obj } }
         );
         result.msg = "已保存文档，请查看记录";
-        result.result = data;
+        result.data = data;
       }
       break;
     //产品
@@ -132,7 +135,7 @@ module.exports = async ctx => {
           carouselPic
         } = query;
         let href = `/products/list/${title}`;
-        DB.SaveRouter({ rout: href });
+        DB.SaveRouter({ rout: href,title });
         let titles = { title, href, img: indexPic };
         await DB.Product.updateOne(
           { title: selectType },
@@ -149,7 +152,7 @@ module.exports = async ctx => {
           }
         });
         result.href = href;
-        result.result = await product_list.save();
+        result.result = await product_list.save() as any;
       }
       break;
     //设置case
@@ -160,7 +163,7 @@ module.exports = async ctx => {
 
         let dates = new Date();
         let href = `/${inputType}/${title}`;
-        DB.SaveRouter({ rout: href });
+        DB.SaveRouter({ rout: href ,title});
         let route = { rout: href, modifyTime: dates };
         let type = {
           sv: "［服务通告］",
@@ -190,7 +193,7 @@ module.exports = async ctx => {
         let list = new collection({
           title,
           data: {
-            name: type[editType],
+            name: (type as any)[editType],
             time: `${dates.getFullYear()}年${dates.getMonth() +
               1}月${dates.getDate()}日`,
             text: title,
@@ -296,9 +299,9 @@ module.exports = async ctx => {
         let { selectType, webSite } = ctx.query;
         result.data = await DB.About.findOne({
           title: selectType
-        }).then(res => {
+        }).then((res:any) => {
           if (!res) return "";
-          let result = res.content.filter(el => el.webSite == webSite);
+          let result = res.content.filter((el:any) => el.webSite == webSite);
           return result.length > 0 ? result[0].body : "";
         });
       }

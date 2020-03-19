@@ -160,7 +160,6 @@
     </b-modal>
   </b-container>
 </template>
-
 <script>
 export default {
   layout: "login",

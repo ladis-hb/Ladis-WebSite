@@ -1,5 +1,5 @@
 /* jshint esversion:8 */
-const Collection = {
+export const Collection = {
   user: "admin_User",
   head: "head",
   router: "router",
@@ -17,6 +17,4 @@ const Collection = {
   news_list: "news_list"
 };
 //通用加密密匙
-const key = "7e1977739c748beac0c0fd14fd26a544";
-
-module.exports = { Collection, key };
+export const key = "7e1977739c748beac0c0fd14fd26a544";

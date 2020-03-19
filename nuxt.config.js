@@ -90,6 +90,8 @@ module.exports = {
 
   proxy: {},
 
+
+  buildModules: ['@nuxt/typescript-build'],
   /*
    ** Build configuration
    */
