@@ -1,34 +1,16 @@
 import { StrToUpperCase } from "../util/Format";
-import {content } from "../userSetup/user"
 import * as DBs from "../mongoose/content";
 import { ParameterizedContext } from "koa";
 export default async (ctx:ParameterizedContext) => {
-  // 检查客户端语言环境
-  const I18n = ctx.cookies.get("Ladis_WebSite_I18n");
-  const isZH = I18n === "zh";
-  console.log({I18n,isZH,time:new Date().toLocaleTimeString()});
+  const {SiteName,i18n} = ctx.query
+  if(!SiteName || i18n) ctx.assert(new Error('argumentError'),400,'argumentError')
+  // 判断是否是en
+  const isEH = i18n === "en";
+  // 打印请求参数和指令
+  console.log({i18n,isEH,SiteName,time:new Date().toLocaleTimeString()});
 
   const DB = (() => {
-    if (isZH) {
-      return {
-        Product: DBs.default.Product,
-        Product_list: DBs.default.Product_list,
-        Support: DBs.default.Support,
-        Support_list: DBs.default.Support_list,
-        Buy_list: DBs.default.Buy_list,
-        Buy: DBs.default.Buy,
-        VR: DBs.default.VR,
-        Case: DBs.default.Case,
-        Case_list: DBs.default.Case_list,
-        News: DBs.default.News,
-        News_list: DBs.default.News_list,
-        About: DBs.default.About,
-        Head: DBs.default.Head,
-        Page: DBs.default.Page,
-        Router: DBs.default.Router,
-        SaveRouter: DBs.default.SaveRouter
-      };
-    } else {
+    if (isEH) {
       return {
         Product: DBs.default.EnProduct,
         Product_list: DBs.default.EnProduct_list,
@@ -47,17 +29,29 @@ export default async (ctx:ParameterizedContext) => {
         Router: DBs.default.Router,
         SaveRouter: DBs.default.SaveRouter
       };
+    } else {
+      return {
+        Product: DBs.default.Product,
+        Product_list: DBs.default.Product_list,
+        Support: DBs.default.Support,
+        Support_list: DBs.default.Support_list,
+        Buy_list: DBs.default.Buy_list,
+        Buy: DBs.default.Buy,
+        VR: DBs.default.VR,
+        Case: DBs.default.Case,
+        Case_list: DBs.default.Case_list,
+        News: DBs.default.News,
+        News_list: DBs.default.News_list,
+        About: DBs.default.About,
+        Head: DBs.default.Head,
+        Page: DBs.default.Page,
+        Router: DBs.default.Router,
+        SaveRouter: DBs.default.SaveRouter
+      };
     }
   })();
   const id = ctx.params.id;
   switch (id) {
-    // 给予显示参数
-    case "runInfo":
-      {
-        const siteName = ctx.query.siteName
-        ctx.body = (content as any)[siteName]
-      }
-      break
     //获取官网主页轮播的新闻列表
     case "GetHomeNews":
       {
@@ -80,7 +74,11 @@ export default async (ctx:ParameterizedContext) => {
     case "Get_arg":
       // table转换大写
       const table = StrToUpperCase(ctx.query.table);
+      // 请求参数
       const { title, parent, isNews } = ctx.query;
+      // 请求的代理商
+      const SiteName = ctx.query.name
+      // 申明结果变量
       let result;
 
       if (title) {
@@ -98,7 +96,7 @@ export default async (ctx:ParameterizedContext) => {
           result = (await (DB as any)[table].find()) || false;
         }
       }
-      console.log(result);
+      // console.log(result);
 
       ctx.body = result;
       break;
