@@ -726,5 +726,6 @@ async function WriteRouter() {
   Router_Address.forEach(rout => {
     if (out.includes(rout)) return false;
     DB.SaveRouter({ rout });
+    return true
   });
 }

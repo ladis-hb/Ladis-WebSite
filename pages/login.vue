@@ -66,7 +66,7 @@ export default {
         return this.$bvModal.msgBoxOk("用户名不能为空或非法字符",{title:"login error",buttonSize:"sm"})
 
       await this.$auth
-        .loginWith("local", { data: { user, password: md5(passwd) } })
+        .loginWith("local", { data: { user, passwd: md5(passwd) } })
         .catch(() => {
           this.$bvModal.msgBoxOk("请确认账号或密码是否正确?",{title:"login error",buttonSize:"sm"})
         });

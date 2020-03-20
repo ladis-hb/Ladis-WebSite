@@ -4,9 +4,11 @@ const { Nuxt, Builder } = require("nuxt");
 import router from "./router/index";
 import body from "koa-body";
 import cors from '@koa/cors';
+import ApolloServer from "./apollo/apollo"
 
 const app = new Koa();
 
+ApolloServer.applyMiddleware({ app, path: "/graphql" })
 //注册mongo
 //app.use(mongo({ db: "ladis" }));
 app.use(cors({}));

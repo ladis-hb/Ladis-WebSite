@@ -51,7 +51,8 @@ module.exports = {
     "bootstrap-vue/nuxt",
     // Doc: https://axios.nuxtjs.org/usage
     "@nuxtjs/axios",
-    "@nuxtjs/auth"
+    "@nuxtjs/auth",
+    '@nuxtjs/apollo'
   ],
   /*
    ** Axios module configuration
@@ -81,15 +82,35 @@ module.exports = {
     }
   },
 
-  axios: {
-    //proxy: true // Can be also an object with default options
-    //baseURL: ServerHost,
-    proxy: true,
-    credentials: true
+  // Give apollo module options
+  apollo: {
+    tokenName: 'ladisServer',
+    cookieAttributes: {
+      expires: 7,
+      path: '/', 
+      domain: 'example.com', 
+      secure: false,
+    },
+    includeNodeModules: true, 
+    authenticationType: 'Basic', 
+    defaultOptions: {
+      $query: {
+        loadingKey: 'loading',
+        fetchPolicy: 'cache-and-network',
+      },
+    },
+    clientConfigs: {
+      default: {
+        // required  
+        httpEndpoint: 'http://127.0.0.1:9006',
+        browserHttpEndpoint: '/graphql',
+        httpLinkOptions: {
+          credentials: 'same-origin'
+        },
+        tokenName: 'apollo-token', // optional
+      }
+    }
   },
-
-  proxy: {},
-
 
   buildModules: ['@nuxt/typescript-build'],
   /*

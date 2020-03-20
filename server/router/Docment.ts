@@ -1,9 +1,11 @@
-import { StrToUpperCase } from "../util/Format";
+// import { StrToUpperCase } from "../util/Format";
 import * as DBs from "../mongoose/content";
 import { ParameterizedContext } from "koa";
+import { CrorQuary, buyListPack } from "../typing/interface";
 export default async (ctx:ParameterizedContext) => {
-  const {SiteName,i18n} = ctx.query
-  if(!SiteName || i18n) ctx.assert(new Error('argumentError'),400,'argumentError')
+  const Query = ctx.query as CrorQuary
+  const {SiteName,i18n} = Query
+  if(!SiteName || !i18n) ctx.assert(new Error('argumentError'),400,'argumentError')
   // 判断是否是en
   const isEH = i18n === "en";
   // 打印请求参数和指令
@@ -57,27 +59,23 @@ export default async (ctx:ParameterizedContext) => {
       {
         ctx.body = await DB.News_list.find()
           .limit(10)
-          .exec();
+          .exec()
       }
       break;
     //获取经销商列表子类
     case "Get_buy_li":
       {
-        let city = ctx.query.city;
-        let { data } = await DB.Buy_list.findOne().lean() as any;
-        let result = data.filter((el: { parent: any; }) => el.parent === city);
+        const city:string = Query.city;
+        const res = await DB.Buy_list.findOne().lean() as buyListPack;
+        const result =res.data.filter((el) => el.parent === city);
         ctx.body = result;
       }
       break;
 
     //转而使用Get_arg请求
     case "Get_arg":
-      // table转换大写
-      const table = StrToUpperCase(ctx.query.table);
       // 请求参数
-      const { title, parent, isNews } = ctx.query;
-      // 请求的代理商
-      const SiteName = ctx.query.name
+      const {table, title, parent, isNews,SiteName } = Query
       // 申明结果变量
       let result;
 
@@ -96,8 +94,7 @@ export default async (ctx:ParameterizedContext) => {
           result = (await (DB as any)[table].find()) || false;
         }
       }
-      // console.log(result);
-
+      ctx.assert(result,401,"数据库未检索到")
       ctx.body = result;
       break;
   }

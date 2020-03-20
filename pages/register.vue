@@ -13,7 +13,7 @@
               label-cols="12"
               label-cols-md="2"
             >
-              <b-form-input id="user" v-model.trim="accont.user"></b-form-input>
+              <b-form-input id="user" v-model.trim="accont.user" :state="statUser"></b-form-input>
             </b-form-group>
 
             <b-form-group
@@ -27,7 +27,9 @@
               <b-form-input
                 id="passwd"
                 v-model="accont.passwd"
+                trim
                 type="password"
+                :state="statPasswd"
               ></b-form-input>
             </b-form-group>
             <b-form-group
@@ -43,6 +45,7 @@
                 :class="{ 'ck-form-control': !ckPW }"
                 v-model="accont.ck_passwd"
                 type="password"
+                :state="accont.ck_passwd === accont.passwd"
               ></b-form-input>
             </b-form-group>
 
@@ -54,7 +57,7 @@
               label-cols="12"
               label-cols-md="2"
             >
-              <b-form-input id="mail" v-model.trim="accont.mail"></b-form-input>
+              <b-form-input id="mail" v-model.trim="accont.mail" :state="statMail"></b-form-input>
             </b-form-group>
             <b-form-group label-cols-md="2">
               <b-button
@@ -62,6 +65,7 @@
                 variant="success"
                 class=" register-btn"
                 @click="Register"
+                :disabled="!statMail || !statPasswd || !statUser || accont.passwd !== accont.ck_passwd"
                 >注册</b-button
               >
             </b-form-group>
@@ -71,37 +75,68 @@
     </b-row>
   </b-container>
 </template>
-
-<script>
-import md5 from "md5";
-export default {
-  auth:false,
-  layout: "login",
+<script lang="ts">
+import Vue from 'vue'
+import md5 from 'md5'
+import gql from 'graphql-tag'
+import { ApolloMongoResult } from '../server/typing/interface'
+export default Vue.extend({
+  auth: false,
+  layout: 'login',
   data() {
     return {
       accont: {
-        user: "",
-        passwd: "",
-        ck_passwd: "",
-        mail: ""
+        user: '',
+        passwd: '',
+        ck_passwd: '',
+        mail: '',
       },
-      ckPW: true
-    };
-  },
-  computed: {
-    ckPasswd() {
-      return this.accont.ck_passwd;
+      ckPW: true,
     }
   },
-  watch: {
-    ckPasswd(newValue, oldValue) {
-      if (newValue !== this.accont.passwd) this.ckPW = false;
-      else this.ckPW = true;
+  computed:{
+    statUser(){
+      const user:string = this.accont.user
+      return user !== "" && user.length<20 && user.length > 3
+    },
+    statPasswd(){
+      const user:string = this.accont.passwd
+      return user !== "" && user.length<20 && user.length > 3
+    },
+    statMail(){
+      return /^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(this.$data.accont.mail)
     }
   },
   methods: {
     async Register() {
-      let validation = this.validation();
+      const { user, passwd, mail } = this.accont
+      const result = await this.$apollo.mutate({
+        mutation: gql`
+          mutation registerUser($user: String, $passwd: String, $mail: String) {
+            register(user: $user, passwd: $passwd, mail: $mail) {
+              ok
+              msg
+            }
+          }
+        `,
+        variables: {
+          user,
+          passwd: md5(passwd),
+          mail,
+        },
+      })
+      const data: ApolloMongoResult = result.data.register
+      if (data.ok === 1) {
+        const isQ = await this.$bvModal.msgBoxConfirm(
+          `${data.msg},是否跳转到登录页面`,
+          { title: 'Success', buttonSize: 'sm' }
+        )
+        if (isQ) this.$router.push({ path: '/login', params: { user, passwd } })
+      } else {
+        this.$bvModal.msgBoxOk(data.msg as string, { buttonSize: 'sm', title: 'Error' })
+      }
+
+      /* let validation = this.validation();
       if (validation) {
         this.$bvModal.msgBoxOk(`${validation.key}:带星号为必填`, {
           title: "输入错误",
@@ -136,20 +171,11 @@ export default {
           }
         }
       }
+    } */
     },
-    validation() {
-      let keys = Object.keys(this.$data.accont);
-      for (let key of keys) {
-        if (["tel", "mail"].includes(key)) break;
-        let val = this.$data.accont[key];
-        if (val === "") return { key };
-      }
-      return false;
-    }
-  }
-};
+  },
+})
 </script>
-
 <style>
 .titles {
   font-size: 30px;

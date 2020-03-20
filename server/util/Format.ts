@@ -2,9 +2,9 @@
 import crypto from "crypto";
 import util from "util";
 import { key,Collection } from "../config";
-import { JwtVerify } from "../Secret";
+import { JwtVerify } from "./Secret";
 import Multiparty from "../util/multiparty";
-
+/* 
 export const validation_jwt_user = (user: string, token: string) => {
   if (!user || user === "") return false;
   if (!token || token === "") return false;
@@ -45,18 +45,12 @@ export const SerizeFormattoObject = async (ctx: { req: any; }) => {
   }
 };
 
-/**
- *
- *
- * @param {*} files
- * @returns
- */
 export const SerizeFilesArraytoString = (files: { [x: string]: any[]; }) => {
   Object.keys(files).forEach(key => {
     if (util.isArray(files[key]) && key !== "file") files[key] = files[key][0];
   });
   return files;
-};
+}; */
 /**
  *
  *
@@ -98,9 +92,9 @@ export const formatPasswd = (passwd: string) => {
  * @param {*} passwd 纯数字密码
  * @returns  md5加密
  */
-export const formatMD5 = (passwd: any) => {
+export const formatMD5 = (passwd: string) => {
   var md5 = crypto.createHash("md5");
-  md5.update(String(passwd));
+  md5.update(passwd);
   md5.update(key);
   return md5.digest("hex");
 };
@@ -116,40 +110,5 @@ export const formatDate = () => {
     1}/${dates.getDate()}`;
   let time = `${dates.getHours()}:${dates.getMinutes()}:${dates.getSeconds()}`; //:${dates.getMilliseconds()}`;
   return `${date} ${time}`;
-};
-
-/**
- *
- *
- * @param {*} ctx   ctx句柄
- * @param {*} data  包含token and user
- * @returns
- */
-/* const Validation_user = async (ctx: { db: { collection: (arg0: any) => { (): any; new(): any; findOne: { (arg0: { user: any; token: any; }): any; new(): any; }; }; }; }, data: { user: any; token: any; }) => {
-  let { user, token } = data;
-  let s = await ctx.db
-    .collection(Collection..DB_user_users)
-    .findOne({ user, token });
-  if (s) status = true;
-  else status = false;
-  let result = {
-    status,
-    user,
-    userGroup: s.userGroup
-  };
-  return result;
-};
-const Validation_root_Group = async (ctx: { db: { collection: (arg0: any) => { (): any; new(): any; findOne: { (arg0: { user: any; userGroup: string; }): any; new(): any; }; }; }; }, operationUser: any) => {
-  let validation = await ctx.db
-    .collection(config.DB_user_users)
-    .findOne({ user: operationUser, userGroup: "root" });
-  if (validation) return true;
-  else return false;
-};
-const ObjectId = mongodb.ObjectId;
- */
-export const StrToUpperCase = (str: string) => {
-  const strArray = str.split("")
-  return str.replace(strArray[0], strArray[0].toUpperCase());
 };
 
