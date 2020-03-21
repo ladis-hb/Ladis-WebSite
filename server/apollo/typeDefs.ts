@@ -29,11 +29,15 @@ const typeDefs: DocumentNode = gql`
     status: Boolean
     messageId: String
   }
-  
+  #
+  type pic {
+    files: [String]
+    size: Int
+  }
   #Query
   type Query {
     #tool
-    Node(IP: String, Name: String): String
+    getUploadFiles(filter:String):pic
     
   }
 
@@ -45,4 +49,4 @@ const typeDefs: DocumentNode = gql`
   }
 `;
 
-export default typeDefs
+export default typeDefs;

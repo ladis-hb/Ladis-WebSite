@@ -12,7 +12,7 @@ export default new ApolloServer({
     // 获取Token
     const token = ctx.cookies.get("auth._token.local");
     // 没有token则检查body，注册和重置页面的请求则通过
-    if (token && token === "false") {
+    if (!token || token === "false") {
       // 获取gragpl
       const { operationName } = ctx.request.body;
       const guestQuery = ["registerUser"];
