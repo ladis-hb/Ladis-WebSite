@@ -31,7 +31,6 @@
       "@types/nuxtjs__auth",
       "vue/types",
       "@nuxtjs/apollo",
-      "graphql-tag",
       "@nuxtjs/axios"
     ]
   }

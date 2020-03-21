@@ -135,43 +135,6 @@ export default Vue.extend({
       } else {
         this.$bvModal.msgBoxOk(data.msg as string, { buttonSize: 'sm', title: 'Error' })
       }
-
-      /* let validation = this.validation();
-      if (validation) {
-        this.$bvModal.msgBoxOk(`${validation.key}:带星号为必填`, {
-          title: "输入错误",
-          buttonSize: "sm"
-        });
-      } else {
-        let { user, passwd, ck_passwd } = this.$data.accont;
-        if (passwd !== ck_passwd)
-          return this.$bvModal.msgBoxOk("密码不一致", {
-            title: "输入错误",
-            buttonSize: "sm"
-          });
-        let result = await this.$axios.$get("/administrator/register", {
-          params: Object.assign(this.$data.accont, { passwd: md5(passwd) })
-        });
-        if (!result.stat)
-          return this.$bvModal.msgBoxOk(result.msg, {
-            title: "注册错误",
-            buttonSize: "sm"
-          });
-        else {
-          const isQ = await this.$bvModal.msgBoxConfirm(result.msg, {
-            title: "注册成功",
-            buttonSize: "sm"
-          });
-          if (isQ) {
-            this.$router.push({
-              name: "admin-accont___zh",
-              params: { user: user, passwd: ck_passwd }
-            });
-            return;
-          }
-        }
-      }
-    } */
     },
   },
 })

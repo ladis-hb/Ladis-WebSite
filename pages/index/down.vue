@@ -164,142 +164,187 @@
     </b-row>
   </b-container>
 </template>
-
-<script>
-import { Add_Problem, Add_Soft } from "../../api/axios";
-import { mapState } from "vuex";
-export default {
+<script lang="ts">
+import Vue from 'vue'
+import { selectFiles, ApolloMongoResult } from '../../server/typing/interface'
+import gql from 'graphql-tag'
+export default Vue.extend({
   data() {
+    const hljs = null
+    const editorOption = {
+      modules: {
+        toolbar: [
+          ['bold', 'italic', 'underline', 'strike'],
+          ['blockquote', 'code-block'],
+          [{ header: 1 }, { header: 2 }],
+          [{ list: 'ordered' }, { list: 'bullet' }],
+          [{ script: 'sub' }, { script: 'super' }],
+          [{ indent: '-1' }, { indent: '+1' }],
+          [{ direction: 'rtl' }],
+          [{ size: ['small', false, 'large', 'huge'] }],
+          [{ header: [1, 2, 3, 4, 5, 6, false] }],
+          [{ font: [] }],
+          [{ color: [] }, { background: [] }],
+          [{ align: [] }],
+          ['clean'],
+          ['link', 'image'], //, "video"]
+        ],
+        syntax: {
+          highlight: (text: any) => (hljs as any).highlightAuto(text).value,
+        },
+      },
+    }
     return {
-      active: Number(this.$route.query.index) || 0,
       soft: {
-        system: ["windows", "linux", "mac", "other"],
-        selectSystem: "",
-        title: "ceshi",
-        platform: "ceshi pla",
-        language: ["简体中文", "英文"],
-        selectLanguage: "",
-        version: "1.00",
-        update: "test",
-        file: "",
-        Loading: true
+        system: ['windows', 'linux', 'mac', 'other'],
+        selectSystem: '',
+        title: 'ceshi',
+        platform: 'ceshi pla',
+        language: ['简体中文', '英文'],
+        selectLanguage: '',
+        version: '1.00',
+        update: 'test',
+        file: '',
+        Loading: true,
       },
       cp: {
-        title: "",
-        system: ["其他产品彩页", "数据中心彩页", "机房空调彩页", "UPS电源彩页"],
-        selectSystem: "",
-        file: ""
+        title: '',
+        system: ['其他产品彩页', '数据中心彩页', '机房空调彩页', 'UPS电源彩页'],
+        selectSystem: '',
+        file: '',
       },
       zz: {
-        title: "",
-        system: ["UPS相关", "精密空调相关", "数据中心相关", "公司相关"],
-        selectSystem: "",
-        file: ""
+        title: '',
+        system: ['UPS相关', '精密空调相关', '数据中心相关', '公司相关'],
+        selectSystem: '',
+        file: '',
       },
       problem: {
-        title: "",
-        movie: "http://",
-        html: "输入",
+        title: '',
+        movie: 'http://',
+        html: '输入',
         parentsUntil: [
-          "软件设置",
-          "电池连接",
-          "硬件安装",
-          "错误代码",
-          "技术文档"
+          '软件设置',
+          '电池连接',
+          '硬件安装',
+          '错误代码',
+          '技术文档',
         ],
-        selectparentsUntil: "",
+        selectparentsUntil: '',
         parent: {
           软件设置: [
-            "viewpower设置",
-            "viewpowerPro设置",
-            "viewpower mini",
-            "SH/D3000",
-            "百事服",
-            "NAS系统"
+            'viewpower设置',
+            'viewpowerPro设置',
+            'viewpower mini',
+            'SH/D3000',
+            '百事服',
+            'NAS系统',
           ],
-          电池连接: ["电池连接"],
-          硬件安装: ["电池更换", "套件安装"],
-          错误代码: ["警告代码", "故障代码"],
-          技术文档: ["电池相关", "数据中心相关", "精密空调相关", "UPS相关"]
+          电池连接: ['电池连接'],
+          硬件安装: ['电池更换', '套件安装'],
+          错误代码: ['警告代码', '故障代码'],
+          技术文档: ['电池相关', '数据中心相关', '精密空调相关', 'UPS相关'],
         },
-        selectparent: ""
+        selectparent: '',
       },
-      editorOption: {
-        modules: {
-          toolbar: [
-            ["bold", "italic", "underline", "strike"],
-            ["blockquote", "code-block"],
-            [{ header: 1 }, { header: 2 }],
-            [{ list: "ordered" }, { list: "bullet" }],
-            [{ script: "sub" }, { script: "super" }],
-            [{ indent: "-1" }, { indent: "+1" }],
-            [{ direction: "rtl" }],
-            [{ size: ["small", false, "large", "huge"] }],
-            [{ header: [1, 2, 3, 4, 5, 6, false] }],
-            [{ font: [] }],
-            [{ color: [] }, { background: [] }],
-            [{ align: [] }],
-            ["clean"],
-            ["link", "image"] //, "video"]
-          ],
-          syntax: {
-            highlight: text => hljs.highlightAuto(text).value
-          }
-        }
-      }
-    };
+      editorOption,
+    }
   },
 
   computed: {
-    ...mapState(["user", "token", "SourceFile"]),
+    SourceFile() {
+      const SourceFile: selectFiles[] = this.$store.state.SourceFile
+      const result = SourceFile.map(file =>
+        Object.assign(file, { text: file.name, value: file.path })
+      )
+      return result
+    },
     parent() {
-      return this.problem.parent[this.problem.selectparentsUntil];
-    }
+      return this.$data.problem.parent[this.$data.problem.selectparentsUntil]
+    },
+    active: {
+      get() {
+        return Number(this.$route.query.index) || 0
+      },
+      set() {
+        return
+      },
+    },
   },
   methods: {
-    onEditorChange({ editor, html, text }) {
-      this.problem.html = html;
+    onEditorChange({
+      editor,
+      html,
+      text,
+    }: {
+      editor: string
+      html: string
+      text: string
+    }) {
+      this.problem.html = html
     },
-    async Submit(type) {
-      let respon = {};
+    async Submit(type: string) {
+      let respon: ApolloMongoResult
       switch (type) {
-        case "problem":
+        case 'problem':
           {
-            let problem = this.$data.problem;
+            const problem = this.$data.problem
             for (let key of Object.keys(problem)) {
-              if (problem[key] === "") {
-                LoadingTabs.close();
+              if (problem[key] === '') {
                 return this.$bvModal.msgBoxOk(`${key}不能为空`, {
-                  title: "参数错误"
-                });
+                  title: '参数错误',
+                })
               }
             }
-            problem.type = type;
-            respon = await Add_Problem(problem);
+            problem.type = type
+            const result = await this.$apollo.mutate({
+              mutation: gql`
+                mutation($arg: JSON) {
+                  setProblem(arg: $arg) {
+                    ok
+                    msg
+                  }
+                }
+              `,
+              variables: { arg: problem },
+            })
+            respon = result.data.setProblem
+            //respon = await Add_Problem(problem);
           }
-          break;
+          break
         default:
           {
-            let data = this.$data[type];
-            let keys = Object.keys(data);
-            let params = { type: type };
+            let data = this.$data[type]
+            let keys = Object.keys(data)
+            let params = { type: type }
             for (let key of keys) {
-              if (data[key] === "") {
+              if (data[key] === '') {
                 return this.$bvModal.msgBoxOk(`${key}不能为空`, {
-                  title: "参数错误"
-                });
+                  title: '参数错误',
+                })
               }
-              params[key] = data[key];
+              ;(params as any)[key] = data[key]
             }
-            respon = await Add_Soft(params);
+            const result = await this.$apollo.mutate({
+              mutation: gql`
+                mutation($arg: JSON) {
+                  setSoft(arg: $arg) {
+                    ok
+                    msg
+                  }
+                }
+              `,
+              variables: { arg: params },
+            })
+            respon = result.data.setSoft
           }
-          break;
+          break
       }
-      let { stat, msg, result } = respon;
-      if (stat) return this.$bvModal.msgBoxOk(msg, { title: "success" });
-    }
-  }
-};
+      if (respon.ok === 1)
+        return this.$bvModal.msgBoxOk('提交资料完成', { title: 'success' })
+    },
+  },
+})
 </script>
 
 <style lang="scss" scoped>

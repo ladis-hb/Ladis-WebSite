@@ -34,50 +34,43 @@
     </b-row>
   </b-container>
 </template>
-
-<script>
-import { Add_Dealers } from "../../api/axios";
-import { mapState } from "vuex";
-export default {
+<script lang="ts">
+import Vue from 'vue'
+import gql from 'graphql-tag'
+export default Vue.extend({
   data() {
     return {
       ad: {
-        daqu: "",
-        province: "",
-        city: "",
-        area: "",
-        address: "华一路1-1号2楼 ",
-        tel: "0571-88254085 88254086",
-        linkman: "杨清华",
-        phone: "13777892810",
-        remark: "杭州市 （浙江省销售服务中心）"
+        daqu: '',
+        province: '',
+        city: '',
+        area: '',
+        address: '华一路1-1号2楼 ',
+        tel: '0571-88254085 88254086',
+        linkman: '杨清华',
+        phone: '13777892810',
+        remark: '杭州市 （浙江省销售服务中心）',
       },
       daqu: [
-        { value: "null", text: "请选择销售区域" },
-        { value: "华中地区销售服务中心", text: "华中地区销售服务中心" },
-        { value: "华东地区销售服务中心", text: "华东地区销售服务中心" },
-        { value: "华北地区销售服务中心", text: "华北地区销售服务中心" },
-        { value: "华南地区销售服务中心", text: "华南地区销售服务中心" },
-        { value: "西南地区销售服务中心", text: "西南地区销售服务中心" },
-        { value: "东北地区销售服务中心", text: "东北地区销售服务中心" },
-        { value: "西北地区销售服务中心", text: "西北地区销售服务中心" }
-      ]
-    };
+        { value: '华中地区销售服务中心', text: '华中地区销售服务中心' },
+        { value: '华东地区销售服务中心', text: '华东地区销售服务中心' },
+        { value: '华北地区销售服务中心', text: '华北地区销售服务中心' },
+        { value: '华南地区销售服务中心', text: '华南地区销售服务中心' },
+        { value: '西南地区销售服务中心', text: '西南地区销售服务中心' },
+        { value: '东北地区销售服务中心', text: '东北地区销售服务中心' },
+        { value: '西北地区销售服务中心', text: '西北地区销售服务中心' },
+      ],
+    }
   },
-
-  computed: {
-    ...mapState(["user", "token"])
-  },
-
   methods: {
-    regionChange(data) {
-      let { area, city, province } = data;
-      this.ad.area = area ? area.value : "";
-      this.ad.city = city ? city.value : "";
-      this.ad.province = province ? province.value : "";
+    regionChange(data: any) {
+      let { area, city, province } = data
+      this.ad.area = area ? area.value : ''
+      this.ad.city = city ? city.value : ''
+      this.ad.province = province ? province.value : ''
     },
     async Submit() {
-      let {
+      const {
         daqu,
         province,
         city,
@@ -86,21 +79,31 @@ export default {
         tel,
         linkman,
         phone,
-        remark
-      } = this.$data.ad;
-      let info = `区域：${daqu}；省市县(区)：${province}|${city}|${area}；
+        remark,
+      } = this.$data.ad
+      const info = `区域：${daqu}；省市县(区)：${province}|${city}|${area}；
                 详细地址：${address}；联系人：${linkman}|${tel}|${phone}；
-                    备注：${remark}`;
+                    备注：${remark}`
 
       const isQ = await this.$bvModal.msgBoxConfirm(info, {
-        title: "核对信息"
-      });
+        title: '核对信息',
+      })
       if (isQ) {
-        this.$bvModal.msgBoxOk("添加成功");
+        await this.$apollo.mutate({
+          mutation: gql`
+            mutation($arg: JSON) {
+              setBuy(arg: $arg) {
+                ok
+              }
+            }
+          `,
+          variables: { arg: this.ad },
+        })
+        this.$bvModal.msgBoxOk('添加成功')
       }
-    }
-  }
-};
+    },
+  },
+})
 </script>
 
 <style lang="scss" scoped></style>

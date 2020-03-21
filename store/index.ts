@@ -1,5 +1,27 @@
-/* jshint esversion:8 */
+ import { GetterTree, ActionTree, MutationTree } from 'vuex'
+import { selectFiles } from '../server/typing/interface'
 export const state = () => ({
+  SourceFile:[{path: "/upload/1572055868193banner01-pc.jpg", name: "1572055868193banner01-pc.jpg", filetype: "img"}] as selectFiles[],
+  name:"ladis"
+})
+
+export type RootState = ReturnType<typeof state>
+
+export const getters: GetterTree<RootState, RootState> = {
+  // name: state => state.name,
+}
+
+export const mutations: MutationTree<RootState> = {
+  SET_SOURCE_FILE: (state, payload: selectFiles) => {
+    state.SourceFile.push(payload as never)
+  }
+}
+
+export const actions: ActionTree<RootState, RootState> = {
+  
+}
+
+/* export const state = () => ({
   user: "nuss",
   token: "",
   carouselPics: null,
@@ -53,5 +75,5 @@ export const mutations = {
       commit("setHost",{localUrl,localSite});      
     }
   }
-};
+}; */
  

@@ -33,6 +33,7 @@ const typeDefs: DocumentNode = gql`
   type pic {
     files: [String]
     size: Int
+    msg: String
   }
   #Query
   type Query {
@@ -44,8 +45,20 @@ const typeDefs: DocumentNode = gql`
   #mutation
   type Mutation {
     #admin
-    # 配置Node
+    # 注册用户
     register(user:String,passwd:String,mail:String):result
+    # 配置轮播图
+    setCarousel(Path:[String]):result
+    # 配置产品
+    setProduct(arg:JSON):result
+    # 常见问题配置
+    setProblem(arg:JSON):result
+    # 配置下载软件
+    setSoft(arg:JSON):result
+    # 配置经销商
+    setBuy(arg:JSON):result
+    # 配置案例 新闻资讯
+    setCaseNews(type:String,arg:JSON):result
   }
 `;
 

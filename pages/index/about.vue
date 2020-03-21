@@ -32,11 +32,34 @@
     </b-card>
   </div>
 </template>
-
-<script>
-import { setAbout, getAbout } from "../../api/axios";
-export default {
+<script lang="ts">
+import Vue from 'vue'
+export default Vue.extend({
   data() {
+    const hljs = null
+    const editorOption = {
+      modules: {
+        toolbar: [
+          ['bold', 'italic', 'underline', 'strike'],
+          ['blockquote', 'code-block'],
+          [{ header: 1 }, { header: 2 }],
+          [{ list: 'ordered' }, { list: 'bullet' }],
+          [{ script: 'sub' }, { script: 'super' }],
+          [{ indent: '-1' }, { indent: '+1' }],
+          [{ direction: 'rtl' }],
+          [{ size: ['small', false, 'large', 'huge'] }],
+          [{ header: [1, 2, 3, 4, 5, 6, false] }],
+          [{ font: [] }],
+          [{ color: [] }, { background: [] }],
+          [{ align: [] }],
+          ['clean'],
+          ['link', 'image'], //, "video"]
+        ],
+        syntax: {
+          highlight: (text: any) => (hljs as any).highlightAuto(text).value,
+        },
+      },
+    }
     return {
       type: [
         "公司简介",
@@ -53,32 +76,10 @@ export default {
       content: `<h2 class="ql-align-center"><span class="ql-font-serif">
       Text content loading..</span></h2>`,
 
-      editorOption: {
-        modules: {
-          toolbar: [
-            ["bold", "italic", "underline", "strike"],
-            ["blockquote", "code-block"],
-            [{ header: 1 }, { header: 2 }],
-            [{ list: "ordered" }, { list: "bullet" }],
-            [{ script: "sub" }, { script: "super" }],
-            [{ indent: "-1" }, { indent: "+1" }],
-            [{ direction: "rtl" }],
-            [{ size: ["small", false, "large", "huge"] }],
-            [{ header: [1, 2, 3, 4, 5, 6, false] }],
-            [{ font: [] }],
-            [{ color: [] }, { background: [] }],
-            [{ align: [] }],
-            ["clean"],
-            ["link", "image"] //, "video"]
-          ],
-          syntax: {
-            highlight: text => this.highlightAuto(text).value
-          }
-        }
-      }
+      editorOption
     };
   },
-  watch: {
+ /*  watch: {
     selectType: function(val) {
       let { selectType, webSite } = this.$data;
       getAbout({ selectType, webSite }).then(el => (this.content = el.data));
@@ -87,21 +88,21 @@ export default {
       let { selectType, webSite } = this.$data;
       getAbout({ selectType, webSite }).then(el => (this.content = el.data));
     }
-  },
+  }, */
 
   methods: {
     async SendEdit() {
-      let { selectType, webSite, content } = this.$data;
+      /* let { selectType, webSite, content } = this.$data;
       if (selectType == "") return;
       setAbout({ selectType, webSite, content });
-      this.$bvModal.msgBoxOk("操作成功", { buttonSize: "sm" });
+      this.$bvModal.msgBoxOk("操作成功", { buttonSize: "sm" }); */
     },
 
     onEditorChange({ html }) {
       this.content = html;
     }
   }
-};
+})
 </script>
 
 <style lang="scss" scoped>

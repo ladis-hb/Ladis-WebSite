@@ -48,7 +48,7 @@ export interface productPack extends GMpack {
   data: product[];
 }
 // 产品详情
-export interface productList {
+export interface productListOld {
   t1: {
     type: contentType;
     content: HtmlString;
@@ -60,9 +60,15 @@ export interface productList {
   img: string[];
   down: GMlink[];
 }
+export interface productListNew {
+  img: string[]
+  head:string
+  body:string
+  down:GMlink[]
+}
 // 产品包装
 export interface productListPack extends GMpack {
-  data: productList[];
+  data: productListOld[] | productListNew[]
 }
 
 // 软件资料目录
@@ -136,8 +142,8 @@ export interface vrPack extends GMpack {
   data: vr[];
 }
 // 案例
-export interface cases extends vr {}
-export interface casesPack extends vrPack {}
+export interface cases extends vr { }
+export interface casesPack extends vrPack { }
 // 案例详情
 export interface caseList {
   text: string;
@@ -208,4 +214,25 @@ export interface uploadResult {
   path: string;
   link: string;
   size: number;
+}
+// fileDirList
+export interface fileDirList {
+  files: string[]
+  size: number
+  msg: string
+}
+// 上传文件选中文件
+export interface selectFiles {
+  path: string
+  name: string
+  filetype: string
+}
+// 上传产品类型
+export interface editProduct {
+  selectType: string
+  title: string
+  content_head: string
+  content_body: string
+  indexPic: string
+  carouselPic: string[]
 }

@@ -57,7 +57,7 @@ export default async (ctx:ParameterizedContext) => {
   let result = { code: 200, msg: "success", stat: true, data: query ,result:null,href:''};
   switch (id) {
     //set Carousel
-    case "setCarousel":
+    /* case "setCarousel":
       let imgs = query.imgs;
       let rs = await DB.Head.updateOne(
         { title: "Carousel" },
@@ -66,9 +66,9 @@ export default async (ctx:ParameterizedContext) => {
       );
       result.msg = "carousel use success";
       result.data = rs;
-      break;
+      break; */
     //add 常见问题
-    case "problem":
+   /*  case "problem":
       {
         let { title, movie, html, selectparentsUntil, selectparent } = query;
         let href = `/support/problem/${title}`;
@@ -122,9 +122,9 @@ export default async (ctx:ParameterizedContext) => {
         result.msg = "已保存文档，请查看记录";
         result.data = data;
       }
-      break;
+      break; */
     //产品
-    case "product":
+    /* case "product":
       {
         let {
           selectType,
@@ -154,9 +154,9 @@ export default async (ctx:ParameterizedContext) => {
         result.href = href;
         result.result = await product_list.save() as any;
       }
-      break;
+      break; */
     //设置case
-    case "SendNewCaseEdit":
+    /* case "SendNewCaseEdit":
       {
         let { pic, content, title, editType, inputType } = query;
         //格式化图片文件地址，去掉static
@@ -214,9 +214,9 @@ export default async (ctx:ParameterizedContext) => {
         result.msg = "已生成最新文档，是否查看";
         result.href = href;
       }
-      break;
+      break; */
     //获取图片素材
-    case "Get_file_Source":
+    /* case "Get_file_Source":
       {
         let pic = fs
           .readdirSync(path.join(__dirname, "../../static/upload"))
@@ -232,9 +232,9 @@ export default async (ctx:ParameterizedContext) => {
         });
         result.data = uploadPiclist;
       }
-      break;
+      break; */
     //设置经销商列表
-    case "dealers":
+    /* case "dealers":
       let {
         daqu,
         province,
@@ -271,7 +271,7 @@ export default async (ctx:ParameterizedContext) => {
         { title: "buy_map" },
         { $push: { data: site } }
       );
-      break;
+      break; */
     //setAbout
     case "setAbout":
       {

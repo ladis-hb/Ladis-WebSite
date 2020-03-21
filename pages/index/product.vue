@@ -5,7 +5,10 @@
       <b-card-body id="editSelect">
         <div>
           <b-form-group label="产品类型:" label-align="right" label-cols="2">
-            <b-form-select v-model="selectType" :options="type"></b-form-select>
+            <b-form-select
+              v-model="selectType"
+              :options="ProductType"
+            ></b-form-select>
           </b-form-group>
           <b-form-group label="产品标题:" label-align="right" label-cols="2">
             <b-form-input v-model.trim="title"></b-form-input>
@@ -47,10 +50,13 @@
           <b-button variant="info" @click="Save_content_head"
             >保存为说明</b-button
           >
-          <b-button variant="info" @click="Save_content_body"
+          <b-button
+            variant="info"
+            @click="Save_content_body"
+            :disabled="content_head === ''"
             >保存为内容</b-button
           >
-          <b-button class="ml-5" @click="Preview">预览</b-button>
+         <!--  <b-button class="ml-5" @click="Preview">预览</b-button> -->
           <b-button variant="success" class="float-right" @click="SendEdit"
             >确定</b-button
           >
@@ -59,141 +65,145 @@
     </b-card>
   </div>
 </template>
-
-<script>
-import { Add_Product } from "../../api/axios";
-import { mapState } from "vuex";
-export default {
+<script lang="ts">
+import Vue from 'vue'
+import { mapState } from 'vuex'
+import { selectFiles, editProduct } from '../../server/typing/interface'
+import gql from 'graphql-tag'
+export default Vue.extend({
   data() {
+    const ProductType = [
+      'UPS电源',
+      '后备式UPS电源',
+      '高频单相UPS电源',
+      '高频三相UPS电源',
+      '工频UPS电源',
+      '机架式UPS电源',
+      '模块化UPS电源',
+      'UPS蓄电池',
+      '数据中心',
+      '微模块机房',
+      '一体化机柜',
+      '配电PDU',
+      '动环监控',
+      '网络机柜',
+      '机房空调',
+      '房间空调',
+      '列间空调',
+      '机架空调',
+    ]
+    const hljs = null
+    const editorOption = {
+      modules: {
+        toolbar: [
+          ['bold', 'italic', 'underline', 'strike'],
+          ['blockquote', 'code-block'],
+          [{ header: 1 }, { header: 2 }],
+          [{ list: 'ordered' }, { list: 'bullet' }],
+          [{ script: 'sub' }, { script: 'super' }],
+          [{ indent: '-1' }, { indent: '+1' }],
+          [{ direction: 'rtl' }],
+          [{ size: ['small', false, 'large', 'huge'] }],
+          [{ header: [1, 2, 3, 4, 5, 6, false] }],
+          [{ font: [] }],
+          [{ color: [] }, { background: [] }],
+          [{ align: [] }],
+          ['clean'],
+          ['link', 'image'], //, "video"]
+        ],
+        syntax: {
+          highlight: (text: any) => (hljs as any).highlightAuto(text).value,
+        },
+      },
+    }
     return {
-      type: [
-        "UPS电源",
-        "后备式UPS电源",
-        "高频单相UPS电源",
-        "高频三相UPS电源",
-        "工频UPS电源",
-        "机架式UPS电源",
-        "模块化UPS电源",
-        "UPS蓄电池",
-        "数据中心",
-        "微模块机房",
-        "一体化机柜",
-        "配电PDU",
-        "动环监控",
-        "网络机柜",
-        "机房空调",
-        "房间空调",
-        "列间空调",
-        "机架空调"
-      ],
-      selectType: "",
-      title: "",
-      indexPic: "",
-      carouselPic: [],
+      ProductType,
+      selectType: '', // 产品类型
+      title: '', // 产品名称
+      indexPic: '', // 产品主图
+      carouselPic: [], // 产品轮播图
       content: `<h2 class="ql-align-center"><span class="ql-font-serif">
       Text content loading..</span></h2>`,
-      content_head: "",
-      content_body: "",
-      editorOption: {
-        modules: {
-          toolbar: [
-            ["bold", "italic", "underline", "strike"],
-            ["blockquote", "code-block"],
-            [{ header: 1 }, { header: 2 }],
-            [{ list: "ordered" }, { list: "bullet" }],
-            [{ script: "sub" }, { script: "super" }],
-            [{ indent: "-1" }, { indent: "+1" }],
-            [{ direction: "rtl" }],
-            [{ size: ["small", false, "large", "huge"] }],
-            [{ header: [1, 2, 3, 4, 5, 6, false] }],
-            [{ font: [] }],
-            [{ color: [] }, { background: [] }],
-            [{ align: [] }],
-            ["clean"],
-            ["link", "image"] //, "video"]
-          ],
-          syntax: {
-            highlight: text => hljs.highlightAuto(text).value
-          }
-        }
-      }
-    };
-  },
-  computed: {
-    ...mapState(["user", "token", "carouselPics", "SourceFile"])
-  },
-  activated() {
-    if (this.carouselPics) {
-      let {
-        title,
-        content_head,
-        content_body,
-        carouselPic,
-        selectType,
-        indexPic
-      } = this.carouselPics;
-
-      this.title = title;
-      this.content_head = content_head;
-      this.content_body = content_body;
-      this.carouselPic = carouselPic;
-      this.selectType = selectType;
-      this.indexPic = indexPic;
-      this.content = content_body;
+      content_head: '', // 简介
+      content_body: '', //详情
+      editorOption,
     }
   },
+  computed: {
+    SourceFile() {
+      const SourceFile: selectFiles[] = this.$store.state.SourceFile
+      const result = SourceFile.filter(
+        file => file.filetype === 'img'
+      ).map(file => Object.assign(file, { text: file.name, value: file.path }))
+      return result
+    },
+  },
+
   methods: {
+    // 提交
     async SendEdit() {
-      let params = {
+      const params: editProduct = {
         selectType: this.selectType,
         title: this.title,
+        indexPic: this.indexPic,
+        carouselPic: this.carouselPic,
         content_head: this.content_head,
         content_body: this.content_body,
-        indexPic: this.indexPic,
-        carouselPic: this.carouselPic.join("+")
-      };
-
-      let result = await Add_Product(params);
-      const isQ = await this.$bvModal.msgBoxConfirm(
-        "编辑成功，是否跳转到页面？",
-        { title: "edit success" }
-      );
-      if (isQ) {
-        this.$router.push(result.href);
+        
       }
+      const result = await this.$apollo.mutate({
+        mutation: gql`
+          mutation($arg: JSON) {
+            setProduct(arg: $arg) {
+              ok
+              msg
+            }
+          }
+        `,
+        variables: { arg: params },
+      })
+      const data = result.data.setProduct
+      const isQ = await this.$bvModal.msgBoxConfirm(
+        "编辑成功",
+        { title: "edit success" }
+      )
     },
     Save_content_head() {
-      this.content_head = this.content;
-      this.content = "";
+      this.content_head = this.content
+      this.content = ''
     },
+    // save消息主题
     Save_content_body() {
-      this.content_body = this.content;
-      this.content = "";
+      this.content_body = this.content
+      this.content = ''
     },
+    // 预览
     Preview() {
-      this.$store.commit("carouselPic", {
+      /* this.$store.commit("carouselPic", {
         title: this.title,
         content_head: this.content_head,
         content_body: this.content_body,
         carouselPic: this.carouselPic,
         selectType: this.selectType,
         indexPic: this.indexPic
-      });
-      let routeData = this.$router.push({
-        name: "admin-prewive___zh",
+      }); */
+      const rout = this.$router.resolve({
+        name: 'prewive',
         params: {
-          title: this.title,
-          content_head: this.content_head,
-          content_body: this.content_body,
-          carouselPic: this.carouselPic
-        }
-      });
+          title: this.$data.title,
+          content_head: this.$data.content_head,
+          content_body: this.$data.content_body,
+          carouselPic: this.$data.carouselPic,
+        },
+      })
+      window.open(rout.href, '_blank')
     },
-    onEditorChange({ html }) {
-      this.content = html;
-    }
-  }
-};
+    // edit编辑器输入事件
+    onEditorChange({ html }: { html: string }) {
+      this.content = html
+    },
+  },
+})
 </script>
 
 <style lang="scss" scoped>
