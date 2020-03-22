@@ -19,6 +19,7 @@ const Schema_Product_list = new Schema({
   date: String,
   table: String,
   href: String,
+  title:String,
   t1: {type:"Mixed"},
   t2: {type:"Mixed"},
   head: String,

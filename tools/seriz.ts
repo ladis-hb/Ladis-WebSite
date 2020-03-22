@@ -43,9 +43,11 @@ async function Html_Serialize_Json(
   const file = await Axios.get(Host + url)
     .then(res => res.data)
     .catch(e => {
+      
       console.log({ url, table, type, query, title, parent, arg,error:"axios error" });
+      return false
     });
-
+    if(!file) throw new Error("get file error")
   const $ = cheerio.load(file);
 
   switch (type) {
@@ -194,11 +196,10 @@ async function Html_Serialize_Json(
               ?.attr("src") as string,
           );
         }
-        const data: productList = { ...defaults, t1, t2, img, down, link: url };
+        const data: productList = { ...defaults,title:defaults.MainTitle, t1, t2, img, down, link: url };
         result.push(data);
         return result;
       }
-      break;
     /* -----------------------------------Support ------------------------------------------------------ */
     //Support
     //抓取support页面常见问题
@@ -589,7 +590,7 @@ async function Get_Product_list() {
     Product_link = [...Product_link, ...el];
   });
  */
-
+  const titleSet:Set<string> = new Set()
   for (let el of Product){
     const result = <productList[]>await Html_Serialize_Json(
       el.link,
@@ -600,28 +601,13 @@ async function Get_Product_list() {
       el.MainTitle,
     )
     for (let els of result) {
+      if(titleSet.has(els.title)) return
+      titleSet.add(els.title)
       await new DB.Product_list(els).save();
       await WriteRouter(els.href)
     }
 
   }
-  /* const Product_list_Promise = Product.map(el => {
-    return Html_Serialize_Json(
-      el.link,
-      "Product_list",
-      "products_dev_arg",
-      null,
-      el.title,
-      el.MainTitle,
-    );
-  });
-
-  const Product_list = <productList[][]>await Promise.all([...Product_list_Promise]);
-  for (let list of Product_list) {
-    for (let el of list) {
-      await new DB.Product_list(el).save();
-    }
-  } */
   console.log("Get_Product_list Success ++++++++++++++");
 }
 

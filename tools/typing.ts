@@ -66,7 +66,9 @@ export interface productListNew {
   down: GMlink[];
 }
 // 产品包装
-export interface productList extends GMpack, productListNew, productListOld {}
+export interface productList extends GMpack, productListNew, productListOld {
+  title:string
+}
 
 //support asid
 export interface supportAsid extends GMpack,GMlink{}
