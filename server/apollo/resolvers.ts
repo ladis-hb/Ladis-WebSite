@@ -1,11 +1,12 @@
 import { IResolvers } from "apollo-server-koa";
-import { ApolloCtx, ApolloMongoResult, UserInfo, fileDirList, editProduct } from "../typing/interface";
+import { ApolloCtx, ApolloMongoResult, UserInfo, fileDirList, editProduct, about } from "../typing/interface";
 import { User } from "../mongoose/admin";
 import DBs from "../mongoose/content"
 import Crypto from "../util/crypto";
 import fs from "fs";
 import path from "path";
 import util from "util"
+import {Agent} from "../config"
 const resolvers: IResolvers = {
   Query: {
     // 获取upload文件夹文件列表
@@ -29,6 +30,17 @@ const resolvers: IResolvers = {
         return data
       })
       return result
+    },
+    // 获取代理商列表
+    getAgents(){
+      return Agent
+    },
+    // 获取代理商about
+    async getAbouts(root,{selectType,webSite}){
+      const result = await DBs.About.findOne({title:selectType,"content.webSite":webSite}).lean() as about
+      console.log(result);
+      
+      return result?.content?.body || ""
     }
   },
 
@@ -183,6 +195,7 @@ const resolvers: IResolvers = {
         { $push: { data: site } }
       );
     },
+    // 添加案例，新闻
     async setCaseNews(root, { type, arg }) {
       const { pic, content, title, editType, } = arg;
       const inputType = type

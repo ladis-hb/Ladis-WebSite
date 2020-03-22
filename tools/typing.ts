@@ -26,97 +26,87 @@ type HtmlString = string;
 export type contentType = "html" | "";
 // 公用包装
 export interface GMpack {
-  title: string;
-  parent?: string;
-  date: Date;
+  MainTitle: string; // 分类
+  MainParent: string; // 父类
+  date: Date | string; // 日期
+  table:string
+  href:string
+  link?:string
 }
 //公用链接格式
 export interface GMlink {
-  target: string;
+  target?: string;
   href: string;
+  link?:string;
   title: string;
 }
 // 产品目录
-export interface product {
+export interface product extends GMpack {
   title: string;
   href: string;
   img: string;
   link: string;
 }
-// 产品包装
-export interface productPack extends GMpack {
-  data: product[];
+//
+export interface productContentOld{
+  type: contentType;
+  content: HtmlString;
 }
 // 产品详情
 export interface productListOld {
-  t1: {
-    type: contentType;
-    content: HtmlString;
-  };
-  t2: {
-    type: contentType;
-    content: HtmlString;
-  };
+  t1?: productContentOld
+  t2?: productContentOld
   img: string[];
   down: GMlink[];
 }
 export interface productListNew {
-  img: string[]
-  head:string
-  body:string
-  down:GMlink[]
+  img: string[];
+  head?: string;
+  body?: string;
+  down: GMlink[];
 }
 // 产品包装
-export interface productListPack extends GMpack {
-  data: productListOld[] | productListNew[]
+export interface productList extends GMpack, productListNew, productListOld {}
+
+//support asid
+export interface supportAsid extends GMpack,GMlink{}
+export interface supportProblem extends GMpack,GMlink{
+  child?:supportProblem[]
 }
 
 // 软件资料目录
-export interface support {
-  language: string;
+export interface support extends GMpack {
+  language?: string;
   type: string;
   title: string;
-  date: Date;
-  platform: string;
-  size: string;
-  version: string;
-  updateReason: string;
-  down: string;
-}
-// 产品包装
-export interface supportPack extends GMpack {
-  data: support[];
+  platform?: string;
+  size?: string;
+  version?: string;
+  updateReason?: string;
+  down?: string;
 }
 
 // 教程
-export interface supportList {
+export interface supportList extends GMpack {
   title: string;
   link: string;
   href: string;
   movie?: string;
   html?: HtmlString;
-  date: Date;
-  parentsUntil: string;
-  parent: string;
-  data: string;
-}
-// 产品包装
-export interface supportListPack extends GMpack {
-  data: supportList[];
+  parentsUntil?: string;
+  parent?: string;
+  data?: string;
 }
 
 // 经销商
-export interface buy {
+export interface buy extends GMpack {
   alt: string;
   shape: string;
   coords: string;
   href: string;
 }
-export interface buyPack extends GMpack {
-  data: buy[];
-}
 // 经销商详情
-export interface buyList {
+export interface buyList extends GMpack {
   parentsUntil: string;
   link: string;
   parent: string;
@@ -124,12 +114,9 @@ export interface buyList {
   content: string;
   table: string;
 }
-export interface buyListPack extends GMpack {
-  data: buyList[];
-}
 
 // vr
-export interface vr {
+export interface vr extends GMpack {
   img: string;
   name: string;
   time: string;
@@ -138,41 +125,27 @@ export interface vr {
   href: string;
   linkText: string;
 }
-export interface vrPack extends GMpack {
-  data: vr[];
-}
 // 案例
-export interface cases extends vr { }
-export interface casesPack extends vrPack { }
+export interface cases extends vr {}
 // 案例详情
-export interface caseList {
+export interface caseList extends GMpack {
   text: string;
   pic: string;
-}
-export interface casesListPack extends GMpack {
-  data: caseList;
 }
 // about
 export interface about extends GMpack {
   body?: string[];
   content?: {
     body: string;
-    webSite: AgentName
+    webSite: AgentName;
   };
 }
-// head
-export interface head extends GMpack {
-  data?: string[];
-}
 //page
-export interface pageLink {
+export interface pageLink extends GMpack {
   title: string;
   href: string;
   link: string;
-  args?: pageLink;
-}
-export interface page extends GMpack {
-  data: pageLink[];
+  args?: pageLink[];
 }
 // router
 export interface router {
@@ -180,7 +153,7 @@ export interface router {
   rout: string;
 }
 /* 跨域查询 */
-type DbTables =
+export type DbTables =
   | "Product"
   | "Product_list"
   | "Support"
@@ -217,30 +190,30 @@ export interface uploadResult {
 }
 // fileDirList
 export interface fileDirList {
-  files: string[]
-  size: number
-  msg: string
+  files: string[];
+  size: number;
+  msg: string;
 }
 // 上传文件选中文件
 export interface selectFiles {
-  path: string
-  name: string
-  filetype: string
+  path: string;
+  name: string;
+  filetype: string;
 }
 // 上传产品类型
 export interface editProduct {
-  selectType: string
-  title: string
-  content_head: string
-  content_body: string
-  indexPic: string
-  carouselPic: string[]
+  selectType: string;
+  title: string;
+  content_head: string;
+  content_body: string;
+  indexPic: string;
+  carouselPic: string[];
 }
 
 // 代理商名称限定
-export type AgentName = "localhost"|"湖北雷迪司"|"贵州代理商"|"陕西代理商" 
+export type AgentName = "localhost" | "湖北雷迪司" | "贵州代理商" | "陕西代理商";
 // 代理
-export interface Agents{
-  name:AgentName
-  url:string
+export interface Agents {
+  name: AgentName;
+  url: string;
 }

@@ -72,6 +72,8 @@ export default async (ctx:ParameterizedContext) => {
       }
       break;
 
+      // 获取
+
     //转而使用Get_arg请求
     case "Get_arg":
       // 请求参数

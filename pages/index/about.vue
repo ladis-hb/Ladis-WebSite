@@ -34,6 +34,7 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
+import gql from 'graphql-tag';
 export default Vue.extend({
   data() {
     const hljs = null
@@ -71,25 +72,37 @@ export default Vue.extend({
         "隐私政策"
       ],
       selectType: "联系我们",
-      webSites: ["localhost", "www.ladis.com.cn", "www.ladishb.com"],
-      webSite: "localhost",
+      webSites: [],
+      webSite: "",
       content: `<h2 class="ql-align-center"><span class="ql-font-serif">
       Text content loading..</span></h2>`,
 
       editorOption
     };
   },
- /*  watch: {
-    selectType: function(val) {
-      let { selectType, webSite } = this.$data;
-      getAbout({ selectType, webSite }).then(el => (this.content = el.data));
+  apollo:{
+    webSites:{
+      query:gql`query{
+        webSites:getAgents{
+          text:name
+          value:name
+        }
+      }`
     },
-    webSite: function(val) {
-      let { selectType, webSite } = this.$data;
-      getAbout({ selectType, webSite }).then(el => (this.content = el.data));
+    contents:{
+      query:gql`
+      query ($selectType:String,$webSite:String){
+        contents:getAbouts(selectType:$selectType,webSite:$webSite)
+      }
+      `,
+      variables(){
+        return {
+          webSite:this.$data.webSite,
+          selectType:this.$data.selectType
+        }
+      }
     }
-  }, */
-
+  },
   methods: {
     async SendEdit() {
       /* let { selectType, webSite, content } = this.$data;
@@ -98,8 +111,8 @@ export default Vue.extend({
       this.$bvModal.msgBoxOk("操作成功", { buttonSize: "sm" }); */
     },
 
-    onEditorChange({ html }) {
-      this.content = html;
+    onEditorChange({ html }:any) {
+      this.$data.content = html;
     }
   }
 })

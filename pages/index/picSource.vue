@@ -48,7 +48,7 @@
                   >
                 </b-input-group-append>
               </b-input-group>
-              <p>Size:{{ sourceFile.size }}/Message:{{ sourceFile.mag }}</p>
+              <p>Size:{{ sourceFile.size }}/Message:{{ sourceFile.msg }}</p>
             </div>
             <b-row>
               <b-col

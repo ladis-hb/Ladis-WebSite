@@ -1,204 +1,153 @@
 /* jshint esversion:8 */
-import { mongooses as mongoose, Schema } from "./momgoose"
+import { mongooses as mongoose, Schema } from "./momgoose";
+import { router } from "../typing/interface";
 
-const Schema_Product = new Schema(
-  {
-    title: String,
-    data: [
-      {
-        title: { type: String },
-        href: { type: String },
-        img: { type: String },
-        link: { type: String }
-      }
-    ]
-  },
-  { timestamps: true }
-);
+const Schema_Product = new Schema({
+  MainTitle: String,
+  MainParent: String,
+  date: String,
+  table: String,
+  href: String,
+  title: String,
+  img: String,
+  link: String,
+});
 
-const Schema_Product_list = new Schema(
-  {
-    parent: String,
-    title: String,
-    data: {type:"Mixed"}
-      /* {
-      t1: { type: "Mixed" },
-      t2: { type: "Mixed" },
-      img: [String],
-      down: ["Mixed"]
-    } */
-  },
-  { timestamps: true }
-);
+const Schema_Product_list = new Schema({
+  MainTitle: String,
+  MainParent: String,
+  date: String,
+  table: String,
+  href: String,
+  t1: {type:"Mixed"},
+  t2: {type:"Mixed"},
+  head: String,
+  body: String,
+  img: [String],
+  down: {type:"Mixed"},
+});
 
-const Schema_Support = new Schema(
-  {
-    parent: String,
-    title: String,
-    data: [
-      {
-        type: { type: String },
-        title: { type: String },
-        date: { type: String },
-        platform: { type: String },
-        language: { type: String, default: "简体中文" },
-        size: { type: String },
-        version: { type: String },
-        updateReason: { type: String },
-        down: { type: String },
-        href: { type: String }
-      }
-    ]
-  },
-  { timestamps: true }
-);
+const Schema_Support = new Schema({
+  MainTitle: String,
+  MainParent: String,
+  date: String,
+  table: String,
+  href: String,
+  language: String,
+  type: String,
+  title: String,
+  platform: String,
+  size: String,
+  version: String,
+  updateReason: String,
+  down: String,
+});
 
-const Schema_Support_list = new Schema(
-  {
-    title: { type: String },
-    link: { type: String },
-    href: { type: String },
-    movie: String,
-    html: { type: String },
-    date: { type: Date, default: new Date() },
-    parentsUntil: { type: String },
-    parent: { type: String },
-    data: {type:"Mixed"}
-  },
-  { timestamps: true }
-);
+const Schema_Support_list = new Schema({
+  MainTitle: String,
+  MainParent: String,
+  date: String,
+  table: String,
+  href: String,
+  title: String,
+  link: String,
+  movie: String,
+  html: String,
+  parentsUntil: String,
+  parent: String,
+  data: String,
+});
 
-const Schema_Buy = new Schema(
-  {
-    title: { type: String },
-    data:{type:"Mixed"}
-       /* {
-      alt: { type: String },
-      shape: { type: String },
-      coords: { type: String },
-      href: { type: String }
-    } */,
-    date: { type: Date, default: new Date() },
-    parent: { type: String }
-  },
-  { timestamps: true }
-);
+const Schema_Buy = new Schema({
+  MainTitle: String,
+  MainParent: String,
+  date: String,
+  table: String,
+  href: String,
+  alt: String,
+  shape: String,
+  coords: String,
+});
 
-const Schema_Buy_list = new Schema(
-  {
-    title: { type: String },
-    data:{type:"Mixed"}
-       /* {
-      parentsUntil: { type: String },
-      link: { type: String },
-      parent: { type: String },
-      title: { type: String },
-      content: { type: String },
-      table: { type: String }
-    } */,
-    date: { type: Date, default: new Date() },
-    parent: { type: String }
-  },
-  { timestamps: true }
-);
+const Schema_Buy_list = new Schema({
+  MainTitle: String,
+  MainParent: String,
+  date: String,
+  table: String,
+  href: String,
+  parentsUntil: String,
+  link: String,
+  parent: String,
+  title: String,
+  content: String,
+});
 
-const Schema_VR = new Schema(
-  {
-    parent: { type: String },
-    title: { type: String },
-    date: { type: Date, default: new Date() },
-    data: [
-      {
-        img: { type: String },
-        name: { type: String },
-        time: { type: String },
-        text: { type: String },
-        link: { type: String },
-        href: { type: String },
-        linkText: { type: String }
-      }
-    ]
-  },
-  { timestamps: true }
-);
+const Schema_VR = new Schema({
+  MainTitle: String,
+  MainParent: String,
+  date: String,
+  table: String,
+  href: String,
+  img: String,
+  name: String,
+  time: String,
+  text: String,
+  link: String,
+  linkText: String,
+});
 
-const Schema_CaseNews = new Schema(
-  {
-    title: { type: String },
-    data:{type:"Mixed"}
-       /* {
-      img: { type: String },
-      name: { type: String },
-      time: { type: String },
-      text: { type: String },
-      link: { type: String },
-      href: { type: String },
-      linkText: { type: String }
-    } */,
-    date: { type: Date, default: new Date() },
-    parent: { type: String }
-  },
-  { timestamps: true }
-);
+const Schema_CaseNews = new Schema({
+  MainTitle: String,
+  MainParent: String,
+  date: String,
+  table: String,
+  href: String,
+});
 
-const Schema_CaseNews_list = new Schema(
-  {
-    parent: { type: String },
-    title: { type: String },
-    date: { type: Date, default: new Date() },
-    data:{type:"Mixed"} /* {
-      text: [String],
-      pic: [String]
-    } */
-  },
-  { timestamps: true }
-);
+const Schema_CaseNews_list = new Schema({
+  MainTitle: String,
+  MainParent: String,
+  date: String,
+  table: String,
+  href: String,
+});
 //about
 
 const Schema_About = new Schema({
-  title: String,
-  content: [
-    new Schema({
-      webSite: String,
-      body: String
-    })
-  ]
+  MainTitle: String,
+  MainParent: String,
+  date: String,
+  table: String,
+  href: String,
 });
-const Schema_Head = new Schema(
-  {
-    title: { type: String },
-    data:{type:"Mixed"} /*  {
-      title: { type: String },
-      keywords: { type: String },
-      description: { type: String }
-    } */
-  },
-  { timestamps: true }
-);
+const Schema_Head = new Schema({
+  MainTitle: String,
+  MainParent: String,
+  date: String,
+  table: String,
+  href: String,
+});
 
-const Schema_Page = new Schema(
-  {
-    parent: { type: String },
-    title: { type: String },
-    table: { type: String },
-    data: ["Mixed"]
-  },
-  { timestamps: true }
-);
-const Schema_Router = new Schema(
-  {
-    rout: { type: String },
-    title: String
-  },
-  { timestamps: true }
-);
+const Schema_Page = new Schema({
+  MainTitle: String,
+  MainParent: String,
+  date: String,
+  table: String,
+  href: String,
+  title: String,
+  link: String,
+  args: {type:"Mixed"},
+  child:{type:"Mixed"}
+});
+const Schema_Router = new Schema({
+  title: String,
+  rout: String,
+});
 
-const SaveRouter = async ({ title, rout }:{title:string,rout:string}) => {
-  if (!title) title = rout.split("/").pop() as string;
-  let r = await Router.findOne({ rout });
-  if (r) return r;
-  let route = new Router({ title, rout });
-  return await route.save();
+const SaveRouter = async ({ title, rout }:router) => {
+  if (!title) title = rout.split("/").pop() as string
+  const result = await Router.updateOne({rout},{$set:title})
+  return result
 };
 
 const Product = mongoose.model("Product", Schema_Product);
@@ -230,7 +179,6 @@ const EnNews = mongoose.model("EnNew", Schema_CaseNews);
 const EnNews_list = mongoose.model("EnNews_list", Schema_CaseNews_list);
 const EnAbout = mongoose.model("Enabout", Schema_About);
 
-
 export default {
   Product,
   Product_list,
@@ -248,7 +196,7 @@ export default {
   Page,
   Router,
   SaveRouter,
-  
+
   EnProduct,
   EnProduct_list,
   EnSupport,
@@ -261,6 +209,4 @@ export default {
   EnNews,
   EnNews_list,
   EnAbout,
-
-  
 };

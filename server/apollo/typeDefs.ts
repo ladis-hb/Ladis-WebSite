@@ -29,16 +29,25 @@ const typeDefs: DocumentNode = gql`
     status: Boolean
     messageId: String
   }
-  #
+  # 
   type pic {
     files: [String]
     size: Int
     msg: String
   }
+  # 
+  type Agent {
+    name: String
+    url: String
+  }
   #Query
   type Query {
-    #tool
+    # upload文件列表
     getUploadFiles(filter:String):pic
+    # 获取代理商列表
+    getAgents:[Agent]
+    # 获取代理商about信息
+    getAbouts(selectType:String,webSite:String):String
     
   }
 
