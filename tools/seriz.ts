@@ -36,6 +36,7 @@ async function Html_Serialize_Json(
   arg?: any,
 ) {
   const defaults: GMpack = {
+    MainUrl:url,
     MainTitle: title,
     date: new Date(),
     MainParent: parent || "",

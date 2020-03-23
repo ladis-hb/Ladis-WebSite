@@ -3,6 +3,7 @@ import { mongooses as mongoose, Schema } from "./momgoose";
 import { router } from "../typing/interface";
 
 const Schema_Product = new Schema({
+  MainUrl: String,
   MainTitle: String,
   MainParent: String,
   date: String,
@@ -14,22 +15,24 @@ const Schema_Product = new Schema({
 });
 
 const Schema_Product_list = new Schema({
+  MainUrl: String,
   MainTitle: String,
   MainParent: String,
   date: String,
   table: String,
   href: String,
-  title:String,
+  title: String,
   link: String,
-  t1: {type:"Mixed"},
-  t2: {type:"Mixed"},
+  t1: { type: "Mixed" },
+  t2: { type: "Mixed" },
   head: String,
   body: String,
   img: [String],
-  down: {type:"Mixed"},
+  down: { type: "Mixed" },
 });
 
 const Schema_Support = new Schema({
+  MainUrl: String,
   MainTitle: String,
   MainParent: String,
   date: String,
@@ -47,6 +50,7 @@ const Schema_Support = new Schema({
 });
 
 const Schema_Support_list = new Schema({
+  MainUrl: String,
   MainTitle: String,
   MainParent: String,
   date: String,
@@ -62,6 +66,7 @@ const Schema_Support_list = new Schema({
 });
 
 const Schema_Buy = new Schema({
+  MainUrl: String,
   MainTitle: String,
   MainParent: String,
   date: String,
@@ -74,6 +79,7 @@ const Schema_Buy = new Schema({
 });
 
 const Schema_Buy_list = new Schema({
+  MainUrl: String,
   MainTitle: String,
   MainParent: String,
   date: String,
@@ -87,6 +93,7 @@ const Schema_Buy_list = new Schema({
 });
 
 const Schema_VR = new Schema({
+  MainUrl: String,
   MainTitle: String,
   MainParent: String,
   date: String,
@@ -101,6 +108,7 @@ const Schema_VR = new Schema({
 });
 
 const Schema_CaseNews = new Schema({
+  MainUrl: String,
   MainTitle: String,
   MainParent: String,
   date: String,
@@ -115,28 +123,30 @@ const Schema_CaseNews = new Schema({
 });
 
 const Schema_CaseNews_list = new Schema({
+  MainUrl: String,
   MainTitle: String,
   MainParent: String,
   date: String,
   table: String,
   href: String,
-  title:String,
-  link:String,
+  title: String,
+  link: String,
   text: [String],
-  pic: [String]
+  pic: [String],
 });
 //about
 
 const Schema_About = new Schema({
+  MainUrl: String,
   MainTitle: String,
   MainParent: String,
   date: String,
   table: String,
   href: String,
   link: String,
-  
 });
 const Schema_Head = new Schema({
+  MainUrl: String,
   MainTitle: String,
   MainParent: String,
   date: String,
@@ -146,6 +156,7 @@ const Schema_Head = new Schema({
 });
 
 const Schema_Page = new Schema({
+  MainUrl: String,
   MainTitle: String,
   MainParent: String,
   date: String,
@@ -153,13 +164,13 @@ const Schema_Page = new Schema({
   href: String,
   title: String,
   link: String,
-  args: {type:"Mixed"},
-  child:{type:"Mixed"}
+  args: { type: "Mixed" },
+  child: { type: "Mixed" },
 });
 const Schema_Router = new Schema({
   title: String,
   rout: String,
-  href:String
+  href: String,
 });
 
 const Product = mongoose.model("Product", Schema_Product);
