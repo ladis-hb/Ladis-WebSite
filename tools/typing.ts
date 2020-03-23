@@ -119,6 +119,7 @@ export interface buyList extends GMpack {
 
 // vr
 export interface vr extends GMpack {
+  title:string
   img: string;
   name: string;
   time: string;
@@ -131,8 +132,9 @@ export interface vr extends GMpack {
 export interface cases extends vr {}
 // 案例详情
 export interface caseList extends GMpack {
-  text: string;
-  pic: string;
+  title:string
+  text: string[];
+  pic: string[];
 }
 // about
 export interface about extends GMpack {
@@ -153,6 +155,7 @@ export interface pageLink extends GMpack {
 export interface router {
   title?: string;
   rout: string;
+  href:string
 }
 /* 跨域查询 */
 export type DbTables =

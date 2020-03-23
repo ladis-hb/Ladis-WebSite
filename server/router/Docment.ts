@@ -28,8 +28,7 @@ export default async (ctx:ParameterizedContext) => {
         About: DBs.default.EnAbout,
         Head: DBs.default.Head,
         Page: DBs.default.Page,
-        Router: DBs.default.Router,
-        SaveRouter: DBs.default.SaveRouter
+        Router: DBs.default.Router
       };
     } else {
       return {
@@ -47,14 +46,13 @@ export default async (ctx:ParameterizedContext) => {
         About: DBs.default.About,
         Head: DBs.default.Head,
         Page: DBs.default.Page,
-        Router: DBs.default.Router,
-        SaveRouter: DBs.default.SaveRouter
+        Router: DBs.default.Router
       };
     }
   })();
   const id = ctx.params.id;
   switch (id) {
-    //获取官网主页轮播的新闻列表
+   //获取官网主页轮播的新闻列表
     case "GetHomeNews":
       {
         ctx.body = await DB.News_list.find()
@@ -77,15 +75,20 @@ export default async (ctx:ParameterizedContext) => {
     //转而使用Get_arg请求
     case "Get_arg":
       // 请求参数
-      const {table, title, parent, isNews,SiteName } = Query
+      const {table, isNews } = Query
+      const queryKeys:string[] = Query['queryKeys[]'] // 'queryKeys[]': [ 'MainTitle', 'MainTitle' ],
+
+      let query = {}
+      if(queryKeys){
+        [queryKeys].flat().forEach(key=>{
+          (query as any)[key] = Query[key]
+        })
+      }
+      console.log({Query,query});
+      
       // 申明结果变量
       let result;
 
-      if (title) {
-        result = (await (DB as any)[table].findOne({ title })) || false;
-      } else if (parent) {
-        result = (await (DB as any)[table].find({ parent })) || false;
-      } else {
         if (isNews) {
           result =
             (await (DB as any)[table]
@@ -93,9 +96,9 @@ export default async (ctx:ParameterizedContext) => {
               .sort({ "data.time": -1 })
               .exec()) || false;
         } else {
-          result = (await (DB as any)[table].find()) || false;
+          result = (await (DB as any)[table].find(query)) || false;
         }
-      }
+      
       ctx.assert(result,401,"数据库未检索到")
       ctx.body = result;
       break;

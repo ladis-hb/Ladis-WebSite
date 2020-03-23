@@ -20,6 +20,7 @@ const Schema_Product_list = new Schema({
   table: String,
   href: String,
   title:String,
+  link: String,
   t1: {type:"Mixed"},
   t2: {type:"Mixed"},
   head: String,
@@ -34,6 +35,7 @@ const Schema_Support = new Schema({
   date: String,
   table: String,
   href: String,
+  link: String,
   language: String,
   type: String,
   title: String,
@@ -65,6 +67,7 @@ const Schema_Buy = new Schema({
   date: String,
   table: String,
   href: String,
+  link: String,
   alt: String,
   shape: String,
   coords: String,
@@ -103,6 +106,12 @@ const Schema_CaseNews = new Schema({
   date: String,
   table: String,
   href: String,
+  img: String,
+  name: String,
+  time: String,
+  text: String,
+  link: String,
+  linkText: String,
 });
 
 const Schema_CaseNews_list = new Schema({
@@ -111,6 +120,10 @@ const Schema_CaseNews_list = new Schema({
   date: String,
   table: String,
   href: String,
+  title:String,
+  link:String,
+  text: [String],
+  pic: [String]
 });
 //about
 
@@ -120,6 +133,8 @@ const Schema_About = new Schema({
   date: String,
   table: String,
   href: String,
+  link: String,
+  
 });
 const Schema_Head = new Schema({
   MainTitle: String,
@@ -127,6 +142,7 @@ const Schema_Head = new Schema({
   date: String,
   table: String,
   href: String,
+  link: String,
 });
 
 const Schema_Page = new Schema({
@@ -143,13 +159,8 @@ const Schema_Page = new Schema({
 const Schema_Router = new Schema({
   title: String,
   rout: String,
+  href:String
 });
-
-const SaveRouter = async ({ title, rout }:router) => {
-  if (!title) title = rout.split("/").pop() as string
-  const result = await Router.updateOne({rout},{$set:title})
-  return result
-};
 
 const Product = mongoose.model("Product", Schema_Product);
 const Product_list = mongoose.model("Product_list", Schema_Product_list);
@@ -196,7 +207,6 @@ export default {
   Head,
   Page,
   Router,
-  SaveRouter,
 
   EnProduct,
   EnProduct_list,

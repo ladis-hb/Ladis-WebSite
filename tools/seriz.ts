@@ -16,9 +16,15 @@ import {
   buy,
   buyList,
   DbTables,
+  router,
+  cases,
+  caseList,
+  vr,
 } from "./typing";
 
 const Host: string = "http://www.ladis.com.cn";
+const CaseNum = 10
+const NewsNum = 363
 
 async function Html_Serialize_Json(
   url: string,
@@ -43,11 +49,11 @@ async function Html_Serialize_Json(
   const file = await Axios.get(Host + url)
     .then(res => res.data)
     .catch(e => {
-      
-      console.log({ url, table, type, query, title, parent, arg,error:"axios error" });
+
+      console.log({ url, table, type, query, title, parent, arg, error: "axios error" });
       return false
     });
-    if(!file) throw new Error("get file error")
+  if (!file) return false
   const $ = cheerio.load(file);
 
   switch (type) {
@@ -56,7 +62,7 @@ async function Html_Serialize_Json(
       console.log(`抓取头部信息`);
       // 结果
       const result: pageLink[] = [];
-      $("#pc_nav .new-down").each(function(i: any, val: any) {
+      $("#pc_nav .new-down").each(function (i: any, val: any) {
         //遍历一级li
         const prev = $(val).prev();
         const title = prev.text();
@@ -64,7 +70,7 @@ async function Html_Serialize_Json(
         const link = prev.attr("href") as string;
         // 保存结果
         const args: pageLink[] = [];
-        prev.find("a").map(function(ii: any, v2: any) {
+        prev.find("a").map(function (ii: any, v2: any) {
           //遍历二级li
           const h = $(v2);
           const title = h.text();
@@ -92,7 +98,7 @@ async function Html_Serialize_Json(
     case "products": {
       const result: product[] = [];
       console.log(`抓取products信息`);
-      $("#scroller .list li").each(function(i: any, val: any) {
+      $("#scroller .list li").each(function (i: any, val: any) {
         const j = $(val);
         const data: product = {
           ...defaults,
@@ -161,7 +167,7 @@ async function Html_Serialize_Json(
         //抓取下载链接
         $(".functionItems a")
           .has("span")
-          .map(function(i: any, val: any) {
+          .map(function (i: any, val: any) {
             if (
               !$(val)
                 ?.attr("href")
@@ -181,12 +187,12 @@ async function Html_Serialize_Json(
         $(".swiper-wrapper")
           .first()
           .find("img")
-          .map(function(i: any, val: any) {
+          .map(function (i: any, val: any) {
             img.push($(val).attr("src") as string);
           });
         const ImgArr = $(".functionItems .productUtilImg img");
         if (ImgArr) {
-          ImgArr.map(function(i: any, val: any) {
+          ImgArr.map(function (i: any, val: any) {
             img.push($(val).attr("src") as string);
           });
         } else {
@@ -196,7 +202,7 @@ async function Html_Serialize_Json(
               ?.attr("src") as string,
           );
         }
-        const data: productList = { ...defaults,title:defaults.MainTitle, t1, t2, img, down, link: url };
+        const data: productList = { ...defaults, title: defaults.MainTitle, t1, t2, img, down, link: url };
         result.push(data);
         return result;
       }
@@ -206,7 +212,7 @@ async function Html_Serialize_Json(
     case "support_problem": {
       console.log(`support_problem`);
       const data: supportAsid[] = [];
-      $(".relate a").each(function(i: any, val: any) {
+      $(".relate a").each(function (i: any, val: any) {
         const title = $(val)
           .text()
           .split("、")[1]
@@ -226,7 +232,7 @@ async function Html_Serialize_Json(
     case "support_down": {
       console.log(`support_down`);
       const data: support[] = [];
-      $(".tabContBox li").each(async function(i: any, val: any) {
+      $(".tabContBox li").each(async function (i: any, val: any) {
         const j = $(val);
         const title = j
           .find("span")
@@ -276,7 +282,7 @@ async function Html_Serialize_Json(
     case "support_problem_asid": {
       console.log(`support_problem_list`);
       const data: supportProblem[] = [];
-      $(".left-search-list .search-list-item").each(function(i: any, val: any) {
+      $(".left-search-list .search-list-item").each(function (i: any, val: any) {
         const j = $(val);
         const title = j.find(".lmmc a").text();
         const link = j.find(".lmmc a").attr("href") as string;
@@ -288,7 +294,7 @@ async function Html_Serialize_Json(
           link,
           href,
         };
-        j.find(".list-sub-item a").map(function(i: any, val: any) {
+        j.find(".list-sub-item a").map(function (i: any, val: any) {
           child.push({
             ...defaults,
             MainParent: d.MainTitle,
@@ -305,17 +311,19 @@ async function Html_Serialize_Json(
     }
     // support 常见问题，视频教程 main
     case "support_problem_args": {
-      const result: supportList[] = [];
+      const results: supportList[] = [];
       console.log(`support_problem_list`);
 
-      $(".r-search-wrap li a").each(async function(i: any, val: any) {
+      $(".r-search-wrap li a").each(async function (i: any, val: any) {
         const j = $(val);
         const title = j.text();
         const link = j.attr("href") as string;
         const href = `/support/problem/${title}`;
         const data: supportList = { ...defaults, title, link, href };
+        results.push(data);
         if (data.link.includes(".shtml")) {
-          const movie = await Html_Serialize_Json(
+          console.log(data.link);
+          data.movie = <string>await Html_Serialize_Json(
             data.link,
             "Support_list",
             "support_problem_args_mv",
@@ -323,8 +331,7 @@ async function Html_Serialize_Json(
             title,
             parent,
           );
-          if (movie) data.movie = <string>movie;
-          const html = await Html_Serialize_Json(
+          data.html = <string>await Html_Serialize_Json(
             data.link,
             "Support_list",
             "support_problem_args_html",
@@ -332,11 +339,12 @@ async function Html_Serialize_Json(
             title,
             parent,
           );
-          if (html) data.html = <string>html;
         }
-        result.push(data);
+
       });
-      return result;
+      console.log({ [title]: results });
+
+      return results;
     }
     //// support 常见问题，视频教程 main 视频
     case "support_problem_args_mv": {
@@ -358,7 +366,7 @@ async function Html_Serialize_Json(
         let list = $(".new_list_outer").find(".lxgd span");
         // map地图数据
         if (arg == "map") {
-          map.each(function(i: any, val: any) {
+          map.each(function (i: any, val: any) {
             const { alt = "", shape, coords, href } = $(val).attr();
             result.push({ ...defaults, alt, shape, coords, href });
           });
@@ -366,7 +374,7 @@ async function Html_Serialize_Json(
         } else {
           //列表
           let pro: Promise<buyList[]>[] = [];
-          list.each(function(i: any, val2: any) {
+          list.each(function (i: any, val2: any) {
             // 大区 华东销售中心
             const parentsUntil = $(val2)
               .find("strong")
@@ -374,7 +382,7 @@ async function Html_Serialize_Json(
 
             $(val2)
               .find("a")
-              .each(function(i: any, val3: any) {
+              .each(function (i: any, val3: any) {
                 // 省
                 const parent = $(val3).text();
                 // 链接
@@ -401,14 +409,14 @@ async function Html_Serialize_Json(
           //result = buy_list;
         }
       }
-      break;
+    /* ------------------------------ buy ------------------------ */
 
     //获取销售服务中心页面省份子页面
     case "buy_list_li": {
       const { parentsUntil, link, parent } = arg;
       const data: buyList[] = [];
       let tsCache: Set<string> = new Set();
-      $(".new_list_outer div").each(function(i: any, val: any) {
+      $(".new_list_outer div").each(function (i: any, val: any) {
         const title = $(val)
           .find("strong")
           .text();
@@ -430,14 +438,95 @@ async function Html_Serialize_Json(
       });
       return data;
     }
+
+    /* -----------------------------vr ,case,news---------------------------------- */
+    //360
+    case "case":
+    case "vr":
+    case "news":
+      //console.log("start serize 360");
+      {
+
+        const list = $("#listPc").find(".new_list");
+        const map: cases[] = [];
+        list.each(function (i, val) {
+          const img = $(val)
+            .find(".new_list_img img")
+            .attr("src") as string
+
+          const name = $(val)
+            .find(".new_list_con .typeAndTime .type_name")
+            .text();
+          const time = $(val)
+            .find(".new_list_con .typeAndTime .type_time")
+            .text();
+          const text = $(val)
+            .find(".new_list_con .new_title_list")
+            .text();
+          const link = $(val)
+            .find(".new_list_con .new_details a")
+            .attr("href") as string
+          const linkText = $(val)
+            .find(".new_list_con .new_details a")
+            .text();
+          const href = `/${table}/${text}`;
+          map.push({
+            ...defaults,
+            title: text,
+            img,
+            name,
+            time,
+            text,
+            link,
+            href,
+            linkText
+          });
+        });
+        return map
+      }
+    //case list
+    case "case_list":
+    case "news_list":
+      {
+
+        const dock: caseList = { ...defaults, title, text: [], pic: [] };
+        const list = $(".MsoNormal");
+        list.each(function (i, val) {
+          const text = $(val)
+            .find("font")
+            .text();
+          const pic = $(val)
+            .find("img")
+            .attr("src")
+          if (text && text.trim() != "") dock.text.push(text);
+          if (pic) dock.pic.push(pic);
+        });
+        //list2
+        const list2 = $(".new_list_outer p");
+        list2.each(function (i, val) {
+          const text = $(val).text();
+          const pic = $(val)
+            .find("img")
+            .attr("src");
+          if (text && text.trim() != "") dock.text.push(text);
+          if (pic) dock.pic.push(pic);
+        });
+        return dock;
+      }
+
+    /* -------------------------swith end ------------------------------------*/
   }
+  /*  ---------------------------------    timeOut -------------------------- */
   setTimeout(() => {
-    console.log({ url, table, type, query, title, parent, arg ,error:"timeOut"});
+    console.log({ url, table, type, query, title, parent, arg, error: "timeOut" });
     return false;
   }, 1000 * 60);
 }
 
-async function start() {
+/* 
+获取头部文件，基础参数
+*/
+async function first() {
   //添加头部文件
   const Pages: Promise<any>[] = [];
   [
@@ -452,7 +541,7 @@ async function start() {
   //添加所有设备列表
   const Products: Promise<any>[] = [];
   [
-    [`/products/index.shtml`, "All"],
+    //[`/products/index.shtml`, "All"],
     [`/products/node_13.shtml`, "UPS电源"],
     [`/products/node_81.shtml`, "后备式UPS电源"],
     [`/products/node_82.shtml`, "高频单相UPS电源"],
@@ -521,77 +610,61 @@ async function start() {
   const Rows = [...Pages, ...Products, ...Support, Buy, Buy_list];
   console.log(`操作数据长度${Rows.length}`);
   for (let row of Rows) {
-    console.log(row);
     const result: GMpack[] = await row;
     if (!result) continue;
-    console.log(result);
     for (let sigle of result) {
-      console.log(sigle);
       await new (DB as any)[sigle.table](sigle).save();
-      await WriteRouter(sigle.href)
+      await WriteRouter((sigle as any).title, sigle.link, sigle.href)
     }
   }
 }
-start().then(async () => {
-  await Get_Product_list();
-  await Get_support_problem_list_arg();
-  
-});
-//技术服务写入
+/* 
+获取produceList,suportList,
 
-/**
- *遍历support下面常见问题列表，存入support_list表
- *
- */
-async function Get_support_problem_list_arg() {
+*/
+
+async function secend() {
+  /* 
+  supportList
+  */
   const support_problem_list: supportProblem[] = await DB.Page.find({
     MainTitle: "support_problem_asid",
   }).lean();
-  //获取
+  //获取  
   const Support_list_linkArray: string[][] = [];
-  const titleSet:Set<string> = new Set()
-  support_problem_list.forEach(({ title, link, child ,MainTitle}) => {
-    if (link && link !== "") Support_list_linkArray.push([title, link,MainTitle]);
-    if (child?.length === 0) return;
-    child?.forEach(({ title: name, link: chLink }) => {
-      if(titleSet.has(title)) return
-      titleSet.add(title)
-      Support_list_linkArray.push([name, chLink as string, title]);
-    });
-  });
-  console.log(Support_list_linkArray);
-  for(let [name, chLink, title] of Support_list_linkArray){
-    const result = <supportList[]>await Html_Serialize_Json(chLink, "Support_list", "support_problem_args", null, name, title);
-    for (let el of result) {
-      await new DB.Support_list(el).save();
-      await WriteRouter(el.href)
+  const titleSet: Set<string> = new Set()
+  for (let list of support_problem_list) {
+    if (list.child) {
+      for (let { title, link } of list.child) {
+        if (!titleSet.has(title)) {
+          titleSet.add(title)
+          Support_list_linkArray.push([title, link as string, list.title]);
+        }
+      }
     }
   }
-  /* const Support_list = Support_list_linkArray.map(([name, chLink, title]) => {
-    return Html_Serialize_Json(chLink, "Support_list", "support_problem_args", null, name, title);
-  });
-  // [[list],[list]]
-  const supportArray = <supportList[][]>await Promise.all([...Support_list]);
-  
+  //
+  console.log(`遍历问题列表,supportProblem:${Support_list_linkArray.length}`);
 
-  for  (let list of supportArray) {
-    for (let el of list) {
+  for (let [name, chLink, title] of Support_list_linkArray) {
+
+    const result = <supportList[]>await Html_Serialize_Json
+      (chLink, "Support_list", "support_problem_args", null, name, title);
+
+    for (let el of result) {
       await new DB.Support_list(el).save();
+      await WriteRouter(el.title, el.link, el.href)
     }
-  }*/
+  }
   console.log("Get_support_problem_list_arg Success ++++++++++++++");
-}
 
-async function Get_Product_list() {
+  /* 
+  productsList
+  */
   const Product: product[] = await DB.Product.find().lean();
-  /* let Product_link_Array = Product.map(el=>({}));
-  let Product_link: any[] = [];
-  Product_link_Array.forEach((el: any) => {
-    Product_link = [...Product_link, ...el];
-  });
- */
-  const titleSet:Set<string> = new Set()
-  for (let el of Product){
+  console.log(`遍历ProductList，count:${Product.length}`);
+  const ProductTitleSet: Set<string> = new Set()
+  for (let el of Product) {
     const result = <productList[]>await Html_Serialize_Json(
       el.link,
       "Product_list",
@@ -601,20 +674,138 @@ async function Get_Product_list() {
       el.MainTitle,
     )
     for (let els of result) {
-      if(titleSet.has(els.title)) return
-      titleSet.add(els.title)
+      if (ProductTitleSet.has(els.title)) continue
+      ProductTitleSet.add(els.title)
       await new DB.Product_list(els).save();
-      await WriteRouter(els.href)
+      await WriteRouter(els.title, els.link, els.href)
     }
 
   }
+  console.log(`遍历ProductList，重复Set:${ProductTitleSet.size}`);
   console.log("Get_Product_list Success ++++++++++++++");
+
 }
 
-async function WriteRouter(rout: string) {
-  if(!rout) return
-  //写入router记录
-  console.log(`写入router记录`);
+/* 
+获取vr,case,news
+*/
+async function three() {
+  {
+    const vr: Promise<vr[]>[] = [];
+    ["/360/node_970.shtml", "/360/node_969.shtml"].forEach(url => {
+      vr.push(<Promise<vr[]>>Html_Serialize_Json(
+        url,
+        "VR",
+        "vr",
+        "vr_dev_list",
+        "vr",
+        "home",
+      ))
+    })
+    //迭代vr
+    for (const list of vr) {
+      const lists = <vr[]>await list
+      for (let row of lists) {
+        await update(row);
+      }
+    }
+  } {
+    //
+    const Case: Promise<cases[]>[] = [];
+    Case.push(
+      <Promise<cases[]>>Html_Serialize_Json("/case/index.shtml",
+        "Case",
+        "case",
+        null,
+        "case_list",
+        "home"
+      )
+    );
+    for (let i = 2; i < CaseNum; i++) {
+      Case.push(
+        <Promise<cases[]>>Html_Serialize_Json(`/case/index_${i}.shtml`,
+          "Case",
+          "case",
+          null,
+          "case_list",
+          "home"
+        )
+      );
+    }
+    //等待解析
+    //CaseObject是case页面的标题列表,CaseList是详细内容content async
+    for (let cases of Case) {
+      const caselist = <cases[]>await cases
+      if (caselist) {
+        for (let caseLi of caselist) {
+          // ［一体化机柜］
+          const parenName = caseLi.name.replace("［", "").replace("］", "")
+          caseLi.MainTitle = parenName
+          caseLi.date = caseLi.time.replace("年", "/")
+            .replace("月", "/")
+            .replace("日", "/")
+          await update(caseLi)
+          let li = <caseList>await Html_Serialize_Json
+            (caseLi.link, "Case_list", "case_list", null, caseLi.text, parenName)
+          li.link = caseLi.link
+          li.href = caseLi.href
+
+          await update(li)
+        }
+      }
+
+    }
+    console.log(`操作 news success`);
+  } {
+    // news
+    for (let i = 2; i < NewsNum; i++) {
+      const NewsObjects = <cases[]>await Html_Serialize_Json(`/news/index_2_${i}.shtml`,
+        "News",
+        "news",
+        null,
+        "news_list",
+        "home"
+      );
+      if (!NewsObjects) continue;
+      for (const NewsObject of NewsObjects) {
+        // ［一体化机柜］
+        const parenName = NewsObject.name.replace("［", "").replace("］", "")
+        NewsObject.MainTitle = parenName
+        NewsObject.date = NewsObject.time.replace("年", "/")
+          .replace("月", "/")
+          .replace("日", "/")
+        await update(NewsObject);
+        //
+        let NewsList = <caseList>await Html_Serialize_Json(
+          NewsObject.link,
+          "News_list",
+          "news_list",
+          null,
+          NewsObject.text,
+          parenName
+        );
+        if(!NewsList) continue
+        NewsList.link = NewsObject.link
+        NewsList.href = NewsObject.href
+        await update(NewsList);
+      }
+    }
+    console.log(`操作 news success`);
+  }
+  async function update(row: cases | caseList) {
+    if (!row) return
+    console.log(`开始迭代，写入表：${row.table},操作title:${row.title}`);
+    await new (DB as any)[row.table](row).save()
+  }
+}
+first().then(async () => {
+  await secend()
+  await three()
+});
+
+
+async function WriteRouter(title: string, rout?: string, href?: string) {
+  if (!rout) return
   let out = [
     "//天猫旗舰店",
     "//京东旗舰店",
@@ -634,5 +825,8 @@ async function WriteRouter(rout: string) {
     "/about/联系我们",
     "/about/经销商列表",
   ];
-  if (!out.includes(rout)) DB.SaveRouter({ rout });
+  if (!out.includes(rout))
+    if (!title) title = rout.split("/").pop() as string
+  const result = await DB.Router.updateOne({ rout }, { $set: { title, href } }, { upsert: true })
+  return result
 }

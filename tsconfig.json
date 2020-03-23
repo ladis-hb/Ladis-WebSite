@@ -33,5 +33,7 @@
       "@nuxtjs/apollo",
       "@nuxtjs/axios"
     ]
-  }
+  },
+  "exclude": ["tools/*"]
+
 }

@@ -84,7 +84,6 @@ const resolvers: IResolvers = {
       const { selectType, title, content_head, content_body, indexPic, carouselPic } = arg as editProduct
       const href = `/products/list/${title}`;
       // 保存路由
-      DBs.SaveRouter({ rout: href, title });
       // 添加主类 
       await DBs.Product.updateOne(
         { title: selectType },
@@ -109,7 +108,6 @@ const resolvers: IResolvers = {
     async setProblem(root, { arg }) {
       const { title, movie, html, selectparentsUntil, selectparent } = arg;
       const href = `/support/problem/${title}`;
-      DBs.SaveRouter({ rout: href, title });
       const obj = {
         title,
         href,
@@ -201,7 +199,6 @@ const resolvers: IResolvers = {
       const inputType = type
       const dates = new Date();
       const href = `/${inputType}/${title}`;
-      DBs.SaveRouter({ rout: href, title });
       const route = { rout: href, modifyTime: dates };
       DBs.Router.updateOne(
         { rout: route.rout },

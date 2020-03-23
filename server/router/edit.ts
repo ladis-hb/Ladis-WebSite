@@ -26,7 +26,6 @@ export default async (ctx:ParameterizedContext) => {
         Head: DBs.Head,
         Page: DBs.Page,
         Router: DBs.Router,
-        SaveRouter: DBs.SaveRouter
       };
     } else {
       return {
@@ -45,7 +44,6 @@ export default async (ctx:ParameterizedContext) => {
         Head: DBs.Head,
         Page: DBs.Page,
         Router: DBs.Router,
-        SaveRouter: DBs.SaveRouter
       };
     }
   })();
