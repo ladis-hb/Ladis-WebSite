@@ -323,7 +323,6 @@ async function Html_Serialize_Json(
         const data: supportList = { ...defaults, title, link, href };
         results.push(data);
         if (data.link.includes(".shtml")) {
-          console.log(data.link);
           data.movie = <string>await Html_Serialize_Json(
             data.link,
             "Support_list",
@@ -343,7 +342,6 @@ async function Html_Serialize_Json(
         }
 
       });
-      console.log({ [title]: results });
 
       return results;
     }
