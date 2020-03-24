@@ -139,11 +139,12 @@ export interface caseList extends GMpack {
 }
 // about
 export interface about extends GMpack {
+  title:string
   body?: string[];
   content?: {
     body: string;
     webSite: AgentName;
-  };
+  }[];
 }
 //page
 export interface pageLink extends GMpack {

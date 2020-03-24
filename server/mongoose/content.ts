@@ -1,27 +1,26 @@
 /* jshint esversion:8 */
 import { mongooses as mongoose, Schema } from "./momgoose";
-import { router } from "../typing/interface";
 
 const Schema_Product = new Schema({
-  MainUrl: String,
-  MainTitle: String,
-  MainParent: String,
+  MainUrl: { type: String, trim: true },
+  MainTitle: { type: String, trim: true },
+  MainParent: { type: String, trim: true },
   date: String,
   table: String,
   href: String,
-  title: String,
+  title: { type: String, trim: true },
   img: String,
   link: String,
 });
 
 const Schema_Product_list = new Schema({
-  MainUrl: String,
-  MainTitle: String,
-  MainParent: String,
+  MainUrl: { type: String, trim: true },
+  MainTitle: { type: String, trim: true },
+  MainParent: { type: String, trim: true },
   date: String,
   table: String,
   href: String,
-  title: String,
+  title: { type: String, trim: true },
   link: String,
   t1: { type: "Mixed" },
   t2: { type: "Mixed" },
@@ -32,16 +31,16 @@ const Schema_Product_list = new Schema({
 });
 
 const Schema_Support = new Schema({
-  MainUrl: String,
-  MainTitle: String,
-  MainParent: String,
+  MainUrl: { type: String, trim: true },
+  MainTitle: { type: String, trim: true },
+  MainParent: { type: String, trim: true },
   date: String,
   table: String,
   href: String,
   link: String,
   language: String,
   type: String,
-  title: String,
+  title: { type: String, trim: true },
   platform: String,
   size: String,
   version: String,
@@ -50,13 +49,13 @@ const Schema_Support = new Schema({
 });
 
 const Schema_Support_list = new Schema({
-  MainUrl: String,
-  MainTitle: String,
-  MainParent: String,
+  MainUrl: { type: String, trim: true },
+  MainTitle: { type: String, trim: true },
+  MainParent: { type: String, trim: true },
   date: String,
   table: String,
   href: String,
-  title: String,
+  title: { type: String, trim: true },
   link: String,
   movie: String,
   html: String,
@@ -66,9 +65,9 @@ const Schema_Support_list = new Schema({
 });
 
 const Schema_Buy = new Schema({
-  MainUrl: String,
-  MainTitle: String,
-  MainParent: String,
+  MainUrl: { type: String, trim: true },
+  MainTitle: { type: String, trim: true },
+  MainParent: { type: String, trim: true },
   date: String,
   table: String,
   href: String,
@@ -79,23 +78,23 @@ const Schema_Buy = new Schema({
 });
 
 const Schema_Buy_list = new Schema({
-  MainUrl: String,
-  MainTitle: String,
-  MainParent: String,
+  MainUrl: { type: String, trim: true },
+  MainTitle: { type: String, trim: true },
+  MainParent: { type: String, trim: true },
   date: String,
   table: String,
   href: String,
   parentsUntil: String,
   link: String,
   parent: String,
-  title: String,
+  title: { type: String, trim: true },
   content: String,
 });
 
 const Schema_VR = new Schema({
-  MainUrl: String,
-  MainTitle: String,
-  MainParent: String,
+  MainUrl: { type: String, trim: true },
+  MainTitle: { type: String, trim: true },
+  MainParent: { type: String, trim: true },
   date: String,
   table: String,
   href: String,
@@ -108,9 +107,9 @@ const Schema_VR = new Schema({
 });
 
 const Schema_CaseNews = new Schema({
-  MainUrl: String,
-  MainTitle: String,
-  MainParent: String,
+  MainUrl: { type: String, trim: true },
+  MainTitle: { type: String, trim: true },
+  MainParent: { type: String, trim: true },
   date: String,
   table: String,
   href: String,
@@ -123,13 +122,13 @@ const Schema_CaseNews = new Schema({
 });
 
 const Schema_CaseNews_list = new Schema({
-  MainUrl: String,
-  MainTitle: String,
-  MainParent: String,
+  MainUrl: { type: String, trim: true },
+  MainTitle: { type: String, trim: true },
+  MainParent: { type: String, trim: true },
   date: String,
   table: String,
   href: String,
-  title: String,
+  title: { type: String, trim: true },
   link: String,
   text: [String],
   pic: [String],
@@ -137,18 +136,23 @@ const Schema_CaseNews_list = new Schema({
 //about
 
 const Schema_About = new Schema({
-  MainUrl: String,
-  MainTitle: String,
-  MainParent: String,
+  MainUrl: { type: String, trim: true },
+  MainTitle: { type: String, trim: true },
+  MainParent: { type: String, trim: true },
   date: String,
   table: String,
   href: String,
   link: String,
+  title:String,
+  content:[new Schema({
+    body: String,
+    webSite:String
+  },{_id:false}) ]
 });
 const Schema_Head = new Schema({
-  MainUrl: String,
-  MainTitle: String,
-  MainParent: String,
+  MainUrl: { type: String, trim: true },
+  MainTitle: { type: String, trim: true },
+  MainParent: { type: String, trim: true },
   date: String,
   table: String,
   href: String,
@@ -156,13 +160,13 @@ const Schema_Head = new Schema({
 });
 
 const Schema_Page = new Schema({
-  MainUrl: String,
-  MainTitle: String,
-  MainParent: String,
+  MainUrl: { type: String, trim: true },
+  MainTitle: { type: String, trim: true },
+  MainParent: { type: String, trim: true },
   date: String,
   table: String,
   href: String,
-  title: String,
+  title: { type: String, trim: true },
   link: String,
   args: { type: "Mixed" },
   child: { type: "Mixed" },

@@ -80,6 +80,7 @@ export default async (ctx:ParameterizedContext) => {
 
       let query = {}
       if(queryKeys){
+        // querykeys：数组至包含一个字符串则会被自动转换为字符串格式，多个则为数组
         [queryKeys].flat().forEach(key=>{
           (query as any)[key] = Query[key]
         })

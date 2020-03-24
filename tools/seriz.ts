@@ -361,20 +361,21 @@ async function Html_Serialize_Json(
     //获取销售服务中心页面
     case "buy_list":
       {
-        const result: buy[] = [];
-
+        const result: buy[] | buyList[] = [];
+        // 地图数据
         let map = $(".new_list_outer").find("map area");
+        // 经销商列表
         let list = $(".new_list_outer").find(".lxgd span");
+        // 存放查询省经销商信息
+        let pro: Promise<buyList[]>[] = [];
         // map地图数据
         if (arg == "map") {
           map.each(function (i: any, val: any) {
             const { alt = "", shape, coords, href } = $(val).attr();
-            result.push({ ...defaults, alt, shape, coords, href });
+            (<buy[]>result).push({ ...defaults, alt, shape, coords, href });
           });
-          return result;
         } else {
           //列表
-          let pro: Promise<buyList[]>[] = [];
           list.each(function (i: any, val2: any) {
             // 大区 华东销售中心
             const parentsUntil = $(val2)
@@ -400,15 +401,14 @@ async function Html_Serialize_Json(
                 pro.push(buy_list);
               });
           });
-
           const buy_list: buyList[][] = await Promise.all(pro);
-          let data: buyList[] = [];
           buy_list.forEach(list => {
-            data = [...data, ...list];
+            (<buyList[]>result).concat(list)
           });
-          return data;
-          //result = buy_list;
+          
+          
         }
+        return result;
       }
     /* ------------------------------ buy ------------------------ */
 
@@ -417,7 +417,7 @@ async function Html_Serialize_Json(
       const { parentsUntil, link, parent } = arg;
       const data: buyList[] = [];
       let tsCache: Set<string> = new Set();
-      $(".new_list_outer div").each(function (i: any, val: any) {
+      $(".new_list_outer div").each(function (i, val) {
         const title = $(val)
           .find("strong")
           .text();
@@ -437,6 +437,8 @@ async function Html_Serialize_Json(
           });
         }
       });
+      console.log(data);
+      
       return data;
     }
 
