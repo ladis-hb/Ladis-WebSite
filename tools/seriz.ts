@@ -63,7 +63,7 @@ async function Html_Serialize_Json(
       console.log(`抓取头部信息`);
       // 结果
       const result: pageLink[] = [];
-      $("#pc_nav .new-down").each(function (i: any, val: any) {
+      $("#pc_nav .new-down").each(function (i,val) {
         //遍历一级li
         const prev = $(val).prev();
         const title = prev.text();
@@ -99,7 +99,7 @@ async function Html_Serialize_Json(
     case "products": {
       const result: product[] = [];
       console.log(`抓取products信息`);
-      $("#scroller .list li").each(function (i: any, val: any) {
+      $("#scroller .list li").each(function (i,val) {
         const j = $(val);
         const data: product = {
           ...defaults,
@@ -168,7 +168,7 @@ async function Html_Serialize_Json(
         //抓取下载链接
         $(".functionItems a")
           .has("span")
-          .map(function (i: any, val: any) {
+          .map(function (i,val) {
             if (
               !$(val)
                 ?.attr("href")
@@ -188,12 +188,12 @@ async function Html_Serialize_Json(
         $(".swiper-wrapper")
           .first()
           .find("img")
-          .map(function (i: any, val: any) {
+          .map(function (i,val) {
             img.push($(val).attr("src") as string);
           });
         const ImgArr = $(".functionItems .productUtilImg img");
         if (ImgArr) {
-          ImgArr.map(function (i: any, val: any) {
+          ImgArr.map(function (i,val) {
             img.push($(val).attr("src") as string);
           });
         } else {
@@ -213,7 +213,7 @@ async function Html_Serialize_Json(
     case "support_problem": {
       console.log(`support_problem`);
       const data: supportAsid[] = [];
-      $(".relate a").each(function (i: any, val: any) {
+      $(".relate a").each(function (i,val) {
         const title = $(val)
           .text()
           .split("、")[1]
@@ -233,7 +233,7 @@ async function Html_Serialize_Json(
     case "support_down": {
       console.log(`support_down`);
       const data: support[] = [];
-      $(".tabContBox li").each(async function (i: any, val: any) {
+      $(".tabContBox li").each(async function (i,val) {
         const j = $(val);
         const title = j
           .find("span")
@@ -283,7 +283,7 @@ async function Html_Serialize_Json(
     case "support_problem_asid": {
       console.log(`support_problem_list`);
       const data: supportProblem[] = [];
-      $(".left-search-list .search-list-item").each(function (i: any, val: any) {
+      $(".left-search-list .search-list-item").each(function (i,val) {
         const j = $(val);
         const title = j.find(".lmmc a").text();
         const link = j.find(".lmmc a").attr("href") as string;
@@ -295,7 +295,7 @@ async function Html_Serialize_Json(
           link,
           href,
         };
-        j.find(".list-sub-item a").map(function (i: any, val: any) {
+        j.find(".list-sub-item a").map(function (i,val) {
           child.push({
             ...defaults,
             MainParent: d.MainTitle,
@@ -312,38 +312,38 @@ async function Html_Serialize_Json(
     }
     // support 常见问题，视频教程 main
     case "support_problem_args": {
-      const results: supportList[] = [];
-      console.log(`support_problem_list`);
+      const supportListResult: supportList[] = [];
+      console.log(`support_problem_list:${defaults.MainUrl}`);
 
-      $(".r-search-wrap li a").each(async function (i: any, val: any) {
+      $(".r-search-wrap li a").each(function (i,val) {
         const j = $(val);
         const title = j.text();
         const link = j.attr("href") as string;
         const href = `/support/problem/${title}`;
         const data: supportList = { ...defaults, title, link, href };
-        results.push(data);
-        if (data.link.includes(".shtml")) {
-          data.movie = <string>await Html_Serialize_Json(
-            data.link,
+        supportListResult.push(data);
+      });
+      for(let list of supportListResult){
+        if (list.link.includes(".shtml")) {
+          list.movie = <string>await Html_Serialize_Json(
+            list.link,
             "Support_list",
             "support_problem_args_mv",
             null,
             title,
             parent,
           );
-          data.html = <string>await Html_Serialize_Json(
-            data.link,
+          list.html = <string>await Html_Serialize_Json(
+            list.link,
             "Support_list",
             "support_problem_args_html",
             null,
             title,
             parent,
-          );
+          );          
         }
-
-      });
-
-      return results;
+      }
+      return supportListResult;
     }
     //// support 常见问题，视频教程 main 视频
     case "support_problem_args_mv": {
@@ -359,41 +359,42 @@ async function Html_Serialize_Json(
     //获取销售服务中心页面
     case "buy_list":
       {
-        const result: buy[] | buyList[] = [];
+        let result: buy[] | buyList[] = [];
         // 地图数据
-        let map = $(".new_list_outer").find("map area");
+        const map = $(".new_list_outer").find("map area");
         // 经销商列表
-        let list = $(".new_list_outer").find(".lxgd span");
+        const list = $(".clearfix").find(".new_list_outer").find(".lxgd span");
         // 存放查询省经销商信息
-        let pro: Promise<buyList[]>[] = [];
+        const pro: Promise<buyList[]>[] = [];
         // map地图数据
         if (arg == "map") {
-          map.each(function (i: any, val: any) {
+          map.each(function (i, val) {
             const { alt = "", shape, coords, href } = $(val).attr();
             (<buy[]>result).push({ ...defaults, alt, shape, coords, href });
           });
         } else {
           //列表
-          list.each(function (i: any, val2: any) {
+          // console.log(list.length);
+          
+          list.each(function (i, val2) {
             // 大区 华东销售中心
             const parentsUntil = $(val2)
               .find("strong")
               .text();
-
-            $(val2)
-              .find("a")
-              .each(function (i: any, val3: any) {
+            const area_list = $(val2).find("a")
+            
+            area_list.each(function (i, val3) {
                 // 省
-                const parent = $(val3).text();
+                const parents = $(val3).text();
                 // 链接
                 let link = $(val3).attr("href") as string;
                 //console.log('link')
                 // 获取每个链接的详情
                 const buy_list = <Promise<buyList[]>>(
-                  Html_Serialize_Json(link, "Buy_list", "buy_list_li", null, "", "", {
+                  Html_Serialize_Json(link, "Buy_list", "buy_list_li", null, parentsUntil, parent, {
                     parentsUntil,
                     link,
-                    parent,
+                    parent:parents,
                   })
                 );
                 pro.push(buy_list);
@@ -401,7 +402,7 @@ async function Html_Serialize_Json(
           });
           const buy_list: buyList[][] = await Promise.all(pro);
           buy_list.forEach(list => {
-            (<buyList[]>result).concat(list)
+           result = <buyList[]>[...result as buyList[],...list]
           });
           
           
@@ -414,8 +415,12 @@ async function Html_Serialize_Json(
     case "buy_list_li": {
       const { parentsUntil, link, parent } = arg;
       const data: buyList[] = [];
-      let tsCache: Set<string> = new Set();
-      $(".new_list_outer div").each(function (i, val) {
+      const tsCache: Set<string> = new Set();
+
+      const area = $(".clearfix").find(".new_list_outer div") //$(".new_list_outer div").first()
+      // console.log({MainParent:defaults.MainParent, parent,length:area.length});
+      
+      area.each(function (i, val) {
         const title = $(val)
           .find("strong")
           .text();
@@ -425,8 +430,6 @@ async function Html_Serialize_Json(
           tsCache.add(title);
           data.push({
             ...defaults,
-            MainTitle: parent,
-            MainParent: parent,
             parentsUntil,
             link,
             parent,
@@ -435,7 +438,7 @@ async function Html_Serialize_Json(
           });
         }
       });
-      console.log(data);
+      // console.log({buy_list:data});
       
       return data;
     }
@@ -588,27 +591,47 @@ async function first() {
     );
   });
 
-  //Buy
-  let Buy = await Html_Serialize_Json(
+  //Buy 地图area数据
+  const Buy_serve = await Html_Serialize_Json(
     "/about/node_37.shtml",
     "Buy",
     "buy_list",
     null,
     "buy_map",
-    "buy",
+    "销售服务中心",
     "map",
   );
-  //buy_list
-  let Buy_list = await Html_Serialize_Json(
+  //buy_list 销售服务中心
+  const Buy_serve_list = await Html_Serialize_Json(
     "/about/node_37.shtml",
     "Buy_list",
     "buy_list",
     null,
     "buy_map",
-    "map",
+    "销售服务中心",
     "child",
   );
-  const Rows = [...Pages, ...Products, ...Support, Buy, Buy_list];
+  //Buy 地图area数据
+  const Buy = await Html_Serialize_Json(
+    "/about/node_53.shtml",
+    "Buy",
+    "buy_list",
+    null,
+    "buy_map",
+    "经销商列表",
+    "map",
+  );
+  // 经销商列表
+  const Buy_list = await Html_Serialize_Json(
+    "/about/node_53.shtml",
+    "Buy_list",
+    "buy_list",
+    null,
+    "buy_map",
+    "经销商列表",
+    "child",
+  );
+  const Rows = [...Pages, ...Products, ...Support, Buy, Buy_list, Buy_serve, Buy_serve_list];
   console.log(`操作数据长度${Rows.length}`);
   for (let row of Rows) {
     const result: GMpack[] = await row;
@@ -635,11 +658,15 @@ async function secend() {
   const Support_list_linkArray: string[][] = [];
   const titleSet: Set<string> = new Set()
   for (let list of support_problem_list) {
+    if(!titleSet.has(list.title)){
+      titleSet.add(list.title)
+      Support_list_linkArray.push([list.title, list.link as string, list.title, list.link as string ]);
+    }
     if (list.child) {
       for (let { title, link } of list.child) {
         if (!titleSet.has(title)) {
           titleSet.add(title)
-          Support_list_linkArray.push([title, link as string, list.title]);
+          Support_list_linkArray.push([title, link as string, list.title, list.link as string ]);
         }
       }
     }
@@ -647,8 +674,7 @@ async function secend() {
   //
   console.log(`遍历问题列表,supportProblem:${Support_list_linkArray.length}`);
 
-  for (let [name, chLink, title] of Support_list_linkArray) {
-
+  for (let [name, chLink, title, perantLink] of Support_list_linkArray) {
     const result = <supportList[]>await Html_Serialize_Json
       (chLink, "Support_list", "support_problem_args", null, name, title);
 
@@ -801,7 +827,7 @@ async function three() {
 }
 first().then(async () => {
   await secend()
-  await three()
+  // await three()
 });
 
 
