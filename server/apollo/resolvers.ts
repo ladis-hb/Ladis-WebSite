@@ -74,9 +74,9 @@ const resolvers: IResolvers = {
     },
     // 配置轮播图
     async setCarousel(root, { Path }) {
-      const result = await DBs.Head.update({ title: "Carousel" },
+      const result = {ok:0} /* await DBs.Head.update({ title: "Carousel" },
         { $set: { data: Path } },
-        { upsert: true })
+        { upsert: true }) */
       return result
     },
     // 配置产品详情
