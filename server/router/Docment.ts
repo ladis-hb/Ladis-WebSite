@@ -1,5 +1,8 @@
 // import { StrToUpperCase } from "../util/Format";
 import * as DBs from "../mongoose/content";
+import Send from "koa-send"
+import fs from "fs"
+import path from "path"
 import { ParameterizedContext } from "koa";
 import { CrorQuary, buyListPack } from "../typing/interface";
 export default async (ctx:ParameterizedContext) => {
@@ -8,9 +11,6 @@ export default async (ctx:ParameterizedContext) => {
   if(!SiteName || !i18n) ctx.assert(new Error('argumentError'),400,'argumentError')
   // 判断是否是en
   const isEH = i18n === "en";
-  // 打印请求参数和指令
-  console.log({i18n,isEH,SiteName,time:new Date().toLocaleTimeString()});
-
   const DB = (() => {
     if (isEH) {
       return {
@@ -51,7 +51,18 @@ export default async (ctx:ParameterizedContext) => {
     }
   })();
   const id = ctx.params.id;
+  // 打印请求参数和指令
+  console.log({id,i18n,isEH,SiteName,time:new Date().toLocaleTimeString()});
   switch (id) {
+    case "Down":
+      {
+        const filePath:string = "/static/" + Query.fileName
+        console.log(filePath);
+        ctx.assert(fs.existsSync(filePath),400,"no files")
+        ctx.attachment(filePath)
+        await Send(ctx,filePath)
+      }
+      break
    //获取官网主页轮播的新闻列表
     case "GetHomeNews":
       {

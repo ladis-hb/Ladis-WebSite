@@ -827,7 +827,7 @@ async function three() {
 }
 first().then(async () => {
   await secend()
-  // await three()
+  await three()
 });
 
 

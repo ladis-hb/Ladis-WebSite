@@ -5,7 +5,6 @@ import router from "./router/index";
 import body from "koa-body";
 import cors from '@koa/cors';
 import ApolloServer from "./apollo/apollo"
-
 const app = new Koa();
 
 ApolloServer.applyMiddleware({ app, path: "/graphql" })
@@ -14,6 +13,8 @@ ApolloServer.applyMiddleware({ app, path: "/graphql" })
 app.use(cors({}));
 //注册router
 app.use(body());
+
+// attch rout
 app.use(router.routes()).use(router.allowedMethods());
 
 // Import and Set Nuxt.js options
