@@ -149,15 +149,6 @@ const Schema_About = new Schema({
     webSite:String
   },{_id:false}) ]
 });
-const Schema_Head = new Schema({
-  MainUrl: { type: String, trim: true },
-  MainTitle: { type: String, trim: true },
-  MainParent: { type: String, trim: true },
-  date: String,
-  table: String,
-  href: String,
-  link: String,
-});
 
 const Schema_Page = new Schema({
   MainUrl: { type: String, trim: true },
@@ -189,7 +180,6 @@ const Case_list = mongoose.model("Case_list", Schema_CaseNews_list);
 const News = mongoose.model("New", Schema_CaseNews);
 const News_list = mongoose.model("News_list", Schema_CaseNews_list);
 const About = mongoose.model("about", Schema_About);
-const Head = mongoose.model("Head", Schema_Head);
 const Page = mongoose.model("Page", Schema_Page);
 const Router = mongoose.model("Router", Schema_Router);
 // 英文版
@@ -205,6 +195,7 @@ const EnCase_list = mongoose.model("EnCase_list", Schema_CaseNews_list);
 const EnNews = mongoose.model("EnNew", Schema_CaseNews);
 const EnNews_list = mongoose.model("EnNews_list", Schema_CaseNews_list);
 const EnAbout = mongoose.model("Enabout", Schema_About);
+const EnPage = mongoose.model("Page", Schema_Page);
 
 export default {
   Product,
@@ -219,7 +210,6 @@ export default {
   News,
   News_list,
   About,
-  Head,
   Page,
   Router,
 
@@ -235,4 +225,5 @@ export default {
   EnNews,
   EnNews_list,
   EnAbout,
+  EnPage
 };

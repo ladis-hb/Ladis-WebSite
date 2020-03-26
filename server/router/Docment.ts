@@ -26,7 +26,6 @@ export default async (ctx:ParameterizedContext) => {
         News: DBs.default.EnNews,
         News_list: DBs.default.EnNews_list,
         About: DBs.default.EnAbout,
-        Head: DBs.default.Head,
         Page: DBs.default.Page,
         Router: DBs.default.Router
       };
@@ -44,7 +43,6 @@ export default async (ctx:ParameterizedContext) => {
         News: DBs.default.News,
         News_list: DBs.default.News_list,
         About: DBs.default.About,
-        Head: DBs.default.Head,
         Page: DBs.default.Page,
         Router: DBs.default.Router
       };
