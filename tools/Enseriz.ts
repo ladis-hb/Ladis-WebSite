@@ -80,14 +80,14 @@ async function Html_Serialize_Json(
         };
         const t2: productContentOld = {
           type: "html",
-          content: $(".functionItems").html() as string,
+          content: $("#productUtil").html() as string,
         };
         const img: string[] = [];
         const down: GMlink[] = [];
         //抓取说明链接
         //console.log(t2)
         //抓取下载链接
-        $(".functionItems a")
+        /* $(".functionItems a")
           .has("span")
           .map(function (i,val) {
             if (
@@ -123,7 +123,7 @@ async function Html_Serialize_Json(
               ?.first()
               ?.attr("src") as string,
           );
-        }
+        } */
         const data: productList = { ...defaults, title: defaults.MainTitle, t1, t2, img, down, link: url };
         result.push(data);
         return result;
