@@ -30,7 +30,6 @@
       "@nuxt/types",
       "@types/nuxtjs__auth",
       "vue/types",
-      "@nuxtjs/apollo",
       "@nuxtjs/axios"
     ]
   },
