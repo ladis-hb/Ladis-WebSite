@@ -23,17 +23,30 @@ export const getFileStatAndDown = async (fpath: string) => {
     const Path = filePath.replace(<string>filePath.split("/").pop(), "");
     // 判断文件夹是否存在，不存在则创建
     if (!fs.existsSync(Path)) fs.ensureDirSync(Path);
+    // 创建文件写入流
+    const fsStream = fs.createWriteStream(filePath);
+    // 创建一个promise，监听到stream关闭返回true
+    // 目的为阻塞流程，等待文件被下载再继续响应流程
+    const em = new Promise(resolve => {
+      fsStream.once("close", () => {
+        console.log(`file ${fpath} is down`);
+        resolve(true);
+      });
+    });
     // 从ladis中文获取资源
     try {
       const Response = await axios.get(ladis + fpath, { responseType: "stream" });
-      Response.data.pipe(fs.createWriteStream(filePath));
+      Response.data.pipe(fsStream);
+      await em;
     } catch (error) {
       // 获取失败则从ladis英文获取，
       try {
         const Response = await axios.get(enladis + fpath, { responseType: "stream" });
-        Response.data.pipe(fs.createWriteStream(filePath));
+        Response.data.pipe(fsStream);
+        await em;
       } catch (error) {
         // 获取失败则抛出错误
+        fsStream.removeAllListeners()
         fileGetStat = false;
         throw new Error("ladis no file");
       }
