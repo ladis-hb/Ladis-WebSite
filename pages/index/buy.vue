@@ -37,6 +37,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import gql from 'graphql-tag'
+import { buy, buyList } from '../../types/typing'
 export default Vue.extend({
   data() {
     return {
@@ -81,14 +82,29 @@ export default Vue.extend({
         phone,
         remark,
       } = this.$data.ad
-      const info = `区域：${daqu}；省市县(区)：${province}|${city}|${area}；
-                详细地址：${address}；联系人：${linkman}|${tel}|${phone}；
+      const info = `区域：${daqu}\n
+                    省市县(区)：${province}|${city}|${area}\n
+                    详细地址：${address}\n
+                    联系人：${linkman}|${tel}|${phone}\n
                     备注：${remark}`
 
       const isQ = await this.$bvModal.msgBoxConfirm(info, {
         title: '核对信息',
+        buttonSize: 'sm',
       })
       if (isQ) {
+        const date = new Date().toLocaleDateString('zh')
+        const link = `/about/${date + new Date().getSeconds()}`
+        const ad: buyList = {
+          MainTitle: daqu,
+          MainParent: '经销商列表',
+          table: 'Buy_list',
+          link,
+          parentsUntil: daqu,
+          parent: province,
+          title: remark,
+          content: info,
+        }
         await this.$apollo.mutate({
           mutation: gql`
             mutation($arg: JSON) {
@@ -97,7 +113,7 @@ export default Vue.extend({
               }
             }
           `,
-          variables: { arg: this.ad },
+          variables: { arg: ad },
         })
         this.$bvModal.msgBoxOk('添加成功')
       }

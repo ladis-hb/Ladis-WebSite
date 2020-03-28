@@ -67,7 +67,7 @@ const typeDefs: DocumentNode = gql`
     # 配置经销商
     setBuy(arg:JSON):result
     # 配置案例 新闻资讯
-    setCaseNews(type:String,arg:JSON):result
+    setCaseNews(arg:JSON):result
   }
 `;
 

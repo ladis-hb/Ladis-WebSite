@@ -1,7 +1,7 @@
 <template>
   <b-container fluid class=" h-100  m-0 p-0">
     <b-row class=" h-100">
-      <b-col cols="12" md="2" class="bg-info border-top text-center p-3">
+      <b-col cols="12" md="2" class="bg-dark border-top text-center p-3">
         <b-nav vertical id="nav">
           <b-nav-item
             :to="{
@@ -88,12 +88,11 @@
             accordion="my-accordion2"
             role="tabpanel"
           >
-            <b-card v-if="file.filetype === 'img'">
               <b-card-img-lazy
+               v-if="file.filetype === 'img'"
                 :src="file.path"
                 :alt="file.path"
               ></b-card-img-lazy>
-            </b-card>
           </b-collapse>
         </b-list-group-item>
       </b-list-group>

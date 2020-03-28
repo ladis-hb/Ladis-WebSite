@@ -1,5 +1,4 @@
 import { IResolvers } from "apollo-server-koa";
-import { ApolloCtx, ApolloMongoResult, UserInfo, fileDirList, editProduct, about } from "../typing/interface";
 import { User } from "../mongoose/admin";
 import DBs from "../mongoose/content"
 import Crypto from "../util/crypto";
@@ -7,6 +6,7 @@ import fs from "fs";
 import path from "path";
 import util from "util"
 import {Agent} from "../config"
+import { ApolloCtx, ApolloMongoResult, UserInfo, fileDirList,cases, caseList, buy } from "typing";
 const resolvers: IResolvers = {
   Query: {
     // 获取upload文件夹文件列表
@@ -37,10 +37,10 @@ const resolvers: IResolvers = {
     },
     // 获取代理商about
     async getAbouts(root,{selectType,webSite}){
-      const result = await DBs.About.findOne({title:selectType,"content.webSite":webSite}).lean() as about
+      /* const result = await DBs.About.findOne({title:selectType,"content.webSite":webSite}).lean() as about
       console.log(result);
       
-      return result?.content?.body || ""
+      return result?.content?.body || "" */
     }
   },
 
@@ -81,7 +81,7 @@ const resolvers: IResolvers = {
     },
     // 配置产品详情
     async setProduct(root, { arg }) {
-      const { selectType, title, content_head, content_body, indexPic, carouselPic } = arg as editProduct
+     /*  const { selectType, title, content_head, content_body, indexPic, carouselPic } = arg as editProduct
       const href = `/products/list/${title}`;
       // 保存路由
       // 添加主类 
@@ -102,11 +102,11 @@ const resolvers: IResolvers = {
         }
       });
       const productBody = await product_list.save()
-      return productBody
+      return productBody */
     },
     // support
     async setProblem(root, { arg }) {
-      const { title, movie, html, selectparentsUntil, selectparent } = arg;
+      /* const { title, movie, html, selectparentsUntil, selectparent } = arg;
       const href = `/support/problem/${title}`;
       const obj = {
         title,
@@ -153,88 +153,21 @@ const resolvers: IResolvers = {
         { $addToSet: { data: obj } },
         { upsert: true }
       ).lean() as any
-      return data
+      return data */
     },
     // 配置经销商
     async setBuy(root, { arg }) {
-      const {
-        daqu,
-        province,
-        city,
-        area,
-        address,
-        tel,
-        linkman,
-        phone,
-        remark
-      } = arg
-      let stopn = 2;
-      if (province === "黑龙江省") stopn = 3;
-      const provinces = province
-        .split("")
-        .slice(0, stopn)
-        .join("");
-      const site = {
-        parentsUntil: daqu,
-        parent: provinces,
-        title: `${city} （${provinces}销售服务中心)`,
-        content: {
-          area,
-          address: provinces + city + area + address,
-          tel,
-          linkman,
-          phone,
-          remark
-        },
-        new: true
-      };
-      return await DBs.Buy_list.updateOne(
-        { title: "buy_map" },
-        { $push: { data: site } }
-      );
+       const ad:buy = arg
+       const result = await DBs.Buy_list.updateOne({link:ad.link},{$set:arg},{upsert:true})
+       return result
     },
     // 添加案例，新闻
-    async setCaseNews(root, { type, arg }) {
-      const { pic, content, title, editType, } = arg;
-      const inputType = type
-      const dates = new Date();
-      const href = `/${inputType}/${title}`;
-      const route = { rout: href, modifyTime: dates };
-      DBs.Router.updateOne(
-        { rout: route.rout },
-        { $set: route },
-        { upsert: true }
-      );
-
-      let collection = DBs.News;
-      let collection_list = DBs.News_list;
-      switch (inputType) {
-        case "case":
-          collection = DBs.Case;
-          collection_list = DBs.Case_list;
-          break;
-      }
-      let list = new collection({
-        title,
-        data: {
-          name: (type as any)[editType],
-          time: `${dates.getFullYear()}年${dates.getMonth() +
-            1}月${dates.getDate()}日`,
-          text: title,
-          href,
-          img: pic,
-          linkText: "查看详情 >"
-        }
-      });
-      list.save();
-
-      let cont = new collection_list({
-        title,
-        data: content,
-        date: dates,
-        new: true
-      });
-      return await cont.save()
+    async setCaseNews(root, { arg }) {
+      const { newsContent,newListContent }:{ newsContent:cases,newListContent:caseList } = arg;
+      const {table,link} = newsContent
+      await (DBs as any)[table as string].updateOne({link},{$set:newsContent},{upsert:true})
+      const result = await (DBs as any)[table+"_list"].updateOne({link},{$set:newListContent},{upsert:true})
+      return result
     }
   },
 };

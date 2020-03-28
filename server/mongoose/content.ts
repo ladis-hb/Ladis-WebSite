@@ -132,6 +132,7 @@ const Schema_CaseNews_list = new Schema({
   link: String,
   text: [String],
   pic: [String],
+  content:String
 });
 //about
 

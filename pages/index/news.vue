@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-card>
-      <b-card-header class="bg-light">新闻资讯</b-card-header>
+      <b-card-header class="bg-info text-light">新闻资讯</b-card-header>
       <b-card-body>
         <div id="editSelect">
           <b-form-group label="新闻类型:" label-align="right" label-cols="2">
@@ -36,8 +36,9 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import { selectFiles } from '../../server/typing/interface'
 import gql from 'graphql-tag'
+import deep from 'deepmerge'
+import { selectFiles, cases, caseList } from '../../types/typing'
 export default Vue.extend({
   data() {
     const hljs = null
@@ -65,16 +66,17 @@ export default Vue.extend({
       },
     }
     return {
+      type:'',
       title: '',
       file: '',
       content: `<h2 class="ql-align-center"><span class="ql-font-serif">Text content loading..</span></h2>`,
-      Option: ['[UPS电源]', ' [一体化机柜]', '[数据中心]', '[机房空调]'],
+      Option: ['UPS电源', ' 一体化机柜', '数据中心', '机房空调'],
       editorOption,
     }
   },
   computed: {
     SourceFile() {
-      const SourceFile: selectFiles[] = this.$store.state.SourceFile
+      const SourceFile:selectFiles[] = this.$store.state.SourceFile
       const result = SourceFile.filter(
         file => file.filetype === 'img'
       ).map(file => Object.assign(file, { text: file.name, value: file.path }))
@@ -87,71 +89,42 @@ export default Vue.extend({
       let { file, type: editType, content, title } = this.$data
       if (!file || !content || !title || !editType)
         return this.$bvModal.msgBoxOk('参数不能为空', { title: '输入错误' })
-      if (title.length > 50)
-        return this.$bvModal.msgBoxOk('标题长度过长', { title: '输入错误' })
-      if (file.size > 2048000)
-        return this.$bvModal.msgBoxOk('图片大大小不能超过2MB', {
-          title: '输入错误',
-        })
-      const params = {
-        pic: file,
-        content,
+      const date = new Date().toLocaleDateString("zh")
+      const link = `/news/${date+new Date().getSeconds()}`
+      const newsContent:cases = {
+        MainUrl:"",
+        MainTitle:editType,
+        MainParent:"home",
+        table:"News",
+        date,
+        link,
+        href:"",
+        name:`[${editType}]`,
+        img:file,
+        text:title,
         title,
-        editType,
-        inputType: Type,
+        linkText:"查看详情 >",
+        time:date
       }
+      
+      const newListContent:caseList =deep(newsContent,{MainTitle:title,MainUrl:link,MainParent:editType,title,content,text:null})
+      // console.log({newsContent,newListContent});
+      
       const result = await this.$apollo.mutate({
         mutation: gql`
-          mutation($type: String, $arg: JSON) {
-            ok
-            msg
+          mutation($arg: JSON){
+            setCaseNews(arg:$arg){
+              ok
+              msg
+            }
           }
         `,
-        variables: { type: Type, arg: params },
+        variables: { arg: {newsContent,newListContent} },
       })
-      this.$bvModal.msgBoxOk('编辑成功')
-      /*  let id = this.$route.params.id;
-      let { file, content, title } = this.$data;
-      let editType = this.edit.editType;
-      if (!file || !content || !title || !editType)
-        return this.$bvModal.msgBoxOk("参数不能为空", { title: "输入错误" });
-      if (title.length > 50)
-        return this.$bvModal.msgBoxOk("标题长度过长", { title: "输入错误" });
-      if (file.size > 2048000)
-        return this.$bvModal.msgBoxOk("图片大大小不能超过2MB", {
-          title: "输入错误"
-        });
-      let params = {
-        pic: file,
-        content,
-        title,
-        editType,
-        inputType: id
-      };
-
-      let result = await SendNewCaseEdit(params);
-      if (result.stat) {
-        const isQ = await this.$bvModal.msgBoxConfirm(result.msg, {
-          title: "编辑成功"
-        });
-        if (isQ) {
-          this.$router.push({ path: result.href });
-        }
-      } else {
-        switch (result.error) {
-          case "tokenValidationError":
-            const isQ = await this.$bvModal.msgBoxConfirm(result.msg, {
-              title: "提交错误"
-            });
-            if (isQ) {
-              this.$router.push({ path: "/admin/accont" });
-            } else {
-              this.$router.push({ path: "/admin/accont" });
-            }
-
-            break;
-        }
-      } */
+      console.log(result);
+      
+      const isOpen = await this.$bvModal.msgBoxConfirm("success")
+      if(isOpen) window.open("http://www.ladishb.com"+link,"_blank")
     },
     onEditorChange({ html }: any) {
       this.content = html
