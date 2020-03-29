@@ -27,6 +27,9 @@ type HtmlString = string;
 export type contentType = 'html' | '';
 // 公用包装
 export interface GMpack {
+  PageTitle?:string
+  Pagekeywords?:string
+  Pagedescription?:string
   MainUrl?:string
   MainTitle?: string; // 分类
   MainParent?: string; // 父类

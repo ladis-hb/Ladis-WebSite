@@ -1,6 +1,7 @@
 /* jshint esversion:8 */
 import cheerio from "cheerio";
 import Axios from "axios";
+import {JSDOM} from "jsdom"
 import DB from "../server/mongoose/content";
 import {
   supportList,
@@ -55,8 +56,22 @@ async function Html_Serialize_Json(
       return false
     });
   if (!file) return false
-  const $ = cheerio.load(file);
+  /* 
+  const paresfile = new JSDOM(file).serialize()
+  console.log({paresfile});
+   */
+  const $ = cheerio.load(file );
+    // 通用获取页面标题，key，des
+  {
 
+    const PageHead = $("head")
+    defaults.PageTitle = PageHead.find("title").text()
+    defaults.Pagekeywords = PageHead.find("meta[name=keywords]").attr("content")
+    defaults.Pagedescription = PageHead.find("meta").attr("name","description").attr("content")
+    console.log({PageHead:PageHead.html(),defaults});
+  }
+  
+  
   switch (type) {
     /* -----------------------------------head  table:pages ------------------------------------------------------ */
     case "head": {
@@ -203,7 +218,7 @@ async function Html_Serialize_Json(
               ?.attr("src") as string,
           );
         }
-        const data: productList = { ...defaults, title: defaults.MainTitle, t1, t2, img, down, link: url };
+        const data: productList = { ...defaults, title: defaults.MainTitle as string, t1, t2, img, down, link: url };
         result.push(data);
         return result;
       }
@@ -502,8 +517,8 @@ async function Html_Serialize_Json(
           const pic = $(val)
             .find("img")
             .attr("src")
-          if (text && text.trim() != "") dock.text.push(text);
-          if (pic) dock.pic.push(pic);
+          if (text && text.trim() != "") (dock.text as string[]).push(text);
+          if (pic) (dock.pic as string[]).push(pic);
         });
         //list2
         const list2 = $(".new_list_outer p");
@@ -512,8 +527,8 @@ async function Html_Serialize_Json(
           const pic = $(val)
             .find("img")
             .attr("src");
-          if (text && text.trim() != "") dock.text.push(text);
-          if (pic) dock.pic.push(pic);
+          if (text && text.trim() != "") (dock.text as string[]).push(text);
+          if (pic) (dock.pic as string[]).push(pic);
         });
         return dock;
       }
@@ -637,7 +652,7 @@ async function first() {
     const result: GMpack[] = await row;
     if (!result) continue;
     for (let sigle of result) {
-      await new (DB as any)[sigle.table](sigle).save();
+      await new (DB as any)[sigle.table as string](sigle).save();
       await WriteRouter((sigle as any).title, sigle.link, sigle.href)
     }
   }
@@ -698,7 +713,7 @@ async function secend() {
       "products_dev_arg",
       null,
       el.title,
-      el.MainTitle,
+      el.MainTitle as string,
     )
     for (let els of result) {
       if (ProductTitleSet.has(els.title)) continue
@@ -822,7 +837,7 @@ async function three() {
   async function update(row: cases | caseList) {
     if (!row) return
     console.log(`开始迭代，写入表：${row.table},操作title:${row.title}`);
-    await new (DB as any)[row.table](row).save()
+    await new (DB as any)[row.table as string](row).save()
   }
 }
 first().then(async () => {

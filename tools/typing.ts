@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* 用户信息 */
 export interface UserInfo {
   user: string;
@@ -23,21 +24,24 @@ export interface ApolloCtx extends UserInfo {
   loggedIn: boolean;
 }
 type HtmlString = string;
-export type contentType = "html" | "";
+export type contentType = 'html' | '';
 // 公用包装
 export interface GMpack {
-  MainUrl:string
-  MainTitle: string; // 分类
-  MainParent: string; // 父类
-  date: Date | string; // 日期
-  table:string
-  href:string
+  PageTitle?:string
+  Pagekeywords?:string
+  Pagedescription?:string
+  MainUrl?:string
+  MainTitle?: string; // 分类
+  MainParent?: string; // 父类
+  date?: Date | string; // 日期
+  table?:DbTables
+  href?:string
   link?:string
 }
-//公用链接格式
+// 公用链接格式
 export interface GMlink {
   target?: string;
-  href: string;
+  href?: string;
   link?:string;
   title: string;
 }
@@ -71,9 +75,9 @@ export interface productList extends GMpack, productListNew, productListOld {
   title:string
 }
 
-//support asid
-export interface supportAsid extends GMpack,GMlink{}
-export interface supportProblem extends GMpack,GMlink{
+// support asid
+export interface supportAsid extends GMpack, GMlink{}
+export interface supportProblem extends GMpack, GMlink{
   child?:supportProblem[]
 }
 
@@ -115,7 +119,6 @@ export interface buyList extends GMpack {
   parent: string;
   title: string;
   content: string;
-  table: string;
 }
 
 // vr
@@ -133,9 +136,10 @@ export interface vr extends GMpack {
 export interface cases extends vr {}
 // 案例详情
 export interface caseList extends GMpack {
-  title:string
-  text: string[];
-  pic: string[];
+  title?:string
+  text?: string[];
+  pic?: string[];
+  content?:string
 }
 // about
 export interface about extends GMpack {
@@ -146,7 +150,7 @@ export interface about extends GMpack {
     webSite: AgentName;
   }[];
 }
-//page
+// page
 export interface pageLink extends GMpack {
   title: string;
   href: string;
@@ -161,21 +165,21 @@ export interface router {
 }
 /* 跨域查询 */
 export type DbTables =
-  | "Product"
-  | "Product_list"
-  | "Support"
-  | "Support_list"
-  | "Buy_list"
-  | "Buy"
-  | "VR"
-  | "Case"
-  | "Case_list"
-  | "News"
-  | "News_list"
-  | "About"
-  | "Head"
-  | "Page"
-  | "Router";
+  | 'Product'
+  | 'Product_list'
+  | 'Support'
+  | 'Support_list'
+  | 'Buy_list'
+  | 'Buy'
+  | 'VR'
+  | 'Case'
+  | 'Case_list'
+  | 'News'
+  | 'News_list'
+  | 'About'
+  | 'Head'
+  | 'Page'
+  | 'Router';
 
 export interface CrorQuary {
   i18n?: string;
@@ -218,7 +222,7 @@ export interface editProduct {
 }
 
 // 代理商名称限定
-export type AgentName = "localhost" | "湖北雷迪司" | "贵州代理商" | "陕西代理商";
+export type AgentName = 'localhost' | '湖北雷迪司' | '贵州代理商' | '陕西代理商';
 // 代理
 export interface Agents {
   name: AgentName;
