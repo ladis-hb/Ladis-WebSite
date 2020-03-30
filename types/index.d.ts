@@ -10,6 +10,7 @@ import {
 import { VueApolloComponentOptions } from "vue-apollo/types/options";
 import { Auth } from "nuxtjs__auth";
 import { BvModal, BvToast } from "bootstrap-vue";
+import { Query } from "server/Event/Event";
 
 declare module "koa"{
   interface Request{

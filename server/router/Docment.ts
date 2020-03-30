@@ -5,7 +5,9 @@ import fs from "fs"
 import path from "path"
 import { ParameterizedContext } from "koa";
 import { CrorQuary, buyListPack, cases } from "../typing/interface";
-export default async (ctx:ParameterizedContext) => {
+import { KoaCtx } from "typing";
+export default async (Ctx:ParameterizedContext) => {
+  const ctx:KoaCtx = Ctx as any
   const Query = ctx.query as CrorQuary
   const {SiteName,i18n} = Query
   if(!SiteName || !i18n) ctx.assert(new Error('argumentError'),400,'argumentError')
@@ -65,26 +67,29 @@ export default async (ctx:ParameterizedContext) => {
     // 
     case 'GetContent':
       {
-        const link:string = Query.link
-
-        const result = {
-          pre:"",
-          next:""
+        interface results{
+          pre?:cases
+          next?:cases
         }
-        
-        const news:cases[] = await DB.News.find().sort({ "data.time": -1 }).lean();
-        const case1:cases[] = await DB.Case.find().sort({ "data.time": -1 }).lean();
-        const newsSet:string[] =(news.map(el=>el.link))
-        const casesSet:string[] = (case1.map(el=>el.link))
+        // url
+        const link:string = Query.link
+        // 类型：news
         const type = link.split("/")[1]
-        
-        if(type === 'case'){
-          const index = casesSet.indexOf(link)
-        }else{
-          const index = newsSet.indexOf(link)
-          console.log({link,type,index,newsSet});
-          result.pre = newsSet[index-1]
-          result.next = newsSet[index+1]
+        let result:results={}
+        switch(type){
+          case "case":{
+            const caseArr = ctx.$Query.CasesLinkArray
+            const indexs = caseArr.indexOf(link)
+            const pre = caseArr[indexs-1]
+            const next = caseArr[indexs+1]
+            result.pre = ctx.$Query.CasesMap.get(pre)
+            result.next = ctx.$Query.CasesMap.get(next)
+          }
+          break
+          case "news":{
+            const index = ctx.$Query.NewsLinkArray.indexOf(link)
+          }
+          break
         }
 
         ctx.body = result

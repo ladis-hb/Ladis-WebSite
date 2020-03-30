@@ -6,8 +6,12 @@ import body from "koa-body";
 import cors from '@koa/cors';
 import logger from "koa-logger";
 import ApolloServer from "./apollo/apollo"
+import Query from "./Event/Event"
 const app = new Koa();
 
+// 挂载全局缓存、事件到app
+Query.attach(app)
+//监听apollo api
 ApolloServer.applyMiddleware({ app, path: "/graphql" })
 //注册mongo
 app.use(logger())

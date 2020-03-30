@@ -1,4 +1,10 @@
+import { ParameterizedContext } from "koa";
+import { Query } from "server/Event/Event";
+
 /* eslint-disable camelcase */
+export interface KoaCtx extends ParameterizedContext {
+  $Query:Query
+}
 /* 用户信息 */
 export interface UserInfo {
   user: string;
