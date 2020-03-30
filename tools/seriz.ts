@@ -1,7 +1,6 @@
 /* jshint esversion:8 */
-import cheerio from "cheerio";
+import { load } from "cheerio";
 import Axios from "axios";
-import {JSDOM} from "jsdom"
 import DB from "../server/mongoose/content";
 import {
   supportList,
@@ -17,7 +16,6 @@ import {
   buy,
   buyList,
   DbTables,
-  router,
   cases,
   caseList,
   vr,
@@ -37,6 +35,9 @@ async function Html_Serialize_Json(
   arg?: any,
 ) {
   const defaults: GMpack = {
+    PageTitle: '',
+    Pagekeywords: '',
+    Pagedescription: '',
     MainUrl:url,
     MainTitle: title,
     date: new Date(),
@@ -46,7 +47,7 @@ async function Html_Serialize_Json(
     link: "",
   };
 
-  if (!url) console.log(defaults);
+   if (!url) console.log(defaults);
 
   const file = await Axios.get(Host + url)
     .then(res => res.data)
@@ -60,25 +61,32 @@ async function Html_Serialize_Json(
   const paresfile = new JSDOM(file).serialize()
   console.log({paresfile});
    */
-  const $ = cheerio.load(file );
-    // 通用获取页面标题，key，des
+  const $ = load(file);
+  // 通用获取页面标题，key，des
   {
+    const keys = ['keywords', 'description']
+    defaults.PageTitle = $("title").text().replace("雷迪司","")
+    const meta = $("meta").map((i, val) => {
+      return val.attribs
+    })
+      .get()
+      .filter(el => keys.includes((el.name as string)))
+      .map(el => ({ [el.name]: el.content }))
 
-    const PageHead = $("head")
-    defaults.PageTitle = PageHead.find("title").text()
-    defaults.Pagekeywords = PageHead.find("meta[name=keywords]").attr("content")
-    defaults.Pagedescription = PageHead.find("meta").attr("name","description").attr("content")
-    console.log({PageHead:PageHead.html(),defaults});
+    const vals = Object.assign({}, ...meta)
+    defaults.Pagekeywords = vals['keywords']
+    defaults.Pagedescription = vals['description']
   }
-  
-  
+  // console.log(defaults);
+
+
   switch (type) {
     /* -----------------------------------head  table:pages ------------------------------------------------------ */
     case "head": {
       console.log(`抓取头部信息`);
       // 结果
       const result: pageLink[] = [];
-      $("#pc_nav .new-down").each(function (i,val) {
+      $("#pc_nav .new-down").each(function (i, val) {
         //遍历一级li
         const prev = $(val).prev();
         const title = prev.text();
@@ -114,7 +122,7 @@ async function Html_Serialize_Json(
     case "products": {
       const result: product[] = [];
       console.log(`抓取products信息`);
-      $("#scroller .list li").each(function (i,val) {
+      $("#scroller .list li").each(function (i, val) {
         const j = $(val);
         const data: product = {
           ...defaults,
@@ -183,7 +191,7 @@ async function Html_Serialize_Json(
         //抓取下载链接
         $(".functionItems a")
           .has("span")
-          .map(function (i,val) {
+          .map(function (i, val) {
             if (
               !$(val)
                 ?.attr("href")
@@ -203,12 +211,12 @@ async function Html_Serialize_Json(
         $(".swiper-wrapper")
           .first()
           .find("img")
-          .map(function (i,val) {
+          .map(function (i, val) {
             img.push($(val).attr("src") as string);
           });
         const ImgArr = $(".functionItems .productUtilImg img");
         if (ImgArr) {
-          ImgArr.map(function (i,val) {
+          ImgArr.map(function (i, val) {
             img.push($(val).attr("src") as string);
           });
         } else {
@@ -228,7 +236,7 @@ async function Html_Serialize_Json(
     case "support_problem": {
       console.log(`support_problem`);
       const data: supportAsid[] = [];
-      $(".relate a").each(function (i,val) {
+      $(".relate a").each(function (i, val) {
         const title = $(val)
           .text()
           .split("、")[1]
@@ -248,7 +256,7 @@ async function Html_Serialize_Json(
     case "support_down": {
       console.log(`support_down`);
       const data: support[] = [];
-      $(".tabContBox li").each(async function (i,val) {
+      $(".tabContBox li").each(async function (i, val) {
         const j = $(val);
         const title = j
           .find("span")
@@ -257,7 +265,7 @@ async function Html_Serialize_Json(
         const href = j.find("a").attr("href") as string;
         if (href.includes(".shtml")) {
           const down = await Axios.get(Host + href);
-          const d = cheerio.load(down.data);
+          const d = load(down.data);
           let info: support = {
             ...defaults,
             link: href,
@@ -298,7 +306,7 @@ async function Html_Serialize_Json(
     case "support_problem_asid": {
       console.log(`support_problem_list`);
       const data: supportProblem[] = [];
-      $(".left-search-list .search-list-item").each(function (i,val) {
+      $(".left-search-list .search-list-item").each(function (i, val) {
         const j = $(val);
         const title = j.find(".lmmc a").text();
         const link = j.find(".lmmc a").attr("href") as string;
@@ -310,7 +318,7 @@ async function Html_Serialize_Json(
           link,
           href,
         };
-        j.find(".list-sub-item a").map(function (i,val) {
+        j.find(".list-sub-item a").map(function (i, val) {
           child.push({
             ...defaults,
             MainParent: d.MainTitle,
@@ -328,9 +336,11 @@ async function Html_Serialize_Json(
     // support 常见问题，视频教程 main
     case "support_problem_args": {
       const supportListResult: supportList[] = [];
+      console.log({defaults});
+      
       console.log(`support_problem_list:${defaults.MainUrl}`);
 
-      $(".r-search-wrap li a").each(function (i,val) {
+      $(".r-search-wrap li a").each(function (i, val) {
         const j = $(val);
         const title = j.text();
         const link = j.attr("href") as string;
@@ -338,7 +348,7 @@ async function Html_Serialize_Json(
         const data: supportList = { ...defaults, title, link, href };
         supportListResult.push(data);
       });
-      for(let list of supportListResult){
+      for (let list of supportListResult) {
         if (list.link.includes(".shtml")) {
           list.movie = <string>await Html_Serialize_Json(
             list.link,
@@ -355,7 +365,7 @@ async function Html_Serialize_Json(
             null,
             title,
             parent,
-          );          
+          );
         }
       }
       return supportListResult;
@@ -390,37 +400,37 @@ async function Html_Serialize_Json(
         } else {
           //列表
           // console.log(list.length);
-          
+
           list.each(function (i, val2) {
             // 大区 华东销售中心
             const parentsUntil = $(val2)
               .find("strong")
               .text();
             const area_list = $(val2).find("a")
-            
+
             area_list.each(function (i, val3) {
-                // 省
-                const parents = $(val3).text();
-                // 链接
-                let link = $(val3).attr("href") as string;
-                //console.log('link')
-                // 获取每个链接的详情
-                const buy_list = <Promise<buyList[]>>(
-                  Html_Serialize_Json(link, "Buy_list", "buy_list_li", null, parentsUntil, parent, {
-                    parentsUntil,
-                    link,
-                    parent:parents,
-                  })
-                );
-                pro.push(buy_list);
-              });
+              // 省
+              const parents = $(val3).text();
+              // 链接
+              let link = $(val3).attr("href") as string;
+              //console.log('link')
+              // 获取每个链接的详情
+              const buy_list = <Promise<buyList[]>>(
+                Html_Serialize_Json(link, "Buy_list", "buy_list_li", null, parentsUntil, parent, {
+                  parentsUntil,
+                  link,
+                  parent: parents,
+                })
+              );
+              pro.push(buy_list);
+            });
           });
           const buy_list: buyList[][] = await Promise.all(pro);
           buy_list.forEach(list => {
-           result = <buyList[]>[...result as buyList[],...list]
+            result = <buyList[]>[...result as buyList[], ...list]
           });
-          
-          
+
+
         }
         return result;
       }
@@ -434,7 +444,7 @@ async function Html_Serialize_Json(
 
       const area = $(".clearfix").find(".new_list_outer div") //$(".new_list_outer div").first()
       // console.log({MainParent:defaults.MainParent, parent,length:area.length});
-      
+
       area.each(function (i, val) {
         const title = $(val)
           .find("strong")
@@ -454,7 +464,7 @@ async function Html_Serialize_Json(
         }
       });
       // console.log({buy_list:data});
-      
+
       return data;
     }
 
@@ -673,15 +683,15 @@ async function secend() {
   const Support_list_linkArray: string[][] = [];
   const titleSet: Set<string> = new Set()
   for (let list of support_problem_list) {
-    if(!titleSet.has(list.title)){
+    if (!titleSet.has(list.title)) {
       titleSet.add(list.title)
-      Support_list_linkArray.push([list.title, list.link as string, list.title, list.link as string ]);
+      Support_list_linkArray.push([list.title, list.link as string, list.title, list.link as string]);
     }
     if (list.child) {
       for (let { title, link } of list.child) {
         if (!titleSet.has(title)) {
           titleSet.add(title)
-          Support_list_linkArray.push([title, link as string, list.title, list.link as string ]);
+          Support_list_linkArray.push([title, link as string, list.title, list.link as string]);
         }
       }
     }
@@ -826,7 +836,7 @@ async function three() {
           NewsObject.text,
           parenName
         );
-        if(!NewsList) continue
+        if (!NewsList) continue
         NewsList.link = NewsObject.link
         NewsList.href = NewsObject.href
         await update(NewsList);
@@ -843,6 +853,7 @@ async function three() {
 first().then(async () => {
   await secend()
   await three()
+  process.exit()
 });
 
 

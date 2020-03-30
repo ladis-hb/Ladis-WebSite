@@ -2,6 +2,9 @@
 import { mongooses as mongoose, Schema } from "./momgoose";
 
 const Schema_Product = new Schema({
+  PageTitle: { type: String, trim: true },
+  Pagekeywords: { type: String, trim: true },
+  Pagedescription: { type: String, trim: true },
   MainUrl: { type: String, trim: true },
   MainTitle: { type: String, trim: true },
   MainParent: { type: String, trim: true },
@@ -14,6 +17,9 @@ const Schema_Product = new Schema({
 });
 
 const Schema_Product_list = new Schema({
+  PageTitle: { type: String, trim: true },
+  Pagekeywords: { type: String, trim: true },
+  Pagedescription: { type: String, trim: true },
   MainUrl: { type: String, trim: true },
   MainTitle: { type: String, trim: true },
   MainParent: { type: String, trim: true },
@@ -31,6 +37,9 @@ const Schema_Product_list = new Schema({
 });
 
 const Schema_Support = new Schema({
+  PageTitle: { type: String, trim: true },
+  Pagekeywords: { type: String, trim: true },
+  Pagedescription: { type: String, trim: true },
   MainUrl: { type: String, trim: true },
   MainTitle: { type: String, trim: true },
   MainParent: { type: String, trim: true },
@@ -49,6 +58,9 @@ const Schema_Support = new Schema({
 });
 
 const Schema_Support_list = new Schema({
+  PageTitle: { type: String, trim: true },
+  Pagekeywords: { type: String, trim: true },
+  Pagedescription: { type: String, trim: true },
   MainUrl: { type: String, trim: true },
   MainTitle: { type: String, trim: true },
   MainParent: { type: String, trim: true },
@@ -65,6 +77,9 @@ const Schema_Support_list = new Schema({
 });
 
 const Schema_Buy = new Schema({
+  PageTitle: { type: String, trim: true },
+  Pagekeywords: { type: String, trim: true },
+  Pagedescription: { type: String, trim: true },
   MainUrl: { type: String, trim: true },
   MainTitle: { type: String, trim: true },
   MainParent: { type: String, trim: true },
@@ -78,6 +93,9 @@ const Schema_Buy = new Schema({
 });
 
 const Schema_Buy_list = new Schema({
+  PageTitle: { type: String, trim: true },
+  Pagekeywords: { type: String, trim: true },
+  Pagedescription: { type: String, trim: true },
   MainUrl: { type: String, trim: true },
   MainTitle: { type: String, trim: true },
   MainParent: { type: String, trim: true },
@@ -92,6 +110,9 @@ const Schema_Buy_list = new Schema({
 });
 
 const Schema_VR = new Schema({
+  PageTitle: { type: String, trim: true },
+  Pagekeywords: { type: String, trim: true },
+  Pagedescription: { type: String, trim: true },
   MainUrl: { type: String, trim: true },
   MainTitle: { type: String, trim: true },
   MainParent: { type: String, trim: true },
@@ -107,6 +128,9 @@ const Schema_VR = new Schema({
 });
 
 const Schema_CaseNews = new Schema({
+  PageTitle: { type: String, trim: true },
+  Pagekeywords: { type: String, trim: true },
+  Pagedescription: { type: String, trim: true },
   MainUrl: { type: String, trim: true },
   MainTitle: { type: String, trim: true },
   MainParent: { type: String, trim: true },
@@ -122,6 +146,9 @@ const Schema_CaseNews = new Schema({
 });
 
 const Schema_CaseNews_list = new Schema({
+  PageTitle: { type: String, trim: true },
+  Pagekeywords: { type: String, trim: true },
+  Pagedescription: { type: String, trim: true },
   MainUrl: { type: String, trim: true },
   MainTitle: { type: String, trim: true },
   MainParent: { type: String, trim: true },
@@ -132,11 +159,14 @@ const Schema_CaseNews_list = new Schema({
   link: String,
   text: [String],
   pic: [String],
-  content:String
+  content: String
 });
 //about
 
 const Schema_About = new Schema({
+  PageTitle: { type: String, trim: true },
+  Pagekeywords: { type: String, trim: true },
+  Pagedescription: { type: String, trim: true },
   MainUrl: { type: String, trim: true },
   MainTitle: { type: String, trim: true },
   MainParent: { type: String, trim: true },
@@ -144,14 +174,17 @@ const Schema_About = new Schema({
   table: String,
   href: String,
   link: String,
-  title:String,
-  content:[new Schema({
+  title: String,
+  content: [new Schema({
     body: String,
-    webSite:String
-  },{_id:false}) ]
+    webSite: String
+  }, { _id: false })]
 });
 
 const Schema_Page = new Schema({
+  PageTitle: { type: String, trim: true },
+  Pagekeywords: { type: String, trim: true },
+  Pagedescription: { type: String, trim: true },
   MainUrl: { type: String, trim: true },
   MainTitle: { type: String, trim: true },
   MainParent: { type: String, trim: true },

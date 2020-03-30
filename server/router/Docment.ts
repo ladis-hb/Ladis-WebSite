@@ -4,7 +4,7 @@ import Send from "koa-send"
 import fs from "fs"
 import path from "path"
 import { ParameterizedContext } from "koa";
-import { CrorQuary, buyListPack } from "../typing/interface";
+import { CrorQuary, buyListPack, cases } from "../typing/interface";
 export default async (ctx:ParameterizedContext) => {
   const Query = ctx.query as CrorQuary
   const {SiteName,i18n} = Query
@@ -61,6 +61,36 @@ export default async (ctx:ParameterizedContext) => {
         await Send(ctx,filePath)
       }
       break
+
+    // 
+    case 'GetContent':
+      {
+        const link:string = Query.link
+
+        const result = {
+          pre:"",
+          next:""
+        }
+        
+        const news:cases[] = await DB.News.find().sort({ "data.time": -1 }).lean();
+        const case1:cases[] = await DB.Case.find().sort({ "data.time": -1 }).lean();
+        const newsSet:string[] =(news.map(el=>el.link))
+        const casesSet:string[] = (case1.map(el=>el.link))
+        const type = link.split("/")[1]
+        
+        if(type === 'case'){
+          const index = casesSet.indexOf(link)
+        }else{
+          const index = newsSet.indexOf(link)
+          console.log({link,type,index,newsSet});
+          result.pre = newsSet[index-1]
+          result.next = newsSet[index+1]
+        }
+
+        ctx.body = result
+
+      }
+    break
    //获取官网主页轮播的新闻列表
     case "GetHomeNews":
       {

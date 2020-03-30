@@ -1,5 +1,5 @@
 /* jshint esversion:8 */
-import cheerio from "cheerio";
+import { load } from "cheerio";
 import Axios from "axios";
 import DB from "../server/mongoose/content";
 import {
@@ -27,6 +27,9 @@ async function Html_Serialize_Json(
   arg?: any,
 ) {
   const defaults: GMpack = {
+    PageTitle: '',
+    Pagekeywords: '',
+    Pagedescription: '',
     MainUrl:url,
     MainTitle: title,
     date: new Date(),
@@ -36,7 +39,7 @@ async function Html_Serialize_Json(
     link: "",
   };
 
-  if (!url) console.log(defaults);
+  // if (!url) console.log(defaults);
 
   const file = await Axios.get(Host + url)
     .then(res => res.data)
@@ -46,8 +49,23 @@ async function Html_Serialize_Json(
       return false
     });
   if (!file) return false
-  const $ = cheerio.load(file);
+  const $ = load(file);
+// 通用获取页面标题，key，des
+{
+  const keys = ['keywords', 'description']
+  defaults.PageTitle = $("title").text().replace("雷迪司","")
+  const meta = $("meta").map((i, val) => {
+    return val.attribs
+  })
+    .get()
+    .filter(el => keys.includes((el.name as string)))
+    .map(el => ({ [el.name]: el.content }))
 
+  const vals = Object.assign({}, ...meta)
+  defaults.Pagekeywords = vals['keywords']
+  defaults.Pagedescription = vals['description']
+}
+// console.log(defaults);
   switch (type) {
     
     /* -----------------------------------Products   ------------------------------------------------------ */
@@ -84,47 +102,7 @@ async function Html_Serialize_Json(
         };
         const img: string[] = [];
         const down: GMlink[] = [];
-        //抓取说明链接
-        //console.log(t2)
-        //抓取下载链接
-        /* $(".functionItems a")
-          .has("span")
-          .map(function (i,val) {
-            if (
-              !$(val)
-                ?.attr("href")
-                ?.includes(".png") &&
-              !$(val)
-                ?.attr("href")
-                ?.includes(".jpg")
-            ) {
-              down.push({
-                target: $(val).attr("target") as string,
-                href: $(val).attr("href") as string,
-                title: $(val).text() as string,
-              });
-            }
-          });
-        //抓取图片
-        $(".swiper-wrapper")
-          .first()
-          .find("img")
-          .map(function (i,val) {
-            img.push($(val).attr("src") as string);
-          });
-        const ImgArr = $(".functionItems .productUtilImg img");
-        if (ImgArr) {
-          ImgArr.map(function (i,val) {
-            img.push($(val).attr("src") as string);
-          });
-        } else {
-          img.push(
-            $(".swiper-slide img")
-              ?.first()
-              ?.attr("src") as string,
-          );
-        } */
-        const data: productList = { ...defaults, title: defaults.MainTitle, t1, t2, img, down, link: url };
+        const data: productList = { ...defaults, title: defaults.MainTitle as string, t1, t2, img, down, link: url };
         result.push(data);
         return result;
       }
@@ -144,7 +122,7 @@ async function Html_Serialize_Json(
         const href = j.find("a").attr("href") as string;
         if (href.includes(".shtml")) {
           const down = await Axios.get(Host + href);
-          const d = cheerio.load(down.data);
+          const d = load(down.data);
           let info: support = {
             ...defaults,
             link: href,
@@ -238,8 +216,8 @@ async function Html_Serialize_Json(
           const pic = $(val)
             .find("img")
             .attr("src")
-          if (text && text.trim() != "") dock.text.push(text);
-          if (pic) dock.pic.push(pic);
+          if (text && text.trim() != "") (dock.text as string[]).push(text);
+          if (pic) (dock.pic as string[]).push(pic);
         });
         //list2
         const list2 = $(".new_list_outer p");
@@ -248,8 +226,8 @@ async function Html_Serialize_Json(
           const pic = $(val)
             .find("img")
             .attr("src");
-          if (text && text.trim() != "") dock.text.push(text);
-          if (pic) dock.pic.push(pic);
+          if (text && text.trim() != "") (dock.text as string[]).push(text);
+          if (pic) (dock.pic as string[]).push(pic);
         });
         return dock;
       }
@@ -346,7 +324,7 @@ async function secend() {
       "products_dev_arg",
       null,
       el.title,
-      el.MainTitle,
+      el.MainTitle as string,
     )
     for (let els of result) {
       if (ProductTitleSet.has(els.title)) continue
@@ -420,5 +398,6 @@ async function three() {
 first().then(async () => {
   await secend()
   await three()
+  process.exit()
 });
 
