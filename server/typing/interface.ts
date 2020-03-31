@@ -244,3 +244,8 @@ export interface Agents{
   name:AgentName
   url:string
 }
+// case列表上下文
+export interface casesContext{
+  pre?:cases
+  next?:cases
+}

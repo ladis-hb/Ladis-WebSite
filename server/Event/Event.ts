@@ -26,7 +26,7 @@ export class Query {
   }
   // 挂载监听到koa ctx
   public attach(app: DefaultContext) {
-    app.context.$Event = this;
+    app.context.$Query = this;
   }
   // 暴露事件触发器，不做条件判断，不接受参数
   public emit(events: eventsName) {
