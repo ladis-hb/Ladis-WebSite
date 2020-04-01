@@ -9,6 +9,8 @@ export default async (ctx: ParameterizedContext) => {
     case "login":
       {
         const { user, passwd } = ctx.request.body as UserInfo;
+        console.log({query:ctx.request.body});
+        
         const result = <UserInfo>await User.findOne({ $or: [{ user }, { mail: user }] }).lean();
         if (!result){
           throw new Error("用户未注册");

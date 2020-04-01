@@ -58,6 +58,9 @@ module.exports = {
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
+  axios:{
+    baseURL:'http://www.ladishb.com:9006'
+  },
   auth: {
     strategies: {
       local: {
