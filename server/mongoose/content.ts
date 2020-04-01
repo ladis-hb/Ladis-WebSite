@@ -164,21 +164,9 @@ const Schema_CaseNews_list = new Schema({
 //about
 
 const Schema_About = new Schema({
-  PageTitle: { type: String, trim: true },
-  Pagekeywords: { type: String, trim: true },
-  Pagedescription: { type: String, trim: true },
-  MainUrl: { type: String, trim: true },
-  MainTitle: { type: String, trim: true },
-  MainParent: { type: String, trim: true },
-  date: String,
-  table: String,
-  href: String,
-  link: String,
-  title: String,
-  content: [new Schema({
-    body: String,
-    webSite: String
-  }, { _id: false })]
+  type:String,
+  webSite:String,
+  content:String
 });
 
 const Schema_Page = new Schema({

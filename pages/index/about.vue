@@ -8,10 +8,7 @@
             <b-form-select v-model="selectType" :options="type"></b-form-select>
           </b-form-group>
           <b-form-group label="区域网址:" label-align="right" label-cols="2">
-            <b-form-select
-              v-model="webSite"
-              :options="webSites"
-            ></b-form-select>
+            <b-form-select v-model="webSite" :options="webSites"></b-form-select>
           </b-form-group>
         </div>
         <section id="editBody" class="my-3">
@@ -24,43 +21,42 @@
         </section>
 
         <div id="editFooter">
-          <b-button variant="success" class="float-right" @click="SendEdit"
-            >确定</b-button
-          >
+          <b-button variant="success" class="float-right" @click="SendEdit">确定</b-button>
         </div>
       </b-card-body>
     </b-card>
   </div>
 </template>
 <script lang="ts">
-import Vue from 'vue'
-import gql from 'graphql-tag';
+import Vue from "vue";
+import gql from "graphql-tag";
+import { about } from "../../types/typing";
 export default Vue.extend({
   data() {
-    const hljs = null
+    const hljs = null;
     const editorOption = {
       modules: {
         toolbar: [
-          ['bold', 'italic', 'underline', 'strike'],
-          ['blockquote', 'code-block'],
+          ["bold", "italic", "underline", "strike"],
+          ["blockquote", "code-block"],
           [{ header: 1 }, { header: 2 }],
-          [{ list: 'ordered' }, { list: 'bullet' }],
-          [{ script: 'sub' }, { script: 'super' }],
-          [{ indent: '-1' }, { indent: '+1' }],
-          [{ direction: 'rtl' }],
-          [{ size: ['small', false, 'large', 'huge'] }],
+          [{ list: "ordered" }, { list: "bullet" }],
+          [{ script: "sub" }, { script: "super" }],
+          [{ indent: "-1" }, { indent: "+1" }],
+          [{ direction: "rtl" }],
+          [{ size: ["small", false, "large", "huge"] }],
           [{ header: [1, 2, 3, 4, 5, 6, false] }],
           [{ font: [] }],
           [{ color: [] }, { background: [] }],
           [{ align: [] }],
-          ['clean'],
-          ['link', 'image'], //, "video"]
+          ["clean"],
+          ["link", "image"] //, "video"]
         ],
         syntax: {
-          highlight: (text: any) => (hljs as any).highlightAuto(text).value,
-        },
-      },
-    }
+          highlight: (text: any) => (hljs as any).highlightAuto(text).value
+        }
+      }
+    };
     return {
       type: [
         "公司简介",
@@ -80,42 +76,66 @@ export default Vue.extend({
       editorOption
     };
   },
-  apollo:{
-    webSites:{
-      query:gql`query{
-        webSites:getAgents{
-          text:name
-          value:name
+  watch:{
+    contents:function(newVal){
+      this.$data.content = newVal
+    }
+  },
+  apollo: {
+    webSites: {
+      query: gql`
+        query {
+          webSites: getAgents {
+            text: name
+            value: name
+          }
         }
-      }`
+      `
     },
-    contents:{
-      query:gql`
-      query ($selectType:String,$webSite:String){
-        contents:getAbouts(selectType:$selectType,webSite:$webSite)
-      }
-      `,
-      variables(){
-        return {
-          webSite:this.$data.webSite,
-          selectType:this.$data.selectType
+    contents: {
+      query: gql`
+        query($selectType: String, $webSite: String) {
+          contents: getAbouts(selectType: $selectType, webSite: $webSite)
         }
+      `,
+      variables() {
+        return {
+          webSite: this.$data.webSite,
+          selectType: this.$data.selectType
+        };
       }
     }
   },
   methods: {
     async SendEdit() {
-      /* let { selectType, webSite, content } = this.$data;
-      if (selectType == "") return;
-      setAbout({ selectType, webSite, content });
-      this.$bvModal.msgBoxOk("操作成功", { buttonSize: "sm" }); */
+      let { selectType, webSite, content } = this.$data;
+      const params: about = {
+        type: selectType,
+        webSite,
+        content
+      };
+      const result = await this.$apollo.mutate({
+        mutation: gql`
+          mutation($arg: JSON) {
+            setAbout(arg: $arg) {
+              ok
+            }
+          }
+        `,
+        variables:{
+          arg:params
+        }
+      });
+      console.log(result);
+      this.$bvModal.msgBoxOk("操作成功", { buttonSize: "sm" });
+      this.$data.content = ""
     },
 
-    onEditorChange({ html }:any) {
+    onEditorChange({ html }: any) {
       this.$data.content = html;
     }
   }
-})
+});
 </script>
 
 <style lang="scss" scoped>

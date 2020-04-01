@@ -68,6 +68,8 @@ const typeDefs: DocumentNode = gql`
     setBuy(arg:JSON):result
     # 配置案例 新闻资讯
     setCaseNews(arg:JSON):result
+    # 配置about
+    setAbout(arg:JSON):result
   }
 `;
 

@@ -6,7 +6,7 @@ import fs from "fs";
 import path from "path";
 import util from "util"
 import {Agent} from "../config"
-import { ApolloCtx, ApolloMongoResult, UserInfo, fileDirList,cases, caseList, buy } from "typing";
+import { ApolloCtx, ApolloMongoResult, UserInfo, fileDirList,cases, caseList, buy, about } from "typing";
 const resolvers: IResolvers = {
   Query: {
     // 获取upload文件夹文件列表
@@ -37,10 +37,8 @@ const resolvers: IResolvers = {
     },
     // 获取代理商about
     async getAbouts(root,{selectType,webSite}){
-      /* const result = await DBs.About.findOne({title:selectType,"content.webSite":webSite}).lean() as about
-      console.log(result);
-      
-      return result?.content?.body || "" */
+      const result = await DBs.About.findOne({type:selectType,webSite:webSite}).lean() as about
+      return result?.content
     }
   },
 
@@ -167,6 +165,11 @@ const resolvers: IResolvers = {
       const {table,link} = newsContent
       await (DBs as any)[table as string].updateOne({link},{$set:newsContent},{upsert:true})
       const result = await (DBs as any)[table+"_list"].updateOne({link},{$set:newListContent},{upsert:true})
+      return result
+    },
+    // 配置about
+    async setAbout(root,{arg}:{arg:about}){
+      const result = await DBs.About.updateOne({type:arg.type,webSite:arg.webSite},{$set:arg},{upsert:true})
       return result
     }
   },

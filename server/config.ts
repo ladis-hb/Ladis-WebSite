@@ -28,4 +28,5 @@ export const Agent: Agents[] = [
   { name: "湖北雷迪司", url: "www.ladishb.com" },
   { name: "贵州代理商", url: "" },
   { name: "陕西代理商", url: "" },
+  { name: "深圳市雷迪司电源有限公司",url:"www.szladis.com.cn"}
 ];

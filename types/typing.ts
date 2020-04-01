@@ -148,13 +148,10 @@ export interface caseList extends GMpack {
   content?:string
 }
 // about
-export interface about extends GMpack {
-  title:string
-  body?: string[];
-  content?: {
-    body: string;
-    webSite: AgentName;
-  }[];
+export interface about{
+  type:string
+  webSite: AgentName;
+  content: string
 }
 // page
 export interface pageLink extends GMpack {

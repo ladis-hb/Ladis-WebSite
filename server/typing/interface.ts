@@ -238,7 +238,7 @@ export interface editProduct {
 }
 
 // 代理商名称限定
-export type AgentName = "localhost"|"湖北雷迪司"|"贵州代理商"|"陕西代理商" 
+export type AgentName = "localhost"|"湖北雷迪司"|"贵州代理商"|"陕西代理商" |"深圳市雷迪司电源有限公司"
 // 代理
 export interface Agents{
   name:AgentName
