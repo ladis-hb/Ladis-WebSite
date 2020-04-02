@@ -31,8 +31,8 @@ export default async (ctx: ParameterizedContext) => {
       break;
     case "user":
       {
-        const token = ctx.req.headers.authorization
-        const tokenSlice = <string>token?.slice(9, token.length)
+        const token = ctx.req.headers.authorization as string
+        const tokenSlice = <string>token.split(" ")[1].trim()
         const {user} = <UserInfo>await JwtVerify(tokenSlice)
         ctx.body = {user}
       }
