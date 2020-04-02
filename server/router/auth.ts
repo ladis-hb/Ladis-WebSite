@@ -31,7 +31,7 @@ export default async (ctx: ParameterizedContext) => {
       break;
     case "user":
       {
-        const token = ctx.cookies.get("auth._token.local")
+        const token = ctx.req.headers.authorization
         const tokenSlice = <string>token?.slice(9, token.length)
         const {user} = <UserInfo>await JwtVerify(tokenSlice)
         ctx.body = {user}

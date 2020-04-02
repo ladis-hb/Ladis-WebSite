@@ -60,6 +60,7 @@ module.exports = {
    */
   axios:{
     baseURL:'http://www.ladishb.com:9006'
+    //baseURL:'http://localhost:9006'
   },
   auth: {
     strategies: {
