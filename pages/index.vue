@@ -13,43 +13,7 @@
           <b-nav-item :to="{ name: 'index-case' }">案例管理</b-nav-item>
           <b-nav-item :to="{ name: 'index-buy' }">经销商管理</b-nav-item>
           <b-nav-item :to="{ name: 'index-about' }">相关管理</b-nav-item>
-          <b-nav-item-dropdown text="服务支持">
-            <b-dropdown-item
-              :to="{
-                name: 'index-down',
-                query: { index: 0 },
-              }"
-              >软件</b-dropdown-item
-            >
-            <b-dropdown-item
-              :to="{
-                name: 'index-down',
-                query: { index: 1 },
-              }"
-              >彩页</b-dropdown-item
-            >
-            <b-dropdown-item
-              :to="{
-                name: 'index-down',
-                query: { index: 3 },
-              }"
-              >视频教程</b-dropdown-item
-            >
-            <b-dropdown-item
-              :to="{
-                name: 'index-down',
-                query: { index: 4 },
-              }"
-              >常见问题</b-dropdown-item
-            >
-            <b-dropdown-item
-              :to="{
-                name: 'index-down',
-                query: { index: 2 },
-              }"
-              >资质</b-dropdown-item
-            >
-          </b-nav-item-dropdown>
+          <b-nav-item :to="{ name: 'index-down' }">服务支持</b-nav-item>
           <b-nav-item :to="{ name: 'index-product' }">产品分类</b-nav-item>
           <b-nav-item-dropdown text="首页管理">
             <b-dropdown-item :to="{ name: 'index-carousel' }"
@@ -103,7 +67,6 @@
 import Vue from 'vue'
 import { selectFiles } from '../server/typing/interface'
 export default Vue.extend({
-  layout: 'login',
   computed: {
     SourceFile(): selectFiles[] {
       return this.$store.state.SourceFile

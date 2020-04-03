@@ -6,7 +6,7 @@ import fs from "fs";
 import path from "path";
 import util from "util"
 import {Agent} from "../config"
-import { ApolloCtx, ApolloMongoResult, UserInfo, fileDirList,cases, caseList, buy, about } from "typing";
+import { ApolloCtx, ApolloMongoResult, UserInfo, fileDirList,cases, caseList, buy, about, buyList } from "typing";
 const resolvers: IResolvers = {
   Query: {
     // 获取upload文件夹文件列表
@@ -39,7 +39,43 @@ const resolvers: IResolvers = {
     async getAbouts(root,{selectType,webSite}){
       const result = await DBs.About.findOne({type:selectType,webSite:webSite}).lean() as about
       return result?.content
+    },
+    // 获取经销商列表
+    async getbuys(){
+      const result:buyList[] = await DBs.Buy_list.find().lean()
+      return result
+    },
+    // 获取案例列表
+    async getCases(){
+      const result:cases[] = await DBs.Case.find().lean()
+      return result
+    },
+    //
+    async getCase(root,{title}){
+      const result:cases = await DBs.Case.findOne({text:title}).lean() as any
+      return result
+    },
+    //
+    async getCaseList(root,{title}){
+      const result:caseList = await DBs.Case_list.findOne({title}).lean() as caseList
+      return result
+    },
+    // 获取案例列表
+    async getNews(){
+      const result:cases[] = await DBs.News.find().lean()
+      return result
+    },
+    //
+    async getNew(root,{title}){
+      const result:cases = await DBs.News.findOne({text:title}).lean() as any
+      return result
+    },
+    //
+    async getNewList(root,{title}){
+      const result:caseList = await DBs.News_list.findOne({title}).lean() as caseList
+      return result
     }
+
   },
 
   Mutation: {
@@ -156,6 +192,8 @@ const resolvers: IResolvers = {
     // 配置经销商
     async setBuy(root, { arg }) {
        const ad:buy = arg
+       console.log(arg);
+       
        const result = await DBs.Buy_list.updateOne({link:ad.link},{$set:arg},{upsert:true})
        return result
     },
@@ -165,6 +203,18 @@ const resolvers: IResolvers = {
       const {table,link} = newsContent
       await (DBs as any)[table as string].updateOne({link},{$set:newsContent},{upsert:true})
       const result = await (DBs as any)[table+"_list"].updateOne({link},{$set:newListContent},{upsert:true})
+      return result
+    },
+    // 删除案例
+    async delCase(root,{title}){
+      await DBs.Case_list.deleteMany({title})
+      const result = await DBs.Case.deleteMany({text:title})
+      return result
+    },
+    // 删除案例
+    async delNew(root,{title}){
+      await DBs.News_list.deleteMany({title})
+      const result = await DBs.News.deleteMany({text:title})
       return result
     },
     // 配置about

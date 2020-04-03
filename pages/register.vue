@@ -82,7 +82,6 @@ import gql from 'graphql-tag'
 import { ApolloMongoResult } from '../server/typing/interface'
 export default Vue.extend({
   auth: false,
-  layout: 'login',
   data() {
     return {
       accont: {

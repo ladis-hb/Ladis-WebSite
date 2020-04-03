@@ -40,6 +40,32 @@ const typeDefs: DocumentNode = gql`
     name: String
     url: String
   }
+  #buy
+  type buys {
+    date: String
+    parentsUntil: String
+    parent: String
+    title: String
+    content: String
+  }
+  #cases
+  type case {
+    MainTitle: String
+    img:String
+    date: String
+    text: String
+    link: String
+  }
+  # caselist
+  type caseList {
+    PageTitle: String
+    Pagekeywords: String
+    Pagedescription: String
+    text: [String]
+    pic: [String]
+    content: String
+    link: String
+  }
   #Query
   type Query {
     # upload文件列表
@@ -48,6 +74,21 @@ const typeDefs: DocumentNode = gql`
     getAgents:[Agent]
     # 获取代理商about信息
     getAbouts(selectType:String,webSite:String):String
+    # 获取经销商列表
+    getbuys:[buys]
+    #获取案例列表
+    getCases:[case]
+    # 获取案例single
+    getCase(title:String):case
+    # 
+    getCaseList(title:String):caseList
+    #获取新闻列表
+    getNews:[case]
+    # 获取案例single
+    getNew(title:String):case
+    # 
+    getNewList(title:String):caseList
+    
     
   }
 
@@ -70,6 +111,10 @@ const typeDefs: DocumentNode = gql`
     setCaseNews(arg:JSON):result
     # 配置about
     setAbout(arg:JSON):result
+    #
+    delCase(title:String):result
+    #
+    delNew(title:String):result
   }
 `;
 
