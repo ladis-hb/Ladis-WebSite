@@ -13,16 +13,16 @@
           <b-form-group label="页面描述:" label-align="right" label-cols="2">
             <b-form-textarea v-model="Pagedescription" />
           </b-form-group>
-          <b-form-group label="案例类型:" label-align="right" label-cols="2">
+          <b-form-group label="新闻类型:" label-align="right" label-cols="2">
             <b-form-select v-model="type" :options="editOption"></b-form-select>
           </b-form-group>
-          <b-form-group label="案例标题:" label-align="right" label-cols="2">
+          <b-form-group label="新闻标题:" label-align="right" label-cols="2">
             <b-form-input v-model.trim="title"></b-form-input>
           </b-form-group>
-          <b-form-group label="图片:" label-align="right" label-cols="2">
+          <b-form-group label="主题图片:" label-align="right" label-cols="2">
             <b-form-select v-model="file" :options="SourceFile"></b-form-select>
           </b-form-group>
-          <b-form-group label="图片:" label-align="right" label-cols="2">
+          <b-form-group label="图片预览:" label-align="right" label-cols="2">
             <b-form-text>{{file}}</b-form-text>
             <b-img :src="file" height="100" fluid></b-img>
           </b-form-group>

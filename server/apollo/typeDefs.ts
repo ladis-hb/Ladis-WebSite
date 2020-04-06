@@ -66,6 +66,44 @@ const typeDefs: DocumentNode = gql`
     content: String
     link: String
   }
+  # 软件下载
+  type supportDown {
+    PageTitle: String
+    Pagekeywords: String
+    Pagedescription: String
+    MainUrl: String
+    MainTitle: String
+    MainParent: String
+    date: String
+    href: String
+    link: String
+    language: String
+    type: String
+    title: String
+    platform: String
+    size: String
+    version: String
+    updateReason: String
+    down: String
+  }
+  type supportProblem {
+    PageTitle: String
+    Pagekeywords: String
+    Pagedescription: String
+    MainUrl: String
+    MainTitle: String
+    MainParent: String
+    date: String
+    table: String
+    href: String
+    title: String
+    link: String
+    movie: String
+    html: String
+    parentsUntil: String
+    parent: String
+    data: String
+  }
   #Query
   type Query {
     # upload文件列表
@@ -88,7 +126,13 @@ const typeDefs: DocumentNode = gql`
     getNew(title:String):case
     # 
     getNewList(title:String):caseList
-    
+    # 获取软件下载列表
+    getSofts:[supportDown]
+    #
+    getSoft(title:String):supportDown
+    # 获取常见问题列表
+    getProblems:[supportProblem]
+    getProblem(title:String):supportProblem
     
   }
 
@@ -115,6 +159,10 @@ const typeDefs: DocumentNode = gql`
     delCase(title:String):result
     #
     delNew(title:String):result
+    #
+    delSupportSoft(title:String):result
+    #
+    delSupportProblem(title:String):result
   }
 `;
 

@@ -2,161 +2,59 @@
   <b-container fluid>
     <b-row>
       <b-col cols="12">
-        <b-tabs v-model="active" id="tabs">
-          <b-tab title="软件上传">
+        <b-tabs id="tabs" fill lazy>
+          <b-tab title="软件上传" title-link-class=" text-dark">
             <b-form class="m-5">
-              <b-form-group
-                label="*软件平台:"
-                label-cols="2"
-                label-align="right"
-              >
-                <b-form-select
-                  :options="soft.system"
-                  v-model="soft.selectSystem"
-                ></b-form-select>
+              <my-keywords
+                v-bind:PageTitle.sync="PageTitle"
+                :Pagekeywords.sync="Pagekeywords"
+                :Pagedescription.sync="Pagedescription"
+              ></my-keywords>
+              <b-form-group label="*软件平台:" label-cols="2" label-align="right">
+                <b-form-select :options="selectSoft" v-model="MainTitle"></b-form-select>
               </b-form-group>
               <b-form-group label="*标题:" label-cols="2" label-align="right">
-                <b-form-input v-model.trim="soft.title"></b-form-input>
+                <b-form-input v-model.trim="title"></b-form-input>
               </b-form-group>
               <b-form-group label="说明:" label-cols="2" label-align="right">
-                <b-form-input v-model.trim="soft.platform"></b-form-input>
+                <b-form-input v-model.trim="platform"></b-form-input>
               </b-form-group>
               <b-form-group label="*语言:" label-cols="2" label-align="right">
-                <b-form-select
-                  :options="soft.language"
-                  v-model="soft.selectLanguage"
-                ></b-form-select>
+                <b-form-select :options="languages" v-model="language"></b-form-select>
               </b-form-group>
               <b-form-group label="版本:" label-cols="2" label-align="right">
-                <b-form-input v-model.trim="soft.version"></b-form-input>
+                <b-form-input v-model.trim="version"></b-form-input>
               </b-form-group>
-              <b-form-group
-                label="更新说明:"
-                label-cols="2"
-                label-align="right"
-              >
-                <b-form-input v-model.trim="soft.update"></b-form-input>
+              <b-form-group label="更新说明:" label-cols="2" label-align="right">
+                <b-form-input v-model.trim="updateReason"></b-form-input>
               </b-form-group>
               <b-form-group label="*文件:" label-cols="2" label-align="right">
-                <b-form-select
-                  v-model="soft.file"
-                  :options="SourceFile"
-                ></b-form-select>
+                <b-form-select v-model="down" :options="SourceFile"></b-form-select>
               </b-form-group>
-              <b-button block @click="Submit('soft')" variant="success"
-                >提交</b-button
-              >
+              <b-button block @click="Submit()" variant="success">提交</b-button>
             </b-form>
           </b-tab>
-          <b-tab title="彩页上传">
+
+          <b-tab title="彩页/资质上传" title-link-class=" text-dark" :active="active">
             <b-form class="m-5">
-              <b-form-group
-                label="*彩页类型:"
-                label-cols="2"
-                label-align="right"
-              >
-                <b-form-select
-                  :options="cp.system"
-                  v-model="cp.selectSystem"
-                ></b-form-select>
+              <my-keywords
+                :PageTitle.sync="PageTitle"
+                :Pagekeywords.sync="Pagekeywords"
+                :Pagedescription.sync="Pagedescription"
+              ></my-keywords>
+              <b-form-group label="*彩页类型:" label-cols="2" label-align="right">
+                <b-form-select :options="selectPdf" v-model="MainTitle"></b-form-select>
               </b-form-group>
               <b-form-group label="*标题:" label-cols="2" label-align="right">
-                <b-form-input v-model.trim="cp.title"></b-form-input>
+                <b-form-input v-model.trim="title"></b-form-input>
               </b-form-group>
 
-              <b-form-group label="*文件:" label-cols="2" label-align="right">
-                <b-form-select
-                  v-model="cp.file"
-                  :options="SourceFile"
-                ></b-form-select>
-              </b-form-group>
-              <b-button block @click="Submit('cp')" variant="success"
-                >提交</b-button
-              >
-            </b-form>
-          </b-tab>
-          <b-tab title="资质">
-            <b-form class="m-5">
-              <b-form-group
-                label="*资质类型:"
-                label-cols="2"
-                label-align="right"
-              >
-                <b-form-select
-                  :options="zz.system"
-                  v-model="zz.selectSystem"
-                ></b-form-select>
-              </b-form-group>
-              <b-form-group label="*标题:" label-cols="2" label-align="right">
-                <b-form-input v-model.trim="zz.title"></b-form-input>
-              </b-form-group>
-
-              <b-form-group label="*文件:" label-cols="2" label-align="right">
-                <b-form-select
-                  v-model="zz.file"
-                  :options="SourceFile"
-                ></b-form-select>
-              </b-form-group>
-              <b-button block @click="Submit('zz')" variant="success"
-                >提交</b-button
-              >
-            </b-form>
-          </b-tab>
-          <b-tab title="视频教程">
-            <b-form class="m-5">
-              <b-form-group label="*父类型:" label-cols="2" label-align="right">
-                <b-form-select
-                  :options="problem.parentsUntil"
-                  v-model="problem.selectparentsUntil"
-                ></b-form-select>
-              </b-form-group>
-              <b-form-group label="*子类型:" label-cols="2" label-align="right">
-                <b-form-select
-                  :options="parent"
-                  v-model="problem.selectparent"
-                ></b-form-select>
-              </b-form-group>
-              <b-form-group label="*标题:" label-cols="2" label-align="right">
-                <b-form-input v-model.trim="problem.title"></b-form-input>
-              </b-form-group>
-              <b-form-group
-                label="*视频链接:"
-                label-cols="2"
-                label-align="right"
-              >
-                <b-form-input v-model.trim="problem.movie"></b-form-input>
-              </b-form-group>
-              <b-button block @click="Submit('problem')" variant="success"
-                >提交</b-button
-              >
-            </b-form>
-          </b-tab>
-          <b-tab title="常见问题">
-            <b-form class="m-5">
-              <b-form-group label="*父类型:" label-cols="2" label-align="right">
-                <b-form-select
-                  :options="problem.parentsUntil"
-                  v-model="problem.selectparentsUntil"
-                ></b-form-select>
-              </b-form-group>
-              <b-form-group label="*子类型:" label-cols="2" label-align="right">
-                <b-form-select
-                  :options="parent"
-                  v-model="problem.selectparent"
-                ></b-form-select>
-              </b-form-group>
-              <b-form-group label="*标题:" label-cols="2" label-align="right">
-                <b-form-input v-model.trim="problem.title"></b-form-input>
-              </b-form-group>
-              <div
-                class="quill-editor mb-5"
-                :content="problem.html"
-                @change="onEditorChange($event)"
-                v-quill:myQuillEditor="editorOption"
-              ></div>
-              <b-button block @click="Submit('problem')" variant="success"
-                >提交</b-button
-              >
+              <!-- <b-form-group label="*文件:" label-cols="2" label-align="right">
+                <b-form-select v-model="down" :options="SourceFile"></b-form-select>
+              </b-form-group> -->
+              <my-selectfile :isPic="true" ></my-selectfile>
+              <p>{{PageTitle}}</p>
+              <b-button block @click="Submit()" variant="success">提交</b-button>
             </b-form>
           </b-tab>
         </b-tabs>
@@ -165,193 +63,115 @@
   </b-container>
 </template>
 <script lang="ts">
-import Vue from 'vue'
-import { selectFiles, ApolloMongoResult } from '../../server/typing/interface'
-import gql from 'graphql-tag'
+import Vue from "vue";
+import MyKeywords from "../../components/MyKeywords.vue";
+import MySelectfile from "../../components/MySelectfile.vue"
+import { selectFiles, ApolloMongoResult } from "../../server/typing/interface";
+import gql from "graphql-tag";
+import { support } from "../../types/typing";
 export default Vue.extend({
+  components: { MyKeywords, MySelectfile },
   data() {
-    const hljs = null
-    const editorOption = {
-      modules: {
-        toolbar: [
-          ['bold', 'italic', 'underline', 'strike'],
-          ['blockquote', 'code-block'],
-          [{ header: 1 }, { header: 2 }],
-          [{ list: 'ordered' }, { list: 'bullet' }],
-          [{ script: 'sub' }, { script: 'super' }],
-          [{ indent: '-1' }, { indent: '+1' }],
-          [{ direction: 'rtl' }],
-          [{ size: ['small', false, 'large', 'huge'] }],
-          [{ header: [1, 2, 3, 4, 5, 6, false] }],
-          [{ font: [] }],
-          [{ color: [] }, { background: [] }],
-          [{ align: [] }],
-          ['clean'],
-          ['link', 'image'], //, "video"]
-        ],
-        syntax: {
-          highlight: (text: any) => (hljs as any).highlightAuto(text).value,
-        },
-      },
-    }
     return {
-      soft: {
-        system: ['windows', 'linux', 'mac', 'other'],
-        selectSystem: '',
-        title: 'ceshi',
-        platform: 'ceshi pla',
-        language: ['简体中文', '英文'],
-        selectLanguage: '',
-        version: '1.00',
-        update: 'test',
-        file: '',
-        Loading: true,
-      },
-      cp: {
-        title: '',
-        system: ['其他产品彩页', '数据中心彩页', '机房空调彩页', 'UPS电源彩页'],
-        selectSystem: '',
-        file: '',
-      },
-      zz: {
-        title: '',
-        system: ['UPS相关', '精密空调相关', '数据中心相关', '公司相关'],
-        selectSystem: '',
-        file: '',
-      },
-      problem: {
-        title: '',
-        movie: 'http://',
-        html: '输入',
-        parentsUntil: [
-          '软件设置',
-          '电池连接',
-          '硬件安装',
-          '错误代码',
-          '技术文档',
-        ],
-        selectparentsUntil: '',
-        parent: {
-          软件设置: [
-            'viewpower设置',
-            'viewpowerPro设置',
-            'viewpower mini',
-            'SH/D3000',
-            '百事服',
-            'NAS系统',
-          ],
-          电池连接: ['电池连接'],
-          硬件安装: ['电池更换', '套件安装'],
-          错误代码: ['警告代码', '故障代码'],
-          技术文档: ['电池相关', '数据中心相关', '精密空调相关', 'UPS相关'],
-        },
-        selectparent: '',
-      },
-      editorOption,
-    }
+      PageTitle: "",
+      Pagekeywords: "",
+      Pagedescription: "",
+      MainUrl: "",
+      MainTitle: "",
+      MainParent: "",
+      date: "",
+      href: "",
+      link: "",
+      language: "",
+      type: "",
+      title: "",
+      platform: "",
+      size: "",
+      version: "",
+      updateReason: "",
+      down: "",
+
+      selectSoft: ["windows", "linux", "mac", "other"],
+      selectPdf: [
+        "其他产品彩页",
+        "数据中心彩页",
+        "机房空调彩页",
+        "UPS电源彩页",
+        "UPS相关",
+        "精密空调相关",
+        "数据中心相关",
+        "公司相关"
+      ],
+      languages: ["简体中文", "英文"],
+      support: null,
+      active: false
+    };
   },
 
   computed: {
     SourceFile() {
-      const SourceFile: selectFiles[] = this.$store.state.SourceFile
+      const SourceFile: selectFiles[] = this.$store.state.SourceFile;
       const result = SourceFile.map(file =>
         Object.assign(file, { text: file.name, value: file.path })
-      )
-      return result
-    },
-    parent() {
-      return this.$data.problem.parent[this.$data.problem.selectparentsUntil]
-    },
-    active: {
-      get() {
-        return Number(this.$route.query.index) || 0
-      },
-      set() {
-        return
-      },
-    },
+      );
+      return result;
+    }
+  },
+  watch: {
+    support: function(newVal: support) {
+      if (newVal) {
+        this.active = newVal.type === "pdf";
+        Object.assign(this.$data, newVal);
+      }
+    }
+  },
+  apollo: {
+    support: {
+      query: gql`
+        query($title: String) {
+          support: getSoft(title: $title) {
+            PageTitle
+            Pagekeywords
+            Pagedescription
+            MainUrl
+            MainTitle
+            MainParent
+            date
+            href
+            link
+            language
+            type
+            title
+            platform
+            size
+            version
+            updateReason
+            down
+          }
+        }
+      `,
+      variables() {
+        return {
+          title: this.$route.query.title
+        };
+      }
+    }
   },
   methods: {
-    onEditorChange({
-      editor,
-      html,
-      text,
-    }: {
-      editor: string
-      html: string
-      text: string
-    }) {
-      this.problem.html = html
-    },
-    async Submit(type: string) {
-      let respon: ApolloMongoResult
-      switch (type) {
-        case 'problem':
-          {
-            const problem = this.$data.problem
-            for (let key of Object.keys(problem)) {
-              if (problem[key] === '') {
-                return this.$bvModal.msgBoxOk(`${key}不能为空`, {
-                  title: '参数错误',
-                })
-              }
+    async Submit() {
+      const result = await this.$apollo.mutate({
+        mutation: gql`
+          mutation($arg: JSON) {
+            setSoft(arg: $arg) {
+              ok
+              msg
             }
-            problem.type = type
-            const result = await this.$apollo.mutate({
-              mutation: gql`
-                mutation($arg: JSON) {
-                  setProblem(arg: $arg) {
-                    ok
-                    msg
-                  }
-                }
-              `,
-              variables: { arg: problem },
-            })
-            respon = result.data.setProblem
-            //respon = await Add_Problem(problem);
           }
-          break
-        default:
-          {
-            let data = this.$data[type]
-            let keys = Object.keys(data)
-            let params = { type: type }
-            for (let key of keys) {
-              if (data[key] === '') {
-                return this.$bvModal.msgBoxOk(`${key}不能为空`, {
-                  title: '参数错误',
-                })
-              }
-              ;(params as any)[key] = data[key]
-            }
-            const result = await this.$apollo.mutate({
-              mutation: gql`
-                mutation($arg: JSON) {
-                  setSoft(arg: $arg) {
-                    ok
-                    msg
-                  }
-                }
-              `,
-              variables: { arg: params },
-            })
-            respon = result.data.setSoft
-          }
-          break
-      }
-      if (respon.ok === 1)
-        return this.$bvModal.msgBoxOk('提交资料完成', { title: 'success' })
-    },
-  },
-})
+        `,
+        variables: { arg: this.$data }
+      });
+      this.$apollo.queries.support.refresh()
+    }
+  }
+});
 </script>
-
-<style lang="scss" scoped>
-.quill-editor {
-  min-height: 300px;
-  max-height: 400px;
-  width: auto;
-  overflow-y: auto;
-}
-</style>

@@ -74,6 +74,24 @@ const resolvers: IResolvers = {
     async getNewList(root,{title}){
       const result:caseList = await DBs.News_list.findOne({title}).lean() as caseList
       return result
+    },
+    // 获取软件下载
+    async getSofts(){
+      const result = await DBs.Support.find().lean()
+      return result
+    },
+    async getSoft(root,{title}){
+      const result = await DBs.Support.findOne({title}).lean()
+      return result
+    },
+    //
+    async getProblems(){
+      const result = await DBs.Support_list.find().lean()
+      return result
+    },
+    async getProblem(root,{title}){
+      const result = await DBs.Support_list.findOne({title}).lean()
+      return result
     }
 
   },
@@ -220,6 +238,15 @@ const resolvers: IResolvers = {
     // 配置about
     async setAbout(root,{arg}:{arg:about}){
       const result = await DBs.About.updateOne({type:arg.type,webSite:arg.webSite},{$set:arg},{upsert:true})
+      return result
+    },
+    //
+    async delSupportSoft(root,{title}){
+      const result = await DBs.Support.deleteOne({title})
+      return result
+    },
+    async delSupportProblem(root,{title}){
+      const result = await DBs.Support_list.deleteOne({title})
       return result
     }
   },
