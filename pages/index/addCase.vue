@@ -4,36 +4,21 @@
       <b-card-header class="bg-info text-light">Case</b-card-header>
       <b-card-body>
         <div id="editSelect">
-          <b-form-group label="页面标题:" label-align="right" label-cols="2">
-            <b-form-input v-model.trim="PageTitle" />
-          </b-form-group>
-          <b-form-group label="页面关键字:" label-align="right" label-cols="2">
-            <b-form-textarea v-model="Pagekeywords" />
-          </b-form-group>
-          <b-form-group label="页面描述:" label-align="right" label-cols="2">
-            <b-form-textarea v-model="Pagedescription" />
-          </b-form-group>
+          <my-keywords
+            :title.sync="PageTitle"
+            :keywords.sync="Pagekeywords"
+            :description.sync="Pagedescription"
+          ></my-keywords>
           <b-form-group label="案例类型:" label-align="right" label-cols="2">
             <b-form-select v-model="type" :options="editOption"></b-form-select>
           </b-form-group>
           <b-form-group label="案例标题:" label-align="right" label-cols="2">
             <b-form-input v-model.trim="title"></b-form-input>
           </b-form-group>
-          <b-form-group label="图片:" label-align="right" label-cols="2">
-            <b-form-select v-model="file" :options="SourceFile"></b-form-select>
-          </b-form-group>
-          <b-form-group label="图片:" label-align="right" label-cols="2">
-            <b-form-text>{{file}}</b-form-text>
-            <b-img :src="file" height="100" fluid></b-img>
-          </b-form-group>
+          <my-selectfile :isPic="true" :files.sync="file"></my-selectfile>
         </div>
         <section id="editBody" class="my-3">
-          <div
-            class="quill-editor"
-            :content="content"
-            @change="onEditorChange($event)"
-            v-quill:myQuillEditor="editorOption"
-          ></div>
+          <my-edit :content.sync="content" />
         </section>
         <div id="editFooter">
           <b-button variant="success" class="float-right" @click="SendEdit('case')">确定</b-button>
@@ -45,34 +30,14 @@
 <script lang="ts">
 import Vue from "vue";
 import gql from "graphql-tag";
+import MyKeywords from "../../components/MyKeywords.vue";
+import MyEdit from "../../components/MyEdit.vue";
+import MySelectfile from "../../components/MySelectfile.vue";
 import { selectFiles, cases, caseList } from "../../types/typing";
 import deepmerge from "deepmerge";
 export default Vue.extend({
+  components: { MyEdit, MyKeywords, MySelectfile },
   data() {
-    const hljs = null;
-    const editorOption = {
-      modules: {
-        toolbar: [
-          ["bold", "italic", "underline", "strike"],
-          ["blockquote", "code-block"],
-          [{ header: 1 }, { header: 2 }],
-          [{ list: "ordered" }, { list: "bullet" }],
-          [{ script: "sub" }, { script: "super" }],
-          [{ indent: "-1" }, { indent: "+1" }],
-          [{ direction: "rtl" }],
-          [{ size: ["small", false, "large", "huge"] }],
-          [{ header: [1, 2, 3, 4, 5, 6, false] }],
-          [{ font: [] }],
-          [{ color: [] }, { background: [] }],
-          [{ align: [] }],
-          ["clean"],
-          ["link", "image"] //, "video"]
-        ],
-        syntax: {
-          highlight: (text: any) => (hljs as any).highlightAuto(text).value
-        }
-      }
-    };
     return {
       PageTitle: "",
       Pagekeywords: "",
@@ -82,20 +47,10 @@ export default Vue.extend({
       file: "",
       content: `<h2 class="ql-align-center"><span class="ql-font-serif">Text content loading..</span></h2>`,
       editOption: ["UPS电源", "一体化机柜", "数据中心", "机房空调"],
-      editorOption,
       // apollo
       case: null,
       caseList: null
     };
-  },
-  computed: {
-    SourceFile() {
-      const SourceFile: selectFiles[] = this.$store.state.SourceFile;
-      const result = SourceFile.filter(
-        file => file.filetype === "img"
-      ).map(file => Object.assign(file, { text: file.name, value: file.path }));
-      return result;
-    }
   },
   watch: {
     case: function(newVal: cases) {
@@ -168,8 +123,10 @@ export default Vue.extend({
       } = this.$data;
       if (!file || !content || !title || !editType)
         return this.$bvModal.msgBoxOk("参数不能为空", { title: "输入错误" });
-      const date = this.$data?.cases?.date || new Date().toLocaleDateString("zh");
-      const link =  this.$data?.case?.link || `/case/${date + new Date().getSeconds()}`;
+      const date =
+        this.$data?.cases?.date || new Date().toLocaleDateString("zh");
+      const link =
+        this.$data?.case?.link || `/case/${date + new Date().getSeconds()}`;
       const newsContent: cases = {
         MainUrl: "",
         MainTitle: editType,
@@ -221,12 +178,3 @@ export default Vue.extend({
   }
 });
 </script>
-
-<style lang="scss" scoped>
-.quill-editor {
-  min-height: 300px;
-  max-height: 400px;
-  width: auto;
-  overflow-y: auto;
-}
-</style>

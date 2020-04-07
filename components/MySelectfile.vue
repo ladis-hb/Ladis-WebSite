@@ -1,11 +1,11 @@
 <template>
   <div>
     <b-form-group :label="title[0]" label-align="right" label-cols="2">
-      <b-form-select v-model="file" :options="SourceFile"></b-form-select>
+      <b-form-select @change="Cfile" v-model="file" :options="SourceFile"></b-form-select>
     </b-form-group>
     <b-form-group :label="title[1]" label-align="right" label-cols="2">
-      <b-form-text>{{file}}</b-form-text>
-      <b-img :src="file" height="100" fluid></b-img>
+      <p class="p-2" v-if="title[1]!=='图片预览:'">{{file}}</p>
+      <b-img :src="file" height="100" fluid v-else></b-img>
     </b-form-group>
   </div>
 </template>
@@ -19,14 +19,15 @@ export default Vue.extend({
       default: true
     },
     files: {
-      type: Array,
-      default: ()=>[]
+      type: String,
+      default: null
     }
   },
-  data(){
-      return {
-          file:null
-      }
+  data() {
+    return {
+      file: "",
+      fileMap: new Set()
+    };
   },
   computed: {
     title() {
@@ -38,22 +39,44 @@ export default Vue.extend({
     },
     SourceFile() {
       const SourceFile: selectFiles[] = this.$store.state.SourceFile;
-      const files =this.files as string[]
-      const hrefs = files.map((el:string)=>({text:el.split('/').pop() as string,value:el}))
+      const files = this.files as string;
+      let hrefs: any[];
+      let result;
 
-
-      const result = SourceFile.filter(file => {
-        if (this.isPic) {
-          return file.filetype === "img";
-        } else {
-          return file.filetype !== "img";
-        }
-      }).map(file =>
-        Object.assign(file, { text: file.name, value: file.path })
-      );
-      console.log({hrefs,result});
-      
-      return [...result,...hrefs];
+      if (
+        this.fileMap.size > 0 &&
+        Array.from(this.fileMap).some((el: any) => el.value === files)
+      ) {
+        result = Array.from(this.fileMap) as any;
+        hrefs = [];
+      } else {
+        hrefs = files
+          ? [
+              {
+                text: decodeURI(files.split("/").pop() as string),
+                value: files
+              }
+            ]
+          : [];
+        result = SourceFile.filter(file => {
+          if (this.isPic) {
+            return file.filetype === "img";
+          } else {
+            return file.filetype !== "img";
+          }
+        }).map(file =>
+          Object.assign(file, { text: file.name, value: file.path })
+        );
+        this.fileMap = new Set([...result, ...hrefs]);
+        this.file = files;
+      }
+      console.log({ result, hrefs, fileMap: this.fileMap });
+      return [...result, ...hrefs];
+    }
+  },
+  methods: {
+    Cfile() {
+      this.$emit("update:files", this.file);
     }
   }
 });

@@ -5,8 +5,8 @@ import Crypto from "../util/crypto";
 import fs from "fs";
 import path from "path";
 import util from "util"
-import {Agent} from "../config"
-import { ApolloCtx, ApolloMongoResult, UserInfo, fileDirList,cases, caseList, buy, about, buyList } from "typing";
+import { Agent } from "../config"
+import { ApolloCtx, ApolloMongoResult, UserInfo, fileDirList, cases, caseList, buy, about, buyList, support, supportList } from "typing";
 const resolvers: IResolvers = {
   Query: {
     // 获取upload文件夹文件列表
@@ -32,67 +32,81 @@ const resolvers: IResolvers = {
       return result
     },
     // 获取代理商列表
-    getAgents(){
+    getAgents() {
       return Agent
     },
     // 获取代理商about
-    async getAbouts(root,{selectType,webSite}){
-      const result = await DBs.About.findOne({type:selectType,webSite:webSite}).lean() as about
+    async getAbouts(root, { selectType, webSite }) {
+      const result = await DBs.About.findOne({ type: selectType, webSite: webSite }).lean() as about
       return result?.content
     },
     // 获取经销商列表
-    async getbuys(){
-      const result:buyList[] = await DBs.Buy_list.find().lean()
+    async getbuys() {
+      const result: buyList[] = await DBs.Buy_list.find().lean()
       return result
     },
     // 获取案例列表
-    async getCases(){
-      const result:cases[] = await DBs.Case.find().lean()
+    async getCases() {
+      const result: cases[] = await DBs.Case.find().lean()
       return result
     },
     //
-    async getCase(root,{title}){
-      const result:cases = await DBs.Case.findOne({text:title}).lean() as any
+    async getCase(root, { title }) {
+      const result: cases = await DBs.Case.findOne({ text: title }).lean() as any
       return result
     },
     //
-    async getCaseList(root,{title}){
-      const result:caseList = await DBs.Case_list.findOne({title}).lean() as caseList
+    async getCaseList(root, { title }) {
+      const result: caseList = await DBs.Case_list.findOne({ title }).lean() as caseList
       return result
     },
     // 获取案例列表
-    async getNews(){
-      const result:cases[] = await DBs.News.find().lean()
+    async getNews() {
+      const result: cases[] = await DBs.News.find().lean()
       return result
     },
     //
-    async getNew(root,{title}){
-      const result:cases = await DBs.News.findOne({text:title}).lean() as any
+    async getNew(root, { title }) {
+      const result: cases = await DBs.News.findOne({ text: title }).lean() as any
       return result
     },
     //
-    async getNewList(root,{title}){
-      const result:caseList = await DBs.News_list.findOne({title}).lean() as caseList
+    async getNewList(root, { title }) {
+      const result: caseList = await DBs.News_list.findOne({ title }).lean() as caseList
       return result
     },
     // 获取软件下载
-    async getSofts(){
+    async getSofts() {
       const result = await DBs.Support.find().lean()
       return result
     },
-    async getSoft(root,{title}){
-      const result = await DBs.Support.findOne({title}).lean()
+    async getSoft(root, { title }) {
+      const result = await DBs.Support.findOne({ title }).lean()
       return result
     },
     //
-    async getProblems(){
+    async getProblems() {
       const result = await DBs.Support_list.find().lean()
       return result
     },
-    async getProblem(root,{title}){
-      const result = await DBs.Support_list.findOne({title}).lean()
+    async getProblem(root, { title }) {
+      const result = await DBs.Support_list.findOne({ title }).lean()
+      return result
+    },
+    //
+    async getProducts() {
+      const result = await DBs.Product.find().lean()
+      return result
+    },
+    async getProduct(root, { title }) {
+      const result = await DBs.Product.findOne({ title }).lean()
+      return result
+    },
+    async getProductList(root, { title }) {
+      const result = await DBs.Product_list.findOne({ title }).lean()
       return result
     }
+
 
   },
 
@@ -126,127 +140,93 @@ const resolvers: IResolvers = {
     },
     // 配置轮播图
     async setCarousel(root, { Path }) {
-      const result = {ok:0} /* await DBs.Head.update({ title: "Carousel" },
+      const result = { ok: 0 } /* await DBs.Head.update({ title: "Carousel" },
         { $set: { data: Path } },
         { upsert: true }) */
       return result
     },
     // 配置产品详情
     async setProduct(root, { arg }) {
-     /*  const { selectType, title, content_head, content_body, indexPic, carouselPic } = arg as editProduct
-      const href = `/products/list/${title}`;
-      // 保存路由
-      // 添加主类 
-      await DBs.Product.updateOne(
-        { title: selectType },
-        { $addToSet: { data: { title, href, img: indexPic } } },
-        { upsert: true }
-      );
-      // 写入子类
-      const product_list = new DBs.Product_list({
-        parant: selectType,
-        title,
-        date: new Date(),
-        data: {
-          content_head,
-          content_body,
-          img: carouselPic
-        }
-      });
-      const productBody = await product_list.save()
-      return productBody */
+
+      /*  const { selectType, title, content_head, content_body, indexPic, carouselPic } = arg as editProduct
+       const href = `/products/list/${title}`;
+       // 保存路由
+       // 添加主类 
+       await DBs.Product.updateOne(
+         { title: selectType },
+         { $addToSet: { data: { title, href, img: indexPic } } },
+         { upsert: true }
+       );
+       // 写入子类
+       const product_list = new DBs.Product_list({
+         parant: selectType,
+         title,
+         date: new Date(),
+         data: {
+           content_head,
+           content_body,
+           img: carouselPic
+         }
+       });
+       const productBody = await product_list.save()
+       return productBody */
     },
     // support
     async setProblem(root, { arg }) {
-      /* const { title, movie, html, selectparentsUntil, selectparent } = arg;
-      const href = `/support/problem/${title}`;
-      const obj = {
-        title,
-        href,
-        date: new Date(),
-        parentsUntil: selectparentsUntil,
-        parent: selectparent,
-        movie,
-        html
-      };
-      if (html === "输入") obj.movie = movie;
-      else obj.html = html;
-      const support_list = new DBs.Support_list(obj);
-      return await support_list.save();
+      const support = arg as supportList
+      const result = await DBs.Support_list.updateOne({ title: support.title }, { $set: support }, { upsert: true })
+      return result
     },
     async setSoft(root, { arg }) {
-      const {
-        selectSystem,
-        title,
-        platform,
-        selectLanguage,
-        version,
-        update,
-        file
-      } = arg;
-      let fileType = "soft";
-      if (file.includes(".pdf")) fileType = "pdf";
-      const f = fs.statSync(path.join("static", file));
-      const obj = {
-        type: fileType,
-        title,
-        date: new Date(),
-        platform,
-        language: selectLanguage,
-        size: f.size / 1024 / 1024 + "MB",
-        version,
-        updateReason: update,
-        down: file,
-        href: file
-      };
-
-      const data: ApolloMongoResult = await DBs.Support.updateOne(
-        { title: selectSystem },
-        { $addToSet: { data: obj } },
-        { upsert: true }
-      ).lean() as any
-      return data */
+      const support = arg as support
+      const result = await DBs.Support.updateOne({ title: support.title }, { $set: support }, { upsert: true })
+      return result
     },
     // 配置经销商
     async setBuy(root, { arg }) {
-       const ad:buy = arg
-       console.log(arg);
-       
-       const result = await DBs.Buy_list.updateOne({link:ad.link},{$set:arg},{upsert:true})
-       return result
+      const ad: buy = arg
+      console.log(arg);
+
+      const result = await DBs.Buy_list.updateOne({ link: ad.link }, { $set: arg }, { upsert: true })
+      return result
     },
     // 添加案例，新闻
     async setCaseNews(root, { arg }) {
-      const { newsContent,newListContent }:{ newsContent:cases,newListContent:caseList } = arg;
-      const {table,link} = newsContent
-      await (DBs as any)[table as string].updateOne({link},{$set:newsContent},{upsert:true})
-      const result = await (DBs as any)[table+"_list"].updateOne({link},{$set:newListContent},{upsert:true})
+      const { newsContent, newListContent }: { newsContent: cases, newListContent: caseList } = arg;
+      const { table, link } = newsContent
+      await (DBs as any)[table as string].updateOne({ link }, { $set: newsContent }, { upsert: true })
+      const result = await (DBs as any)[table + "_list"].updateOne({ link }, { $set: newListContent }, { upsert: true })
       return result
     },
     // 删除案例
-    async delCase(root,{title}){
-      await DBs.Case_list.deleteMany({title})
-      const result = await DBs.Case.deleteMany({text:title})
+    async delCase(root, { title }) {
+      await DBs.Case_list.deleteMany({ title })
+      const result = await DBs.Case.deleteMany({ text: title })
       return result
     },
     // 删除案例
-    async delNew(root,{title}){
-      await DBs.News_list.deleteMany({title})
-      const result = await DBs.News.deleteMany({text:title})
+    async delNew(root, { title }) {
+      await DBs.News_list.deleteMany({ title })
+      const result = await DBs.News.deleteMany({ text: title })
       return result
     },
     // 配置about
-    async setAbout(root,{arg}:{arg:about}){
-      const result = await DBs.About.updateOne({type:arg.type,webSite:arg.webSite},{$set:arg},{upsert:true})
+    async setAbout(root, { arg }: { arg: about }) {
+      const result = await DBs.About.updateOne({ type: arg.type, webSite: arg.webSite }, { $set: arg }, { upsert: true })
       return result
     },
     //
-    async delSupportSoft(root,{title}){
-      const result = await DBs.Support.deleteOne({title})
+    async delSupportSoft(root, { title }) {
+      const result = await DBs.Support.deleteOne({ title })
       return result
     },
-    async delSupportProblem(root,{title}){
-      const result = await DBs.Support_list.deleteOne({title})
+    async delSupportProblem(root, { title }) {
+      const result = await DBs.Support_list.deleteOne({ title })
+      return result
+    },
+    async delProduct(root, { title }) {
+      await DBs.Product_list.deleteOne({ title })
+      const result = await DBs.Product.deleteOne({ title })
       return result
     }
   },

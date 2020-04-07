@@ -104,6 +104,40 @@ const typeDefs: DocumentNode = gql`
     parent: String
     data: String
   }
+  # 产品
+  type product {
+    PageTitle: String
+    Pagekeywords: String
+    Pagedescription: String
+    MainUrl: String
+    MainTitle: String
+    MainParent: String
+    date: String
+    table: String
+    href: String
+    title: String
+    img: String
+    link: String
+  }
+  type productList {
+    PageTitle: String
+    Pagekeywords: String
+    Pagedescription: String
+    MainUrl: String
+    MainTitle: String
+    MainParent: String
+    date: String
+    table: String
+    href: String
+    title: String
+    link: String
+    t1: JSON
+    t2: JSON
+    head: String
+    body: String
+    img: [String]
+    down: JSON
+  }
   #Query
   type Query {
     # upload文件列表
@@ -133,6 +167,11 @@ const typeDefs: DocumentNode = gql`
     # 获取常见问题列表
     getProblems:[supportProblem]
     getProblem(title:String):supportProblem
+    # 获取产品列表
+    getProducts:[product]
+    getProduct(title:String):product
+
+    getProductList(title:String):productList
     
   }
 
@@ -163,6 +202,8 @@ const typeDefs: DocumentNode = gql`
     delSupportSoft(title:String):result
     #
     delSupportProblem(title:String):result
+    #
+    delProduct(title:String):result
   }
 `;
 

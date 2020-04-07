@@ -30,7 +30,8 @@
       "@nuxt/types",
       "@types/nuxtjs__auth",
       "vue/types",
-      "@nuxtjs/axios"
+      "@nuxtjs/axios",
+      "bootstrap-vue"
     ]
   },
   "exclude": ["tools/*"]
