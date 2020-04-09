@@ -22,7 +22,11 @@
         <b-form-group label="*视频链接:" label-cols="2" label-align="right">
           <b-form-input v-model.trim="problem.movie"></b-form-input>
         </b-form-group>
-        <my-edit :content.sync="problem.html" v-if="!problem.movie" />
+        <vue-editor id="asxsd " v-model="problem.html"></vue-editor>
+        <!-- <no-ssr>
+          <vue-editor id="asxsd " v-model="html"></vue-editor>
+        </no-ssr>-->
+        <!-- <my-edit :content.sync="html" v-if="!problem.movie" /> -->
         <!-- <p>{{problem.html}}</p> -->
         <b-button block @click="Submit('problem')" variant="success">提交</b-button>
       </b-form>
@@ -33,10 +37,9 @@
 import Vue from "vue";
 import MyKeywords from "../../components/MyKeywords.vue";
 import gql from "graphql-tag";
-import MyEdit from "../../components/MyEdit.vue";
 import { supportList } from "../../types/typing";
 export default Vue.extend({
-  components: { MyKeywords, MyEdit },
+  components: { MyKeywords },
   data() {
     return {
       parentsUntil: [
@@ -59,10 +62,10 @@ export default Vue.extend({
         html: ""
       },
       blem: null,
-      active: false
+      active: false,
+      html:''
     };
   },
-
   computed: {
     parent() {
       const s = this.$data.problem.MainParent;
@@ -136,9 +139,8 @@ export default Vue.extend({
         `,
         variables: { arg: this.$data.problem }
       });
-      this.$bvToast.toast("success")
+      this.$bvToast.toast("success");
       this.$apollo.queries.blem.refresh();
-      
     }
   }
 });

@@ -41,6 +41,7 @@ module.exports = {
 
   */
   plugins: [
+    { src: '~/plugins/vue-editor.js', ssr: false  },
     // { src: "~plugins/nuxt-quill-plugin.js", ssr: false },
     { src: "~plugins/v-region.js", ssr: false }
   ],

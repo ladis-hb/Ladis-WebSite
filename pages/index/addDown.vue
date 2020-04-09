@@ -50,7 +50,7 @@ import Vue from "vue";
 import MyKeywords from "../../components/MyKeywords.vue";
 import MySelectfile from "../../components/MySelectfile.vue";
 import gql from "graphql-tag";
-import { selectFiles, ApolloMongoResult,support } from "../../types/typing";
+import { selectFiles, ApolloMongoResult, support } from "../../types/typing";
 import { paresLink } from "../../plugins/tool";
 export default Vue.extend({
   components: { MyKeywords, MySelectfile },
@@ -163,13 +163,25 @@ export default Vue.extend({
   },
   methods: {
     async Submit() {
-      const params: support = this.$data.dev;
-      const {date,link} = paresLink("support")
+      const dev: support = this.$data.dev;
+      const { date, datePares, link } = paresLink("support");
       // 构建软件下载数据
-      const support = {
-
-      }
-      
+      const support: support = {
+        MainTitle: dev.MainTitle,
+        MainParent: dev.type === "soft" ? "监控软件下载" : "产品彩页说明",
+        date: datePares,
+        href: dev.down,
+        link,
+        type: dev.type,
+        title: dev.title,
+        //soft
+        platform: dev.platform,
+        language: dev.language,
+        size: dev.size,
+        version: dev.version || "1.0.0",
+        updateReason: dev.updateReason,
+        down: dev.down
+      };
 
       const result = await this.$apollo.mutate({
         mutation: gql`

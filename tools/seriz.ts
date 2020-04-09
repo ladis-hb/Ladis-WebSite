@@ -158,8 +158,8 @@ async function Html_Serialize_Json(
         const data: productList = {
           ...defaults, title: defaults.MainTitle as string, link: url,
           img: Array.from(new Set(img)), // 图片去重
-          head: $(".printDisplay_para").html() as string,
-          body: $(".responseWidth").html() as string
+          head: $(".printDisplay_para").html()?.replace(/\/n/g,"").replace("div","span").trim(),
+          body: $(".responseWidth").html()?.replace(/\/n/g,"").replace("div","span").trim()
         };
 
         /* const t1: productContentOld = {
@@ -301,10 +301,12 @@ async function Html_Serialize_Json(
       const supportListResult: supportList[] = [];
       $(".r-search-wrap li a").each(function (i, val) {
         const j = $(val);
-        const title = j.text();
-        const link = j.attr("href") as string;
-        const href = `/support/problem/${title}`;
-        const data: supportList = { ...defaults, title, link, href };
+        const data: supportList = {
+          ...defaults,
+          title: j.text(),
+          link: j.attr("href") as string,
+          href: `/support/problem/${title}`
+        };
         supportListResult.push(data);
       });
       for (let list of supportListResult) {
@@ -317,28 +319,30 @@ async function Html_Serialize_Json(
             title,
             parent,
           );
-          list.html = <string>await Html_Serialize_Json(
-            list.link,
-            "Support_list",
-            "support_problem_args_html",
-            null,
-            title,
-            parent,
-          );
+          if(!list.movie){
+            // 没有
+            list.html = <string>await Html_Serialize_Json(
+              list.link,
+              "Support_list",
+              "support_problem_args_html",
+              null,
+              title,
+              parent,
+            );
+          }
+          
         }
       }
       return supportListResult;
     }
     //// support 常见问题，视频教程 main 视频
     case "support_problem_args_mv": {
-      query = query || "iframe";
-      return $(query).attr("src");
+      return $("iframe").attr("src");
     }
 
     //// support 常见问题，视频教程 main 视频
     case "support_problem_args_html": {
-      query = query || ".new_list_outer";
-      return $(query).html();
+      return $(".new_list_outer").html()?.replace(/\/n/g,"").replace("div","span").trim()
     }
     //获取销售服务中心页面
     case "buy_list":
@@ -619,11 +623,11 @@ async function first() {
   const Rows = [...Pages, ...Products, ...Support, Buy, Buy_list, Buy_serve, Buy_serve_list];
   console.log(`操作数据长度${Rows.length}`);
   console.log({
-    Pages:Pages.length,
-    Products:Products.length,
-    Support:Support.length,
+    Pages: Pages.length,
+    Products: Products.length,
+    Support: Support.length,
   });
-  
+
   await DB.Product.deleteMany({})
   await DB.Page.deleteMany({})
   await DB.Product_list.deleteMany({})
@@ -663,8 +667,8 @@ async function secend() {
   const titleSet: Set<string> = new Set()
   for (let list of support_problem_list) {
     if (!titleSet.has(list.title)) {
-      titleSet.add(list.title)
-      Support_list_linkArray.push([list.title, list.link as string, list.title, list.link as string]);
+      // titleSet.add(list.title)
+      // Support_list_linkArray.push([list.title, list.link as string, list.title, list.link as string]);
     }
     if (list.child) {
       for (let { title, link } of list.child) {

@@ -1,6 +1,6 @@
 <template>
   <client-only>
-    <vue-editor v-model="Cont"></vue-editor>
+    <vue-editor :id="Date.now()" v-model="Cont"></vue-editor>
   </client-only>
 </template>
 <script lang="ts">
@@ -22,14 +22,16 @@ export default Vue.extend({
         return (this as any).content;
       },
       set(val) {
+        console.log(val);
+        
         (this as any).editorContent = val as string;
       }
     }
   },
-  watch: {
+  /* watch: {
     editorContent: function(val) {
       (this as any).$emit("update:content", val);
     }
-  }
+  } */
 });
 </script>

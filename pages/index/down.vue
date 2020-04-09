@@ -2,7 +2,10 @@
   <b-card>
     <b-card-header class="bg-dark text-light m-3">
       <span>服务支持</span>
-      <b-button class="float-right" size="sm" variant="primary" to="/addDown">添加</b-button>
+      <b-button-group class="float-right" size="sm">
+        <b-button variant="primary" to="/addDown">添加软件/资质</b-button>
+        <b-button variant="info" to="/addProblem">添加视频/问题</b-button>
+      </b-button-group>
     </b-card-header>
     <b-card-body>
       <b-tabs fill>
