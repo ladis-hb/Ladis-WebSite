@@ -2,10 +2,8 @@
 import * as DBs from "../mongoose/content";
 import Send from "koa-send"
 import fs from "fs"
-import path from "path"
 import { ParameterizedContext } from "koa";
-import { CrorQuary, buyListPack, cases, casesContext } from "../typing/interface";
-import { KoaCtx } from "typing";
+import { KoaCtx, CrorQuary, casesContext, buy, buyList } from "typing";
 export default async (Ctx: ParameterizedContext) => {
   const ctx: KoaCtx = Ctx as any
   const Query = ctx.query as CrorQuary
@@ -108,14 +106,14 @@ export default async (Ctx: ParameterizedContext) => {
       }
       break;
     //获取经销商列表子类
-    case "Get_buy_li":
+    /* case "Get_buy_li":
       {
         const city: string = Query.city;
-        const res = await DB.Buy_list.findOne().lean() as buyListPack;
+        const res = await DB.Buy_list.findOne().lean() as buyList;
         const result = res.data.filter((el) => el.parent === city);
         ctx.body = result;
       }
-      break;
+      break; */
 
     // 获取
 

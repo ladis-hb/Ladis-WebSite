@@ -58,23 +58,16 @@ export interface productContentOld{
   content: HtmlString;
 }
 // 产品详情
+// 产品详情
 export interface productListOld {
-  t1?: productContentOld
-  t2?: productContentOld
-  img: string[];
-  down: GMlink[];
-}
-export interface productListNew {
   img: string[];
   head?: string;
   body?: string;
-  down: GMlink[];
 }
 // 产品包装
-export interface productList extends GMpack, productListNew, productListOld {
+export interface productList extends GMpack, productListOld {
   title:string
 }
-
 // support asid
 export interface supportAsid extends GMpack, GMlink{}
 export interface supportProblem extends GMpack, GMlink{

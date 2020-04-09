@@ -30,7 +30,7 @@ async function Html_Serialize_Json(
     PageTitle: '',
     Pagekeywords: '',
     Pagedescription: '',
-    MainUrl:url,
+    MainUrl: url,
     MainTitle: title,
     date: new Date(),
     MainParent: parent || "",
@@ -50,29 +50,29 @@ async function Html_Serialize_Json(
     });
   if (!file) return false
   const $ = load(file);
-// 通用获取页面标题，key，des
-{
-  const keys = ['keywords', 'description']
-  defaults.PageTitle = $("title").text().replace("雷迪司","")
-  const meta = $("meta").map((i, val) => {
-    return val.attribs
-  })
-    .get()
-    .filter(el => keys.includes((el.name as string)))
-    .map(el => ({ [el.name]: el.content }))
+  // 通用获取页面标题，key，des
+  {
+    const keys = ['keywords', 'description']
+    defaults.PageTitle = $("title").text().split("-")[0].trim()
+    const meta = $("meta").map((i, val) => {
+      return val.attribs
+    })
+      .get()
+      .filter(el => keys.includes((el.name as string)))
+      .map(el => ({ [el.name]: el.content }))
 
-  const vals = Object.assign({}, ...meta)
-  defaults.Pagekeywords = vals['keywords']
-  defaults.Pagedescription = vals['description']
-}
-// console.log(defaults);
+    const vals = Object.assign({}, ...meta)
+    defaults.Pagekeywords = vals['keywords']
+    defaults.Pagedescription = vals['description']
+  }
+  // console.log(defaults);
   switch (type) {
-    
+
     /* -----------------------------------Products   ------------------------------------------------------ */
     case "products": {
       const result: product[] = [];
       console.log(`抓取products信息`);
-      $("#scroller .list li").each(function (i,val) {
+      $("#scroller .list li").each(function (i, val) {
         const j = $(val);
         const data: product = {
           ...defaults,
@@ -86,34 +86,50 @@ async function Html_Serialize_Json(
       return result;
     }
 
-    
+
     //每个设备的详情页面
     case "products_dev_arg":
       {
         const result: productList[] = [];
         console.log(`抓取products_dev_arg信息`);
-        const t1: productContentOld = {
-          type: "html",
-          content: $(".printDisplay_para").html() as string,
-        };
-        const t2: productContentOld = {
-          type: "html",
-          content: $("#productUtil").html() as string,
-        };
+
+        //抓取图片
         const img: string[] = [];
-        const down: GMlink[] = [];
-        const data: productList = { ...defaults, title: defaults.MainTitle as string, t1, t2, img, down, link: url };
+        $(".swiper-wrapper")
+          .first()
+          .find("img")
+          .map(function (i, val) {
+            img.push($(val).attr("src") as string);
+          });
+        const ImgArr = $(".functionItems .productUtilImg img");
+        if (ImgArr) {
+          ImgArr.map(function (i, val) {
+            img.push($(val).attr("src") as string);
+          });
+        } else {
+          img.push(
+            $(".swiper-slide img")
+              ?.first()
+              ?.attr("src") as string,
+          );
+        }
+        const data: productList = {
+          ...defaults, title: defaults.MainTitle as string, link: url,
+          img: Array.from(new Set(img)), // 图片去重
+          head: $(".printDisplay_para").html() as string,
+          body: $(".responseWidth").html() as string
+        };
         result.push(data);
         return result;
       }
     /* -----------------------------------Support ------------------------------------------------------ */
     //Support
-  
+
     //抓取support页面软件下载
     case "support_down": {
       console.log(`support_down`);
       const data: support[] = [];
-      $(".tabContBox li").each(async function (i,val) {
+      $(".tabContBox li").each(async function (i, val) {
         const j = $(val);
         const title = j
           .find("span")
@@ -159,7 +175,7 @@ async function Html_Serialize_Json(
       });
       return data;
     }
-    
+
     /* -----------------------------vr ,case,news---------------------------------- */
     //360
     case "case":
@@ -260,6 +276,7 @@ async function first() {
     [`/products/node_10.shtml`, "数据中心"],
     [`/products/node_143.shtml`, "微模块机房"],
     [`/products/node_135.shtml`, "一体化机柜"],
+    ['/products/node_978.shtml', '户外一体柜ETC'],
     [`/products/node_11.shtml`, "配电PDU"],
     [`/products/node_136.shtml`, "动环监控"],
     [`/products/node_138.shtml`, "网络机柜"],
@@ -294,13 +311,25 @@ async function first() {
     );
   });
 
-  const Rows = [ ...Products, ...Support];
+  await DB.EnProduct.deleteMany({})
+  await DB.EnPage.deleteMany({})
+  await DB.EnProduct_list.deleteMany({})
+  await DB.EnSupport.deleteMany({})
+  await DB.EnSupport_list.deleteMany({})
+  await DB.EnBuy.deleteMany({})
+  await DB.EnBuy_list.deleteMany({})
+  await DB.EnVR.deleteMany({})
+  await DB.EnCase.deleteMany({})
+  await DB.EnCase_list.deleteMany({})
+  await DB.EnNews.deleteMany({})
+  await DB.EnNews_list.deleteMany({})
+  const Rows = [...Products, ...Support];
   console.log(`操作数据长度${Rows.length}`);
   for (let row of Rows) {
     const result: GMpack[] = await row;
     if (!result) continue;
     for (let sigle of result) {
-      await new (DB as any)['En'+sigle.table](sigle).save();
+      await new (DB as any)['En' + sigle.table](sigle).save();
     }
   }
 }
@@ -310,7 +339,7 @@ async function first() {
 */
 
 async function secend() {
-  
+
   /* 
   productsList
   */
@@ -342,10 +371,20 @@ async function secend() {
 获取vr,case,news
 */
 async function three() {
-    //
-    const Case: Promise<cases[]>[] = [];
+  //
+  const Case: Promise<cases[]>[] = [];
+  Case.push(
+    <Promise<cases[]>>Html_Serialize_Json("/case/index.shtml",
+      "Case",
+      "case",
+      null,
+      "case_list",
+      "home"
+    )
+  );
+  for (let i = 2; i < CaseNum; i++) {
     Case.push(
-      <Promise<cases[]>>Html_Serialize_Json("/case/index.shtml",
+      <Promise<cases[]>>Html_Serialize_Json(`/case/index_${i}.shtml`,
         "Case",
         "case",
         null,
@@ -353,46 +392,36 @@ async function three() {
         "home"
       )
     );
-    for (let i = 2; i < CaseNum; i++) {
-      Case.push(
-        <Promise<cases[]>>Html_Serialize_Json(`/case/index_${i}.shtml`,
-          "Case",
-          "case",
-          null,
-          "case_list",
-          "home"
-        )
-      );
-    }
-    //等待解析
-    //CaseObject是case页面的标题列表,CaseList是详细内容content async
-    for (let cases of Case) {
-      const caselist = <cases[]>await cases
-      if (caselist) {
-        for (let caseLi of caselist) {
-          // ［一体化机柜］
-          const parenName = caseLi.name.replace("［", "").replace("］", "")
-          caseLi.MainTitle = parenName
-          caseLi.date = caseLi.time.replace("年", "/")
-            .replace("月", "/")
-            .replace("日", "/")
-          await update(caseLi)
-          let li = <caseList>await Html_Serialize_Json
-            (caseLi.link, "Case_list", "case_list", null, caseLi.text, parenName)
-          li.link = caseLi.link
-          li.href = caseLi.href
+  }
+  //等待解析
+  //CaseObject是case页面的标题列表,CaseList是详细内容content async
+  for (let cases of Case) {
+    const caselist = <cases[]>await cases
+    if (caselist) {
+      for (let caseLi of caselist) {
+        // ［一体化机柜］
+        const parenName = caseLi.name.replace("［", "").replace("］", "")
+        caseLi.MainTitle = parenName
+        caseLi.date = caseLi.time.replace("年", "/")
+          .replace("月", "/")
+          .replace("日", "/")
+        await update(caseLi)
+        let li = <caseList>await Html_Serialize_Json
+          (caseLi.link, "Case_list", "case_list", null, caseLi.text, parenName)
+        li.link = caseLi.link
+        li.href = caseLi.href
 
-          await update(li)
-        }
-      
+        await update(li)
+      }
+
 
     }
     console.log(`操作 news success`);
-  } 
+  }
   async function update(row: cases | caseList) {
     if (!row) return
     console.log(`开始迭代，写入表：${row.table},操作title:${row.title}`);
-    await new (DB as any)["En"+row.table](row).save()
+    await new (DB as any)["En" + row.table](row).save()
   }
 }
 first().then(async () => {

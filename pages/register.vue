@@ -79,7 +79,7 @@
 import Vue from 'vue'
 import md5 from 'md5'
 import gql from 'graphql-tag'
-import { ApolloMongoResult } from '../server/typing/interface'
+import { ApolloMongoResult } from '../types/typing'
 export default Vue.extend({
   auth: false,
   data() {

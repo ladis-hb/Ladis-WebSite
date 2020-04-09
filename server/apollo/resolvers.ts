@@ -6,7 +6,7 @@ import fs from "fs";
 import path from "path";
 import util from "util"
 import { Agent } from "../config"
-import { ApolloCtx, ApolloMongoResult, UserInfo, fileDirList, cases, caseList, buy, about, buyList, support, supportList } from "typing";
+import { ApolloCtx, ApolloMongoResult, UserInfo, fileDirList, cases, caseList, buy, about, buyList, support, supportList, product, productList } from "typing";
 const resolvers: IResolvers = {
   Query: {
     // 获取upload文件夹文件列表
@@ -147,7 +147,11 @@ const resolvers: IResolvers = {
     },
     // 配置产品详情
     async setProduct(root, { arg }) {
-
+      const { product, productlist }: { product: product, productlist: productList } = arg
+      await DBs.Product_list.updateOne({ link: productlist.link }, { $set: productlist }, { upsert: true })
+      const result = await DBs.Product
+        .updateOne({ link: product.link }, { $set: product }, { upsert: true })
+      return result
       /*  const { selectType, title, content_head, content_body, indexPic, carouselPic } = arg as editProduct
        const href = `/products/list/${title}`;
        // 保存路由

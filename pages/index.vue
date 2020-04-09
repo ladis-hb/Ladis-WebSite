@@ -65,7 +65,7 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import { selectFiles } from '../server/typing/interface'
+import { selectFiles } from '../types/typing'
 export default Vue.extend({
   computed: {
     SourceFile(): selectFiles[] {

@@ -1,6 +1,6 @@
 import Multiparty from "../util/multiparty";
 import { ParameterizedContext } from "koa";
-import { uploadResult } from "../typing/interface";
+import { uploadResult } from "typing";
 
 export default async (ctx:ParameterizedContext) => {
   const UploadFile = await Multiparty(ctx.req) as uploadResult[]

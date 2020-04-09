@@ -1,8 +1,8 @@
 import { User } from "../mongoose/admin";
 import { ParameterizedContext } from "koa";
-import { UserInfo } from "../typing/interface";
 import { JwtSign, JwtVerify } from "../util/Secret";
 import Crypto from "../util/crypto";
+import { UserInfo } from "typing";
 
 export default async (ctx: ParameterizedContext) => {
   switch (ctx.params.id) {

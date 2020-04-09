@@ -1,77 +1,35 @@
 <template>
-  <div
-    class="quill-editor mb-5"
-    :content="comContent"
-    @change="onEditorChange($event)"
-    v-quill:myQuillEditor="editorOption"
-  ></div>
+  <client-only>
+    <vue-editor v-model="Cont"></vue-editor>
+  </client-only>
 </template>
 <script lang="ts">
 import Vue from "vue";
+import { VueEditor } from "vue2-editor";
 export default Vue.extend({
-  name: "MyEdit",
+  components: {
+    VueEditor
+  },
   props: ["content"],
   data() {
-    const hljs = null;
-    const editorOption = {
-      modules: {
-        toolbar: [
-          ["bold", "italic", "underline", "strike"],
-          ["blockquote", "code-block"],
-          [{ header: 1 }, { header: 2 }],
-          [{ list: "ordered" }, { list: "bullet" }],
-          [{ script: "sub" }, { script: "super" }],
-          [{ indent: "-1" }, { indent: "+1" }],
-          [{ direction: "rtl" }],
-          [{ size: ["small", false, "large", "huge"] }],
-          [{ header: [1, 2, 3, 4, 5, 6, false] }],
-          [{ font: [] }],
-          [{ color: [] }, { background: [] }],
-          [{ align: [] }],
-          ["clean"],
-          ["link", "image"] //, "video"]
-        ],
-        syntax: {
-          highlight: (text: any) => (hljs as any).highlightAuto(text).value
-        }
-      }
-    };
     return {
-      DataContent: "",
-      editorOption
+      editorContent: "<h1>Some initial content</h1>"
     };
   },
   computed: {
-    comContent: {
+    Cont: {
       get() {
-        return this.content;
+        return (this as any).content;
       },
       set(val) {
-        this.DataContent = val as string;
+        (this as any).editorContent = val as string;
       }
     }
   },
-  methods: {
-    onEditorChange({
-      editor,
-      html,
-      text
-    }: {
-      editor: string;
-      html: string;
-      text: string;
-    }) {
-      this.$emit("update:content", html);
+  watch: {
+    editorContent: function(val) {
+      (this as any).$emit("update:content", val);
     }
   }
 });
 </script>
-
-<style lang="scss" scoped>
-.quill-editor {
-  min-height: 300px;
-  max-height: 400px;
-  width: auto;
-  overflow-y: auto;
-}
-</style>

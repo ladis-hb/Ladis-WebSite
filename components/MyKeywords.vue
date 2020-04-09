@@ -15,9 +15,18 @@
 import Vue from "vue";
 export default Vue.extend({
   props: {
-    title: String,
-    keywords: String,
-    description: String
+    title: {
+      type: String,
+      default: ""
+    },
+    keywords: {
+      type: String,
+      default: ""
+    },
+    description: {
+      type: String,
+      default: ""
+    }
   },
   data() {
     return {
@@ -29,7 +38,7 @@ export default Vue.extend({
   computed: {
     PageTitle: {
       get() {
-        return (this as any).title;
+        return (this as any).title || "";
       },
       set(val) {
         (this as any).daPageTitle = val;

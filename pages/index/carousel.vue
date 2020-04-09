@@ -22,7 +22,7 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import { selectFiles, ApolloMongoResult } from '../../server/typing/interface'
+import { selectFiles, ApolloMongoResult } from '../../types/typing'
 import gql from 'graphql-tag'
 export default Vue.extend({
   data() {

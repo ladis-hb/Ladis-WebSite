@@ -49,9 +49,9 @@
 import Vue from "vue";
 import MyKeywords from "../../components/MyKeywords.vue";
 import MySelectfile from "../../components/MySelectfile.vue";
-import { selectFiles, ApolloMongoResult } from "../../server/typing/interface";
 import gql from "graphql-tag";
-import { support } from "../../types/typing";
+import { selectFiles, ApolloMongoResult,support } from "../../types/typing";
+import { paresLink } from "../../plugins/tool";
 export default Vue.extend({
   components: { MyKeywords, MySelectfile },
   data() {
@@ -164,9 +164,10 @@ export default Vue.extend({
   methods: {
     async Submit() {
       const params: support = this.$data.dev;
-      if (!params.link) {
-        const date = new Date().toLocaleDateString("zh");
-        const link = `/support/${date + new Date().getSeconds()}`;
+      const {date,link} = paresLink("support")
+      // 构建软件下载数据
+      const support = {
+
       }
       
 
@@ -179,7 +180,7 @@ export default Vue.extend({
             }
           }
         `,
-        variables: { arg: params }
+        variables: { arg: support }
       });
       this.$bvToast.toast("success");
       this.$apollo.queries.support.refresh();

@@ -12,12 +12,7 @@
                 placeholder="可以多选"
               ></b-form-file>
               <b-input-group-append>
-                <b-button
-                  variant="info"
-                  @click="Put_file_Source"
-                  :disabled="!files"
-                  >上传</b-button
-                >
+                <b-button variant="info" @click="Put_file_Source" :disabled="!files">上传</b-button>
               </b-input-group-append>
             </b-input-group>
             <!-- <b-form-file
@@ -38,14 +33,9 @@
           <b-card-body>
             <div>
               <b-input-group prepend="关键字" class="mt-3">
-                <b-form-input
-                  v-model.trim="keyswords"
-                  placeholder="默认检索全部文件"
-                ></b-form-input>
+                <b-form-input v-model.trim="keyswords" placeholder="默认检索全部文件"></b-form-input>
                 <b-input-group-append>
-                  <b-button variant="info" @click="Get_pic_Source(keyswords)"
-                    >检索</b-button
-                  >
+                  <b-button variant="info" @click="Get_pic_Source(keyswords)">检索</b-button>
                 </b-input-group-append>
               </b-input-group>
               <p>Size:{{ sourceFile.size }}/Message:{{ sourceFile.msg }}</p>
@@ -65,13 +55,9 @@
                       pill
                       class="ml-2 mb-2"
                       @click="selectSourceFile(file)"
-                      >选中素材</b-button
-                    >
+                    >选中素材</b-button>
                   </b-card-sub-title>
-                  <b-card-img-lazy
-                    v-if="file.filetype === 'img'"
-                    :src="file.path"
-                  ></b-card-img-lazy>
+                  <b-card-img-lazy v-if="file.filetype === 'img'" :src="file.path"></b-card-img-lazy>
                   <b-card-body v-else>
                     <b-link :href="file.path">{{ file.path }}</b-link>
                   </b-card-body>
@@ -85,67 +71,67 @@
   </b-container>
 </template>
 <script lang="ts">
-import Vue from 'vue'
-import { uploadResult, fileDirList, selectFiles } from '../../server/typing/interface'
-import gql from 'graphql-tag'
+import Vue from "vue";
+import { uploadResult, fileDirList, selectFiles } from "../../types/typing";
+import gql from "graphql-tag";
 export default Vue.extend({
   data() {
     let sourceFile = {
       files: [],
       size: 0,
-      msg: '',
-    }
+      msg: ""
+    };
     return {
       files: null,
-      keyswords: '',
-      sourceFile,
-    }
+      keyswords: "",
+      sourceFile
+    };
   },
   computed: {
     //  要上传的文件名列表
     fileList() {
-      if (!this.files) return []
+      if (!this.files) return [];
       return (<File[]>this.$data.files).map(file => {
-        return file.name
-      })
+        return file.name;
+      });
     },
 
     // 刷选文件
     sourceFileFilter() {
-      const sourceFile: fileDirList = this.$data.sourceFile
+      const sourceFile: fileDirList = this.$data.sourceFile;
       const files = sourceFile.files.map(file => {
-        let filetype = <string>file.split('.').pop()
-        const name = <string>file.split('/').pop()
-        if (['png', 'jpeg', 'jpg', 'git', 'bmp'].includes(filetype))
-          filetype = 'img'
+        let filetype = <string>file.split(".").pop();
+        const name = <string>file.split("/").pop();
+        if (["png", "jpeg", "jpg", "git", "bmp"].includes(filetype))
+          filetype = "img";
         return {
           path: file,
           name,
-          filetype,
-        }
-      })
-      return files
-    },
+          filetype
+        };
+      });
+      return files;
+    }
   },
   methods: {
     // 上传文件
     Put_file_Source() {
-      const data = new FormData()
-      ;(<Blob[]>this.$data.files).forEach(file => {
-        data.append('files', file)
-      })
+      const data = new FormData();
+      (<Blob[]>this.$data.files).forEach(file => {
+        data.append("files", file);
+      });
       this.$axios
-        .$put('/uploads/files', data)
+        .$put("/uploads/files", data)
         .then((result: { code: number; data: uploadResult[] }) => {
-          this.$bvModal.msgBoxOk('上传已完成')
-          this.files = null
+          this.$bvModal.msgBoxOk("上传已完成");
+          this.files = null;
           result.data.forEach(file => {
-            this.$store.commit('setSourceFile', file)
-          })
-        })
+            this.$store.commit("SET_SOURCE_FILE", file);
+          });
+        });
     },
     // 获取图片
-    async Get_pic_Source(filter: string = '') {
+    async Get_pic_Source(filter: string = "") {
       const files = await this.$apollo.query({
         query: gql`
           query getUploadFiles($filter: String) {
@@ -156,30 +142,31 @@ export default Vue.extend({
             }
           }
         `,
-        variables: { filter },
-      })
-      this.sourceFile = files.data.getUploadFiles
+        variables: { filter }
+      });
+      this.sourceFile = files.data.getUploadFiles;
     },
     // 格式化文件名
     formatNames(files: File[]) {
       if (files.length === 1) {
-        return files[0].name
+        return files[0].name;
       } else {
-        return `${files.length} files selected`
+        return `${files.length} files selected`;
       }
     },
     // 选中文件
     selectSourceFile(file: selectFiles) {
-      this.$data.sourceFile.files = (this.$data.sourceFile as fileDirList).files.filter(f => f !== file.path)
-      this.$store.commit('SET_SOURCE_FILE', file)
-    },
-  },
-})
+      this.$data.sourceFile.files = (this.$data
+        .sourceFile as fileDirList).files.filter(f => f !== file.path);
+      this.$store.commit("SET_SOURCE_FILE", file);
+    }
+  }
+});
 </script>
 
 <style lang="scss" scoped>
 .custom-file-input:lang(en) ~ .custom-file-label::after {
-  content: '选取';
+  content: "选取";
 }
 .list-file {
   transition: 2s;

@@ -1,3 +1,4 @@
+const webpack = require('webpack')
 module.exports = {
   mode: "spa",
   /*
@@ -40,7 +41,7 @@ module.exports = {
 
   */
   plugins: [
-    { src: "~plugins/nuxt-quill-plugin.js", ssr: false },
+    // { src: "~plugins/nuxt-quill-plugin.js", ssr: false },
     { src: "~plugins/v-region.js", ssr: false }
   ],
   /*
@@ -124,7 +125,13 @@ module.exports = {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {}
+    extend(config, ctx) {},
+    plugins: [
+      new webpack.ProvidePlugin({
+        'window.Quill': 'quill/dist/quill.js',
+        'Quill': 'quill/dist/quill.js'
+      })
+    ]
   },
   //
   router: {

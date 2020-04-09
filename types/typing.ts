@@ -54,7 +54,7 @@ export interface GMlink {
 // 产品目录
 export interface product extends GMpack {
   title: string;
-  href: string;
+  href?: string;
   img: string;
   link: string;
 }
@@ -68,13 +68,13 @@ export interface productListOld {
   t1?: productContentOld
   t2?: productContentOld
   img: string[];
-  down: GMlink[];
+  down?: GMlink[];
 }
 export interface productListNew {
   img: string[];
   head?: string;
   body?: string;
-  down: GMlink[];
+  down?: GMlink[];
 }
 // 产品包装
 export interface productList extends GMpack, productListNew, productListOld {
@@ -225,9 +225,14 @@ export interface editProduct {
 }
 
 // 代理商名称限定
-export type AgentName = 'localhost' | '湖北雷迪司' | '贵州代理商' | '陕西代理商';
+export type AgentName = 'localhost' | '湖北雷迪司' | '贵州代理商' | '陕西代理商'|'深圳市雷迪司电源有限公司';
 // 代理
 export interface Agents {
   name: AgentName;
   url: string;
+}
+// case列表上下文
+export interface casesContext{
+  pre?:cases
+  next?:cases
 }

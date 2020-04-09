@@ -4,11 +4,9 @@ import Axios from "axios";
 import DB from "../server/mongoose/content";
 import {
   supportList,
-  GMlink,
   pageLink,
   GMpack,
   product,
-  productContentOld,
   productList,
   supportAsid,
   support,
@@ -38,7 +36,7 @@ async function Html_Serialize_Json(
     PageTitle: '',
     Pagekeywords: '',
     Pagedescription: '',
-    MainUrl:url,
+    MainUrl: url,
     MainTitle: title,
     date: new Date(),
     MainParent: parent || "",
@@ -47,7 +45,7 @@ async function Html_Serialize_Json(
     link: "",
   };
 
-   if (!url) console.log(defaults);
+  if (!url) console.log(defaults);
 
   const file = await Axios.get(Host + url)
     .then(res => res.data)
@@ -57,15 +55,14 @@ async function Html_Serialize_Json(
       return false
     });
   if (!file) return false
-  /* 
-  const paresfile = new JSDOM(file).serialize()
-  console.log({paresfile});
-   */
+
   const $ = load(file);
   // 通用获取页面标题，key，des
   {
     const keys = ['keywords', 'description']
-    defaults.PageTitle = $("title").text().replace("雷迪司","")
+    defaults.PageTitle = $("title").text().split("-")[0].trim()
+    console.log({ PageTitle: defaults.PageTitle });
+
     const meta = $("meta").map((i, val) => {
       return val.attribs
     })
@@ -135,48 +132,41 @@ async function Html_Serialize_Json(
       });
       return result;
     }
-
-    /* case "products_asid":
-      {
-        console.log(`抓取products_asid信息`);
-        $("#prodCateLeft ul").each(function (i, val) {
-          const j = $(val)
-            .prev()
-            .find("a");
-          const title = j.text();
-          const href = `/${j.attr("href")?.split("/")[1]}/${title}`
-          // save
-          const data
-          result.data[i] = {
-            title,
-            href,
-            link: j.attr("href") as string,
-            args: []
-          };
-          Router_Address.push(href);
-
-          j.find("a")
-            .map(function (ii, v2) {
-              const h = $(v2);
-              const title = h.text();
-              const href = `/${j.attr("href")?.split("/")[1]}/${title}`
-              result.data[i]?.args?.push({
-                title,
-                href,
-                link: h.attr("href") as string
-              })
-
-              Router_Address.push(href);
-            });
-        });
-      }
-      break */
     //每个设备的详情页面
     case "products_dev_arg":
       {
         const result: productList[] = [];
         console.log(`抓取products_dev_arg信息`);
-        const t1: productContentOld = {
+
+        //抓取图片
+        const img: string[] = [];
+        $(".swiper-wrapper")
+          .first()
+          .find("img")
+          .map(function (i, val) {
+            img.push($(val).attr("src") as string);
+          });
+        const ImgArr = $(".functionItems .productUtilImg img");
+        if (ImgArr) {
+          ImgArr.map(function (i, val) {
+            img.push($(val).attr("src") as string);
+          });
+        } else {
+          img.push(
+            $(".swiper-slide img")
+              ?.first()
+              ?.attr("src") as string,
+          );
+        }
+
+        const data: productList = {
+          ...defaults, title: defaults.MainTitle as string, link: url,
+          img: Array.from(new Set(img)), // 图片去重
+          head: $(".printDisplay_para").html() as string,
+          body: $(".responseWidth").html() as string
+        };
+
+        /* const t1: productContentOld = {
           type: "html",
           content: $(".printDisplay_para").html() as string,
         };
@@ -184,8 +174,8 @@ async function Html_Serialize_Json(
           type: "html",
           content: $(".functionItems").html() as string,
         };
-        const img: string[] = [];
-        const down: GMlink[] = [];
+        
+        const down: GMlink[] = []; 
         //抓取说明链接
         //console.log(t2)
         //抓取下载链接
@@ -206,27 +196,8 @@ async function Html_Serialize_Json(
                 title: $(val).text() as string,
               });
             }
-          });
-        //抓取图片
-        $(".swiper-wrapper")
-          .first()
-          .find("img")
-          .map(function (i, val) {
-            img.push($(val).attr("src") as string);
-          });
-        const ImgArr = $(".functionItems .productUtilImg img");
-        if (ImgArr) {
-          ImgArr.map(function (i, val) {
-            img.push($(val).attr("src") as string);
-          });
-        } else {
-          img.push(
-            $(".swiper-slide img")
-              ?.first()
-              ?.attr("src") as string,
-          );
-        }
-        const data: productList = { ...defaults, title: defaults.MainTitle as string, t1, t2, img, down, link: url };
+          });*/
+
         result.push(data);
         return result;
       }
@@ -336,8 +307,8 @@ async function Html_Serialize_Json(
     // support 常见问题，视频教程 main
     case "support_problem_args": {
       const supportListResult: supportList[] = [];
-      console.log({defaults});
-      
+      console.log({ defaults });
+
       console.log(`support_problem_list:${defaults.MainUrl}`);
 
       $(".r-search-wrap li a").each(function (i, val) {
@@ -582,6 +553,7 @@ async function first() {
     [`/products/node_10.shtml`, "数据中心"],
     [`/products/node_143.shtml`, "微模块机房"],
     [`/products/node_135.shtml`, "一体化机柜"],
+    ['/products/node_978.shtml', '户外一体柜ETC'],
     [`/products/node_11.shtml`, "配电PDU"],
     [`/products/node_136.shtml`, "动环监控"],
     [`/products/node_138.shtml`, "网络机柜"],
@@ -658,6 +630,19 @@ async function first() {
   );
   const Rows = [...Pages, ...Products, ...Support, Buy, Buy_list, Buy_serve, Buy_serve_list];
   console.log(`操作数据长度${Rows.length}`);
+  await DB.Product.deleteMany({})
+  await DB.Page.deleteMany({})
+  await DB.Product_list.deleteMany({})
+  await DB.Support.deleteMany({})
+  await DB.Support_list.deleteMany({})
+  await DB.Buy.deleteMany({})
+  await DB.Buy_list.deleteMany({})
+  await DB.VR.deleteMany({})
+  await DB.Case.deleteMany({})
+  await DB.Case_list.deleteMany({})
+  await DB.News.deleteMany({})
+  await DB.News_list.deleteMany({})
+
   for (let row of Rows) {
     const result: GMpack[] = await row;
     if (!result) continue;

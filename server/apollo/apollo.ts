@@ -2,8 +2,8 @@ import { ApolloServer } from "apollo-server-koa";
 import typeDefs from "./typeDefs";
 import resolvers from "./resolvers";
 import { ParameterizedContext } from "koa";
-import { UserInfo } from "../typing/interface";
 import { JwtVerify } from "../util/Secret";
+import { UserInfo } from "typing";
 
 export default new ApolloServer({
   typeDefs: typeDefs,

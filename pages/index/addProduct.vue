@@ -1,6 +1,6 @@
 <template>
-  <b-card>
-    <b-card-header class="bg-light">产品</b-card-header>
+  <b-card class="p-0 m-0">
+    <b-card-header class="bg-dark text-light m-3">产品</b-card-header>
     <b-card-body id="editSelect">
       <b-form>
         <my-keywords
@@ -14,24 +14,25 @@
         <b-form-group label="产品标题:" label-align="right" label-cols="2">
           <b-form-input v-model.trim="dev.title"></b-form-input>
         </b-form-group>
-        <my-selectfile :isPic="true" :files.sync="dev.img"></my-selectfile>
-        <!-- <b-form-group label="轮播图片:" label-align="right" label-cols="2">
-          <b-form-select v-model="carouselPic" :options="SourceFile" multiple></b-form-select>
-        </b-form-group>-->
-        <b-form-group label="产品介绍:" label-align="right" label-cols="2">
-          <b-form-input disabled v-model.trim="dev.head" @click="content = dev.head"></b-form-input>
-        </b-form-group>
-        <b-form-group label="产品详情:" label-align="right" label-cols="2">
-          <b-form-input disabled v-model.trim="dev.body"></b-form-input>
-        </b-form-group>
-
-        <my-edit :content.sync="content" />
+        <my-selectfile :isPic="true" :files.sync="productImg"></my-selectfile>
       </b-form>
-      <div id="editFooter">
-        <b-button variant="info" @click="Save_content_head">保存为说明</b-button>
-        <b-button variant="info" @click="Save_content_body" :disabled="dev.head === ''">保存为内容</b-button>
-        <!--  <b-button class="ml-5" @click="Preview">预览</b-button> -->
-        <b-button variant="success" class="float-right" @click="SendEdit">确定</b-button>
+      <div id="pre" class="border rounded p-2">
+        <b-row>
+          <b-col>
+            <my-selectfile-multi :isPic="true" :files.sync="dev.img"></my-selectfile-multi>
+          </b-col>
+          <b-col>
+            <my-edit :content.sync="dev.head" />
+          </b-col>
+        </b-row>
+        <b-row no-gutters>
+          <b-card title="产品特点" class="w-100">
+            <my-edit :content.sync="dev.body" />
+          </b-card>
+        </b-row>
+      </div>
+      <div id="editFooter" class="p-3">
+        <b-button block variant="success" class="float-right" @click="SendEdit">确定</b-button>
       </div>
     </b-card-body>
   </b-card>
@@ -42,10 +43,17 @@ import MyKeywords from "../../components/MyKeywords.vue";
 import gql from "graphql-tag";
 import MyEdit from "../../components/MyEdit.vue";
 import MySelectfile from "../../components/MySelectfile.vue";
-import { selectFiles, editProduct } from "../../server/typing/interface";
+import MySelectfileMulti from "../../components/MySelectfileMulti.vue";
+import {
+  selectFiles,
+  editProduct,
+  product,
+  productList
+} from "../../types/typing";
+import { paresLink } from "../../plugins/tool";
 
 export default Vue.extend({
-  components: { MyKeywords, MyEdit, MySelectfile },
+  components: { MyKeywords, MyEdit, MySelectfile, MySelectfileMulti },
   data() {
     const ProductType = [
       "UPS电源",
@@ -85,25 +93,103 @@ export default Vue.extend({
         t2: "",
         head: "",
         body: "",
-        img: "",
+        img: [],
         down: ""
       },
       ProductType,
-      content: `<h2 class="ql-align-center"><span class="ql-font-serif">
-      Text content loading..</span></h2>`
+      // apollo
+      productImg: ""
     };
   },
 
+  apollo: {
+    productImg: {
+      query: gql`
+        query getProduct($title: String) {
+          productImg: getProduct(title: $title) {
+            img
+          }
+        }
+      `,
+      variables() {
+        return {
+          title: this.$route.query.title
+        };
+      },
+      update: data => data.productImg?.img || ""
+    },
+    dev: {
+      query: gql`
+        query($title: String) {
+          dev: getProductList(title: $title) {
+            PageTitle
+            Pagekeywords
+            Pagedescription
+            MainUrl
+            MainTitle
+            MainParent
+            date
+            table
+            href
+            title
+            link
+            t1
+            t2
+            head
+            body
+            img
+            down
+          }
+        }
+      `,
+      variables() {
+        return {
+          title: this.$route.query.title
+        };
+      },
+      update: function(data) {
+        if (data.dev) {
+          const dev: productList = data.dev;
+
+          if (dev?.t1 && !dev.head) {
+            dev.head = dev.t1?.content;
+            dev.body = dev.t2?.content;
+          }
+          return dev;
+        } else {
+          return this.$data.dev;
+        }
+      }
+    }
+  },
+  scrollToTop: true,
   methods: {
     // 提交
     async SendEdit() {
-      /* const params: editProduct = {
-        selectType: this.selectType,
-        title: this.title,
-        indexPic: this.indexPic,
-        carouselPic: this.carouselPic,
-        content_head: this.content_head,
-        content_body: this.content_body
+      const dev: productList = this.$data.dev;
+      const { date, link, datePares } = paresLink("products");
+      console.log(datePares);
+
+      // 构建产品目录
+      const product: product = {
+        MainTitle: dev.MainParent,
+        date,
+        link: dev.link || link,
+        title: dev.title,
+        img: this.$data.productImg
+      };
+      // 构建产品详情
+      const productlist: productList = {
+        PageTitle: dev.PageTitle,
+        Pagekeywords: dev.Pagekeywords,
+        Pagedescription: dev.Pagedescription,
+        MainParent: dev.MainParent,
+        date,
+        link: dev.link || link,
+        title: dev.title,
+        head: dev.head,
+        body: dev.body,
+        img: dev.img
       };
       const result = await this.$apollo.mutate({
         mutation: gql`
@@ -114,21 +200,13 @@ export default Vue.extend({
             }
           }
         `,
-        variables: { arg: params }
+        variables: {
+          arg: { product, productlist }
+        }
       });
-      const data = result.data.setProduct;
-      const isQ = await this.$bvModal.msgBoxConfirm("编辑成功", {
-        title: "edit success"
-      }); */
-    },
-    Save_content_head() {
-      /* this.content_head = this.content;
-      this.content = ""; */
-    },
-    // save消息主题
-    Save_content_body() {
-      /* this.content_body = this.content;
-      this.content = ""; */
+      this.$apollo.queries.productImg.refresh();
+      this.$apollo.queries.dev.refresh();
+      this.$bvModal.msgBoxOk("success");
     }
   }
 });
