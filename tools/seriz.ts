@@ -80,7 +80,6 @@ async function Html_Serialize_Json(
   switch (type) {
     /* -----------------------------------head  table:pages ------------------------------------------------------ */
     case "head": {
-      console.log(`抓取头部信息`);
       // 结果
       const result: pageLink[] = [];
       $("#pc_nav .new-down").each(function (i, val) {
@@ -118,7 +117,6 @@ async function Html_Serialize_Json(
     /* -----------------------------------Products   ------------------------------------------------------ */
     case "products": {
       const result: product[] = [];
-      console.log(`抓取products信息`);
       $("#scroller .list li").each(function (i, val) {
         const j = $(val);
         const data: product = {
@@ -136,8 +134,6 @@ async function Html_Serialize_Json(
     case "products_dev_arg":
       {
         const result: productList[] = [];
-        console.log(`抓取products_dev_arg信息`);
-
         //抓取图片
         const img: string[] = [];
         $(".swiper-wrapper")
@@ -205,7 +201,6 @@ async function Html_Serialize_Json(
     //Support
     //抓取support页面常见问题
     case "support_problem": {
-      console.log(`support_problem`);
       const data: supportAsid[] = [];
       $(".relate a").each(function (i, val) {
         const title = $(val)
@@ -219,13 +214,11 @@ async function Html_Serialize_Json(
           href: `problem/${title}`,
         });
       });
-      //console.log(data)
       return data;
     }
 
     //抓取support页面软件下载
     case "support_down": {
-      console.log(`support_down`);
       const data: support[] = [];
       $(".tabContBox li").each(async function (i, val) {
         const j = $(val);
@@ -275,7 +268,6 @@ async function Html_Serialize_Json(
     }
     // support 常见问题，视频教程 asid
     case "support_problem_asid": {
-      console.log(`support_problem_list`);
       const data: supportProblem[] = [];
       $(".left-search-list .search-list-item").each(function (i, val) {
         const j = $(val);
@@ -307,10 +299,6 @@ async function Html_Serialize_Json(
     // support 常见问题，视频教程 main
     case "support_problem_args": {
       const supportListResult: supportList[] = [];
-      console.log({ defaults });
-
-      console.log(`support_problem_list:${defaults.MainUrl}`);
-
       $(".r-search-wrap li a").each(function (i, val) {
         const j = $(val);
         const title = j.text();
@@ -589,7 +577,7 @@ async function first() {
   });
 
   //Buy 地图area数据
-  const Buy_serve = await Html_Serialize_Json(
+  const Buy_serve = Html_Serialize_Json(
     "/about/node_37.shtml",
     "Buy",
     "buy_list",
@@ -599,7 +587,7 @@ async function first() {
     "map",
   );
   //buy_list 销售服务中心
-  const Buy_serve_list = await Html_Serialize_Json(
+  const Buy_serve_list = Html_Serialize_Json(
     "/about/node_37.shtml",
     "Buy_list",
     "buy_list",
@@ -609,7 +597,7 @@ async function first() {
     "child",
   );
   //Buy 地图area数据
-  const Buy = await Html_Serialize_Json(
+  const Buy = Html_Serialize_Json(
     "/about/node_53.shtml",
     "Buy",
     "buy_list",
@@ -619,7 +607,7 @@ async function first() {
     "map",
   );
   // 经销商列表
-  const Buy_list = await Html_Serialize_Json(
+  const Buy_list = Html_Serialize_Json(
     "/about/node_53.shtml",
     "Buy_list",
     "buy_list",
@@ -630,6 +618,12 @@ async function first() {
   );
   const Rows = [...Pages, ...Products, ...Support, Buy, Buy_list, Buy_serve, Buy_serve_list];
   console.log(`操作数据长度${Rows.length}`);
+  console.log({
+    Pages:Pages.length,
+    Products:Products.length,
+    Support:Support.length,
+  });
+  
   await DB.Product.deleteMany({})
   await DB.Page.deleteMany({})
   await DB.Product_list.deleteMany({})
@@ -682,8 +676,6 @@ async function secend() {
     }
   }
   //
-  console.log(`遍历问题列表,supportProblem:${Support_list_linkArray.length}`);
-
   for (let [name, chLink, title, perantLink] of Support_list_linkArray) {
     const result = <supportList[]>await Html_Serialize_Json
       (chLink, "Support_list", "support_problem_args", null, name, title);
@@ -693,13 +685,10 @@ async function secend() {
       await WriteRouter(el.title, el.link, el.href)
     }
   }
-  console.log("Get_support_problem_list_arg Success ++++++++++++++");
-
   /* 
   productsList
   */
   const Product: product[] = await DB.Product.find().lean();
-  console.log(`遍历ProductList，count:${Product.length}`);
   const ProductTitleSet: Set<string> = new Set()
   for (let el of Product) {
     const result = <productList[]>await Html_Serialize_Json(
@@ -718,9 +707,6 @@ async function secend() {
     }
 
   }
-  console.log(`遍历ProductList，重复Set:${ProductTitleSet.size}`);
-  console.log("Get_Product_list Success ++++++++++++++");
-
 }
 
 /* 
@@ -792,7 +778,6 @@ async function three() {
       }
 
     }
-    console.log(`操作 news success`);
   } {
     // news
     for (let i = 2; i < NewsNum; i++) {
@@ -827,11 +812,9 @@ async function three() {
         await update(NewsList);
       }
     }
-    console.log(`操作 news success`);
   }
   async function update(row: cases | caseList) {
     if (!row) return
-    console.log(`开始迭代，写入表：${row.table},操作title:${row.title}`);
     await new (DB as any)[row.table as string](row).save()
   }
 }
