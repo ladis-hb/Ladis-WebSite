@@ -1,69 +1,60 @@
 <template>
-  <b-card>
-    <b-card-header class="bg-dark text-light m-3">
-      <span>服务支持</span>
+  <my-card title="服务支持" :load="$apollo.loading">
+    <template v-slot:head>
       <b-button-group class="float-right" size="sm">
         <b-button variant="primary" to="/addDown">添加软件/资质</b-button>
         <b-button variant="info" to="/addProblem">添加视频/问题</b-button>
       </b-button-group>
-    </b-card-header>
-    <b-card-body>
-      <b-tabs fill>
-        <b-tab title="软件下载" title-link-class=" text-dark">
-          <b-table :items="downs" :fields="fieldsDown" responsive>
-            <template v-slot:cell(oprate)="row">
-              <b-button-group>
-                <b-button
-                  variant="info"
-                  :to="{name:'index-addDown',query:{title:row.item.title}}"
-                >编辑</b-button>
-                <b-button @click="deleteDown(row.item.title)">删除</b-button>
-              </b-button-group>
-            </template>
-          </b-table>
-        </b-tab>
-        <b-tab title="彩页/资质" title-link-class=" text-dark">
-          <b-table :items="pdfs" :fields="fieldsPdf">
-            <template v-slot:cell(oprate)="row">
-              <b-button-group>
-                <b-button
-                  variant="info"
-                  :to="{name:'index-addDown',query:{title:row.item.title}}"
-                >编辑</b-button>
-                <b-button @click="deleteDown(row.item.title)">删除</b-button>
-              </b-button-group>
-            </template>
-          </b-table>
-        </b-tab>
-        <b-tab title="视频教程" title-link-class=" text-dark">
-          <b-table :items="movies" :fields="fieldsMovie">
-            <template v-slot:cell(oprate)="row">
-              <b-button-group>
-                <b-button
-                  variant="info"
-                  :to="{name:'index-addProblem',query:{title:row.item.title}}"
-                >编辑</b-button>
-                <b-button @click="deleteProblem(row.item.title)">删除</b-button>
-              </b-button-group>
-            </template>
-          </b-table>
-        </b-tab>
-        <b-tab title="常见问题" title-link-class=" text-dark">
-          <b-table :items="problem" :fields="fieldsProblem">
-            <template v-slot:cell(oprate)="row">
-              <b-button-group>
-                <b-button
-                  variant="info"
-                  :to="{name:'index-addProblem',query:{title:row.item.title}}"
-                >编辑</b-button>
-                <b-button @click="deleteProblem(row.item.title)">删除</b-button>
-              </b-button-group>
-            </template>
-          </b-table>
-        </b-tab>
-      </b-tabs>
-    </b-card-body>
-  </b-card>
+    </template>
+    <b-tabs fill>
+      <b-tab title="软件下载" title-link-class=" text-dark">
+        <b-table :items="downs" :fields="fieldsDown" responsive>
+          <template v-slot:cell(oprate)="row">
+            <b-button-group>
+              <b-button variant="info" :to="{name:'index-addDown',query:{title:row.item.title}}">编辑</b-button>
+              <b-button @click="deleteDown(row.item.title)">删除</b-button>
+            </b-button-group>
+          </template>
+        </b-table>
+      </b-tab>
+      <b-tab title="彩页/资质" title-link-class=" text-dark">
+        <b-table :items="pdfs" :fields="fieldsPdf">
+          <template v-slot:cell(oprate)="row">
+            <b-button-group>
+              <b-button variant="info" :to="{name:'index-addDown',query:{title:row.item.title}}">编辑</b-button>
+              <b-button @click="deleteDown(row.item.title)">删除</b-button>
+            </b-button-group>
+          </template>
+        </b-table>
+      </b-tab>
+      <b-tab title="视频教程" title-link-class=" text-dark">
+        <b-table :items="movies" :fields="fieldsMovie">
+          <template v-slot:cell(oprate)="row">
+            <b-button-group>
+              <b-button
+                variant="info"
+                :to="{name:'index-addProblem',query:{title:row.item.title}}"
+              >编辑</b-button>
+              <b-button @click="deleteProblem(row.item.title)">删除</b-button>
+            </b-button-group>
+          </template>
+        </b-table>
+      </b-tab>
+      <b-tab title="常见问题" title-link-class=" text-dark">
+        <b-table :items="problem" :fields="fieldsProblem">
+          <template v-slot:cell(oprate)="row">
+            <b-button-group>
+              <b-button
+                variant="info"
+                :to="{name:'index-addProblem',query:{title:row.item.title}}"
+              >编辑</b-button>
+              <b-button @click="deleteProblem(row.item.title)">删除</b-button>
+            </b-button-group>
+          </template>
+        </b-table>
+      </b-tab>
+    </b-tabs>
+  </my-card>
 </template>
 <script lang="ts">
 import Vue from "vue";

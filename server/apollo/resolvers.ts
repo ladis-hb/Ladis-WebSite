@@ -12,7 +12,7 @@ const resolvers: IResolvers = {
     // 获取upload文件夹文件列表
     async getUploadFiles(root, { filter }) {
       // 目录地址
-      const dir = path.join(__dirname, "../../static/upload")
+      const dir = path.join(__dirname, "../static/upload")
       // 转换callback to promise
       const readdir = util.promisify(fs.readdir)
       // 默认结果
@@ -38,7 +38,7 @@ const resolvers: IResolvers = {
     // 获取代理商about
     async getAbouts(root, { selectType, webSite }) {
       const result = await DBs.About.findOne({ type: selectType, webSite: webSite }).lean() as about
-      return result.content
+      return result?.content
     },
     // 获取经销商列表
     async getbuys() {
@@ -96,7 +96,12 @@ const resolvers: IResolvers = {
     //
     async getProducts() {
       const result = await DBs.Product.find().lean()
-      return result
+      const test = new Promise((resolve,reject)=>{
+        setTimeout(async () => {
+          resolve(result)
+        }, 5000);
+      })
+      return  await test
     },
     async getProduct(root, { title }) {
       const result = await DBs.Product.findOne({ title }).lean()

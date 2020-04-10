@@ -1,41 +1,38 @@
 <template>
-  <b-card class="p-0 m-0">
-    <b-card-header class="bg-dark text-light m-3">产品</b-card-header>
-    <b-card-body id="editSelect">
-      <b-form>
-        <my-keywords
-          :title.sync="dev.PageTitle"
-          :keywords.sync="dev.Pagekeywords"
-          :description.sync="dev.Pagedescription"
-        ></my-keywords>
-        <b-form-group label="产品类型:" label-align="right" label-cols="2">
-          <b-form-select v-model="dev.MainParent" :options="ProductType"></b-form-select>
-        </b-form-group>
-        <b-form-group label="产品标题:" label-align="right" label-cols="2">
-          <b-form-input v-model.trim="dev.title"></b-form-input>
-        </b-form-group>
-        <my-selectfile :isPic="true" :files.sync="productImg"></my-selectfile>
-      </b-form>
-      <div id="pre" class="border rounded p-2">
-        <b-row>
-          <b-col>
-            <my-selectfile-multi :isPic="true" :files.sync="dev.img"></my-selectfile-multi>
-          </b-col>
-          <b-col>
-            <vue-editor id="head" v-model="dev.head" />
-          </b-col>
-        </b-row>
-        <b-row no-gutters>
-          <b-card title="产品特点" class="w-100">
-            <vue-editor id="body" v-model="dev.body" />
-          </b-card>
-        </b-row>
-      </div>
-      <div id="editFooter" class="p-3">
-        <b-button block variant="success" class="float-right" @click="SendEdit">确定</b-button>
-      </div>
-    </b-card-body>
-  </b-card>
+  <my-card title="产品详情" :load="$apollo.loading">
+    <b-form>
+      <my-keywords
+        :title.sync="dev.PageTitle"
+        :keywords.sync="dev.Pagekeywords"
+        :description.sync="dev.Pagedescription"
+      ></my-keywords>
+      <b-form-group label="产品类型:" label-align="right" label-cols="2">
+        <b-form-select v-model="dev.MainParent" :options="ProductType"></b-form-select>
+      </b-form-group>
+      <b-form-group label="产品标题:" label-align="right" label-cols="2">
+        <b-form-input v-model.trim="dev.title"></b-form-input>
+      </b-form-group>
+      <my-selectfile :isPic="true" :files.sync="productImg"></my-selectfile>
+    </b-form>
+    <div id="pre" class="border rounded p-2">
+      <b-row>
+        <b-col>
+          <my-selectfile-multi :isPic="true" :files.sync="dev.img"></my-selectfile-multi>
+        </b-col>
+        <b-col>
+          <vue-editor id="head" v-model="dev.head" />
+        </b-col>
+      </b-row>
+      <b-row no-gutters>
+        <b-card title="产品特点" class="w-100">
+          <vue-editor id="body" v-model="dev.body" />
+        </b-card>
+      </b-row>
+    </div>
+    <div id="editFooter" class="p-3">
+      <b-button block variant="success" class="float-right" @click="SendEdit">确定</b-button>
+    </div>
+  </my-card>
 </template>
 <script lang="ts">
 import Vue from "vue";
@@ -84,12 +81,9 @@ export default Vue.extend({
         href: "",
         title: "",
         link: "",
-        t1: "",
-        t2: "",
         head: "",
         body: "",
         img: [],
-        down: ""
       },
       ProductType,
       // apollo
@@ -128,12 +122,9 @@ export default Vue.extend({
             href
             title
             link
-            t1
-            t2
             head
             body
             img
-            down
           }
         }
       `,

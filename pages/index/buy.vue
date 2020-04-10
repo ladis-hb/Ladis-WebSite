@@ -1,22 +1,20 @@
 <template>
-  <div>
-    <b-card>
-      <b-card-header class="bg-dark text-light">经销商列表</b-card-header>
-      <b-card-body>
-        <b-table-lite :items="buys" :fields="fields">
-          <template v-slot:cell(oprate)="row">
-            <b-button-group>
-              <b-button
-                variant="info"
-                :to="{name:'index-addBuy',query:{title:row.item.title,daqu:row.item.parentsUntil}}"
-              >编辑</b-button>
-              <b-button @click="deletes(row.item.title)">删除</b-button>
-            </b-button-group>
-          </template>
-        </b-table-lite>
-      </b-card-body>
-    </b-card>
-  </div>
+  <my-card title="经销商列表" :load="$apollo.loading">
+    <template v-slot:head>
+      <b-button class="float-right" size="sm" variant="primary" to="addBuy">添加</b-button>
+    </template>
+    <b-table-lite :items="buys" :fields="fields">
+      <template v-slot:cell(oprate)="row">
+        <b-button-group>
+          <b-button
+            variant="info"
+            :to="{name:'index-addBuy',query:{title:row.item.title,daqu:row.item.parentsUntil}}"
+          >编辑</b-button>
+          <b-button @click="deletes(row.item.title)">删除</b-button>
+        </b-button-group>
+      </template>
+    </b-table-lite>
+  </my-card>
 </template>
 <script lang="ts">
 import Vue from "vue";

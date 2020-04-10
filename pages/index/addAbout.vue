@@ -1,27 +1,22 @@
 <template>
-  <div class="overflow-auto">
-    <b-card>
-      <b-card-header class="bg-dark text-light">About</b-card-header>
-      <b-card-body id="editSelect">
-        <div>
-          <b-form-group label="类型:" label-align="right" label-cols="2">
-            <b-form-select v-model="selectType" :options="type"></b-form-select>
-          </b-form-group>
-          <b-form-group label="区域网址:" label-align="right" label-cols="2">
-            <b-input disabled :placeholder="name"></b-input>
-            <!-- <b-form-select v-model="webSite" :options="webSites"></b-form-select> -->
-          </b-form-group>
-        </div>
-        <section id="editBody" class="my-3">
-          <vue-editor v-model="content" />
-        </section>
+  <my-card title="关于代理" :load="$apollo.loading">
+    <div>
+      <b-form-group label="类型:" label-align="right" label-cols="2">
+        <b-form-select v-model="selectType" :options="type"></b-form-select>
+      </b-form-group>
+      <b-form-group label="区域网址:" label-align="right" label-cols="2">
+        <b-input disabled :placeholder="name"></b-input>
+        <!-- <b-form-select v-model="webSite" :options="webSites"></b-form-select> -->
+      </b-form-group>
+    </div>
+    <section id="editBody" class="my-3">
+      <vue-editor v-model="content" />
+    </section>
 
-        <div id="editFooter">
-          <b-button variant="success" class="float-right" @click="SendEdit">确定</b-button>
-        </div>
-      </b-card-body>
-    </b-card>
-  </div>
+    <div id="editFooter">
+      <b-button variant="success" class="float-right" @click="SendEdit">确定</b-button>
+    </div>
+  </my-card>
 </template>
 <script lang="ts">
 import Vue from "vue";
@@ -40,8 +35,7 @@ export default Vue.extend({
         "隐私政策"
       ],
       selectType: "公司简介",
-      content: `<h2 class="ql-align-center"><span class="ql-font-serif">
-      Text content loading..</span></h2>`
+      content: ``
     };
   },
   computed: {
@@ -55,10 +49,10 @@ export default Vue.extend({
     }
   },
   apollo: {
-    contents: {
+    content: {
       query: gql`
         query($selectType: String, $webSite: String) {
-          contents: getAbouts(selectType: $selectType, webSite: $webSite)
+          content: getAbouts(selectType: $selectType, webSite: $webSite)
         }
       `,
       variables() {
@@ -72,10 +66,10 @@ export default Vue.extend({
   },
   methods: {
     async SendEdit() {
-      let { selectType, webSite, content } = this.$data;
+      let { selectType, content } = this.$data;
       const params: about = {
         type: selectType,
-        webSite,
+        webSite:(this as any).name,
         content
       };
       const result = await this.$apollo.mutate({

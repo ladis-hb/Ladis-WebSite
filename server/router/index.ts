@@ -2,9 +2,9 @@
 import Router from "koa-router";
 import Auth from "./auth";
 import Upload from "./upload";
-import Edit from "./edit";
 import Docment from "./Docment";
 import File, { getFileStatAndDown } from "./file";
+import fs from "fs"
 import Send from "koa-send";
 import { ParameterizedContext } from "koa";
 
@@ -18,17 +18,20 @@ router.get("/a_images/*", File);
 //
 router.post("/auth/:id", Auth);
 router.put("/uploads/:id", Upload);
-router.get("/edit/:id", Edit);
 router.get("/api/:id", Docment);
 
 async function down(ctx: ParameterizedContext<any, Router.IRouterParamContext<any, {}>>) {
   try {
     const result = await getFileStatAndDown(ctx.path);
+    console.log({result});
+    
     if (result.stat) {
-      const filePath: string = "/static/" + ctx.path;
+      // 文件路径需要定位到npm根目录,Send函数会二次处理路径
+      const filePath: string = "server/static/" + ctx.path;
 
-      ctx.attachment(filePath);
-      await Send(ctx, filePath);
+      ctx.attachment(result.Path);
+      ctx.body = fs.createReadStream(result.Path)
+      //await Send(ctx, filePath); 
     } else {
       ctx.throw(400, "no files");
     }

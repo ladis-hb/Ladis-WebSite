@@ -1,33 +1,30 @@
 <template>
-  <b-card>
-    <b-card-header class="bg-dark text-light m-3">
-      <span>新闻列表</span>
+  <my-card title="新闻列表" :load="$apollo.loading">
+    <template v-slot:head>
       <b-button class="float-right" size="sm" variant="primary" to="addNews">添加</b-button>
-    </b-card-header>
-    <b-card-body>
-      <b-table
-        :items="cases"
-        :fields="fields"
-        id="table"
-        :per-page="perPage"
-        :current-page="currentPage"
-      >
-        <template v-slot:cell(oprate)="row">
-          <b-button-group>
-            <b-button variant="info" :to="{name:'index-addNews',query:{title:row.item.text}}">编辑</b-button>
-            <b-button @click="deletes(row.item.text)">删除</b-button>
-          </b-button-group>
-        </template>
-      </b-table>
-      <b-pagination
-        align="center"
-        v-model="currentPage"
-        :total-rows="rows"
-        :per-page="perPage"
-        aria-controls="table"
-      ></b-pagination>
-    </b-card-body>
-  </b-card>
+    </template>
+    <b-table
+      :items="cases"
+      :fields="fields"
+      id="table"
+      :per-page="perPage"
+      :current-page="currentPage"
+    >
+      <template v-slot:cell(oprate)="row">
+        <b-button-group>
+          <b-button variant="info" :to="{name:'index-addNews',query:{title:row.item.text}}">编辑</b-button>
+          <b-button @click="deletes(row.item.text)">删除</b-button>
+        </b-button-group>
+      </template>
+    </b-table>
+    <b-pagination
+      align="center"
+      v-model="currentPage"
+      :total-rows="rows"
+      :per-page="perPage"
+      aria-controls="table"
+    ></b-pagination>
+  </my-card>
 </template>
 <script lang="ts">
 import Vue from "vue";

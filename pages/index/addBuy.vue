@@ -1,37 +1,31 @@
 <template>
-  <b-container fluid>
-    <b-row>
-      <b-col cols="12">
-        <b-card title="经销商Mg" sub-title="添加经销商">
-          <b-card-body>
-            <b-form-group label="选择区域:" label-align="right" label-cols="2">
-              <b-form-select :options="daqu" v-model="ad.daqu"></b-form-select>
-            </b-form-group>
-            <b-form-group label="名称:" label-align="right" label-cols="2">
-              <b-form-input v-model="ad.title"></b-form-input>
-            </b-form-group>
-            <b-form-group label="选择地址:" label-align="right" label-cols="2">
-              <v-region @values="regionChange"></v-region>
-            </b-form-group>
-            <b-form-group label="详细地址:" label-align="right" label-cols="2">
-              <b-form-input v-model="ad.address"></b-form-input>
-            </b-form-group>
+  <my-card title="经销商Mg"  :load="$apollo.loading">
+    <b-form name="buy">
+      <b-form-group label="选择区域:" label-align="right" label-cols="2">
+        <b-form-select :options="daqu" v-model="ad.daqu"></b-form-select>
+      </b-form-group>
+      <b-form-group label="名称:" label-align="right" label-cols="2">
+        <b-form-input v-model="ad.title"></b-form-input>
+      </b-form-group>
+      <b-form-group label="选择地址:" label-align="right" label-cols="2">
+        <v-region @values="regionChange"></v-region>
+      </b-form-group>
+      <b-form-group label="详细地址:" label-align="right" label-cols="2">
+        <b-form-input v-model="ad.address"></b-form-input>
+      </b-form-group>
 
-            <b-form-group label="联系人:" label-align="right" label-cols="2">
-              <b-form-input v-model="ad.linkman"></b-form-input>
-            </b-form-group>
-            <b-form-group label="座机电话(多个电话用';'分隔)：" label-align="right" label-cols="2">
-              <b-form-input v-model="ad.tel"></b-form-input>
-            </b-form-group>
-            <b-form-group label="手机(多个电话用';'分隔):" label-align="right" label-cols="2">
-              <b-form-input v-model="ad.phone"></b-form-input>
-            </b-form-group>
-            <b-button @click="Submit" block variant="success">提交</b-button>
-          </b-card-body>
-        </b-card>
-      </b-col>
-    </b-row>
-  </b-container>
+      <b-form-group label="联系人:" label-align="right" label-cols="2">
+        <b-form-input v-model="ad.linkman"></b-form-input>
+      </b-form-group>
+      <b-form-group label="座机电话(多个电话用';'分隔)：" label-align="right" label-cols="2">
+        <b-form-input v-model="ad.tel"></b-form-input>
+      </b-form-group>
+      <b-form-group label="手机(多个电话用';'分隔):" label-align="right" label-cols="2">
+        <b-form-input v-model="ad.phone"></b-form-input>
+      </b-form-group>
+      <b-button @click="Submit" block variant="success">提交</b-button>
+    </b-form>
+  </my-card>
 </template>
 <script lang="ts">
 import Vue from "vue";
@@ -49,7 +43,7 @@ export default Vue.extend({
         address: "",
         tel: "",
         linkman: "",
-        phone: "",
+        phone: ""
       },
       daqu: [
         "华中地区销售服务中心",
@@ -92,7 +86,7 @@ export default Vue.extend({
       const info = `区域：${daqu}
                     省市县(区)：${province}|${city}|${area}
                     详细地址：${address}
-                    联系人：${linkman}|${tel}|${phone}`
+                    联系人：${linkman}|${tel}|${phone}`;
 
       const isQ = await this.$bvModal.msgBoxConfirm(info, {
         title: "核对信息",
@@ -107,7 +101,7 @@ export default Vue.extend({
           table: "Buy_list",
           link,
           parentsUntil: daqu,
-          parent: (province as string).replace(/[省市]/,''),
+          parent: (province as string).replace(/[省市]/, ""),
           title,
           content: info
         };

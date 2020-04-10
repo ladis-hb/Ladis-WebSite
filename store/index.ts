@@ -1,7 +1,7 @@
  import { GetterTree, ActionTree, MutationTree } from 'vuex'
 import { selectFiles } from '../types/typing'
 export const state = () => ({
-  SourceFile:[{path: "/upload/1572055868193banner01-pc.jpg", name: "1572055868193banner01-pc.jpg", filetype: "img"}] as selectFiles[],
+  SourceFile:[{path: "/_CMS_NEWS_IMG_/cms_images/fck/2018-08/21/567d1696-22a3-4086-a70c-41e205b3aa44.png", name: "1572055868193banner01-pc.jpg", filetype: "img"}] as selectFiles[],
   name:"ladis"
 })
 

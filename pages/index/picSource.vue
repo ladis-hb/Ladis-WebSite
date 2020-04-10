@@ -1,74 +1,56 @@
 <template>
-  <b-container fluid id="source">
-    <b-row>
-      <b-col cols="12">
-        <b-card title="上传素材">
-          <b-card-body>
-            <b-input-group prepend="选择文件" class="mt-3">
-              <b-form-file
-                multiple
-                v-model="files"
-                :file-name-formatter="formatNames"
-                placeholder="可以多选"
-              ></b-form-file>
-              <b-input-group-append>
-                <b-button variant="info" @click="Put_file_Source" :disabled="!files">上传</b-button>
-              </b-input-group-append>
-            </b-input-group>
-            <!-- <b-form-file
-                multiple
-                v-model="files"
-                :file-name-formatter="formatNames"
-            ></b-form-file>-->
-
-            <ul>
-              <li v-for="(name, key) in fileList" :key="key">{{ name }}</li>
-            </ul>
-          </b-card-body>
-        </b-card>
-      </b-col>
-
-      <b-col cols="12" class="my-3">
-        <b-card title="素材库">
-          <b-card-body>
-            <div>
-              <b-input-group prepend="关键字" class="mt-3">
-                <b-form-input v-model.trim="keyswords" placeholder="默认检索全部文件"></b-form-input>
-                <b-input-group-append>
-                  <b-button variant="info" @click="Get_pic_Source(keyswords)">检索</b-button>
-                </b-input-group-append>
-              </b-input-group>
-              <p>Size:{{ sourceFile.size }}/Message:{{ sourceFile.msg }}</p>
-            </div>
-            <b-row>
-              <b-col
-                cols="6"
-                v-for="(file, key) in sourceFileFilter"
-                :key="key"
-                class="my-1 list-file"
-              >
-                <b-card>
-                  <b-card-sub-title>
-                    {{ file.name }}
-                    <b-button
-                      variant="success"
-                      pill
-                      class="ml-2 mb-2"
-                      @click="selectSourceFile(file)"
-                    >选中素材</b-button>
-                  </b-card-sub-title>
-                  <b-card-img-lazy v-if="file.filetype === 'img'" :src="file.path"></b-card-img-lazy>
-                  <b-card-body v-else>
-                    <b-link :href="file.path">{{ file.path }}</b-link>
-                  </b-card-body>
-                </b-card>
-              </b-col>
-            </b-row>
-          </b-card-body>
-        </b-card>
-      </b-col>
-    </b-row>
-  </b-container>
+  <my-card title="上传素材">
+    <b-jumbotron>
+      <b-form>
+        <b-input-group prepend="选择文件" class="mt-3">
+          <b-form-file
+            multiple
+            v-model="files"
+            :file-name-formatter="formatNames"
+            placeholder="可以多选"
+          ></b-form-file>
+          <b-input-group-append>
+            <b-overlay :show="load" rounded="sm">
+              <b-button variant="info" @click="Put_file_Source" :disabled="!files">上传</b-button>
+            </b-overlay>
+          </b-input-group-append>
+        </b-input-group>
+        <ul class="mt-5">
+          <li v-for="(name, key) in fileList" :key="key">{{ name }}</li>
+        </ul>
+      </b-form>
+    </b-jumbotron>
+    <b-card title="选择素材">
+      <b-form>
+        <b-input-group prepend="关键字" class="mt-3">
+          <b-form-input v-model.trim="keyswords" placeholder="默认检索全部文件"></b-form-input>
+          <b-input-group-append>
+            <b-button variant="info" @click="Get_pic_Source(keyswords)">检索</b-button>
+          </b-input-group-append>
+        </b-input-group>
+        <p>Size:{{ sourceFile.size }}/Message:{{ sourceFile.msg }}</p>
+      </b-form>
+      <b-row>
+        <b-col cols="6" v-for="(file, key) in sourceFileFilter" :key="key" class="my-1 list-file">
+          <b-card>
+            <b-card-sub-title>
+              {{ file.name }}
+              <b-button
+                variant="success"
+                pill
+                class="ml-2 mb-2"
+                @click="selectSourceFile(file)"
+              >选中素材</b-button>
+            </b-card-sub-title>
+            <b-card-img-lazy v-if="file.filetype === 'img'" :src="file.path"></b-card-img-lazy>
+            <b-card-body v-else>
+              <b-link :href="file.path">{{ file.path }}</b-link>
+            </b-card-body>
+          </b-card>
+        </b-col>
+      </b-row>
+    </b-card>
+  </my-card>
 </template>
 <script lang="ts">
 import Vue from "vue";
@@ -84,7 +66,8 @@ export default Vue.extend({
     return {
       files: null,
       keyswords: "",
-      sourceFile
+      sourceFile,
+      load: false
     };
   },
   computed: {
@@ -116,6 +99,7 @@ export default Vue.extend({
   methods: {
     // 上传文件
     Put_file_Source() {
+      this.load = true;
       const data = new FormData();
       (<Blob[]>this.$data.files).forEach(file => {
         data.append("files", file);
@@ -125,6 +109,7 @@ export default Vue.extend({
         .then((result: { code: number; data: uploadResult[] }) => {
           this.$bvModal.msgBoxOk("上传已完成");
           this.files = null;
+          this.load = false;
           result.data.forEach(file => {
             this.$store.commit("SET_SOURCE_FILE", file);
           });
@@ -142,7 +127,8 @@ export default Vue.extend({
             }
           }
         `,
-        variables: { filter }
+        variables: { filter },
+        fetchPolicy:"network-only",
       });
       this.sourceFile = files.data.getUploadFiles;
     },

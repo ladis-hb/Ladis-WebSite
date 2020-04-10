@@ -13,7 +13,7 @@ export const getFileStatAndDown = async (fpath: string) => {
   const ladis = "http://www.ladis.com.cn";
   const enladis = "http://en.ladis.com.cn";
   // 获取请求素材路径
-  const filePath = path.join(__dirname, "../../static", fpath);
+  const filePath = path.join(__dirname, "../static", fpath);
   // 判断文件是否存在
   const isFile = fs.existsSync(filePath);
   // 文件获取状态

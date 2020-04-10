@@ -1,34 +1,26 @@
 <template>
-  <div>
-    <b-card>
-      <b-card-header class="bg-info text-light">Case</b-card-header>
-      <b-card-body>
-        <div id="editSelect">
-          <my-keywords
-            :title.sync="PageTitle"
-            :keywords.sync="Pagekeywords"
-            :description.sync="Pagedescription"
-          ></my-keywords>
-          <b-form-group label="案例类型:" label-align="right" label-cols="2">
-            <b-form-select v-model="type" :options="editOption"></b-form-select>
-          </b-form-group>
-          <b-form-group label="案例标题:" label-align="right" label-cols="2">
-            <b-form-input v-model.trim="title"></b-form-input>
-          </b-form-group>
-          <my-selectfile :isPic="true" :files.sync="file"></my-selectfile>
-        </div>
-        <section id="editBody" class="my-3">
-          <vue-editor id="bodysaxs" v-model="contents" />
-        </section>
-        <div id="editFooter">
-          <b-button variant="success" class="float-right" @click="SendEdit('case')">确定</b-button>
-        </div>
-      </b-card-body>
-    </b-card>
-    <div>
-      
+  <my-card title="案例详情" :load="$apollo.loading">
+    <div id="editSelect">
+      <my-keywords
+        :title.sync="PageTitle"
+        :keywords.sync="Pagekeywords"
+        :description.sync="Pagedescription"
+      ></my-keywords>
+      <b-form-group label="案例类型:" label-align="right" label-cols="2">
+        <b-form-select v-model="type" :options="editOption"></b-form-select>
+      </b-form-group>
+      <b-form-group label="案例标题:" label-align="right" label-cols="2">
+        <b-form-input v-model.trim="title"></b-form-input>
+      </b-form-group>
+      <my-selectfile :isPic="true" :files.sync="file"></my-selectfile>
     </div>
-  </div>
+    <section id="editBody" class="my-3">
+      <vue-editor id="bodysaxs" v-model="contents" />
+    </section>
+    <div id="editFooter">
+      <b-button variant="success" class="float-right" @click="SendEdit('case')">确定</b-button>
+    </div>
+  </my-card>
 </template>
 <script lang="ts">
 import Vue from "vue";

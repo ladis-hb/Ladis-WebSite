@@ -2,8 +2,6 @@
 import crypto from "crypto";
 import util from "util";
 import { key,Collection } from "../config";
-import { JwtVerify } from "./Secret";
-import Multiparty from "../util/multiparty";
 /* 
 export const validation_jwt_user = (user: string, token: string) => {
   if (!user || user === "") return false;

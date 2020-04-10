@@ -62,8 +62,8 @@ module.exports = {
    ** See https://axios.nuxtjs.org/options
    */
   axios:{
-    baseURL:'http://www.ladishb.com:9006'
-    //baseURL:'http://localhost:9006'
+    // baseURL:'http://www.ladishb.com:9006'
+    baseURL:'http://localhost:9006'
   },
   auth: {
     strategies: {

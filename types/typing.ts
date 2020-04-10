@@ -1,10 +1,4 @@
-import { ParameterizedContext } from "koa";
-import { Query } from "server/Event/Event";
-
 /* eslint-disable camelcase */
-export interface KoaCtx extends ParameterizedContext {
-  $Query:Query
-}
 /* 用户信息 */
 export interface UserInfo {
   user: string;
@@ -42,13 +36,13 @@ export interface GMpack {
   date?: Date | string; // 日期
   table?:DbTables
   href?:string
-  link?:string
+  link:string
 }
 // 公用链接格式
 export interface GMlink {
   target?: string;
   href?: string;
-  link?:string;
+  link:string;
   title: string;
 }
 // 产品目录
@@ -142,7 +136,7 @@ export interface vr extends GMpack {
 export interface cases extends vr {}
 // 案例详情
 export interface caseList extends GMpack {
-  title?:string
+  title:string
   text?: string[];
   pic?: string[];
   content?:string
@@ -225,7 +219,7 @@ export interface editProduct {
 }
 
 // 代理商名称限定
-export type AgentName = 'localhost' | '湖北雷迪司' | '贵州代理商' | '陕西代理商'|'深圳市雷迪司电源有限公司';
+export type AgentName = 'localhost' | '湖北雷迪司' | '贵州代理商' | '陕西代理商'|'深圳市雷迪司电源有限公司'|'雷迪司网络能源(深圳)有限公司';
 // 代理
 export interface Agents {
   name: AgentName;

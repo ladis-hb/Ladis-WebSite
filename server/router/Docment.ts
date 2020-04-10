@@ -3,7 +3,8 @@ import * as DBs from "../mongoose/content";
 import Send from "koa-send"
 import fs from "fs"
 import { ParameterizedContext } from "koa";
-import { KoaCtx, CrorQuary, casesContext, buy, buyList } from "typing";
+import { CrorQuary, casesContext, buy, buyList } from "typing";
+import { KoaCtx } from "server";
 export default async (Ctx: ParameterizedContext) => {
   const ctx: KoaCtx = Ctx as any
   const Query = ctx.query as CrorQuary
@@ -54,7 +55,7 @@ export default async (Ctx: ParameterizedContext) => {
   switch (id) {
     case "Down":
       {
-        const filePath: string = "/static/" + Query.fileName
+        const filePath: string = "../static/" + Query.fileName
         console.log(filePath);
         ctx.assert(fs.existsSync(filePath), 400, "no files")
         ctx.attachment(filePath)
