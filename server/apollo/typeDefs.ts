@@ -131,12 +131,9 @@ const typeDefs: DocumentNode = gql`
     href: String
     title: String
     link: String
-    t1: JSON
-    t2: JSON
     head: String
     body: String
     img: [String]
-    down: JSON
   }
   #Query
   type Query {

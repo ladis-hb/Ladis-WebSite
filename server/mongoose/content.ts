@@ -28,12 +28,9 @@ const Schema_Product_list = new Schema({
   href: String,
   title: { type: String, trim: true },
   link: String,
-  t1: { type: "Mixed" },
-  t2: { type: "Mixed" },
   head: String,
   body: String,
   img: [String],
-  down: { type: "Mixed" },
 });
 
 const Schema_Support = new Schema({
@@ -157,8 +154,6 @@ const Schema_CaseNews_list = new Schema({
   href: String,
   title: { type: String, trim: true },
   link: String,
-  text: [String],
-  pic: [String],
   content: String
 });
 //about

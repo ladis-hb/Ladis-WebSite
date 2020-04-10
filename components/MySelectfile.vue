@@ -83,7 +83,7 @@ export default Vue.extend({
 </script>
 <style lang="scss" scoped>
 .imgs {
-  height: 100%;
+  height: 250px;
   width: auto;
 }
 </style>

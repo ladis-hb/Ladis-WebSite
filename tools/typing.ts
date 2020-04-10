@@ -27,22 +27,22 @@ type HtmlString = string;
 export type contentType = 'html' | '';
 // 公用包装
 export interface GMpack {
-  PageTitle?:string
-  Pagekeywords?:string
-  Pagedescription?:string
-  MainUrl?:string
+  PageTitle?: string
+  Pagekeywords?: string
+  Pagedescription?: string
+  MainUrl?: string
   MainTitle?: string; // 分类
   MainParent?: string; // 父类
   date?: Date | string; // 日期
-  table?:DbTables
-  href?:string
-  link?:string
+  table?: DbTables
+  href?: string
+  link?: string
 }
 // 公用链接格式
 export interface GMlink {
   target?: string;
   href?: string;
-  link?:string;
+  link?: string;
   title: string;
 }
 // 产品目录
@@ -53,7 +53,7 @@ export interface product extends GMpack {
   link: string;
 }
 //
-export interface productContentOld{
+export interface productContentOld {
   type: contentType;
   content: HtmlString;
 }
@@ -66,12 +66,12 @@ export interface productListOld {
 }
 // 产品包装
 export interface productList extends GMpack, productListOld {
-  title:string
+  title: string
 }
 // support asid
-export interface supportAsid extends GMpack, GMlink{}
-export interface supportProblem extends GMpack, GMlink{
-  child?:supportProblem[]
+export interface supportAsid extends GMpack, GMlink { }
+export interface supportProblem extends GMpack, GMlink {
+  child?: supportProblem[]
 }
 
 // 软件资料目录
@@ -116,7 +116,7 @@ export interface buyList extends GMpack {
 
 // vr
 export interface vr extends GMpack {
-  title:string
+  title: string
   img: string;
   name: string;
   time: string;
@@ -126,22 +126,19 @@ export interface vr extends GMpack {
   linkText: string;
 }
 // 案例
-export interface cases extends vr {}
+export interface cases extends vr { }
 // 案例详情
 export interface caseList extends GMpack {
-  title?:string
+  title: string/* 
   text?: string[];
-  pic?: string[];
-  content?:string
+  pic?: string[]; */
+  content: string
 }
 // about
 export interface about extends GMpack {
-  title:string
-  body?: string[];
-  content?: {
-    body: string;
-    webSite: AgentName;
-  }[];
+  type: string
+  webSite: string
+  content: string
 }
 // page
 export interface pageLink extends GMpack {
@@ -154,7 +151,7 @@ export interface pageLink extends GMpack {
 export interface router {
   title?: string;
   rout: string;
-  href:string
+  href: string
 }
 /* 跨域查询 */
 export type DbTables =

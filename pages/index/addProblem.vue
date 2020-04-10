@@ -23,11 +23,6 @@
           <b-form-input v-model.trim="problem.movie"></b-form-input>
         </b-form-group>
         <vue-editor id="asxsd " v-model="problem.html"></vue-editor>
-        <!-- <no-ssr>
-          <vue-editor id="asxsd " v-model="html"></vue-editor>
-        </no-ssr>-->
-        <!-- <my-edit :content.sync="html" v-if="!problem.movie" /> -->
-        <!-- <p>{{problem.html}}</p> -->
         <b-button block @click="Submit('problem')" variant="success">提交</b-button>
       </b-form>
     </b-card-body>
@@ -35,11 +30,9 @@
 </template>
 <script lang="ts">
 import Vue from "vue";
-import MyKeywords from "../../components/MyKeywords.vue";
 import gql from "graphql-tag";
 import { supportList } from "../../types/typing";
 export default Vue.extend({
-  components: { MyKeywords },
   data() {
     return {
       parentsUntil: [
@@ -59,11 +52,10 @@ export default Vue.extend({
         title: "",
         link: "",
         movie: "",
-        html: ""
+        html: `<font face="宋体">一体化机柜将数据中心基础设施产品进行深度整合，包含</font>`
       },
       blem: null,
       active: false,
-      html:''
     };
   },
   computed: {

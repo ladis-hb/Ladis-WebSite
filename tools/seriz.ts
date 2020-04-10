@@ -1,7 +1,12 @@
-/* jshint esversion:8 */
+/* 
+top:1,截取html字符串需要替换div,font等字符为span,富文本编辑器不识别
+    2,html字段中所有的中文需要由字符实体转换为中文字符串
+
+*/
 import { load } from "cheerio";
 import Axios from "axios";
 import DB from "../server/mongoose/content";
+const decoder = require('html-entity-decoder');
 import {
   supportList,
   pageLink,
@@ -158,8 +163,8 @@ async function Html_Serialize_Json(
         const data: productList = {
           ...defaults, title: defaults.MainTitle as string, link: url,
           img: Array.from(new Set(img)), // 图片去重
-          head: $(".printDisplay_para").html()?.replace(/\/n/g,"").replace("div","span").trim(),
-          body: $(".responseWidth").html()?.replace(/\/n/g,"").replace("div","span").trim()
+          head: decoder.feed($(".printDisplay_para").html()?.replace(/\/n/g, "").replace(/(div|font)/g, "span").trim()),
+          body: decoder.feed($(".responseWidth").html()?.replace(/\/n/g, "").replace(/(div|font)/g, "span").trim())
         };
 
         /* const t1: productContentOld = {
@@ -319,7 +324,7 @@ async function Html_Serialize_Json(
             title,
             parent,
           );
-          if(!list.movie){
+          if (!list.movie) {
             // 没有
             list.html = <string>await Html_Serialize_Json(
               list.link,
@@ -330,7 +335,7 @@ async function Html_Serialize_Json(
               parent,
             );
           }
-          
+
         }
       }
       return supportListResult;
@@ -342,7 +347,7 @@ async function Html_Serialize_Json(
 
     //// support 常见问题，视频教程 main 视频
     case "support_problem_args_html": {
-      return $(".new_list_outer").html()?.replace(/\/n/g,"").replace("div","span").trim()
+      return decoder.feed($(".new_list_outer").html()?.replace(/\/n/g, "").replace(/(div|font)/g, "span").trim())
     }
     //获取销售服务中心页面
     case "buy_list":
@@ -480,8 +485,14 @@ async function Html_Serialize_Json(
     case "case_list":
     case "news_list":
       {
+        const data: caseList = {
+          ...defaults,
+          title,
+          content: decoder.feed($(".new_list_outer").html()?.replace(/\/n/g, "").replace(/(div|font)/g, "span").trim() as string)
+        }
+        return data
 
-        const dock: caseList = { ...defaults, title, text: [], pic: [] };
+        /* const dock: caseList = { ...defaults, title, text: [], pic: [] };
         const list = $(".MsoNormal");
         list.each(function (i, val) {
           const text = $(val)
@@ -503,7 +514,7 @@ async function Html_Serialize_Json(
           if (text && text.trim() != "") (dock.text as string[]).push(text);
           if (pic) (dock.pic as string[]).push(pic);
         });
-        return dock;
+        return dock; */
       }
 
     /* -------------------------swith end ------------------------------------*/
@@ -523,7 +534,7 @@ async function first() {
   const Pages: Promise<any>[] = [];
   [
     [`/support/index.shtml`, "head", "head"],
-    //[`/products/index.shtml`, "products_asid", "products_asid"],
+    // [`/products/index.shtml`, "products_asid", "products_asid"],
     [`/support/node_27.shtml`, "support_problem", "support_asid"],
     [`/support/node_25.shtml`, "support_problem_asid", "support_problem_asid"],
   ].forEach(([path, type, title]) => {
@@ -635,11 +646,6 @@ async function first() {
   await DB.Support_list.deleteMany({})
   await DB.Buy.deleteMany({})
   await DB.Buy_list.deleteMany({})
-  await DB.VR.deleteMany({})
-  await DB.Case.deleteMany({})
-  await DB.Case_list.deleteMany({})
-  await DB.News.deleteMany({})
-  await DB.News_list.deleteMany({})
 
   for (let row of Rows) {
     const result: GMpack[] = await row;
@@ -718,6 +724,13 @@ async function secend() {
 */
 async function three() {
   {
+
+    await DB.VR.deleteMany({})
+    await DB.Case.deleteMany({})
+    await DB.Case_list.deleteMany({})
+    await DB.News.deleteMany({})
+    await DB.News_list.deleteMany({})
+
     const vr: Promise<vr[]>[] = [];
     ["/360/node_970.shtml", "/360/node_969.shtml"].forEach(url => {
       vr.push(<Promise<vr[]>>Html_Serialize_Json(
@@ -827,6 +840,7 @@ first().then(async () => {
   await three()
   process.exit()
 });
+
 
 
 async function WriteRouter(title: string, rout?: string, href?: string) {

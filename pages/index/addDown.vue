@@ -47,13 +47,10 @@
 </template>
 <script lang="ts">
 import Vue from "vue";
-import MyKeywords from "../../components/MyKeywords.vue";
-import MySelectfile from "../../components/MySelectfile.vue";
 import gql from "graphql-tag";
 import { selectFiles, ApolloMongoResult, support } from "../../types/typing";
 import { paresLink } from "../../plugins/tool";
 export default Vue.extend({
-  components: { MyKeywords, MySelectfile },
   data() {
     return {
       dev: {

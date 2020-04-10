@@ -18,25 +18,24 @@
           <my-selectfile :isPic="true" :files.sync="file"></my-selectfile>
         </div>
         <section id="editBody" class="my-3">
-          <my-edit :content.sync="content" />
+          <vue-editor id="bodysaxs" v-model="contents" />
         </section>
         <div id="editFooter">
           <b-button variant="success" class="float-right" @click="SendEdit('case')">确定</b-button>
         </div>
       </b-card-body>
     </b-card>
+    <div>
+      
+    </div>
   </div>
 </template>
 <script lang="ts">
 import Vue from "vue";
 import gql from "graphql-tag";
-import MyKeywords from "../../components/MyKeywords.vue";
-import MyEdit from "../../components/MyEdit.vue";
-import MySelectfile from "../../components/MySelectfile.vue";
 import { selectFiles, cases, caseList } from "../../types/typing";
 import deepmerge from "deepmerge";
 export default Vue.extend({
-  components: { MyEdit, MyKeywords, MySelectfile },
   data() {
     return {
       PageTitle: "",
@@ -45,7 +44,7 @@ export default Vue.extend({
       title: "",
       type: "",
       file: "",
-      content: `<h2 class="ql-align-center"><span class="ql-font-serif">Text content loading..</span></h2>`,
+      content: ``,
       editOption: ["UPS电源", "一体化机柜", "数据中心", "机房空调"],
       // apollo
       case: null,
@@ -65,7 +64,7 @@ export default Vue.extend({
         this.$data.PageTitle = newVal.PageTitle;
         this.$data.Pagekeywords = newVal.Pagekeywords;
         this.$data.Pagedescription = newVal.Pagedescription;
-        this.$data.content = newVal.content || newVal.text;
+        this.$data.content = newVal.content;
       }
     }
   },
@@ -96,8 +95,6 @@ export default Vue.extend({
             PageTitle
             Pagekeywords
             Pagedescription
-            text
-            pic
             content
           }
         }
@@ -171,9 +168,6 @@ export default Vue.extend({
 
       const isOpen = await this.$bvModal.msgBoxConfirm("success");
       if (isOpen) window.open("http://www.ladishb.com" + link, "_blank");
-    },
-    onEditorChange({ html }: { html: string }) {
-      this.content = html;
     }
   }
 });

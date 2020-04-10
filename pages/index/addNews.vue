@@ -18,7 +18,7 @@
           <my-selectfile :isPic="true" :files.sync="file"></my-selectfile>
         </div>
         <section id="editBody" class="my-3">
-          <my-edit :content.sync="content" />
+          <vue-editor v-model="content" />
         </section>
         <div id="editFooter">
           <b-button variant="success" class="float-right" @click="SendEdit('case')">确定</b-button>
@@ -30,13 +30,9 @@
 <script lang="ts">
 import Vue from "vue";
 import gql from "graphql-tag";
-import MyKeywords from "../../components/MyKeywords.vue";
-import MyEdit from "../../components/MyEdit.vue";
-import MySelectfile from "../../components/MySelectfile.vue";
 import { selectFiles, cases, caseList } from "../../types/typing";
 import deepmerge from "deepmerge";
 export default Vue.extend({
-  components: { MyEdit, MyKeywords, MySelectfile },
   data() {
     return {
       PageTitle: "",
@@ -45,7 +41,7 @@ export default Vue.extend({
       title: "",
       type: "",
       file: "",
-      content: ``,
+      content: `<p face=\"宋体\">一体化机柜将数据中心基础设施产品进行深度整合，包含</p>`,
       editOption: ["行业新闻", "产品新闻", "企业新闻", "服务通告"],
       // apollo
       case: null,
@@ -96,8 +92,6 @@ export default Vue.extend({
             PageTitle
             Pagekeywords
             Pagedescription
-            text
-            pic
             content
           }
         }

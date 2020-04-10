@@ -22,12 +22,12 @@
             <my-selectfile-multi :isPic="true" :files.sync="dev.img"></my-selectfile-multi>
           </b-col>
           <b-col>
-            <my-edit :content.sync="dev.head" />
+            <vue-editor id="head" v-model="dev.head" />
           </b-col>
         </b-row>
         <b-row no-gutters>
           <b-card title="产品特点" class="w-100">
-            <my-edit :content.sync="dev.body" />
+            <vue-editor id="body" v-model="dev.body" />
           </b-card>
         </b-row>
       </div>
@@ -39,11 +39,7 @@
 </template>
 <script lang="ts">
 import Vue from "vue";
-import MyKeywords from "../../components/MyKeywords.vue";
 import gql from "graphql-tag";
-import MyEdit from "../../components/MyEdit.vue";
-import MySelectfile from "../../components/MySelectfile.vue";
-import MySelectfileMulti from "../../components/MySelectfileMulti.vue";
 import {
   selectFiles,
   editProduct,
@@ -53,7 +49,6 @@ import {
 import { paresLink } from "../../plugins/tool";
 
 export default Vue.extend({
-  components: { MyKeywords, MyEdit, MySelectfile, MySelectfileMulti },
   data() {
     const ProductType = [
       "UPS电源",

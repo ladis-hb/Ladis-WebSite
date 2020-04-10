@@ -70,6 +70,7 @@
     "@types/vue2-editor": "^2.6.0",
     "cheerio": "^1.0.0-rc.3",
     "core-js": "^2.6.11",
+    "html-entity-decoder": "^1.0.1",
     "node-sass": "^4.12.0",
     "nodemon": "^2.0.2",
     "quill-image-resize-module": "^3.0.0",

@@ -13,7 +13,7 @@
           </b-form-group>
         </div>
         <section id="editBody" class="my-3">
-          <my-edit :content.sync="content" />
+          <vue-editor v-model="content" />
         </section>
 
         <div id="editFooter">
@@ -26,10 +26,8 @@
 <script lang="ts">
 import Vue from "vue";
 import gql from "graphql-tag";
-import MyEdit from "../../components/MyEdit.vue";
 import { about } from "../../types/typing";
 export default Vue.extend({
-  components: { MyEdit },
   data() {
     return {
       type: [

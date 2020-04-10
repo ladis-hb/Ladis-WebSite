@@ -38,7 +38,7 @@ const resolvers: IResolvers = {
     // 获取代理商about
     async getAbouts(root, { selectType, webSite }) {
       const result = await DBs.About.findOne({ type: selectType, webSite: webSite }).lean() as about
-      return result?.content
+      return result.content
     },
     // 获取经销商列表
     async getbuys() {
