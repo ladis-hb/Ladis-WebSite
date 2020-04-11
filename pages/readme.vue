@@ -45,9 +45,3 @@ export default {
   }
 };
 </script>
-
-<style scope>
-img {
-  width: 90%;
-}
-</style>

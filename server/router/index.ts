@@ -3,23 +3,23 @@ import Router from "koa-router";
 import Auth from "./auth";
 import Upload from "./upload";
 import Docment from "./Docment";
-import File, { getFileStatAndDown } from "./file";
+import File, { getFileStatAndDown } from "./file";/* 
 import fs from "fs"
-import Send from "koa-send";
-import { ParameterizedContext } from "koa";
+// import Send from "koa-send";
+import { ParameterizedContext } from "koa"; */
 
 const router = new Router();
 // 下载附件
-router.get("/down/:title", down);
-router.get("/upload/:title", down);
+router.get("/down/*", File);
+router.get("/upload/*", File);
 // 图片
-router.get("/_CMS_NEWS_IMG_/*", File);
-router.get("/a_images/*", File);
+router.get( /(\/_CMS_NEWS_IMG_\/*|a_images\/*)/, File);
+// router.get("/a_images/*", File);
 //
 router.post("/auth/:id", Auth);
 router.put("/uploads/:id", Upload);
 router.get("/api/:id", Docment);
-
+/* 
 async function down(ctx: ParameterizedContext<any, Router.IRouterParamContext<any, {}>>) {
   try {
     const result = await getFileStatAndDown(ctx.path);
@@ -38,6 +38,6 @@ async function down(ctx: ParameterizedContext<any, Router.IRouterParamContext<an
   } catch (error) {
     ctx.throw(400, error);
   }
-}
+} */
 
 export default router;

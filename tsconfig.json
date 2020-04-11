@@ -34,6 +34,6 @@
       "bootstrap-vue"
     ]
   },
-  "exclude": ["tools/*"]
+  "exclude": ["tools/*","node_modules"]
 
 }

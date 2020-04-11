@@ -99,7 +99,7 @@ const resolvers: IResolvers = {
       const test = new Promise((resolve,reject)=>{
         setTimeout(async () => {
           resolve(result)
-        }, 5000);
+        }, 1000);
       })
       return  await test
     },
