@@ -4,6 +4,7 @@ import multiparty from "multiparty";
 import Path from "path";
 import fs from "fs-extra";
 import { IncomingMessage } from "http"
+import ImageCompre from "../util/ImageCompre";
 interface uploadFile {
   fieldName: string
   originalFilename: string
@@ -45,6 +46,8 @@ function Multiparty(req: IncomingMessage) {
         const flieNameNew = `${new Date().toLocaleString().replace(/( |:|:)/g, "-")}__${file.originalFilename}`
         const newPath = file.path.replace(Path.basename(file.path), flieNameNew)
         fs.renameSync(file.path, decodeURI(newPath))
+        // 压缩图片
+        ImageCompre(newPath)
         //获取文件路径相对链接
         const link = `/upload/${flieNameNew}`
         return {

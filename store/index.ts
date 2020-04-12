@@ -1,25 +1,29 @@
- import { GetterTree, ActionTree, MutationTree } from 'vuex'
-import { selectFiles } from '../types/typing'
+import { GetterTree, ActionTree, MutationTree } from "vuex";
+import { selectFiles } from "../types/typing";
 export const state = () => ({
-  SourceFile:[{path: "/_CMS_NEWS_IMG_/cms_images/fck/2018-08/21/567d1696-22a3-4086-a70c-41e205b3aa44.png", name: "1572055868193banner01-pc.jpg", filetype: "img"}] as selectFiles[],
-  name:"ladis"
-})
+  SourceFile: [
+    {
+      path: "/_CMS_NEWS_IMG_/cms_images/fck/2018-08/21/567d1696-22a3-4086-a70c-41e205b3aa44.png",
+      name: "1572055868193banner01-pc.jpg",
+      filetype: "img"
+    }
+  ] as selectFiles[],
+  name: "ladis"
+});
 
-export type RootState = ReturnType<typeof state>
+export type RootState = ReturnType<typeof state>;
 
 export const getters: GetterTree<RootState, RootState> = {
   // name: state => state.name,
-}
+};
 
 export const mutations: MutationTree<RootState> = {
   SET_SOURCE_FILE: (state, payload: selectFiles) => {
-    state.SourceFile.push(payload as never)
+    state.SourceFile.push(payload as never);
   }
-}
+};
 
-export const actions: ActionTree<RootState, RootState> = {
-  
-}
+export const actions: ActionTree<RootState, RootState> = {};
 
 /* export const state = () => ({
   user: "nuss",
@@ -76,4 +80,3 @@ export const mutations = {
     }
   }
 }; */
- 

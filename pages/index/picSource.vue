@@ -37,7 +37,6 @@
     <b-card title="选择素材">
       <div id="allImg" class="my-2" v-if="sourceFileFilter.Img.length>0">
         <h5 class="px-3 border-bottom">图片素材</h5>
-
         <span
           v-for="(item, index) in sourceFileFilter.Img"
           :key="index"
@@ -104,12 +103,18 @@ export default Vue.extend({
     sourceFileFilter() {
       const sourceFile: fileDirList = this.$data.sourceFile;
       const keyswords = this.$data.keyswords;
+      const storeKeys = this.$store.state.SourceFile as selectFiles[];
       const files: any = {
         Img: [],
         Other: []
       };
       sourceFile.files
-        .filter(el => !keyswords || el.includes(keyswords))
+        .filter(el => {
+          return (
+            (!keyswords || el.includes(keyswords)) &&
+            !storeKeys.some(els => els.path === el)
+          );
+        })
         .forEach(file => {
           let filetype = <string>file.split(".").pop();
           const name = <string>file.split("/").pop();
@@ -195,17 +200,22 @@ export default Vue.extend({
     },
     //
     inputSours() {
-      const inputSour = decodeURI(new URL(this.$data.inputSour).pathname);
-      if (!inputSour) return;
-      const sourceFile: fileDirList = this.$data.sourceFile;
-      const files: string[] = sourceFile.files;
-
-      if (files.includes(inputSour)) {
-        console.log(files);
-        console.log(inputSour);
+      const inputSour = this.$data.inputSour;
+      if (/http:\/\/*\/*\//.test(inputSour)) {
+        const pathname = decodeURI(new URL(inputSour).pathname);
+        const files: selectFiles[] = Object.values(
+          (this as any).sourceFileFilter
+        ).flat();
+        for (let el of files) {
+          if (el.path === pathname) {
+            this.$store.commit("SET_SOURCE_FILE", el);
+            continue;
+          }
+        }
       }
-
-      this.$data.inputSour = "";
+      this.$data.inputSour =null;
+      console.log({sss:this.$data.inputSour});
+      
     }
   }
 });
