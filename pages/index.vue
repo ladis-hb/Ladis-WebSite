@@ -24,7 +24,7 @@
           </b-nav-item>
         </b-nav>
       </b-col>
-      <b-col class="p-5 overflow-auto mh-100">
+      <b-col class="overflow-auto mh-100">
         <b-overlay :show="$apollo.loading">
           <transition>
             <keep-alive>

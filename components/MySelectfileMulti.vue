@@ -12,10 +12,9 @@
         controls
         indicators
         background="#ababab"
-        img-height="360"
         style="text-shadow: 1px 1px 2px #333;"
       >
-        <b-carousel-slide v-for="val in carousel" :key="val" :img-src="val" class="imgs"></b-carousel-slide>
+        <b-carousel-slide v-for="val in carousel" :key="val" :img-src="val" img-height="200"></b-carousel-slide>
       </b-carousel>
       <!-- <b-img :src="file" height="50" class="imgs" v-else></b-img> -->
     </b-form-group>
@@ -104,7 +103,7 @@ export default Vue.extend({
 </script>
 <style lang="scss" scoped>
 .imgs {
-  height: 100%;
+  height: 200px;
   width: auto;
 }
 </style>

@@ -20,12 +20,15 @@
           <my-selectfile-multi :isPic="true" :files.sync="dev.img"></my-selectfile-multi>
         </b-col>
         <b-col>
-          <vue-editor id="head" v-model="dev.head" />
+          <!-- <vue-editor id="head" v-model="dev.head" /> -->
+          <!-- <b-textarea v-model="dev.head"></b-textarea> -->
+          <my-edit :content.sync='dev.head'></my-edit>
         </b-col>
       </b-row>
       <b-row no-gutters>
         <b-card title="产品特点" class="w-100">
-          <vue-editor id="body" v-model="dev.body" />
+          <my-edit :content.sync='dev.body'></my-edit>
+          <!-- <vue-editor id="body" v-model="dev.body" /> -->
         </b-card>
       </b-row>
     </div>

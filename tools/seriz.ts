@@ -163,8 +163,8 @@ async function Html_Serialize_Json(
         const data: productList = {
           ...defaults, title: defaults.MainTitle as string, link: url,
           img: Array.from(new Set(img)), // 图片去重
-          head: decoder.feed($(".printDisplay_para").html()?.replace(/\/n/g, "").replace(/(div|font)/g, "span").trim()),
-          body: decoder.feed($(".responseWidth").html()?.replace(/\/n/g, "").replace(/(div|font)/g, "span").trim())
+          head: htmlParse($(".printDisplay_para").html()), //decoder.feed($(".printDisplay_para").html()?.replace(/\/n/g, "").replace(/(div|font)/g, "span").trim()),
+          body: htmlParse($(".responseWidth").html()),//decoder.feed($(".responseWidth").html()?.replace(/\/n/g, "").replace(/(div|font)/g, "span").trim())
         };
 
         /* const t1: productContentOld = {
@@ -347,7 +347,7 @@ async function Html_Serialize_Json(
 
     //// support 常见问题，视频教程 main 视频
     case "support_problem_args_html": {
-      return decoder.feed($(".new_list_outer").html()?.replace(/\/n/g, "").replace(/(div|font)/g, "span").trim())
+      return htmlParse($(".new_list_outer").html())//decoder.feed($(".new_list_outer").html()?.replace(/\/n/g, "").replace(/(div|font)/g, "span").trim())
     }
     //获取销售服务中心页面
     case "buy_list":
@@ -488,7 +488,7 @@ async function Html_Serialize_Json(
         const data: caseList = {
           ...defaults,
           title,
-          content: decoder.feed($(".new_list_outer").html()?.replace(/\/n/g, "").replace(/(div|font)/g, "span").trim() as string)
+          content: htmlParse($(".new_list_outer").html())//decoder.feed($(".new_list_outer").html()?.replace(/\/n/g, "").replace(/(div|font)/g, "span").trim() as string)
         }
         return data
 
@@ -841,7 +841,10 @@ first().then(async () => {
   process.exit()
 });
 
-
+function htmlParse(html:string|null){
+  //return decoder.feed(html?.replace(/\/n/g, "").replace(/(div|font)/g, "span").trim())
+  return decoder.feed(html?.replace(/\/n/g, "").trim())
+}
 
 async function WriteRouter(title: string, rout?: string, href?: string) {
   if (!rout) return
