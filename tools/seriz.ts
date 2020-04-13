@@ -843,7 +843,8 @@ first().then(async () => {
 
 function htmlParse(html:string|null){
   //return decoder.feed(html?.replace(/\/n/g, "").replace(/(div|font)/g, "span").trim())
-  return decoder.feed(html?.replace(/\/n/g, "").trim())
+  //return decoder.feed(html?.replace(/\/n/g, "").trim())
+  return decoder.feed(html?.trim())
 }
 
 async function WriteRouter(title: string, rout?: string, href?: string) {

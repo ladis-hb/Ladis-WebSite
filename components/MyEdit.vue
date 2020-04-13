@@ -1,21 +1,34 @@
 <template>
-  <quill-editor
-    v-model="cpContent"
-    :options="editorOption"
-    @blur="onEditorBlur($event)"
-    @focus="onEditorFocus($event)"
-    @change="onEditorChange($event)"
-  ></quill-editor>
+  <b-tabs>
+    <b-tab title="编辑器">
+      <quill-editor
+        v-model="cpContent"
+        :options="editorOption"
+        @change="onEditorChange($event)"
+      ></quill-editor>
+    </b-tab>
+    <b-tab title="源码">
+      <codemirror ref="myCm"
+                :value="cpContent" 
+                :options="cmOptions"
+                @input="onCmCodeChange">
+    </codemirror>
+    </b-tab>
+  </b-tabs>
 </template>
 <script>
 import { quillEditor } from "vue-quill-editor";
 import Quill from "quill"; //引入编辑器
 import { ImageDrop } from "quill-image-drop-module";
 import ImageResize from "quill-image-resize-module";
+//
+import { codemirror } from 'vue-codemirror'
+// require styles
+import 'codemirror/lib/codemirror.css'
 Quill.register("modules/imageDrop", ImageDrop);
 Quill.register("modules/imageResize", ImageResize);
 export default {
-  components: { quillEditor },
+  components: { quillEditor, codemirror },
   data() {
     return {
       DaContent: ``,
@@ -46,25 +59,36 @@ export default {
         readyOnly: false, //是否只读
         theme: "snow", //主题 snow/bubble
         syntax: true //语法检测
+      },
+      //
+      cmOptions: {
+        // codemirror options
+        tabSize: 4,
+        mode: 'text/html',
+        theme: 'base16-dark',
+        lineNumbers: true,
+        line: true
       }
     };
   },
   methods: {
-    // 失去焦点
-    onEditorBlur(editor) {},
-    // 获得焦点
-    onEditorFocus(editor) {},
-    // 开始
-    onEditorReady(editor) {},
     // 值发生变化
     onEditorChange(editor) {
-      /* this.content = editor.html;
-      console.log(editor); */
       this.$emit("update:content", this.DaContent);
+    },
+    onCmCodeChange(newCode) {
+      this.DaContent = newCode
+      this.$emit("update:content", this.DaContent);
+      console.log({cp:this.cpContent,newCode})
+      
+      
     }
   },
   props: ["content"],
   computed: {
+    codemirror() {
+      return this.$refs.myCm.codemirror
+    },
     cpContent: {
       get() {
         return this.content || "";
