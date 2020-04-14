@@ -20,12 +20,13 @@
           <my-selectfile-multi :isPic="true" :files.sync="dev.img"></my-selectfile-multi>
         </b-col>
         <b-col>
-          <my-edit :content.sync='dev.head'></my-edit>
+          <my-code :html.sync = 'dev.head'></my-code>
+          <!-- <my-edit :content.sync='dev.head'></my-edit> -->
         </b-col>
       </b-row>
       <b-row no-gutters>
         <b-card title="产品特点" class="w-100">
-          <my-edit :content.sync='dev.body'></my-edit>
+          <!-- <my-edit :content.sync='dev.body'></my-edit> -->
         </b-card>
       </b-row>
     </div>

@@ -3,3 +3,4 @@ declare module 'vue-picture-preview'{
         test:any
     }
 }
+

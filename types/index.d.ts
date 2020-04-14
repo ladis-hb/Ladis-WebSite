@@ -16,6 +16,22 @@ declare module "koa"{
     body?:any
   }
 }
+declare module 'tinymce'{
+  interface value{
+    title:string
+    value?:string
+    description?:string
+    content?:string
+    url?:string
+  }
+  interface Settings{
+      importcss_append?:boolean
+      image_list?:value[]
+      link_list?:value[]
+      save_onsavecallback?:()=>void
+      templates?:value[]
+  }
+}
 
 // 2. 定制一个文件，设置你想要补充的类型
 //    在 types/vue.d.ts 里 Vue 有构造函数类型

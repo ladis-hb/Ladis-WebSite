@@ -31,7 +31,8 @@
       "@types/nuxtjs__auth",
       "vue/types",
       "@nuxtjs/axios",
-      "bootstrap-vue"
+      "bootstrap-vue",
+      "@types/tinymce"
     ]
   },
   "exclude": ["tools/*"]
