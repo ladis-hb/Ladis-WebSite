@@ -14,7 +14,12 @@ export const state = () => ({
 export type RootState = ReturnType<typeof state>;
 
 export const getters: GetterTree<RootState, RootState> = {
-  // name: state => state.name,
+  getFiles: state => (isImg: boolean) => {
+    const files = state.SourceFile;
+    return files
+      .filter(el => (el.filetype === "img") === isImg)
+      .map(el => ({ title: el.name, value: el.path, url: el.path }));
+  }
 };
 
 export const mutations: MutationTree<RootState> = {

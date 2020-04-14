@@ -23,6 +23,7 @@ declare module 'tinymce'{
     description?:string
     content?:string
     url?:string
+    type?:string
   }
   interface Settings{
       importcss_append?:boolean

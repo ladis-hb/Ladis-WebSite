@@ -1,7 +1,15 @@
 <template>
   <div class="overflow-auto border">
     <b-card title="编辑器">
-      <editor :api-key="key" :init="opt" output-format="html" v-model="content" />
+      <editor
+        :api-key="key"
+        :init="opt"
+        output-format="html"
+        v-model="content"
+        initial-value="Once upon a time..."
+        @onFocus="fouce"
+        @onInit="loginit"
+      />
     </b-card>
   </div>
 </template>
@@ -9,7 +17,7 @@
 import Vue from "vue";
 import Editor from "@tinymce/tinymce-vue";
 import "../assets/css/product.css";
-import { Settings } from "tinymce";
+import { Settings,Events,Editor as edit } from "tinymce";
 export default Vue.extend({
   components: {
     editor: Editor
@@ -30,10 +38,7 @@ export default Vue.extend({
         "save|styleselect | code template|anchor|restoredraft| hr |image media insertdatetime link |numlist bullist|searchreplace wordcount",
       content_css: "/css/productUtil.css",
       // 图片列表
-      image_list: [
-        { title: "狗", value: "mydog.jpg" },
-        { title: "猫", value: "mycat.gif" }
-      ],
+      image_list: this.$store.getters.getFiles(true),
       // 链接列表
       link_list: [
         { title: "My page 1", value: "https://www.tiny.cloud" },
@@ -56,8 +61,21 @@ export default Vue.extend({
     return {
       key: "ah01czhmyx4gu3m907gtiaw1gbcv33tsxzvu4u8uucryki7h",
       opt,
-      content: this.html || ""
+      content: " sssssssssssssssss"
     };
+  },
+  mounted() {
+    console.log({ s: this.$store.getters.getFiles(true) });
+  },
+  methods:{
+    fouce(Fouce:Events.FocusBlurEvent,edit:edit){
+      console.log({Fouce,edit});
+      edit.init()
+    },
+    loginit(){
+      console.log("loginit");
+      
+    }
   }
 });
 </script>
