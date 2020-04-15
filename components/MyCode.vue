@@ -6,7 +6,6 @@
         :init="opt"
         output-format="html"
         v-model="content"
-        initial-value="Once upon a time..."
         @onFocus="fouce"
         @onInit="loginit"
       >loading</editor>
