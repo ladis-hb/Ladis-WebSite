@@ -8,6 +8,8 @@
         v-model="content"
         @onFocus="fouce"
         @onInit="loginit"
+        placeholder="此处开始编写代码"
+        class=" border rounded-sm p-3"
       >loading</editor>
     </b-card>
   </div>
