@@ -18,7 +18,8 @@
     "noImplicitThis": true,
     "noEmit": true,
     "baseUrl": ".",
-    "skipDefaultLibCheck": false,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck":true,
     "paths": {
       "*": [
         "./types/*",
@@ -32,7 +33,7 @@
       "vue/types",
       "@nuxtjs/axios",
       "bootstrap-vue",
-      "@types/tinymce"
+      //"@types/tinymce"
     ]
   },
   "exclude": ["tools/*"]

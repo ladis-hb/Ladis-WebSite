@@ -26,6 +26,7 @@
       </b-row>
       <b-row no-gutters>
         <b-card title="产品特点" class="w-100">
+          <my-code :html.sync = 'dev.body'></my-code>
           <!-- <my-edit :content.sync='dev.body'></my-edit> -->
         </b-card>
       </b-row>

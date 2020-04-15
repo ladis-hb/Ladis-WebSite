@@ -9,7 +9,7 @@
         initial-value="Once upon a time..."
         @onFocus="fouce"
         @onInit="loginit"
-      />
+      >loading</editor>
     </b-card>
   </div>
 </template>
@@ -32,18 +32,21 @@ export default Vue.extend({
       menubar: "format",
       //importcss_append: true,
       plugins: [
-        "importcss code autosave hr image insertdatetime link lists media save searchreplace template wordcount"
+        "importcss code autosave hr image insertdatetime link lists media save searchreplace template wordcount",
+        'advlist autolink lists link image charmap print preview anchor',
+           'searchreplace visualblocks code fullscreen',
+           'insertdatetime media table paste code help wordcount'
       ],
       toolbar:
-        "save|styleselect | code template|anchor|restoredraft| hr |image media insertdatetime link |numlist bullist|searchreplace wordcount",
+        "save|styleselect | code template|anchor|restoredraft| hr |image media insertdatetime link |numlist bullist|searchreplace wordcount| bold italic backcolor ",
       content_css: "/css/productUtil.css",
-      // 图片列表
+      /* // 图片列表
       image_list: this.$store.getters.getFiles(true),
       // 链接列表
       link_list: [
         { title: "My page 1", value: "https://www.tiny.cloud" },
         { title: "My page 2", value: "https://about.tiny.cloud" }
-      ],
+      ], */
       // 模板
       templates: [
         {
@@ -61,7 +64,7 @@ export default Vue.extend({
     return {
       key: "ah01czhmyx4gu3m907gtiaw1gbcv33tsxzvu4u8uucryki7h",
       opt,
-      content: " sssssssssssssssss"
+      content: ""
     };
   },
   mounted() {
@@ -69,8 +72,11 @@ export default Vue.extend({
   },
   methods:{
     fouce(Fouce:Events.FocusBlurEvent,edit:edit){
+      if(this.html && !this.content){
+        this.content = this.html
+      }
       console.log({Fouce,edit});
-      edit.init()
+      //edit.init()
     },
     loginit(){
       console.log("loginit");

@@ -9,15 +9,16 @@
           <b-nav-item :to="{ name: 'index-news' }">新闻资讯</b-nav-item>
           <b-nav-item :to="{ name: 'index-case' }">案例管理</b-nav-item>
           <b-nav-item :to="{ name: 'index-buy' }">经销商管理</b-nav-item>
-          <b-nav-item to="/">相关管理</b-nav-item>
+          <b-nav-item :to="{name:'index-about'}">相关管理</b-nav-item>
           <b-nav-item :to="{ name: 'index-down' }">服务支持</b-nav-item>
           <b-nav-item :to="{ name: 'index-product' }">产品分类</b-nav-item>
           <b-nav-item-dropdown text="首页管理">
             <b-dropdown-item :to="{ name: 'index-carousel' }">轮播图</b-dropdown-item>
           </b-nav-item-dropdown>
+          <b-nav-item to="/">空编辑器</b-nav-item>
           <b-nav-item :to="{ name: 'index-picSource' }">素材管理</b-nav-item>
           <b-nav-item>
-            <b-button v-b-modal.modal-1 variant="info">
+            <b-button v-b-toggle.modal-1 variant="info">
               已选素材
               <b-badge pill>{{ SourceFile.length }}</b-badge>
             </b-button>
@@ -34,26 +35,29 @@
         </b-overlay>
       </b-col>
     </b-row>
-    <b-modal id="modal-1" title="已选素材" size="xl">
+    <b-sidebar id="modal-1" title="已选素材" bg-variant="dark" text-variant="light" shadow>
       <b-list-group>
         <b-list-group-item
           v-for="file in SourceFile || []"
           :key="file.name"
           v-b-toggle="'pic' + file.name"
+          class="bg-dark text-light"
         >
           <b-badge>{{String(file.filetype).toLocaleUpperCase()}}</b-badge>
-          {{file.name }}
-          <b-collapse :id="'pic' + file.name" visible accordion="my-accordion2" role="tabpanel">
-            <b-card-img-lazy
-              v-if="file.filetype === 'img'"
-              class="modalImg"
-              :src="file.path"
-              :alt="file.path"
-            ></b-card-img-lazy>
+          {{file.name.split("__").pop() }}
+          <b-collapse
+            :id="'pic' + file.name"
+            visible
+            accordion="my-accordion2"
+            role="tabpanel"
+            class="bg-light"
+          >
+            <b-card-img-lazy v-if="file.filetype === 'img'" class="modalImg" :src="file.path"></b-card-img-lazy>
+            <b-link v-else :href="file.path" class>{{file.path}}</b-link>
           </b-collapse>
         </b-list-group-item>
       </b-list-group>
-    </b-modal>
+    </b-sidebar>
   </b-container>
 </template>
 <script lang="ts">
