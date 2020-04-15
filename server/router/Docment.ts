@@ -114,7 +114,8 @@ export default async (Ctx: ParameterizedContext) => {
     case "Get_arg":
       // 请求参数
       const { table, isNews } = Query;
-      const queryKeys: string[] = Query["queryKeys[]"]; // 'queryKeys[]': [ 'MainTitle', 'MainTitle' ],
+      // 'queryKeys[]': [ 'MainTitle', 'MainTitle' ],
+      const queryKeys: string[] = Query["queryKeys[]"]; 
 
       let query = {};
       if (queryKeys) {
@@ -123,8 +124,13 @@ export default async (Ctx: ParameterizedContext) => {
           (query as any)[key] = Query[key];
         });
       }
+      //
+      {
+        if(table === 'About'){
+          (query as any).webSite = Query.SiteName
+        }
+      }
       console.log({ Query, query });
-
       // 申明结果变量
       let result;
 
