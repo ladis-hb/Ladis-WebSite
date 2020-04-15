@@ -59,7 +59,7 @@
 <script lang="ts">
 import Vue from "vue";
 import gql from "graphql-tag";
-import { support, supportList } from "../../types/typing";
+import { support, supportList } from "../../../types/typing";
 export default Vue.extend({
   data() {
     return {

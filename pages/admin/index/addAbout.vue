@@ -21,7 +21,7 @@
 <script lang="ts">
 import Vue from "vue";
 import gql from "graphql-tag";
-import { about } from "../../types/typing";
+import { about } from "../../../types/typing";
 export default Vue.extend({
   data() {
     return {

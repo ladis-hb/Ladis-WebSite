@@ -1,4 +1,5 @@
 const webpack = require('webpack')
+const Host = 'https://www.ladishb.com/admin'
 module.exports = {
   mode: "spa",
   /*
@@ -58,7 +59,7 @@ module.exports = {
    ** See https://axios.nuxtjs.org/options
    */
   axios:{
-    baseURL:process.env.NODE_ENV === "production" ? 'http://www.ladishb.com:9006' : 'http://localhost:9006'
+    baseURL:process.env.NODE_ENV === "production" ? Host : 'http://localhost:9006'
     //baseURL:'http://localhost:9006'
   },
   auth: {
@@ -78,10 +79,10 @@ module.exports = {
       }
     },
     redirect: {
-      login: "/login",
-      logout: "/login",
+      login: "/admin/login",
+      logout: "/admin/login",
       //callback: '/admin/edit',
-      home: "/"
+      home: "/admin/"
     }
   },
 
@@ -120,16 +121,11 @@ module.exports = {
    ** Build configuration
    */
   build: {
+    publicPath: process.env.NODE_ENV === "production" ? Host+'/_nuxt/' :'/_nuxt/',
     /*
      ** You can extend webpack config here
      */
     extend(config, ctx) {},
-    plugins: [
-      new webpack.ProvidePlugin({
-        'window.Quill': 'quill/dist/quill.js',
-        'Quill': 'quill/dist/quill.js'
-      })
-    ]
   },
   //
   router: {

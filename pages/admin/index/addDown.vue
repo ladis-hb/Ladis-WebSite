@@ -43,8 +43,8 @@
 <script lang="ts">
 import Vue from "vue";
 import gql from "graphql-tag";
-import { selectFiles, ApolloMongoResult, support } from "../../types/typing";
-import { paresLink } from "../../plugins/tool";
+import { selectFiles, ApolloMongoResult, support } from "../../../types/typing";
+import { paresLink } from "../../../plugins/tool";
 export default Vue.extend({
   data() {
     return {

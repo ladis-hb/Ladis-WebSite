@@ -44,8 +44,8 @@ import {
   editProduct,
   product,
   productList
-} from "../../types/typing";
-import { paresLink } from "../../plugins/tool";
+} from "../../../types/typing";
+import { paresLink } from "../../../plugins/tool";
 
 export default Vue.extend({
   data() {

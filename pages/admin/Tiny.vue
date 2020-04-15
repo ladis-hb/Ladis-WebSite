@@ -8,7 +8,7 @@
 <script lang="ts">
 import Vue from "vue";
 import Editor from "@tinymce/tinymce-vue";
-import "../assets/css/product.css";
+import "../../assets/css/product.css";
 import { Settings } from "tinymce";
 export default Vue.extend({
   components: {

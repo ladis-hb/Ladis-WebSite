@@ -1,15 +1,15 @@
 <template>
-  <my-card title="案例详情" :load="$apollo.loading">
+  <my-card title="新闻资讯" :load="$apollo.loading">
     <div id="editSelect">
       <my-keywords
         :title.sync="PageTitle"
         :keywords.sync="Pagekeywords"
         :description.sync="Pagedescription"
       ></my-keywords>
-      <b-form-group label="案例类型:" label-align="right" label-cols="2">
+      <b-form-group label="新闻类型:" label-align="right" label-cols="2">
         <b-form-select v-model="type" :options="editOption"></b-form-select>
       </b-form-group>
-      <b-form-group label="案例标题:" label-align="right" label-cols="2">
+      <b-form-group label="新闻标题:" label-align="right" label-cols="2">
         <b-form-input v-model.trim="title"></b-form-input>
       </b-form-group>
       <my-selectfile :isPic="true" :files.sync="file"></my-selectfile>
@@ -25,7 +25,7 @@
 <script lang="ts">
 import Vue from "vue";
 import gql from "graphql-tag";
-import { selectFiles, cases, caseList } from "../../types/typing";
+import { selectFiles, cases, caseList } from "../../../types/typing";
 import deepmerge from "deepmerge";
 export default Vue.extend({
   data() {
@@ -36,8 +36,8 @@ export default Vue.extend({
       title: "",
       type: "",
       file: "",
-      content: ``,
-      editOption: ["UPS电源", "一体化机柜", "数据中心", "机房空调"],
+      content: `<p face=\"宋体\">一体化机柜将数据中心基础设施产品进行深度整合，包含</p>`,
+      editOption: ["行业新闻", "产品新闻", "企业新闻", "服务通告"],
       // apollo
       case: null,
       caseList: null
@@ -56,7 +56,7 @@ export default Vue.extend({
         this.$data.PageTitle = newVal.PageTitle;
         this.$data.Pagekeywords = newVal.Pagekeywords;
         this.$data.Pagedescription = newVal.Pagedescription;
-        this.$data.content = newVal.content;
+        this.$data.content = newVal.content || newVal.text;
       }
     }
   },
@@ -65,7 +65,7 @@ export default Vue.extend({
     case: {
       query: gql`
         query($title: String) {
-          case: getCase(title: $title) {
+          case: getNew(title: $title) {
             MainTitle
             title: text
             img
@@ -83,7 +83,7 @@ export default Vue.extend({
     caseList: {
       query: gql`
         query($title: String) {
-          caseList: getCaseList(title: $title) {
+          caseList: getNewList(title: $title) {
             PageTitle
             Pagekeywords
             Pagedescription
@@ -120,7 +120,7 @@ export default Vue.extend({
         MainUrl: "",
         MainTitle: editType,
         MainParent: "home",
-        table: "Case",
+        table: "News",
         date,
         link,
         href: "",
@@ -160,7 +160,19 @@ export default Vue.extend({
 
       const isOpen = await this.$bvModal.msgBoxConfirm("success");
       if (isOpen) window.open("http://www.ladishb.com" + link, "_blank");
+    },
+    onEditorChange({ html }: { html: string }) {
+      this.content = html;
     }
   }
 });
 </script>
+
+<style lang="scss" scoped>
+.quill-editor {
+  min-height: 300px;
+  max-height: 400px;
+  width: auto;
+  overflow-y: auto;
+}
+</style>

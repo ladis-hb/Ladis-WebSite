@@ -8,7 +8,7 @@
 </template>
 <script lang="ts">
 import Vue from "vue";
-import { selectFiles, ApolloMongoResult } from "../../types/typing";
+import { selectFiles, ApolloMongoResult } from "../../../types/typing";
 import gql from "graphql-tag";
 export default Vue.extend({
   data() {

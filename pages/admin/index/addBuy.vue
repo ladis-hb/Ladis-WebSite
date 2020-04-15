@@ -30,7 +30,7 @@
 <script lang="ts">
 import Vue from "vue";
 import gql from "graphql-tag";
-import { buy, buyList } from "../../types/typing";
+import { buy, buyList } from "../../../types/typing";
 export default Vue.extend({
   data() {
     return {
