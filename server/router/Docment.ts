@@ -1,15 +1,15 @@
 // import { StrToUpperCase } from "../util/Format";
 import * as DBs from "../mongoose/content";
-import Send from "koa-send"
-import fs from "fs"
+import Send from "koa-send";
+import fs from "fs";
 import { ParameterizedContext } from "koa";
 import { CrorQuary, casesContext, buy, buyList } from "typing";
 import { KoaCtx } from "server";
 export default async (Ctx: ParameterizedContext) => {
-  const ctx: KoaCtx = Ctx as any
-  const Query = ctx.query as CrorQuary
-  const { SiteName, i18n } = Query
-  if (!SiteName || !i18n) ctx.assert(new Error('argumentError'), 400, 'argumentError')
+  const ctx: KoaCtx = Ctx as any;
+  const Query = ctx.query as CrorQuary;
+  const { SiteName, i18n } = Query;
+  if (!SiteName || !i18n) ctx.assert(new Error("argumentError"), 400, "argumentError");
   // 判断是否是en
   const isEH = i18n === "en";
   const DB = (() => {
@@ -28,7 +28,7 @@ export default async (Ctx: ParameterizedContext) => {
         News_list: DBs.default.EnNews_list,
         About: DBs.default.EnAbout,
         Page: DBs.default.Page,
-        Router: DBs.default.Router
+        Router: DBs.default.Router,
       };
     } else {
       return {
@@ -45,91 +45,83 @@ export default async (Ctx: ParameterizedContext) => {
         News_list: DBs.default.News_list,
         About: DBs.default.About,
         Page: DBs.default.Page,
-        Router: DBs.default.Router
+        Router: DBs.default.Router,
       };
     }
   })();
-  const id = ctx.params.id;
+  const id = ctx.params.id as string;
   // 打印请求参数和指令
-  console.log({ id, i18n, isEH, SiteName, time: new Date().toLocaleTimeString() });
+  if (!["GetHomeNews", "Down"].includes(id as never)) {
+    console.log({ id, i18n, isEH, SiteName, time: new Date().toLocaleTimeString() });
+  }
   switch (id) {
     case "Down":
       {
-        const filePath: string = "../static/" + Query.fileName
+        const filePath: string = "../static/" + Query.fileName;
         console.log(filePath);
-        ctx.assert(fs.existsSync(filePath), 400, "no files")
-        ctx.attachment(filePath)
-        await Send(ctx, filePath)
+        ctx.assert(fs.existsSync(filePath), 400, "no files");
+        ctx.attachment(filePath);
+        await Send(ctx, filePath);
       }
-      break
+      break;
 
-    // 
-    case 'GetContent':
+    //
+    case "GetContent":
       {
         // url
-        const link: string = Query.link
+        const link: string = Query.link;
         // 类型：news
-        const type = link.split("/")[1]
-        let result: casesContext = {}
-        console.log({link,type});
-        
+        const type = link.split("/")[1];
+        let result: casesContext = {};
+        console.log({ link, type });
+
         switch (type) {
-          case "case": {
-            const caseArr = ctx.$Query.CasesLinkArray
-            const index = caseArr.indexOf(link)
-            const pre = caseArr[index - 1]
-            const next = caseArr[index + 1]
-            result.pre = ctx.$Query.CasesMap.get(pre)
-            result.next = ctx.$Query.CasesMap.get(next)
-          }
-            break
-          case "news": {
-            const newsArr = ctx.$Query.NewsLinkArray
-            const index = newsArr.indexOf(link)
-            const pre = newsArr[index - 1]
-            const next = newsArr[index + 1]
-            result.pre = ctx.$Query.NewsMap.get(pre)
-            result.next = ctx.$Query.NewsMap.get(next)
-          }
-            break
+          case "case":
+            {
+              const caseArr = ctx.$Query.CasesLinkArray;
+              const index = caseArr.indexOf(link);
+              const pre = caseArr[index - 1];
+              const next = caseArr[index + 1];
+              result.pre = ctx.$Query.CasesMap.get(pre);
+              result.next = ctx.$Query.CasesMap.get(next);
+            }
+            break;
+          case "news":
+            {
+              const newsArr = ctx.$Query.NewsLinkArray;
+              const index = newsArr.indexOf(link);
+              const pre = newsArr[index - 1];
+              const next = newsArr[index + 1];
+              result.pre = ctx.$Query.NewsMap.get(pre);
+              result.next = ctx.$Query.NewsMap.get(next);
+            }
+            break;
         }
 
-        ctx.body = result
-
+        ctx.body = result;
       }
-      break
+      break;
     //获取官网主页轮播的新闻列表
     case "GetHomeNews":
       {
         ctx.body = await DB.News_list.find()
           .limit(10)
-          .exec()
+          .exec();
       }
       break;
-    //获取经销商列表子类
-    /* case "Get_buy_li":
-      {
-        const city: string = Query.city;
-        const res = await DB.Buy_list.findOne().lean() as buyList;
-        const result = res.data.filter((el) => el.parent === city);
-        ctx.body = result;
-      }
-      break; */
-
-    // 获取
 
     //转而使用Get_arg请求
     case "Get_arg":
       // 请求参数
-      const { table, isNews } = Query
-      const queryKeys: string[] = Query['queryKeys[]'] // 'queryKeys[]': [ 'MainTitle', 'MainTitle' ],
+      const { table, isNews } = Query;
+      const queryKeys: string[] = Query["queryKeys[]"]; // 'queryKeys[]': [ 'MainTitle', 'MainTitle' ],
 
-      let query = {}
+      let query = {};
       if (queryKeys) {
         // querykeys：数组至包含一个字符串则会被自动转换为字符串格式，多个则为数组
-        [queryKeys].flat().forEach(key => {
-          (query as any)[key] = Query[key]
-        })
+        [queryKeys].flat().forEach((key) => {
+          (query as any)[key] = Query[key];
+        });
       }
       console.log({ Query, query });
 
@@ -146,7 +138,7 @@ export default async (Ctx: ParameterizedContext) => {
         result = (await (DB as any)[table].find(query)) || false;
       }
 
-      ctx.assert(result, 401, "数据库未检索到")
+      ctx.assert(result, 401, "数据库未检索到");
       ctx.body = result;
       break;
   }
