@@ -29,5 +29,6 @@ export const Agent: Agents[] = [
   { name: "贵州代理商", url: "" },
   { name: "陕西代理商", url: "" },
   { name: "深圳市雷迪司电源有限公司", url: "www.szladis.com.cn" },
-  { name: '雷迪司网络能源(深圳)有限公司', url: 'www.gdladis.cn' }
+  { name: "雷迪司网络能源(深圳)有限公司", url: "www.gdladis.cn" },
+  { name: "遵义雷迪司", url: "www.zyups.cn" },
 ];
