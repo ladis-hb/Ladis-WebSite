@@ -15,7 +15,7 @@
       <my-selectfile :isPic="true" :files.sync="file"></my-selectfile>
     </div>
     <section id="editBody" class="my-3">
-      <vue-editor id="bodysaxs" v-model="contents" />
+      <my-code :html.sync ='content'></my-code>
     </section>
     <div id="editFooter">
       <b-button variant="success" class="float-right" @click="SendEdit('case')">确定</b-button>

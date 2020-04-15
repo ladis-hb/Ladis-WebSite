@@ -18,8 +18,8 @@
       <b-form-group label="*视频链接:" label-cols="2" label-align="right">
         <b-form-input v-model.trim="problem.movie"></b-form-input>
       </b-form-group>
-      <vue-editor id="asxsd " v-model="problem.html" class="my-3" v-if="active"></vue-editor>
-      <b-button block @click="Submit('problem')" variant="success">提交</b-button>
+      <my-code :html.sync ='problem.html' v-if="active"></my-code>
+      <b-button block @click="Submit()" variant="success">提交</b-button>
     </b-form>
   </my-card>
 </template>

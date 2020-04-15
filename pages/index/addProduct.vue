@@ -20,19 +20,19 @@
           <my-selectfile-multi :isPic="true" :files.sync="dev.img"></my-selectfile-multi>
         </b-col>
         <b-col>
-          <my-code :html.sync = 'dev.head'></my-code>
+          <my-code :html.sync ='dev.head'></my-code>
           <!-- <my-edit :content.sync='dev.head'></my-edit> -->
         </b-col>
       </b-row>
       <b-row no-gutters>
         <b-card title="产品特点" class="w-100">
-          <my-code :html.sync = 'dev.body'></my-code>
+          <my-code :html.sync ='dev.body'></my-code>
           <!-- <my-edit :content.sync='dev.body'></my-edit> -->
         </b-card>
       </b-row>
     </div>
     <div id="editFooter" class="p-3">
-      <b-button block variant="success" class="float-right" @click="SendEdit">确定</b-button>
+      <b-button block variant="success" class="float-right" @click="SendEdit()">确定</b-button>
     </div>
   </my-card>
 </template>
@@ -79,14 +79,13 @@ export default Vue.extend({
         MainTitle: "",
         MainParent: "",
         date: "",
-        table: "",
         href: "",
         title: "",
         link: "",
         head: "",
         body: "",
         img: [],
-      },
+      } as productList,
       ProductType,
       // apollo
       productImg: ""

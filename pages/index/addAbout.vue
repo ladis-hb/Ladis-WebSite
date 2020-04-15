@@ -10,7 +10,7 @@
       </b-form-group>
     </div>
     <section id="editBody" class="my-3">
-      <vue-editor v-model="content" />
+      <my-code :html.sync ='content'></my-code>
     </section>
 
     <div id="editFooter">
