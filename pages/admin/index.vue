@@ -3,20 +3,18 @@
     <b-row class="h-100">
       <b-col cols="12" md="2" class="bg-dark border-top text-center p-3">
         <b-nav vertical id="nav">
-          <b-nav-item :to="{
-              path: '/readme',
-            }">使用说明</b-nav-item>
-          <b-nav-item :to="{ name: 'index-news' }">新闻资讯</b-nav-item>
-          <b-nav-item :to="{ name: 'index-case' }">案例管理</b-nav-item>
-          <b-nav-item :to="{ name: 'index-buy' }">经销商管理</b-nav-item>
-          <b-nav-item :to="{name:'index-about'}">相关管理</b-nav-item>
-          <b-nav-item :to="{ name: 'index-down' }">服务支持</b-nav-item>
-          <b-nav-item :to="{ name: 'index-product' }">产品分类</b-nav-item>
+          <b-nav-item to="readme">使用说明</b-nav-item>
+          <b-nav-item to="news">新闻资讯</b-nav-item>
+          <b-nav-item to="case">案例管理</b-nav-item>
+          <b-nav-item to="buy">经销商管理</b-nav-item>
+          <b-nav-item to="about">相关管理</b-nav-item>
+          <b-nav-item to="down">服务支持</b-nav-item>
+          <b-nav-item to="product">产品分类</b-nav-item>
           <b-nav-item-dropdown text="首页管理">
-            <b-dropdown-item :to="{ name: 'index-carousel' }">轮播图</b-dropdown-item>
+            <b-dropdown-item to="carousel">轮播图</b-dropdown-item>
           </b-nav-item-dropdown>
-          <b-nav-item to="/">空编辑器</b-nav-item>
-          <b-nav-item :to="{ name: 'index-picSource' }">素材管理</b-nav-item>
+          <b-nav-item to="./">空编辑器</b-nav-item>
+          <b-nav-item to="picSource">素材管理</b-nav-item>
           <b-nav-item>
             <b-button v-b-toggle.modal-1 variant="info">
               已选素材
@@ -25,14 +23,12 @@
           </b-nav-item>
         </b-nav>
       </b-col>
-      <b-col class="overflow-auto mh-100">
-        <b-overlay :show="$apollo.loading">
-          <transition>
-            <keep-alive>
-              <router-view></router-view>
-            </keep-alive>
-          </transition>
-        </b-overlay>
+      <b-col>
+        <transition>
+          <keep-alive>
+            <router-view></router-view>
+          </keep-alive>
+        </transition>
       </b-col>
     </b-row>
     <b-sidebar id="modal-1" title="已选素材" bg-variant="dark" text-variant="light" shadow>
@@ -52,7 +48,7 @@
             role="tabpanel"
             class="bg-light"
           >
-            <b-card-img-lazy v-if="file.filetype === 'img'" class="modalImg" :src="file.path"></b-card-img-lazy>
+            <b-img-lazy v-if="file.filetype === 'img'" class="modalImg" :src="file.path"></b-img-lazy>
             <b-link v-else :href="file.path" class>{{file.path}}</b-link>
           </b-collapse>
         </b-list-group-item>

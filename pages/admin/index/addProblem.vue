@@ -27,6 +27,7 @@
 import Vue from "vue";
 import gql from "graphql-tag";
 import { supportList } from "../../../types/typing";
+import { paresLink } from "../../../plugins/tool";
 export default Vue.extend({
   data() {
     return {
@@ -122,6 +123,21 @@ export default Vue.extend({
   },
   methods: {
     async Submit() {
+      const dev: supportList = this.$data.problem;
+      const { date, datePares, link } = paresLink("support");
+      // 构建软件下载数据
+      const supportList: supportList = {
+        PageTitle:dev.PageTitle,
+        Pagekeywords:dev.Pagekeywords,
+        Pagedescription:dev.Pagedescription,
+        MainTitle: dev.MainTitle,
+        MainParent: dev.MainParent,
+        date: datePares,
+        href: dev.link,
+        link,
+        title: dev.title,
+        //soft
+      };
       const result = await this.$apollo.mutate({
         mutation: gql`
           mutation($arg: JSON) {
@@ -131,10 +147,10 @@ export default Vue.extend({
             }
           }
         `,
-        variables: { arg: this.$data.problem }
+        variables: { arg: supportList }
       });
       this.$bvToast.toast("success");
-      this.$apollo.queries.blem.refresh();
+      this.$apollo.queries.problem.refresh();
     }
   }
 });

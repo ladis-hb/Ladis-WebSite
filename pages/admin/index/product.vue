@@ -12,7 +12,7 @@
     >
       <template v-slot:cell(oprate)="row">
         <b-button-group>
-          <b-button variant="info" :to="{name:'index-addProduct',query:{title:row.item.title}}">编辑</b-button>
+          <b-button variant="info" :to="{name:'admin-index-addProduct',query:{title:row.item.title}}">编辑</b-button>
           <b-button @click="deletes(row.item.title)">删除</b-button>
         </b-button-group>
       </template>

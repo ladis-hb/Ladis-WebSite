@@ -7,9 +7,10 @@
         output-format="html"
         v-model="content"
         @onFocus="fouce"
+        @onBlur="blur"
         @onInit="loginit"
         placeholder="此处开始编写代码"
-        class=" border rounded-sm p-3"
+        class="border rounded-sm p-3"
       >loading</editor>
     </b-card>
   </div>
@@ -18,7 +19,20 @@
 import Vue from "vue";
 import Editor from "@tinymce/tinymce-vue";
 import "../assets/css/product.css";
-import { Settings,Events,Editor as edit } from "tinymce";
+import { Settings, Events, Editor as edit } from "tinymce";
+function URLConverter(
+  url: string,
+  node: HTMLElement,
+  on_save: boolean,
+  name: string
+) {
+  if(['src','href'].includes(name)){
+    if(/http*/g.test(url)){
+      return new URL(url).pathname
+    }
+  }
+  return url
+}
 export default Vue.extend({
   components: {
     editor: Editor
@@ -27,20 +41,28 @@ export default Vue.extend({
   data() {
     const opt: Settings = {
       inline: true,
-      language_url: "http://tinymce.ax-z.cn/static/tiny/langs/zh_CN.js",
+      language_url: "/js/Tiny-language.js",
       language: "zh_CN", //语言
       height: 500,
       menubar: "format",
+      // default
+      cache_suffix: "?v=5.0.0",
+      draggable_modal: true,
+      elementpath: true,
+      convert_urls: false,
+      urlconverter_callback: URLConverter,
       //importcss_append: true,
       plugins: [
-        "importcss code autosave hr image insertdatetime link lists media save searchreplace template wordcount",
-        'advlist autolink lists link image charmap print preview anchor',
-           'searchreplace visualblocks code fullscreen',
-           'insertdatetime media table paste code help wordcount'
+        "importcss code autosave hr image insertdatetime lists media save searchreplace template wordcount",
+        "advlist autolink lists link image charmap print preview anchor",
+        "searchreplace visualblocks code fullscreen",
+        "insertdatetime media table paste code help wordcount"
       ],
       toolbar:
-        "save|styleselect | code template|anchor|restoredraft| hr |image media insertdatetime link |numlist bullist|searchreplace wordcount| bold italic backcolor ",
+        "save|undo redo |styleselect | code template|anchor|restoredraft| hr |image media insertdatetime link |numlist bullist|searchreplace wordcount| bold italic backcolor ",
       content_css: "/css/productUtil.css",
+      typeahead_urls: false,
+      image_prepend_url: "/",
       /* // 图片列表
       image_list: this.$store.getters.getFiles(true),
       // 链接列表
@@ -68,21 +90,26 @@ export default Vue.extend({
       content: ""
     };
   },
-  mounted() {
-    console.log({ s: this.$store.getters.getFiles(true) });
+  watch: {
+    html: function(val) {
+      if (val !== this.content) {
+        this.content = val || " ";
+      }
+    }
   },
-  methods:{
-    fouce(Fouce:Events.FocusBlurEvent,edit:edit){
-      if(this.html && !this.content){
+  methods: {
+    fouce(Fouce: Events.FocusBlurEvent, edit: edit) {
+      if(!this.content){
         this.content = this.html
       }
-      console.log({Fouce,edit});
-      //edit.init()
     },
-    loginit(){
+    blur() {
+      this.$emit("update:html", this.$data.content);
+    },
+    loginit() {
       console.log("loginit");
-      
     }
+    // 处理链接
   }
 });
 </script>

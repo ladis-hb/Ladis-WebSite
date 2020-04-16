@@ -76,7 +76,7 @@ export interface productList extends GMpack, productListNew, productListOld {
 }
 
 // support asid
-export interface supportAsid extends GMpack, GMlink {}
+export interface supportAsid extends GMpack, GMlink { }
 export interface supportProblem extends GMpack, GMlink {
   child?: supportProblem[];
 }
@@ -133,7 +133,7 @@ export interface vr extends GMpack {
   linkText: string;
 }
 // 案例
-export interface cases extends vr {}
+export interface cases extends vr { }
 // 案例详情
 export interface caseList extends GMpack {
   title: string;
@@ -226,7 +226,14 @@ export type AgentName =
   | "陕西代理商"
   | "深圳市雷迪司电源有限公司"
   | "雷迪司网络能源(深圳)有限公司"
-  | "遵义雷迪司";
+  | "遵义雷迪司"
+  | '贵州毕节雷迪司'
+  | '贵州安顺雷迪司'
+  | '贵州都匀雷迪司'
+  | '贵州六盘水雷迪司'
+  | '贵州铜仁雷迪司'
+  | '贵州兴义雷迪司'
+  | '贵州凯里雷迪司'
 // 代理
 export interface Agents {
   name: AgentName;

@@ -26,11 +26,16 @@ declare module 'tinymce'{
     type?:string
   }
   interface Settings{
+    draggable_modal?:boolean,
+    auto_focus?:boolean
       importcss_append?:boolean
       image_list?:value[]
       link_list?:value[]
       save_onsavecallback?:()=>void
       templates?:value[]
+      typeahead_urls?:boolean
+      image_prepend_url?:string
+      urlconverter_callback?:any
   }
 }
 

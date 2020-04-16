@@ -31,4 +31,11 @@ export const Agent: Agents[] = [
   { name: "深圳市雷迪司电源有限公司", url: "www.szladis.com.cn" },
   { name: "雷迪司网络能源(深圳)有限公司", url: "www.gdladis.cn" },
   { name: "遵义雷迪司", url: "www.zyups.cn" },
+  { name: '贵州毕节雷迪司', url: 'bijie.gzjifang.com' },
+  { name: '贵州安顺雷迪司', url: 'anshun.gzjifang.com' },
+  { name: '贵州都匀雷迪司', url: 'duyun.gzjifang.com' },
+  { name: '贵州六盘水雷迪司', url: 'liupanshui.gzjifang.com' },
+  { name: '贵州铜仁雷迪司', url: 'tongren.gzjifang.com' },
+  { name: '贵州兴义雷迪司', url: 'xingyi.gzjifang.com' },
+  { name: '贵州凯里雷迪司', url: 'kaili.gzjifang.com' }
 ];

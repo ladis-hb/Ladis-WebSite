@@ -52,7 +52,7 @@ async function start() {
 
   app.listen(port, () => {
     consola.ready({
-      message: `Server listening on http://${host}:${port}`,
+      message: `Server listening on http://${host}:${port}/admin`,
       badge: true
     });
   });

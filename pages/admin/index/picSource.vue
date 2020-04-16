@@ -180,7 +180,7 @@ export default Vue.extend({
           }
         `,
         variables: { filter },
-        fetchPolicy: "network-only"
+        fetchPolicy: "no-cache"
       });
       this.$data.sourceFile = files.data.getUploadFiles;
     },

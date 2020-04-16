@@ -11,7 +11,7 @@
         <b-table :items="downs" :fields="fieldsDown" responsive>
           <template v-slot:cell(oprate)="row">
             <b-button-group>
-              <b-button variant="info" :to="{name:'index-addDown',query:{title:row.item.title}}">编辑</b-button>
+              <b-button variant="info" :to="{name:'admin-index-addDown',query:{title:row.item.title}}">编辑</b-button>
               <b-button @click="deleteDown(row.item.title)">删除</b-button>
             </b-button-group>
           </template>
@@ -21,7 +21,7 @@
         <b-table :items="pdfs" :fields="fieldsPdf">
           <template v-slot:cell(oprate)="row">
             <b-button-group>
-              <b-button variant="info" :to="{name:'index-addDown',query:{title:row.item.title}}">编辑</b-button>
+              <b-button variant="info" :to="{name:'admin-index-addDown',query:{title:row.item.title}}">编辑</b-button>
               <b-button @click="deleteDown(row.item.title)">删除</b-button>
             </b-button-group>
           </template>
@@ -33,7 +33,7 @@
             <b-button-group>
               <b-button
                 variant="info"
-                :to="{name:'index-addProblem',query:{title:row.item.title}}"
+                :to="{name:'admin-index-addProblem',query:{title:row.item.title}}"
               >编辑</b-button>
               <b-button @click="deleteProblem(row.item.title)">删除</b-button>
             </b-button-group>
@@ -46,7 +46,7 @@
             <b-button-group>
               <b-button
                 variant="info"
-                :to="{name:'index-addProblem',query:{title:row.item.title}}"
+                :to="{name:'admin-index-addProblem',query:{title:row.item.title}}"
               >编辑</b-button>
               <b-button @click="deleteProblem(row.item.title)">删除</b-button>
             </b-button-group>

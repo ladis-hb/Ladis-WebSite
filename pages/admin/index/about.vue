@@ -3,7 +3,7 @@
     <b-table-lite :items="webSites" :fields="fields">
       <template v-slot:cell(oprate)="row">
         <b-button-group>
-          <b-button variant="info" :to="{name:'index-addAbout',query:{name:row.item.name}}">编辑</b-button>
+          <b-button variant="info" :to="{name:'admin-index-addAbout',query:{name:row.item.name}}">编辑</b-button>
           <b-button @click="deletes(row.item.name)">删除</b-button>
         </b-button-group>
       </template>

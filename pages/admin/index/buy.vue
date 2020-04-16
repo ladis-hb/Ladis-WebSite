@@ -8,7 +8,7 @@
         <b-button-group>
           <b-button
             variant="info"
-            :to="{name:'index-addBuy',query:{title:row.item.title,daqu:row.item.parentsUntil}}"
+            :to="{name:'admin-index-addBuy',query:{title:row.item.title,daqu:row.item.parentsUntil}}"
           >编辑</b-button>
           <b-button @click="deletes(row.item.title)">删除</b-button>
         </b-button-group>

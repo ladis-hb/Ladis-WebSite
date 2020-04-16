@@ -115,7 +115,7 @@ export default Vue.extend({
       const date =
         this.$data?.cases?.date || new Date().toLocaleDateString("zh");
       const link =
-        this.$data?.case?.link || `/case/${date + new Date().getSeconds()}`;
+        this.$data?.case?.link || `/news/${date + new Date().getSeconds()}`;
       const newsContent: cases = {
         MainUrl: "",
         MainTitle: editType,

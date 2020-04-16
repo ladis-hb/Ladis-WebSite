@@ -159,6 +159,9 @@ export default Vue.extend({
       const { date, datePares, link } = paresLink("support");
       // 构建软件下载数据
       const support: support = {
+        PageTitle:dev.PageTitle,
+        Pagekeywords:dev.Pagekeywords,
+        Pagedescription:dev.Pagedescription,
         MainTitle: dev.MainTitle,
         MainParent: dev.type === "soft" ? "监控软件下载" : "产品彩页说明",
         date: datePares,
