@@ -11,6 +11,7 @@ export default async (ctx: ParameterizedContext) => {
 };
 
 export const getFileStatAndDown = async (fpath: string) => {
+  fpath = decodeURI(fpath)
   const ladis = "http://www.ladis.com.cn";
   const enladis = "http://en.ladis.com.cn";
   // 获取请求素材路径

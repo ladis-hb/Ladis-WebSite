@@ -31,7 +31,7 @@
         </b-form-group>
       </div>
       <div id="zz" v-if="dev.type === 'pdf'">
-        <b-form-group label="*彩页类型:" label-cols="2" label-align="right">
+        <b-form-group label="*彩页/资质类型:" label-cols="2" label-align="right">
           <b-form-select :options="selectPdf" v-model="dev.MainTitle"></b-form-select>
         </b-form-group>
       </div>
@@ -159,11 +159,21 @@ export default Vue.extend({
       const { date, datePares, link } = paresLink("support");
       // 构建软件下载数据
       const support: support = {
-        PageTitle:dev.PageTitle,
-        Pagekeywords:dev.Pagekeywords,
-        Pagedescription:dev.Pagedescription,
+        PageTitle: dev.PageTitle,
+        Pagekeywords: dev.Pagekeywords,
+        Pagedescription: dev.Pagedescription,
         MainTitle: dev.MainTitle,
-        MainParent: dev.type === "soft" ? "监控软件下载" : "产品彩页说明",
+        MainParent:
+          dev.type === "soft"
+            ? "监控软件下载"
+            : [
+                "其他产品彩页",
+                "数据中心彩页",
+                "机房空调彩页",
+                "UPS电源彩页"
+              ].includes(dev.MainTitle as string)
+            ? "产品彩页说明"
+            : "证书资质",
         date: datePares,
         href: dev.down,
         link,
@@ -189,7 +199,7 @@ export default Vue.extend({
         `,
         variables: { arg: support }
       });
-      this.$bvToast.toast("success");
+      this.$bvModal.msgBoxOk("添加成功");
       this.$apollo.queries.support.refresh();
     }
   }

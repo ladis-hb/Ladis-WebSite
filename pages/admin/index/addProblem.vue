@@ -18,7 +18,10 @@
       <b-form-group label="*视频链接:" label-cols="2" label-align="right">
         <b-form-input v-model.trim="problem.movie"></b-form-input>
       </b-form-group>
-      <my-code :html.sync ='problem.html' v-if="active"></my-code>
+      <b-form-group label="文案:" label-cols="2" label-align="right">
+        <my-code :html.sync ='problem.html'></my-code>
+      </b-form-group>
+      
       <b-button block @click="Submit()" variant="success">提交</b-button>
     </b-form>
   </my-card>
@@ -136,6 +139,8 @@ export default Vue.extend({
         href: dev.link,
         link,
         title: dev.title,
+        movie:dev.movie,
+        html:dev.html
         //soft
       };
       const result = await this.$apollo.mutate({
@@ -149,7 +154,7 @@ export default Vue.extend({
         `,
         variables: { arg: supportList }
       });
-      this.$bvToast.toast("success");
+      this.$bvModal.msgBoxOk("添加成功");
       this.$apollo.queries.problem.refresh();
     }
   }

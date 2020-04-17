@@ -8,7 +8,7 @@
         <b-button-group>
           <b-button
             variant="info"
-            :to="{name:'admin-index-addBuy',query:{title:row.item.title,daqu:row.item.parentsUntil}}"
+            :to="{name:'admin-index-addBuy',query:{title:row.item.title}}"
           >编辑</b-button>
           <b-button @click="deletes(row.item.title)">删除</b-button>
         </b-button-group>
@@ -52,6 +52,21 @@ export default Vue.extend({
         `确定删除代理商：${title} 吗？`,
         { title: "delete?", buttonSize: "sm" }
       );
+      if(isDel){
+        const result = await this.$apollo.mutate({
+          mutation:gql`
+          mutation ($title:String){
+            delBuy(title:$title){
+              ok
+            }
+          }
+          `,
+          variables:{
+            title
+          }
+        })
+        this.$apollo.queries.buys.refresh()
+      }
     }
   }
 });

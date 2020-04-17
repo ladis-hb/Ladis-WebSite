@@ -6,7 +6,7 @@ import fs from "fs";
 import path from "path";
 import util from "util"
 import { Agent } from "../config"
-import { ApolloCtx, ApolloMongoResult, UserInfo, fileDirList, cases, caseList, buy, about, buyList, support, supportList, product, productList } from "typing";
+import { ApolloCtx, ApolloMongoResult, UserInfo, fileDirList, cases, caseList, buy, about, buyList, support, supportList, product, productList, supportAsid } from "typing";
 const resolvers: IResolvers = {
   Query: {
     // 获取upload文件夹文件列表
@@ -43,6 +43,10 @@ const resolvers: IResolvers = {
     // 获取经销商列表
     async getbuys() {
       const result: buyList[] = await DBs.Buy_list.find().lean()
+      return result
+    },
+    async getbuy(root,{title}){
+      const result:buyList = await DBs.Buy_list.findOne({title}).lean() as any
       return result
     },
     // 获取案例列表
@@ -157,32 +161,18 @@ const resolvers: IResolvers = {
       const result = await DBs.Product
         .updateOne({ link: product.link }, { $set: product }, { upsert: true })
       return result
-      /*  const { selectType, title, content_head, content_body, indexPic, carouselPic } = arg as editProduct
-       const href = `/products/list/${title}`;
-       // 保存路由
-       // 添加主类 
-       await DBs.Product.updateOne(
-         { title: selectType },
-         { $addToSet: { data: { title, href, img: indexPic } } },
-         { upsert: true }
-       );
-       // 写入子类
-       const product_list = new DBs.Product_list({
-         parant: selectType,
-         title,
-         date: new Date(),
-         data: {
-           content_head,
-           content_body,
-           img: carouselPic
-         }
-       });
-       const productBody = await product_list.save()
-       return productBody */
     },
     // support
     async setProblem(root, { arg }) {
       const support = arg as supportList
+      // 获取设置分类
+      const selectlist = await DBs.Page.findOne({MainTitle: "support_problem_asid",title:support.MainParent}).exec().then(el=>{
+        const su:supportAsid[] = el?.toJSON()['child']
+        const mpas:Map<string,supportAsid> = new Map()
+        su.forEach(els=>mpas.set(els.title,els))
+        return mpas
+      })
+      support.MainUrl = selectlist.get(support.MainTitle as string)?.link
       const result = await DBs.Support_list.updateOne({ title: support.title }, { $set: support }, { upsert: true })
       return result
     },
@@ -193,10 +183,19 @@ const resolvers: IResolvers = {
     },
     // 配置经销商
     async setBuy(root, { arg }) {
-      const ad: buy = arg
-      console.log(arg);
-
-      const result = await DBs.Buy_list.updateOne({ link: ad.link }, { $set: arg }, { upsert: true })
+      // 获取省市->链接对应
+      const buyMap = await DBs.Buy_list.find().exec().then(el=>{
+        const maps:Map<string,string> = new Map()
+        el.forEach(el=>{
+          const buy:buyList = el.toJSON()
+          maps.set(buy.parent,buy.link)
+        })
+        return maps
+      })
+      //
+      let ad: buyList = arg
+      ad.link = buyMap.get(ad.parent) || ad.link
+      const result = await DBs.Buy_list.updateOne({ title: ad.title }, { $set: arg }, { upsert: true })
       return result
     },
     // 添加案例，新闻
@@ -205,6 +204,11 @@ const resolvers: IResolvers = {
       const { table, link } = newsContent
       await (DBs as any)[table as string].updateOne({ link }, { $set: newsContent }, { upsert: true })
       const result = await (DBs as any)[table + "_list"].updateOne({ link }, { $set: newListContent }, { upsert: true })
+      return result
+    },
+    // 删除代理商
+    async delBuy(root,{title}){
+      const result = await DBs.Buy_list.deleteOne({title})
       return result
     },
     // 删除案例

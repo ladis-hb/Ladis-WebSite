@@ -5,6 +5,7 @@ import fs from "fs";
 import { ParameterizedContext } from "koa";
 import { CrorQuary, casesContext, buy, buyList } from "typing";
 import { KoaCtx } from "server";
+import { Model ,Document} from "mongoose";
 export default async (Ctx: ParameterizedContext) => {
   const ctx: KoaCtx = Ctx as any;
   const Query = ctx.query as CrorQuary;
@@ -116,7 +117,6 @@ export default async (Ctx: ParameterizedContext) => {
       const { table, isNews } = Query;
       // 'queryKeys[]': [ 'MainTitle', 'MainTitle' ],
       const queryKeys: string[] = Query["queryKeys[]"]; 
-
       let query = {};
       if (queryKeys) {
         // querykeys：数组至包含一个字符串则会被自动转换为字符串格式，多个则为数组
@@ -132,16 +132,19 @@ export default async (Ctx: ParameterizedContext) => {
       }
       console.log({ Query, query });
       // 申明结果变量
+      const dbs: Model<Document, {}> = (DB as any)[table]
       let result;
 
       if (isNews) {
         result =
-          (await (DB as any)[table]
+          await dbs
             .find()
             .sort({ "data.time": -1 })
-            .exec()) || false;
-      } else {
-        result = (await (DB as any)[table].find(query)) || false;
+            .lean()
+            .exec()
+      } 
+      else {
+        result = (await dbs.find(query)) || false;
       }
 
       ctx.assert(result, 401, "数据库未检索到");

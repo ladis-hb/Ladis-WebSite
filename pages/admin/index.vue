@@ -3,18 +3,18 @@
     <b-row class="h-100">
       <b-col cols="12" md="2" class="bg-dark border-top text-center p-3">
         <b-nav vertical id="nav">
-          <b-nav-item to="readme">使用说明</b-nav-item>
-          <b-nav-item to="news">新闻资讯</b-nav-item>
-          <b-nav-item to="case">案例管理</b-nav-item>
-          <b-nav-item to="buy">经销商管理</b-nav-item>
-          <b-nav-item to="about">相关管理</b-nav-item>
-          <b-nav-item to="down">服务支持</b-nav-item>
-          <b-nav-item to="product">产品分类</b-nav-item>
+          <b-nav-item to="/admin/readme">使用说明</b-nav-item>
+          <b-nav-item to="/admin/news">新闻资讯</b-nav-item>
+          <b-nav-item to="/admin/case">案例管理</b-nav-item>
+          <b-nav-item to="/admin/buy">经销商管理</b-nav-item>
+          <b-nav-item to="/admin/about">相关管理</b-nav-item>
+          <b-nav-item to="/admin/down">服务支持</b-nav-item>
+          <b-nav-item to="/admin/product">产品分类</b-nav-item>
           <b-nav-item-dropdown text="首页管理">
-            <b-dropdown-item to="carousel">轮播图</b-dropdown-item>
+            <b-dropdown-item to="/admin/carousel">轮播图</b-dropdown-item>
           </b-nav-item-dropdown>
-          <b-nav-item to="./">空编辑器</b-nav-item>
-          <b-nav-item to="picSource">素材管理</b-nav-item>
+          <b-nav-item to="/admin/">空编辑器</b-nav-item>
+          <b-nav-item to="/admin/picSource">素材管理</b-nav-item>
           <b-nav-item>
             <b-button v-b-toggle.modal-1 variant="info">
               已选素材
@@ -66,7 +66,9 @@ export default Vue.extend({
       a.toLocaleUpperCase;
       return this.$store.state.SourceFile;
     }
-  }
+  },
+  scrollToTop:true,
+  watchQuery:true
 });
 </script>
 

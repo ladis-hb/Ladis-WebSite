@@ -2,8 +2,8 @@
   <my-card title="服务支持" :load="$apollo.loading">
     <template v-slot:head>
       <b-button-group class="float-right" size="sm">
-        <b-button variant="primary" to="/addDown">添加软件/资质</b-button>
-        <b-button variant="info" to="/addProblem">添加视频/问题</b-button>
+        <b-button variant="primary" to="/admin/addDown">添加软件/资质</b-button>
+        <b-button variant="info" to="/admin/addProblem">添加视频/问题</b-button>
       </b-button-group>
     </template>
     <b-tabs fill>

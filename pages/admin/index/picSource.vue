@@ -163,6 +163,8 @@ export default Vue.extend({
           this.$data.files = null;
           this.$data.load = false;
           result.data.forEach(file => {
+            file.path = decodeURI(file.path)
+            file.name = decodeURI(file.name)
             this.$store.commit("SET_SOURCE_FILE", file);
           });
         });

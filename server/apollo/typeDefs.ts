@@ -42,10 +42,12 @@ const typeDefs: DocumentNode = gql`
   }
   #buy
   type buys {
+    MainParent:String
     date: String
     parentsUntil: String
     parent: String
     title: String
+    link:String
     content: String
   }
   #cases
@@ -145,6 +147,8 @@ const typeDefs: DocumentNode = gql`
     getAbouts(selectType:String,webSite:String):String
     # 获取经销商列表
     getbuys:[buys]
+    #
+    getbuy(title:String):buys
     #获取案例列表
     getCases:[case]
     # 获取案例single
@@ -191,6 +195,8 @@ const typeDefs: DocumentNode = gql`
     setCaseNews(arg:JSON):result
     # 配置about
     setAbout(arg:JSON):result
+    #
+    delBuy(title:String):result
     #
     delCase(title:String):result
     #
