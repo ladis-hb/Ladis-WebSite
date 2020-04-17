@@ -1,5 +1,6 @@
 const webpack = require('webpack')
 const Host = 'https://www.ladishb.com/admin'
+const isProduction = process.env.NODE_ENV === "production"
 module.exports = {
   mode: "spa",
   /*
@@ -7,7 +8,7 @@ module.exports = {
    */
   server: {
     port: 9006,
-    host: process.env.NODE_ENV === "production" ? "0.0.0.0" : "localhost"
+    host: isProduction ? "0.0.0.0" : "localhost"
   },
   head: {
     meta: [
@@ -59,7 +60,7 @@ module.exports = {
    ** See https://axios.nuxtjs.org/options
    */
   axios:{
-    baseURL:process.env.NODE_ENV === "production" ? Host : 'http://localhost:9006'
+    baseURL:isProduction ? Host : 'http://localhost:9006'
     //baseURL:'http://localhost:9006'
   },
   auth: {
@@ -106,8 +107,8 @@ module.exports = {
     clientConfigs: {
       default: {
         // required  
-        httpEndpoint: 'http://127.0.0.1:9006',
-        browserHttpEndpoint: '/graphql',
+        httpEndpoint: 'http://www.ladishb.com:9006',//isProduction? 'http://www.ladishb.com:9006': 'http://127.0.0.1:9006',
+        browserHttpEndpoint: isProduction?'/admin/graphql':'/graphql',
         httpLinkOptions: {
           credentials: 'same-origin'
         },
@@ -121,7 +122,7 @@ module.exports = {
    ** Build configuration
    */
   build: {
-    publicPath: process.env.NODE_ENV === "production" ? Host+'/_nuxt/' :'/_nuxt/',
+    publicPath: isProduction ? Host+'/_nuxt/' :'/_nuxt/',
     /*
      ** You can extend webpack config here
      */
