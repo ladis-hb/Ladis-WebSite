@@ -103,7 +103,7 @@ export default Vue.extend({
           parentsUntil: daqu,
           parent: (province as string).replace(/[省市]/, ""),
           title,
-          content: info
+          content: info.replace(/\\n/g,'')
         };
         await this.$apollo.mutate({
           mutation: gql`

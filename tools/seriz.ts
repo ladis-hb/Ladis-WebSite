@@ -551,8 +551,8 @@ async function first() {
     [`/products/node_83.shtml`, "高频三相UPS电源"],
     [`/products/node_85.shtml`, "工频UPS电源"],
     [`/products/node_84.shtml`, "机架式UPS电源"],
-    [`/products/node_81.shtml`, "模块化UPS电源"],
-    [`/products/node_81.shtml`, "UPS蓄电池"],
+    [`/products/node_86.shtml`, "模块化UPS电源"],
+    [`/products/node_87.shtml`, "UPS蓄电池"],
     [`/products/node_10.shtml`, "数据中心"],
     [`/products/node_143.shtml`, "微模块机房"],
     [`/products/node_135.shtml`, "一体化机柜"],
@@ -652,7 +652,7 @@ async function first() {
     if (!result) continue;
     for (let sigle of result) {
       await new (DB as any)[sigle.table as string](sigle).save();
-      await WriteRouter((sigle as any).title, sigle.link, sigle.href)
+      await WriteRouter((sigle as any).title, sigle.link as string, sigle.href)
     }
   }
 }
@@ -713,7 +713,7 @@ async function secend() {
       if (ProductTitleSet.has(els.title)) continue
       ProductTitleSet.add(els.title)
       await new DB.Product_list(els).save();
-      await WriteRouter(els.title, els.link, els.href)
+      await WriteRouter(els.title, els.link as string, els.href)
     }
 
   }
@@ -827,12 +827,14 @@ async function three() {
         NewsList.link = NewsObject.link
         NewsList.href = NewsObject.href
         await update(NewsList);
+       
       }
     }
   }
   async function update(row: cases | caseList) {
     if (!row) return
     await new (DB as any)[row.table as string](row).save()
+    await WriteRouter(row.title, row.link as string, row.href)
   }
 }
 first().then(async () => {
@@ -844,10 +846,10 @@ first().then(async () => {
 function htmlParse(html:string|null){
   //return decoder.feed(html?.replace(/\/n/g, "").replace(/(div|font)/g, "span").trim())
   //return decoder.feed(html?.replace(/\/n/g, "").trim())
-  return decoder.feed(html?.trim())
+  return decoder.feed(html?.replace(/\/n/g, "").trim())
 }
 
-async function WriteRouter(title: string, rout?: string, href?: string) {
+async function WriteRouter(title: string, rout: string, href?: string) {
   if (!rout) return
   let out = [
     "//天猫旗舰店",
