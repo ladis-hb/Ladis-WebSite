@@ -28,7 +28,36 @@ export const mutations: MutationTree<RootState> = {
   }
 };
 
-export const actions: ActionTree<RootState, RootState> = {};
+export const actions: ActionTree<RootState, RootState> = {
+  set_user: (state, payload) => {
+    console.log('set_user');
+
+  },
+  /* nuxtServerInit: async ({ dispatch }, ctx: Context) => {
+    const client: DollarApollo<Context> = ctx.app.apolloProvider.defaultClient
+    console.log(client);
+
+    const user = await client.query({
+      query: gql`
+        {
+          user: getUser {
+            name
+            user
+            userGroup
+            mail
+            company
+            tel
+            address
+          }
+        }
+      `,
+      fetchPolicy: "network-only"
+    })
+    console.log(user.data);
+
+    await dispatch('set_user')
+  } */
+};
 
 /* export const state = () => ({
   user: "nuss",
@@ -66,7 +95,7 @@ export const mutations = {
     const forwardedHost = req.headers["x-forwarded-host"]
     const host = req.headers.host.split(":")[0]
     // console.log({forwardedHost,host});
-    
+
     if (req) {
       let localUrl = forwardedHost || host
       let localSite = true;
@@ -81,7 +110,7 @@ export const mutations = {
           localSite = true;
         break;
       }
-      commit("setHost",{localUrl,localSite});      
+      commit("setHost",{localUrl,localSite});
     }
   }
 }; */

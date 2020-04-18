@@ -9,6 +9,10 @@ import { Agent } from "../config"
 import { ApolloCtx, ApolloMongoResult, UserInfo, fileDirList, cases, caseList, buy, about, buyList, support, supportList, product, productList, supportAsid } from "typing";
 const resolvers: IResolvers = {
   Query: {
+    // 获取用户信息
+  getUser(root,arg,ctx:ApolloCtx){
+    return ctx
+  },
     // 获取upload文件夹文件列表
     async getUploadFiles(root, { filter }) {
       // 目录地址
@@ -136,7 +140,7 @@ const resolvers: IResolvers = {
         passwd: Crypto.Encrypt(passwd),
         mail,
         DateTime: new Date(DateTime),
-        stat: true,
+        stat: false,
         name: user,
       };
       const dbUser = new User(BcryptUser);

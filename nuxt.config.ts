@@ -1,7 +1,8 @@
+import { Configuration } from "@nuxt/types"
 const webpack = require('webpack')
 const Host = 'https://www.ladishb.com/admin'
 const isProduction = process.env.NODE_ENV === "production"
-module.exports = {
+export default {
   mode: "spa",
   /*
    ** Headers of the page
@@ -39,7 +40,7 @@ module.exports = {
 
   */
   plugins: [
-    {src:'~/plugins/my-component.js',ssr:false},
+    { src: '~/plugins/my-component.js', ssr: false },
     //{ src: '~/plugins/vue-editor.js', ssr: false  },
     //{ src: "~plugins/nuxt-quill-plugin.js", ssr: false },
     { src: "~plugins/v-region.js", ssr: false }
@@ -59,8 +60,8 @@ module.exports = {
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  axios:{
-    baseURL:isProduction ? Host : 'http://localhost:9006'
+  axios: {
+    baseURL: isProduction ? Host : 'http://localhost:9006'
     //baseURL:'http://localhost:9006'
   },
   auth: {
@@ -92,12 +93,12 @@ module.exports = {
     tokenName: 'ladisServer',
     cookieAttributes: {
       expires: 7,
-      path: '/', 
-      domain: 'example.com', 
+      path: '/',
+      domain: 'example.com',
       secure: false,
     },
-    includeNodeModules: true, 
-    authenticationType: 'Basic', 
+    includeNodeModules: true,
+    authenticationType: 'Basic',
     defaultOptions: {
       $query: {
         loadingKey: 'loading',
@@ -108,7 +109,7 @@ module.exports = {
       default: {
         // required  
         httpEndpoint: 'http://www.ladishb.com:9006',//isProduction? 'http://www.ladishb.com:9006': 'http://127.0.0.1:9006',
-        browserHttpEndpoint: isProduction?'/admin/graphql':'/graphql',
+        browserHttpEndpoint: isProduction ? '/admin/graphql' : '/graphql',
         httpLinkOptions: {
           credentials: 'same-origin'
         },
@@ -122,14 +123,15 @@ module.exports = {
    ** Build configuration
    */
   build: {
-    publicPath: isProduction ? Host+'/_nuxt/' :'/_nuxt/',
+    publicPath: isProduction ? Host + '/_nuxt/' : '/_nuxt/',
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {},
+    extend(_config, _ctx) { },
   },
   //
   router: {
+    base: isProduction ? 'admin/' : '/',
     middleware: ["auth"]
   }
-};
+} as Configuration
