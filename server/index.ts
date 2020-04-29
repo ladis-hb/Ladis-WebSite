@@ -24,7 +24,8 @@ app.use(body());
 app.use(router.routes()).use(router.allowedMethods());
 
 // Import and Set Nuxt.js options
-const config = require("../nuxt.config.js");
+//const config = require("../nuxt.config.js");
+import config from '../nuxt.config'
 config.dev = !(app.env == "production");
 
 async function start() {

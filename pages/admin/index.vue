@@ -58,8 +58,14 @@
 </template>
 <script lang="ts">
 import Vue from "vue";
-import { selectFiles } from "../../types/typing";
+import { selectFiles, UserInfo } from "../../types/typing";
+import gql from "graphql-tag";
 export default Vue.extend({
+  data() {
+      return {
+        user: {} as UserInfo
+      };
+    },
   computed: {
     SourceFile(): selectFiles[] {
       let a = "";
@@ -67,8 +73,26 @@ export default Vue.extend({
       return this.$store.state.SourceFile;
     }
   },
-  scrollToTop:true,
-  watchQuery:true
+  scrollToTop: true,
+  watchQuery: true,
+ /*  apollo: {
+    user: {
+      query: gql`
+        {
+          user: getUser {
+            name
+            user
+            userGroup
+            mail
+            company
+            tel
+            address
+          }
+        }
+      `,
+      fetchPolicy: "network-only"
+    }
+  } */
 });
 </script>
 

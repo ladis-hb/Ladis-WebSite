@@ -6,7 +6,7 @@
         <p>1，编辑文件之前需要先上传素材（图片，视频，软件，pdf文件等），已提供在编辑的时候选择</p>
         <p>1.1，先进入素材管理，上传素材或者选择已有素材</p>
 
-        <b-img src="~/assets/readme/1.png" />
+        <b-img fluid src="~/assets/readme/1.png" />
 
         <p>
           <br />
@@ -45,3 +45,9 @@ export default {
   }
 };
 </script>
+<style scoped>
+img{
+  max-width: 100%;
+  height: auto;
+}
+</style>

@@ -139,6 +139,8 @@ const typeDefs: DocumentNode = gql`
   }
   #Query
   type Query {
+    # 获取用户信息
+    getUser:User
     # upload文件列表
     getUploadFiles(filter:String):pic
     # 获取代理商列表

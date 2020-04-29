@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+export type userGroup = 'root'|'admin'|'user'|'guest'
 /* 用户信息 */
 export interface UserInfo {
   user: string;
@@ -8,7 +9,7 @@ export interface UserInfo {
   mail?: string;
   DateTime: Date;
   stat: boolean;
-  Group?: string;
+  Group?: userGroup;
   IP?: string;
 }
 // apollo server result
