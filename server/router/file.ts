@@ -50,6 +50,7 @@ export const getFileStatAndDown = async (fpath: string) => {
         // 获取失败则抛出错误
         fsStream.removeAllListeners()
         fileGetStat = false;
+        console.log({fpath});
         throw new Error("ladis no file");
       }
     }

@@ -52,14 +52,14 @@ export default async (Ctx: ParameterizedContext) => {
   })();
   const id = ctx.params.id as string;
   // 打印请求参数和指令
-  if (!["GetHomeNews", "Down"].includes(id as never)) {
+  /* if (!["GetHomeNews", "Down"].includes(id as never)) {
     console.log({ id, i18n, isEH, SiteName, time: new Date().toLocaleTimeString() });
-  }
+  } */
   switch (id) {
     case "Down":
       {
         const filePath: string = "../static/" + Query.fileName;
-        console.log(filePath);
+        // console.log(filePath);
         ctx.assert(fs.existsSync(filePath), 400, "no files");
         ctx.attachment(filePath);
         await Send(ctx, filePath);
@@ -71,10 +71,11 @@ export default async (Ctx: ParameterizedContext) => {
       {
         // url
         const link: string = Query.link;
+        ctx.assert(link,404,'src is null')
         // 类型：news
         const type = link.split("/")[1];
         let result: casesContext = {};
-        console.log({ link, type });
+        // console.log({ link, type });
 
         switch (type) {
           case "case":
@@ -130,7 +131,7 @@ export default async (Ctx: ParameterizedContext) => {
           (query as any).webSite = Query.SiteName
         }
       }
-      console.log({ Query, query });
+      // console.log({ Query, query });
       // 申明结果变量
       const dbs: Model<Document, {}> = (DB as any)[table]
       let result;
