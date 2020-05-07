@@ -131,7 +131,7 @@ export default {
   },
   //
   router: {
-    base: isProduction ? 'admin/' : '/',
+    // base: isProduction ? 'admin/' : '/',
     middleware: ["auth"]
   }
 } as Configuration

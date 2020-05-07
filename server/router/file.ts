@@ -16,12 +16,14 @@ export const getFileStatAndDown = async (fpath: string) => {
   const enladis = "http://en.ladis.com.cn";
   // 获取请求素材路径
   const filePath = path.join(__dirname, "../static", fpath);
-  // 判断文件是否存在
-  const isFile = fs.existsSync(filePath);
   // 文件获取状态
   let fileGetStat = true;
+  const result = {
+    stat: fileGetStat,
+    Path: filePath,
+  }
   // 如果不存在文件
-  if (!isFile) {
+  if (!fs.existsSync(filePath);) {
     const Path = path.dirname(filePath)
     // 判断文件夹是否存在，不存在则创建
     if (!fs.existsSync(Path)) fs.ensureDirSync(Path);
@@ -50,12 +52,9 @@ export const getFileStatAndDown = async (fpath: string) => {
         // 获取失败则抛出错误
         fsStream.removeAllListeners()
         fileGetStat = false;
-        throw new Error("ladis no file=="+fpath);
+        console.error(new Error("ladis no file==" + fpath));
       }
     }
   }
-  return {
-    stat: fileGetStat,
-    Path: filePath,
-  };
+  return result;
 };
