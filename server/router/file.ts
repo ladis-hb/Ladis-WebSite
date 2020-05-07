@@ -23,7 +23,7 @@ export const getFileStatAndDown = async (fpath: string) => {
     Path: filePath,
   }
   // 如果不存在文件
-  if (!fs.existsSync(filePath);) {
+  if (!fs.existsSync(filePath)) {
     const Path = path.dirname(filePath)
     // 判断文件夹是否存在，不存在则创建
     if (!fs.existsSync(Path)) fs.ensureDirSync(Path);
