@@ -26,8 +26,6 @@ export const Agent: Agents[] = [
     url: "www.ladis.com.cn",
   },
   { name: "湖北雷迪司", url: "www.ladishb.com" },
-  { name: "贵州代理商", url: "" },
-  { name: "陕西代理商", url: "" },
   { name: "深圳市雷迪司电源有限公司", url: "www.szladis.com.cn" },
   { name: "雷迪司网络能源(深圳)有限公司", url: "www.gdladis.cn" },
   { name: "遵义雷迪司", url: "www.zyups.cn" },
@@ -37,5 +35,8 @@ export const Agent: Agents[] = [
   { name: '贵州六盘水雷迪司', url: 'liupanshui.gzjifang.com' },
   { name: '贵州铜仁雷迪司', url: 'tongren.gzjifang.com' },
   { name: '贵州兴义雷迪司', url: 'xingyi.gzjifang.com' },
-  { name: '贵州凯里雷迪司', url: 'kaili.gzjifang.com' }
+  { name: '贵州凯里雷迪司', url: 'kaili.gzjifang.com' },
+  { name: '陕西雷迪司', url: 'www.xaladis.com' },
+  { name: '河北雷迪司', url: 'www.hbladis.com' },
+  { name: '福建雷迪司', url: 'www.ladups.com' }
 ];

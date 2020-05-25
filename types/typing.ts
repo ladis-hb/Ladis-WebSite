@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-export type userGroup = 'root'|'admin'|'user'|'guest'
+export type userGroup = 'root' | 'admin' | 'user' | 'guest'
 /* 用户信息 */
 export interface UserInfo {
   user: string;
@@ -223,8 +223,6 @@ export interface editProduct {
 export type AgentName =
   | "localhost"
   | "湖北雷迪司"
-  | "贵州代理商"
-  | "陕西代理商"
   | "深圳市雷迪司电源有限公司"
   | "雷迪司网络能源(深圳)有限公司"
   | "遵义雷迪司"
@@ -235,6 +233,9 @@ export type AgentName =
   | '贵州铜仁雷迪司'
   | '贵州兴义雷迪司'
   | '贵州凯里雷迪司'
+  | '陕西雷迪司'
+  | '河北雷迪司'
+  | '福建雷迪司'
 // 代理
 export interface Agents {
   name: AgentName;
