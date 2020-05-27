@@ -1,4 +1,3 @@
-/* jshint esversion:8 */
 import mongoose from "mongoose";
 const DB_URL = "mongodb://localhost:27017/ladis"; /** * 连接 */
 export const Schema = mongoose.Schema;

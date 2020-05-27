@@ -25,8 +25,10 @@ import {
 } from "./typing";
 
 const Host: string = "http://www.ladis.com.cn";
-const CaseNum = 10
-const NewsNum = 363
+const CaseNum = 13
+const NewsNum = 570
+
+const errorArray: any[] = []
 
 async function Html_Serialize_Json(
   url: string,
@@ -55,8 +57,7 @@ async function Html_Serialize_Json(
   const file = await Axios.get(Host + url)
     .then(res => res.data)
     .catch(e => {
-
-      console.log({ url, table, type, query, title, parent, arg, error: "axios error" });
+      errorArray.push({ url, table, type, query, title, parent, arg, error: "axios error" })
       return false
     });
   if (!file) return false
@@ -827,7 +828,7 @@ async function three() {
         NewsList.link = NewsObject.link
         NewsList.href = NewsObject.href
         await update(NewsList);
-       
+
       }
     }
   }
@@ -840,10 +841,13 @@ async function three() {
 first().then(async () => {
   await secend()
   await three()
+
+  console.log(errorArray);
+  
   process.exit()
 });
 
-function htmlParse(html:string|null){
+function htmlParse(html: string | null) {
   //return decoder.feed(html?.replace(/\/n/g, "").replace(/(div|font)/g, "span").trim())
   //return decoder.feed(html?.replace(/\/n/g, "").trim())
   return decoder.feed(html?.replace(/\/n/g, "").trim())
