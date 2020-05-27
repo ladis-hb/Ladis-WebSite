@@ -38,6 +38,6 @@ export const Agent: Agents[] = [
   { name: '贵州凯里雷迪司', url: 'kaili.gzjifang.com' },
   { name: '陕西雷迪司', url: 'www.xaladis.com' },
   { name: '河北雷迪司', url: 'www.hbladis.com' },
-  { name: '福州雷迪司', url: 'www.ladups.com' },
+  { name: '福州雷迪司通电子有限公司', url: 'www.ladups.com' },
   { name: '浙江雷迪司', url: 'www.hz-ups.com' }
 ];
