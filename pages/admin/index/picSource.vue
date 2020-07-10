@@ -157,7 +157,7 @@ export default Vue.extend({
         data.append("files", file);
       });
       this.$axios
-        .$put("/uploads/files", data)
+        .$put("https://www.ladishb.com/admin/uploads/files", data)
         .then((result: { code: number; data: uploadResult[] }) => {
           this.$bvModal.msgBoxOk("上传已完成");
           this.$data.files = null;

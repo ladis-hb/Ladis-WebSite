@@ -43,7 +43,7 @@ function Multiparty(req: IncomingMessage) {
       const Files: uploadFile[] = files.files
       const SaveFiles = Files.map(file => {
         //
-        const flieNameNew = `${new Date().toLocaleString().replace(/( |:|:)/g, "-")}__${file.originalFilename}`
+        const flieNameNew = `${new Date().toLocaleDateString().replace(/( |:|:|\/)/g, "")}__${file.originalFilename}`
         const newPath = file.path.replace(Path.basename(file.path), flieNameNew)
         fs.renameSync(file.path, decodeURI(newPath))
         // 压缩图片

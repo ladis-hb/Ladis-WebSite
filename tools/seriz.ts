@@ -25,8 +25,8 @@ import {
 } from "./typing";
 
 const Host: string = "http://www.ladis.com.cn";
-const CaseNum = 13
-const NewsNum = 570
+const CaseNum = 14
+const NewsNum = 1169
 
 const errorArray: any[] = []
 
