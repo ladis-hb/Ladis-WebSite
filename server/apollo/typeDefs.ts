@@ -209,6 +209,8 @@ const typeDefs: DocumentNode = gql`
     delSupportProblem(title:String):result
     #
     delProduct(title:String):result
+    # 添加代理商
+    addAgent(arg:JSON):result
   }
 `;
 

@@ -239,6 +239,7 @@ export type AgentName =
   | '浙江雷迪司'
   | '成都雷迪司电子有限公司'
   | '沈阳雷迪司'
+  | string
 // 代理
 export interface Agents {
   name: AgentName;

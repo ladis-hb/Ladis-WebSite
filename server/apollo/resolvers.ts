@@ -7,6 +7,7 @@ import path from "path";
 import util from "util"
 import { Agent } from "../config"
 import { ApolloCtx, ApolloMongoResult, UserInfo, fileDirList, cases, caseList, buy, about, buyList, support, supportList, product, productList, supportAsid } from "typing";
+import { AgentConfig } from "../mongoose/config";
 const resolvers: IResolvers = {
   Query: {
     // 获取用户信息
@@ -245,6 +246,9 @@ const resolvers: IResolvers = {
       await DBs.Product_list.deleteOne({ title })
       const result = await DBs.Product.deleteOne({ title })
       return result
+    },
+    async addAgent(root,arg){
+      return await AgentConfig.updateOne({name:arg.name},{$set:arg})
     }
   },
 };
