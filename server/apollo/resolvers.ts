@@ -37,8 +37,11 @@ const resolvers: IResolvers = {
       return result
     },
     // 获取代理商列表
-    getAgents() {
-      return Agent
+    async getAgents() {
+      return await AgentConfig.find().lean()
+    },
+    async getAgent(root,{name}){
+      return await AgentConfig.findOne({name}).lean()
     },
     // 获取代理商about
     async getAbouts(root, { selectType, webSite }) {
@@ -247,8 +250,11 @@ const resolvers: IResolvers = {
       const result = await DBs.Product.deleteOne({ title })
       return result
     },
-    async addAgent(root,arg){
-      return await AgentConfig.updateOne({name:arg.name},{$set:arg})
+    async addAgent(root,{arg}){
+      const {name} = arg
+      console.log({name,arg});
+      
+      return await AgentConfig.updateOne({name:arg.name},{$set:arg},{upsert:true})
     }
   },
 };

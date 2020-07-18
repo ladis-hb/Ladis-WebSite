@@ -7,7 +7,7 @@
           <b-nav-item to="/admin/news">新闻资讯</b-nav-item>
           <b-nav-item to="/admin/case">案例管理</b-nav-item>
           <b-nav-item to="/admin/buy">经销商管理</b-nav-item>
-          <b-nav-item to="/admin/about">相关管理</b-nav-item>
+          <b-nav-item to="/admin/about">代理商配置</b-nav-item>
           <b-nav-item to="/admin/down">服务支持</b-nav-item>
           <b-nav-item to="/admin/product">产品分类</b-nav-item>
           <b-nav-item-dropdown text="首页管理">

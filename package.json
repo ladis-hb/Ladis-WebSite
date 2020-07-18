@@ -12,7 +12,7 @@
   "dependencies": {
     "@koa/cors": "^3.0.0",
     "@nuxt/typescript-runtime": "^0.4.0",
-    "@nuxtjs/apollo": "^4.0.0-rc19",
+    "@nuxtjs/apollo": "4.0.1-rc.1",
     "@nuxtjs/auth": "^4.8.4",
     "@nuxtjs/axios": "^5.3.6",
     "@tinymce/tinymce-vue": "^3.2.0",

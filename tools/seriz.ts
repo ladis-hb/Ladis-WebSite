@@ -26,7 +26,7 @@ import {
 
 const Host: string = "http://www.ladis.com.cn";
 const CaseNum = 14
-const NewsNum = 1169
+const NewsNum = 1356
 
 const errorArray: any[] = []
 

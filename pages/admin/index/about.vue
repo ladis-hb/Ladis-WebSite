@@ -1,9 +1,13 @@
 <template>
   <my-card title="代理商列表" :load="$apollo.loading">
+    <template v-slot:head>
+      <b-button class="float-right" size="sm" variant="primary" to="addAgent">添加</b-button>
+    </template>
     <b-table-lite :items="webSites" :fields="fields">
       <template v-slot:cell(oprate)="row">
         <b-button-group>
-          <b-button variant="info" :to="{name:'admin-index-addAbout',query:{name:row.item.name}}">编辑</b-button>
+          <b-button variant="info" :to="{name:'admin-index-addAbout',query:{name:row.item.name}}">关于代理商</b-button>
+          <b-button variant="success" :to="{name:'admin-index-agentConfig',query:{name:row.item.name}}">网站配置</b-button>
           <b-button @click="deletes(row.item.name)">删除</b-button>
         </b-button-group>
       </template>

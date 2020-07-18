@@ -38,7 +38,19 @@ const typeDefs: DocumentNode = gql`
   # 
   type Agent {
     name: String
-    url: String
+    url: String 
+    share: Boolean
+    port:Int
+    hm: String
+    logoType:String
+    logoValue:String
+    beian:String
+    title:String
+    metaKeywords:String
+    metaDescription:String
+    contactQQ:String
+    contactTel:[String]
+    contact400:String
   }
   #buy
   type buys {
@@ -145,6 +157,7 @@ const typeDefs: DocumentNode = gql`
     getUploadFiles(filter:String):pic
     # 获取代理商列表
     getAgents:[Agent]
+    getAgent(name:String):Agent
     # 获取代理商about信息
     getAbouts(selectType:String,webSite:String):String
     # 获取经销商列表
