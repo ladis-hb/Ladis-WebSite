@@ -6,14 +6,14 @@ import fs from "fs";
 import path from "path";
 import util from "util"
 import { Agent } from "../config"
-import { ApolloCtx, ApolloMongoResult, UserInfo, fileDirList, cases, caseList, buy, about, buyList, support, supportList, product, productList, supportAsid } from "typing";
-import { AgentConfig } from "../mongoose/config";
+import { ApolloCtx, ApolloMongoResult, UserInfo, fileDirList, cases, caseList, buy, about, buyList, support, supportList, product, productList, supportAsid, Agents } from "typing";
+import { AgentConfig, LinkFrend } from "../mongoose/config";
 const resolvers: IResolvers = {
   Query: {
     // 获取用户信息
-  getUser(root,arg,ctx:ApolloCtx){
-    return ctx
-  },
+    getUser(root, arg, ctx: ApolloCtx) {
+      return ctx
+    },
     // 获取upload文件夹文件列表
     async getUploadFiles(root, { filter }) {
       // 目录地址
@@ -40,8 +40,8 @@ const resolvers: IResolvers = {
     async getAgents() {
       return await AgentConfig.find().lean()
     },
-    async getAgent(root,{name}){
-      return await AgentConfig.findOne({name}).lean()
+    async getAgent(root, { name }) {
+      return await AgentConfig.findOne({ name }).lean()
     },
     // 获取代理商about
     async getAbouts(root, { selectType, webSite }) {
@@ -53,8 +53,8 @@ const resolvers: IResolvers = {
       const result: buyList[] = await DBs.Buy_list.find().lean()
       return result
     },
-    async getbuy(root,{title}){
-      const result:buyList = await DBs.Buy_list.findOne({title}).lean() as any
+    async getbuy(root, { title }) {
+      const result: buyList = await DBs.Buy_list.findOne({ title }).lean() as any
       return result
     },
     // 获取案例列表
@@ -108,12 +108,12 @@ const resolvers: IResolvers = {
     //
     async getProducts() {
       const result = await DBs.Product.find().lean()
-      const test = new Promise((resolve,reject)=>{
+      const test = new Promise((resolve, reject) => {
         setTimeout(async () => {
           resolve(result)
         }, 1000);
       })
-      return  await test
+      return await test
     },
     async getProduct(root, { title }) {
       const result = await DBs.Product.findOne({ title }).lean()
@@ -122,9 +122,10 @@ const resolvers: IResolvers = {
     async getProductList(root, { title }) {
       const result = await DBs.Product_list.findOne({ title }).lean()
       return result
+    },
+    async getLinkFrends() {
+      return await LinkFrend.find()
     }
-
-
   },
 
   Mutation: {
@@ -174,10 +175,10 @@ const resolvers: IResolvers = {
     async setProblem(root, { arg }) {
       const support = arg as supportList
       // 获取设置分类
-      const selectlist = await DBs.Page.findOne({MainTitle: "support_problem_asid",title:support.MainParent}).exec().then(el=>{
-        const su:supportAsid[] = el?.toJSON()['child']
-        const mpas:Map<string,supportAsid> = new Map()
-        su.forEach(els=>mpas.set(els.title,els))
+      const selectlist = await DBs.Page.findOne({ MainTitle: "support_problem_asid", title: support.MainParent }).exec().then(el => {
+        const su: supportAsid[] = el?.toJSON()['child']
+        const mpas: Map<string, supportAsid> = new Map()
+        su.forEach(els => mpas.set(els.title, els))
         return mpas
       })
       support.MainUrl = selectlist.get(support.MainTitle as string)?.link
@@ -192,11 +193,11 @@ const resolvers: IResolvers = {
     // 配置经销商
     async setBuy(root, { arg }) {
       // 获取省市->链接对应
-      const buyMap = await DBs.Buy_list.find().exec().then(el=>{
-        const maps:Map<string,string> = new Map()
-        el.forEach(el=>{
-          const buy:buyList = el.toJSON()
-          maps.set(buy.parent,buy.link)
+      const buyMap = await DBs.Buy_list.find().exec().then(el => {
+        const maps: Map<string, string> = new Map()
+        el.forEach(el => {
+          const buy: buyList = el.toJSON()
+          maps.set(buy.parent, buy.link)
         })
         return maps
       })
@@ -215,8 +216,8 @@ const resolvers: IResolvers = {
       return result
     },
     // 删除代理商
-    async delBuy(root,{title}){
-      const result = await DBs.Buy_list.deleteOne({title})
+    async delBuy(root, { title }) {
+      const result = await DBs.Buy_list.deleteOne({ title })
       return result
     },
     // 删除案例
@@ -250,11 +251,14 @@ const resolvers: IResolvers = {
       const result = await DBs.Product.deleteOne({ title })
       return result
     },
-    async addAgent(root,{arg}){
-      const {name} = arg
-      console.log({name,arg});
-      
-      return await AgentConfig.updateOne({name:arg.name},{$set:arg},{upsert:true})
+    async addAgent(root, { arg }) {
+      const { name } = arg
+      console.log({ name, arg });
+
+      return await AgentConfig.updateOne({ name: arg.name }, { $set: arg }, { upsert: true })
+    },
+    async addLinkFrend(root, { name, link }) {
+      return await LinkFrend.updateOne({ name }, { $set: { link } }, { upsert: true })
     }
   },
 };

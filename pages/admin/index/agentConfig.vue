@@ -40,6 +40,9 @@
       <b-form-group label="400电话:" label-align="right" label-cols="2">
         <b-input v-model="agent.contact400"></b-input>
       </b-form-group>
+      <b-form-group label="网店:" label-align="right" label-cols="2">
+        <b-tags v-model="agent.tml" placeholder="名称和网址以逗号(:)分隔,例：天猫店铺:www.taobao.com"></b-tags>
+      </b-form-group>
       <b-form-group label="是否添加为友情连接:" label-align="right" label-cols="2">
         <b-check v-model="agent.share"></b-check>
       </b-form-group>
@@ -70,7 +73,8 @@ export default Vue.extend({
         metaDescription: "",
         contactQQ: "",
         contactTel: [],
-        contact400: ""
+        contact400: "",
+        tml:[]
       }
     };
   },
@@ -93,6 +97,7 @@ export default Vue.extend({
             contactQQ
             contactTel
             contact400
+            tml
           }
         }
       `,

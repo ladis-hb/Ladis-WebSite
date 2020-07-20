@@ -51,6 +51,12 @@ const typeDefs: DocumentNode = gql`
     contactQQ:String
     contactTel:[String]
     contact400:String
+    tml:[String]
+  }
+  # 友情连接
+  type LinkFrend {
+    name:String
+    link:String
   }
   #buy
   type buys {
@@ -188,6 +194,8 @@ const typeDefs: DocumentNode = gql`
     getProduct(title:String):product
 
     getProductList(title:String):productList
+    # 获取友情连接
+    getLinkFrends:[LinkFrend]
     
   }
 
@@ -224,6 +232,8 @@ const typeDefs: DocumentNode = gql`
     delProduct(title:String):result
     # 添加代理商
     addAgent(arg:JSON):result
+    # 添加友情连接
+    addLinkFrend(name:String,link:String):result
   }
 `;
 
