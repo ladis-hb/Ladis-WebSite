@@ -7,18 +7,36 @@ import File, { getFileStatAndDown } from "./file";/*
 import fs from "fs"
 // import Send from "koa-send";
 import { ParameterizedContext } from "koa"; */
+import { AgentConfig } from "../mongoose/config";
 
 const router = new Router();
 // 下载附件
 router.get("/down/*", File);
 router.get("/upload/*", File);
 // 图片
-router.get( /(\/_CMS_NEWS_IMG_\/*|a_images\/*)/, File);
+router.get(/(\/_CMS_NEWS_IMG_\/*|a_images\/*)/, File);
 // router.get("/a_images/*", File);
 //
 router.post("/auth/:id", Auth);
 router.put("/uploads/:id", Upload);
 router.get("/api/:id", Docment);
+
+router.get("/config/:id", async (ctx) => {
+  const query = ctx.query
+  switch (ctx.params.id) {
+    case "agent":
+      {
+        const data = await AgentConfig.findOne({ name: query.name }).lean()
+        console.log({data,query});
+        ctx.body = data
+      }
+      break;
+
+    default:
+      break;
+  }
+
+})
 /* 
 async function down(ctx: ParameterizedContext<any, Router.IRouterParamContext<any, {}>>) {
   try {

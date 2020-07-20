@@ -26,7 +26,10 @@ import {
 
 const Host: string = "http://www.ladis.com.cn";
 const CaseNum = 14
-const NewsNum = 1356
+const NewsNum = process.argv[2] || 1356
+
+console.log(`案例条目页数:${CaseNum},新闻条目页数:${NewsNum}`);
+
 
 const errorArray: any[] = []
 
