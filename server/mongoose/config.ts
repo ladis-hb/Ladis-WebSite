@@ -15,6 +15,7 @@ const SchemaAgentConfig = new Schema({
         default: "/logo.png"
     },
     beian: String,
+    wangan:String,
     //
     title: String,
     metaKeywords: String,

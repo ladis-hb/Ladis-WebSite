@@ -45,6 +45,7 @@ const typeDefs: DocumentNode = gql`
     logoType:String
     logoValue:String
     beian:String
+    wangan:String
     title:String
     metaKeywords:String
     metaDescription:String

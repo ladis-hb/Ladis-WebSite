@@ -7,7 +7,8 @@ import File, { getFileStatAndDown } from "./file";/*
 import fs from "fs"
 // import Send from "koa-send";
 import { ParameterizedContext } from "koa"; */
-import { AgentConfig } from "../mongoose/config";
+import { AgentConfig, LinkFrend } from "../mongoose/config";
+import { Agents } from "typing";
 
 const router = new Router();
 // 下载附件
@@ -27,11 +28,19 @@ router.get("/config/:id", async (ctx) => {
     case "agent":
       {
         const data = await AgentConfig.findOne({ name: query.name }).lean()
-        console.log({data,query});
+        console.log({ data, query });
         ctx.body = data
       }
       break;
+    case "linkFrend":
+      {
+        const agents = await AgentConfig.find({ share: true }).select(['name', 'url']).lean() as Agents[]
+        const links = await LinkFrend.find().lean()
 
+        const agentsParse = agents.map(el => ({ name: el.name, link: el.url }))
+        ctx.body = [...agentsParse, ...links]
+      }
+      break
     default:
       break;
   }
