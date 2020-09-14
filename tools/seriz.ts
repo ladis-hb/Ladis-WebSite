@@ -26,7 +26,7 @@ import {
 
 const Host: string = "http://www.ladis.com.cn";
 const CaseNum = 14
-const NewsNum = process.argv[2] || 1356
+const NewsNum = process.argv[2] || 1927
 
 console.log(`案例条目页数:${CaseNum},新闻条目页数:${NewsNum}`);
 
@@ -800,39 +800,121 @@ async function three() {
 
     }
   } {
+
     // news
-    for (let i = 2; i < NewsNum; i++) {
-      const NewsObjects = <cases[]>await Html_Serialize_Json(`/news/index_2_${i}.shtml`,
+    const qiyeNews: cases[] = []
+    {
+      const qiye1 = await Html_Serialize_Json(`/news/node_49.shtml`,
         "News",
         "news",
         null,
         "news_list",
         "home"
-      );
-      if (!NewsObjects) continue;
-      for (const NewsObject of NewsObjects) {
-        // ［一体化机柜］
-        const parenName = NewsObject.name.replace("［", "").replace("］", "")
-        NewsObject.MainTitle = parenName
-        NewsObject.date = NewsObject.time.replace("年", "/")
-          .replace("月", "/")
-          .replace("日", "/")
-        await update(NewsObject);
-        //
-        let NewsList = <caseList>await Html_Serialize_Json(
-          NewsObject.link,
-          "News_list",
-          "news_list",
-          null,
-          NewsObject.text,
-          parenName
-        );
-        if (!NewsList) continue
-        NewsList.link = NewsObject.link
-        NewsList.href = NewsObject.href
-        await update(NewsList);
-
+      ) as cases[]
+      if (qiye1) {
+        qiye1.forEach(el => {
+          if (el) qiyeNews.push(el)
+        })
       }
+
+      for (let i = 2; i < NewsNum; i++) {
+        const NewsObjects = await Html_Serialize_Json(`/news/node_49_${i}.shtml`,
+          "News",
+          "news",
+          null,
+          "news_list",
+          "home"
+        ) as cases[]
+        if (NewsObjects) {
+          NewsObjects.forEach(el => {
+            if (el) qiyeNews.push(el)
+          })
+        } else {
+          console.log(`/news/node_49_${i}.shtml`);
+        }
+      }
+    }
+    const chanpinNews: cases[] = []
+    {
+      const qiye1 = await Html_Serialize_Json(`/news/node_48.shtml`,
+        "News",
+        "news",
+        null,
+        "news_list",
+        "home"
+      ) as cases[]
+      qiye1.forEach(el => {
+        if (el) chanpinNews.push(el)
+      })
+      for (let i = 2; i < 14; i++) {
+        const NewsObjects = await Html_Serialize_Json(`/news/node_48_${i}.shtml`,
+          "News",
+          "news",
+          null,
+          "news_list",
+          "home"
+        ) as cases[]
+        if (NewsObjects) {
+          NewsObjects.forEach(el => {
+            if (el) qiyeNews.push(el)
+          })
+        } else {
+          console.log(`/news/node_49_${i}.shtml`);
+        }
+      }
+    }
+    const hangyeNews: cases[] = []
+    {
+      const qiye1 = await Html_Serialize_Json(`/news/node_47.shtml`,
+        "News",
+        "news",
+        null,
+        "news_list",
+        "home"
+      ) as cases[]
+      qiye1.forEach(el => {
+        if (el) hangyeNews.push(el)
+      })
+      for (let i = 2; i < 236; i++) {
+        const NewsObjects = await Html_Serialize_Json(`/news/node_47_${i}.shtml`,
+          "News",
+          "news",
+          null,
+          "news_list",
+          "home"
+        ) as cases[]
+        if (NewsObjects) {
+          NewsObjects.forEach(el => {
+            if (el) qiyeNews.push(el)
+          })
+        } else {
+          console.log(`/news/node_49_${i}.shtml`);
+        }
+      }
+    }
+
+    for (const NewsObject of [...qiyeNews, ...hangyeNews, ...chanpinNews]) {
+      // ［一体化机柜］
+      const parenName = NewsObject.name.replace("［", "").replace("］", "")
+      NewsObject.MainTitle = parenName
+      NewsObject.date = NewsObject.time.replace("年", "/")
+        .replace("月", "/")
+        .replace("日", "/")
+      await update(NewsObject);
+      //
+      let NewsList = <caseList>await Html_Serialize_Json(
+        NewsObject.link,
+        "News_list",
+        "news_list",
+        null,
+        NewsObject.text,
+        parenName
+      );
+      if (!NewsList) continue
+      NewsList.link = NewsObject.link
+      NewsList.href = NewsObject.href
+      await update(NewsList);
+
     }
   }
   async function update(row: cases | caseList) {
@@ -846,7 +928,7 @@ first().then(async () => {
   await three()
 
   console.log(errorArray);
-  
+
   process.exit()
 });
 
