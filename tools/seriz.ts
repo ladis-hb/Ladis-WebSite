@@ -846,7 +846,7 @@ async function three() {
       qiye1.forEach(el => {
         if (el) chanpinNews.push(el)
       })
-      for (let i = 2; i < 14; i++) {
+      for (let i = 2; i < 12; i++) {
         const NewsObjects = await Html_Serialize_Json(`/news/node_48_${i}.shtml`,
           "News",
           "news",
@@ -875,7 +875,7 @@ async function three() {
       qiye1.forEach(el => {
         if (el) hangyeNews.push(el)
       })
-      for (let i = 2; i < 236; i++) {
+      for (let i = 2; i < 235; i++) {
         const NewsObjects = await Html_Serialize_Json(`/news/node_47_${i}.shtml`,
           "News",
           "news",
