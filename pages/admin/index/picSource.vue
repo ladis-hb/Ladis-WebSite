@@ -207,7 +207,7 @@ export default Vue.extend({
         const pathname = decodeURI(new URL(inputSour).pathname);
         const files: selectFiles[] = Object.values(
           (this as any).sourceFileFilter
-        ).flat();
+        ).flat() as any[];
         for (let el of files) {
           if (el.path === pathname) {
             this.$store.commit("SET_SOURCE_FILE", el);

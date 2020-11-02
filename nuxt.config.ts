@@ -4,7 +4,7 @@ const Host = 'https://www.ladishb.com/admin'
 const isProduction = process.env.NODE_ENV === "production"
 export default {
   telemetry: true,
-  mode: "spa",
+  modern:'client',
   /*
    ** Headers of the page
    */

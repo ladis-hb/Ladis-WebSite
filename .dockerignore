@@ -1,0 +1,12 @@
+node_modules
+static
+server/static
+page
+.nuxt
+.vscode
+components
+layouts
+tools
+.dockerignore
+.gitignore
+Dockerfile

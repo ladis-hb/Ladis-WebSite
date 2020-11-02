@@ -89,3 +89,5 @@ sw.*
 
 # static
 server/static
+server/*.js
+server/*/*.js
