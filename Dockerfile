@@ -1,4 +1,4 @@
-from node:14-alpine
+FROM node:14-alpine
 
 WORKDIR /app
 
@@ -20,5 +20,8 @@ COPY plugins /app/plugins
 COPY server /app/server
 COPY store /app/store
 COPY types /app/types
+
+# 声明容器使用的端口
+EXPOSE 9006
 
 CMD ["ts-node","--project", "./server/serverTsconfig.json","./server/index.ts"]

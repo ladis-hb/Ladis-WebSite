@@ -10,7 +10,8 @@ export default new ApolloServer({
   resolvers: resolvers,
   context: async ({ ctx }: { ctx: ParameterizedContext }) => {
     // 获取Token
-    const token = ctx.cookies.get("auth._token.local");
+    const token = ctx.request.header.authorization
+    // console.log({ ctx: ctx.request.header.authorization, token });
     // 没有token则检查body，注册和重置页面的请求则通过
     if (!token || token === "false") {
       // 获取gragpl
@@ -18,12 +19,15 @@ export default new ApolloServer({
       const guestQuery = ["registerUser"];
       if (operationName && guestQuery.includes(operationName))
         return { user: "guest", loggedIn: false };
-      else throw new Error("query error");
+      else {
+        console.log('apollo 请求没有携带cookie');
+        throw new Error("query error");
+      }
+    } else {
+      const user: UserInfo = await JwtVerify(token.replace(/(^Bearer|bearer)/ig, "").trim());
+      if (!user || !user.user) throw new Error("you must be logged in");
+      return { ...user, loggedIn: true };
     }
-    // 解构token
-    const user:UserInfo = await JwtVerify((<string>token).replace("bearer%20", ""));
-    //
-    if (!user || !user.user) throw new Error("you must be logged in");
-    return { ...user, loggedIn: true };
+
   }
 });
