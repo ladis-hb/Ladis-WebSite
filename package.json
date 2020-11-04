@@ -6,6 +6,8 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon -e ts --exec ts-node ./server/index.ts --watch server",
+    "build:docker": "sudo docker build -t ladiswebserver .",
+    "run:docker": "sudo docker stop ladiswebserver && sudo docker rm ladiswebserver && sudo docker run -itd --name ladiswebserver --network net --volume /home/cc/Web/Ladis-WebSite/server/static:/app/server/static -p 9006:9006  ladiswebserver",
     "start": "cross-env NODE_ENV=production ts-node ./server/index.ts"
   },
   "dependencies": {
