@@ -3,8 +3,7 @@ import * as DBs from "../mongoose/content";
 import Send from "koa-send";
 import fs from "fs";
 import { ParameterizedContext } from "koa";
-import { CrorQuary, casesContext, buy, buyList } from "typing";
-import { KoaCtx } from "server";
+import { CrorQuary, casesContext, KoaCtx } from "typing";
 import { Model ,Document} from "mongoose";
 export default async (Ctx: ParameterizedContext) => {
   const ctx: KoaCtx = Ctx as any;

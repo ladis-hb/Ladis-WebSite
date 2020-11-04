@@ -53,6 +53,11 @@ const typeDefs: DocumentNode = gql`
     contactTel:[String]
     contact400:String
     tml:[String]
+    showProduct: Boolean
+    showBuy: Boolean
+    showCase: Boolean
+    showNews: Boolean
+    showLaungua: Boolean
   }
   # 友情连接
   type LinkFrend {

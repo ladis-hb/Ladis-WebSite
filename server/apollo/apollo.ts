@@ -25,7 +25,10 @@ export default new ApolloServer({
       }
     } else {
       const user: UserInfo = await JwtVerify(token.replace(/(^Bearer|bearer)/ig, "").trim());
-      if (!user || !user.user) throw new Error("you must be logged in");
+      if (!user || !user.user) {
+        console.log("you must be logged in");
+        throw new Error("you must be logged in");
+      }
       return { ...user, loggedIn: true };
     }
 

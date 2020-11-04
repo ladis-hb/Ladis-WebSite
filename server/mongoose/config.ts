@@ -15,7 +15,7 @@ const SchemaAgentConfig = new Schema({
         default: "/logo.png"
     },
     beian: String,
-    wangan:String,
+    wangan: String,
     //
     title: String,
     metaKeywords: String,
@@ -24,7 +24,28 @@ const SchemaAgentConfig = new Schema({
     contactQQ: String,
     contactTel: [String],
     contact400: String,
-    tml: [String]
+    tml: [String],
+    showProduct: {
+        type: Boolean,
+        default: true
+    },
+    showBuy: {
+        type: Boolean,
+        default: false
+    },
+    showCase: {
+        type: Boolean,
+        default: true
+    },
+    showNews: {
+        type: Boolean,
+        default: true
+    },
+    showLaungua: {
+        type: Boolean,
+        default: false
+    },
+
 }, { timestamps: true })
 
 const SchemaLink = new Schema({

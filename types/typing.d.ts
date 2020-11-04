@@ -1,3 +1,6 @@
+import { ParameterizedContext } from "koa";
+import { Query } from "../server/Event/Event";
+
 /* eslint-disable camelcase */
 export type userGroup = 'root' | 'admin' | 'user' | 'guest'
 /* 用户信息 */
@@ -249,4 +252,9 @@ export interface Agents {
 export interface casesContext {
   pre?: cases;
   next?: cases;
+}
+
+
+export interface KoaCtx extends ParameterizedContext {
+  $Query:Query
 }

@@ -1,4 +1,4 @@
-import { Agents } from "../types/typing";
+import { Agents } from "typing";
 
 export const Collection = {
   user: "admin_User",
