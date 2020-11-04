@@ -26,7 +26,7 @@ import {
 
 const Host: string = "http://www.ladis.com.cn";
 const CaseNum = 14
-const NewsNum = process.argv[2] || 1927
+const NewsNum = process.argv[2] || 206
 
 console.log(`案例条目页数:${CaseNum},新闻条目页数:${NewsNum}`);
 
@@ -818,7 +818,8 @@ async function three() {
       }
 
       for (let i = 2; i < NewsNum; i++) {
-        const NewsObjects = await Html_Serialize_Json(`/news/node_49_${i}.shtml`,
+        const url = `/news/node_49_${i}.shtml`
+        const NewsObjects = await Html_Serialize_Json(url,
           "News",
           "news",
           null,
@@ -830,7 +831,7 @@ async function three() {
             if (el) qiyeNews.push(el)
           })
         } else {
-          console.log(`/news/node_49_${i}.shtml`);
+          console.log(`${url} is error`);
         }
       }
     }
@@ -847,7 +848,8 @@ async function three() {
         if (el) chanpinNews.push(el)
       })
       for (let i = 2; i < 12; i++) {
-        const NewsObjects = await Html_Serialize_Json(`/news/node_48_${i}.shtml`,
+        const url = `/news/node_48_${i}.shtml`
+        const NewsObjects = await Html_Serialize_Json(url,
           "News",
           "news",
           null,
@@ -859,7 +861,7 @@ async function three() {
             if (el) qiyeNews.push(el)
           })
         } else {
-          console.log(`/news/node_49_${i}.shtml`);
+          console.log(`${url} is error`);
         }
       }
     }
@@ -876,7 +878,8 @@ async function three() {
         if (el) hangyeNews.push(el)
       })
       for (let i = 2; i < 235; i++) {
-        const NewsObjects = await Html_Serialize_Json(`/news/node_47_${i}.shtml`,
+        const url = `/news/node_47_${i}.shtml`
+        const NewsObjects = await Html_Serialize_Json(url,
           "News",
           "news",
           null,
@@ -888,7 +891,7 @@ async function three() {
             if (el) qiyeNews.push(el)
           })
         } else {
-          console.log(`/news/node_49_${i}.shtml`);
+          console.log(`${url} is error`);
         }
       }
     }
@@ -911,10 +914,11 @@ async function three() {
         parenName
       );
       if (!NewsList) continue
-      NewsList.link = NewsObject.link
-      NewsList.href = NewsObject.href
-      await update(NewsList);
-
+      else{
+        NewsList.link = NewsObject.link
+        NewsList.href = NewsObject.href
+        await update(NewsList);
+      }
     }
   }
   async function update(row: cases | caseList) {
