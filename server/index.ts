@@ -21,7 +21,7 @@ app.use(body());
 // attch rout
 app.use(router.routes()).use(router.allowedMethods());
 
-const port = 8006
+const port = 9006
 async function start() {
   app.listen(port, () => {
     consola.ready({
