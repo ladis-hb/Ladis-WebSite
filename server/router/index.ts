@@ -3,6 +3,7 @@ import Router from "koa-router";
 import Auth from "./auth";
 import Upload from "./upload";
 import Docment from "./Docment";
+import DocmentV2 from "./DocmentV2";
 import File, { getFileStatAndDown } from "./file";/* 
 import fs from "fs"
 // import Send from "koa-send";
@@ -21,15 +22,14 @@ router.get(/(\/_CMS_NEWS_IMG_\/*|a_images\/*)/, File);
 router.post("/auth/:id", Auth);
 router.put("/uploads/:id", Upload);
 router.get("/api/:id", Docment);
+router.post("/api/v2/:id", DocmentV2);
 
 router.get("/config/:id", async (ctx) => {
   const query = ctx.query
   switch (ctx.params.id) {
     case "agent":
       {
-        const data = await AgentConfig.findOne({ name: query.name }).lean()
-        console.log({ data, query });
-        ctx.body = data
+        ctx.body = await AgentConfig.findOne({ name: query.name }).lean()
       }
       break;
     case "linkFrend":

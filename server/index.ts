@@ -9,7 +9,6 @@ import Query from "./Event/Event"
 const app = new Koa();
 //注册mongo
 app.use(logger())
-//app.use(mongo({ db: "ladis" }));
 app.use(cors({}));
 // 挂载全局缓存、事件到app
 Query.attach(app)
@@ -22,7 +21,7 @@ app.use(body());
 // attch rout
 app.use(router.routes()).use(router.allowedMethods());
 
-const port = 9006
+const port = 8006
 async function start() {
   app.listen(port, () => {
     consola.ready({
