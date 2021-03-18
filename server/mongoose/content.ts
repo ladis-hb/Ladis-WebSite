@@ -214,7 +214,7 @@ const EnNews_list = mongoose.model("EnNews_list", Schema_CaseNews_list);
 const EnAbout = mongoose.model("Enabout", Schema_About);
 const EnPage = mongoose.model("Page", Schema_Page);
 
-export default {
+export {
   Product,
   Product_list,
   Support,

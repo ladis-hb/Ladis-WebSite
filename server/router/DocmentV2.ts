@@ -5,6 +5,7 @@ import fs from "fs";
 import { ParameterizedContext } from "koa";
 import { CrorQuary, casesContext, KoaCtx } from "typing";
 import { Model, Document } from "mongoose";
+import { Product } from "../mongoose/content";
 export default async (Ctx: ParameterizedContext) => {
     const ctx: KoaCtx = Ctx as any;
     const body = ctx.request.body as CrorQuary
@@ -18,37 +19,37 @@ export default async (Ctx: ParameterizedContext) => {
     const DB = (() => {
         if (isEH) {
             return {
-                Product: DBs.default.EnProduct,
-                Product_list: DBs.default.EnProduct_list,
-                Support: DBs.default.EnSupport,
-                Support_list: DBs.default.EnSupport_list,
-                Buy_list: DBs.default.Buy_list,
-                Buy: DBs.default.Buy,
-                VR: DBs.default.VR,
-                Case: DBs.default.EnCase,
-                Case_list: DBs.default.EnCase_list,
-                News: DBs.default.EnNews,
-                News_list: DBs.default.EnNews_list,
-                About: DBs.default.EnAbout,
-                Page: DBs.default.Page,
-                Router: DBs.default.Router,
+                Product: DBs.EnProduct,
+                Product_list: DBs.EnProduct_list,
+                Support: DBs.EnSupport,
+                Support_list: DBs.EnSupport_list,
+                Buy_list: DBs.Buy_list,
+                Buy: DBs.Buy,
+                VR: DBs.VR,
+                Case: DBs.EnCase,
+                Case_list: DBs.EnCase_list,
+                News: DBs.EnNews,
+                News_list: DBs.EnNews_list,
+                About: DBs.EnAbout,
+                Page: DBs.Page,
+                Router: DBs.Router,
             };
         } else {
             return {
-                Product: DBs.default.Product,
-                Product_list: DBs.default.Product_list,
-                Support: DBs.default.Support,
-                Support_list: DBs.default.Support_list,
-                Buy_list: DBs.default.Buy_list,
-                Buy: DBs.default.Buy,
-                VR: DBs.default.VR,
-                Case: DBs.default.Case,
-                Case_list: DBs.default.Case_list,
-                News: DBs.default.News,
-                News_list: DBs.default.News_list,
-                About: DBs.default.About,
-                Page: DBs.default.Page,
-                Router: DBs.default.Router,
+                Product: DBs.Product,
+                Product_list: DBs.Product_list,
+                Support: DBs.Support,
+                Support_list: DBs.Support_list,
+                Buy_list: DBs.Buy_list,
+                Buy: DBs.Buy,
+                VR: DBs.VR,
+                Case: DBs.Case,
+                Case_list: DBs.Case_list,
+                News: DBs.News,
+                News_list: DBs.News_list,
+                About: DBs.About,
+                Page: DBs.Page,
+                Router: DBs.Router,
             };
         }
     })();
@@ -110,6 +111,21 @@ export default async (Ctx: ParameterizedContext) => {
                     .exec();
             }
             break;
+
+        // 搜索产品信息
+        case "seachProducts":
+            {
+                const str = body.seach as string
+                if (typeof str === "string" && str.length < 1000) {
+                    const regstr = eval('/' + str + '/i')
+                    // console.log(await DB.Product.findOne());
+                    const products = await DB.Product.find({ "$or": [{ "Pagekeywords": regstr }, { "title": regstr }] }).exec()
+                    ctx.body = products
+                } else {
+                    ctx.throw('查询字符出错')
+                }
+                break
+            }
 
         //转而使用Get_arg请求
         case "Get_arg":

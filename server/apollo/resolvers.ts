@@ -1,6 +1,6 @@
 import { IResolvers } from "apollo-server-koa";
 import { User } from "../mongoose/admin";
-import DBs from "../mongoose/content"
+import * as DBs from "../mongoose/content"
 import Crypto from "../util/crypto";
 import fs from "fs";
 import path from "path";

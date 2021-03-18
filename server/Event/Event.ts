@@ -1,6 +1,6 @@
 import { EventEmitter } from "events";
 import { cases } from "typing";
-import DB from "../mongoose/content";
+import * as DB from "../mongoose/content";
 import { DefaultContext } from "koa";
 type eventsName = "refreshNews" | "refreshCases";
 export class Query {

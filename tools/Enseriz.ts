@@ -1,7 +1,7 @@
 /* jshint esversion:8 */
 import { load } from "cheerio";
 import Axios from "axios";
-import DB from "../server/mongoose/content";
+import * as DB from "../server/mongoose/content";
 import {
   GMlink,
   GMpack,

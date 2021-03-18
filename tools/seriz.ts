@@ -5,7 +5,7 @@ top:1,截取html字符串需要替换div,font等字符为span,富文本编辑器
 */
 import { load } from "cheerio";
 import Axios from "axios";
-import DB from "../server/mongoose/content";
+import * as DB from "../server/mongoose/content";
 const decoder = require('html-entity-decoder');
 import {
   supportList,
