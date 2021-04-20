@@ -1,10 +1,11 @@
 import { ParameterizedContext } from "koa";
-import { uploadResult } from "typing";
+import { uploadResult, UserInfo } from "typing";
 import multiparty from "multiparty";
 import Path from "path";
 import fs from "fs-extra";
 import { IncomingMessage } from "http"
 import ImageCompre from "../util/ImageCompre";
+import { JwtVerify } from "../util/Secret";
 interface uploadFile {
   fieldName: string
   originalFilename: string
@@ -17,6 +18,10 @@ interface uploadFile {
 }
 
 export default async (ctx: ParameterizedContext) => {
+  const token = ctx.header.authorization as string
+  if (!token || !(await JwtVerify<UserInfo>(token.replace(/^bearer/, '').trim()).catch(() => null))?.stat) {
+    ctx.throw("secretError")
+  }
   const UploadFile = await Multiparty(ctx.req) as uploadResult[]
   ctx.assert(UploadFile, 402, "upload error")
   ctx.body = {

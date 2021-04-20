@@ -15,7 +15,7 @@ export const JwtSign = (payload: string | object | Buffer, options?: jsonwebtoke
     const opt = Object.assign({ expiresIn: tokenExpiresTime }, options || {});
     jsonwebtoken.sign(payload, secret, opt, (err, encodeURI) => {
       if (err) reject(err)
-      resolve(encodeURI)
+      resolve(encodeURI as string)
     })
   })
   return result
@@ -28,12 +28,12 @@ export const JwtSign = (payload: string | object | Buffer, options?: jsonwebtoke
  * @returns
  */
 
- export const JwtVerify = (token: string) => {
-  const result: Promise<string | object | Buffer | any> = new Promise((resolve, reject) => {
+export const JwtVerify = <T>(token: string) => {
+  const result = new Promise<T>((resolve, reject) => {
     jsonwebtoken.verify(token, secret, (err, decode) => {
       if (err) reject(err)
-      resolve(decode)
+      resolve(decode as any)
     })
   })
   return result
-}; 
+};

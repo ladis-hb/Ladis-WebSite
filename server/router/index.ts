@@ -71,8 +71,13 @@ router.post("/file/:id", async (ctx) => {
     case "delete":
       {
         const path = join(__dirname, '../static', body.path)
-        const File = fs.statSync(path)
-        if (File.isFile()) {
+        let File: fs.Stats
+        try {
+          File = fs.statSync(path)
+        } catch (error) {
+          ctx.throw(error)
+        }
+        if (File!.isFile()) {
           const resutl = await new Promise((resolve, reject) => {
             fs.rm(path, (err) => {
               if (err) reject(err)
