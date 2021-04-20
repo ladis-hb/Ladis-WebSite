@@ -1,5 +1,7 @@
 /* jshint esversion:8 */
 import Router from "koa-router";
+import fs from "fs"
+import { parse, join } from "path"
 import Auth from "./auth";
 import Upload from "./upload";
 import Docment from "./Docment";
@@ -24,6 +26,7 @@ router.put("/uploads/:id", Upload);
 router.get("/api/:id", Docment);
 router.post("/api/v2/:id", DocmentV2);
 
+// 响应代理商网站配置
 router.get("/config/:id", async (ctx) => {
   const query = ctx.query
   switch (ctx.params.id) {
@@ -46,25 +49,49 @@ router.get("/config/:id", async (ctx) => {
   }
 
 })
-/* 
-async function down(ctx: ParameterizedContext<any, Router.IRouterParamContext<any, {}>>) {
-  try {
-    const result = await getFileStatAndDown(ctx.path);
-    console.log({result});
-    
-    if (result.stat) {
-      // 文件路径需要定位到npm根目录,Send函数会二次处理路径
-      const filePath: string = "server/static/" + ctx.path;
 
-      ctx.attachment(result.Path);
-      ctx.body = fs.createReadStream(result.Path)
-      //await Send(ctx, filePath); 
-    } else {
-      ctx.throw(400, "no files");
-    }
-  } catch (error) {
-    ctx.throw(400, error);
+// 响应后台文件操作
+router.post("/file/:id", async (ctx) => {
+  const body = ctx.request.body
+  switch (ctx.params.id) {
+    case "rename":
+      {
+        const { path, name: newName } = body
+        const { dir, ext } = parse(path)
+        const newPth = join(__dirname, '../static', dir, newName + ext)
+        const oldPth = join(__dirname, "../static", path)
+        fs.renameSync(oldPth, newPth)
+        ctx.body = {
+          code: 200,
+          msg: '重命名成功'
+        }
+      }
+      break;
+
+    case "delete":
+      {
+        const path = join(__dirname, '../static', body.path)
+        const File = fs.statSync(path)
+        if (File.isFile()) {
+          const resutl = await new Promise((resolve, reject) => {
+            fs.rm(path, (err) => {
+              if (err) reject(err)
+              resolve(null)
+            })
+          })
+          ctx.body = {
+            code: 200,
+            msg: '删除成功'
+          }
+        } else {
+          ctx.body = {
+            code: 0,
+            msg: '操作出错'
+          }
+        }
+      }
+      break;
   }
-} */
+})
 
 export default router;
