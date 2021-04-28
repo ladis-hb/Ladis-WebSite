@@ -25,7 +25,7 @@ import {
 } from "./typing";
 
 const Host: string = "http://www.ladis.com.cn";
-const CaseNum = 14
+const CaseNum = 16
 const NewsNum = process.argv[2] || 206
 
 console.log(`案例条目页数:${CaseNum},新闻条目页数:${NewsNum}`);
