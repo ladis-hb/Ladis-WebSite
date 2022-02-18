@@ -25,7 +25,7 @@ import {
 } from "./typing";
 
 const Host: string = "http://www.ladis.com.cn";
-const CaseNum = 16
+const CaseNum = 23
 const NewsNum = process.argv[2] || 206
 
 console.log(`案例条目页数:${CaseNum},新闻条目页数:${NewsNum}`);
@@ -70,7 +70,6 @@ async function Html_Serialize_Json(
   {
     const keys = ['keywords', 'description']
     defaults.PageTitle = $("title").text().split("-")[0].trim()
-    console.log({ PageTitle: defaults.PageTitle });
 
     const meta = $("meta").map((i, val) => {
       return val.attribs
@@ -164,12 +163,28 @@ async function Html_Serialize_Json(
           );
         }
 
+        let [head, body] = ['', '']
+
+        head = htmlParse($(".printDisplay_para")?.html()) || '' //decoder.feed($(".printDisplay_para").html()?.replace(/\/n/g, "").replace(/(div|font)/g, "span").trim()),
+        body = htmlParse($(".responseWidth").html())//decoder.feed($(".responseWidth").html()?.replace(/\/n/g, "").replace(/(div|font)/g, "span").trim())
+
+
+        // 有的页面不按照模板编写
+        if (typeof body !== 'string') {
+          head = ''
+          body = htmlParse($(".new_list_outer").html())
+        }
         const data: productList = {
           ...defaults, title: defaults.MainTitle as string, link: url,
           img: Array.from(new Set(img)), // 图片去重
-          head: htmlParse($(".printDisplay_para").html()), //decoder.feed($(".printDisplay_para").html()?.replace(/\/n/g, "").replace(/(div|font)/g, "span").trim()),
-          body: htmlParse($(".responseWidth").html()),//decoder.feed($(".responseWidth").html()?.replace(/\/n/g, "").replace(/(div|font)/g, "span").trim())
+          head,
+          body
         };
+
+        if (data.PageTitle === "雷迪司机架式定频机房精密空调冷通道柜式空调") {
+          console.log(data);
+
+        }
 
         /* const t1: productContentOld = {
           type: "html",
@@ -914,7 +929,7 @@ async function three() {
         parenName
       );
       if (!NewsList) continue
-      else{
+      else {
         NewsList.link = NewsObject.link
         NewsList.href = NewsObject.href
         await update(NewsList);
