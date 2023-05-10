@@ -5,6 +5,8 @@ import axios from "axios";
 
 export default async (ctx: ParameterizedContext) => {
   const queryPath = decodeURI(ctx.path)
+  console.log('query', ctx.query);
+  
   const { stat, Path } = await getFileStatAndDown(queryPath);
   ctx.assert(stat, 400, ctx.path + " is no file");
   ctx.body = fs.createReadStream(Path);

@@ -507,7 +507,7 @@ async function Html_Serialize_Json(
         const data: caseList = {
           ...defaults,
           title,
-          content: htmlParse($(".new_list_outer").html())//decoder.feed($(".new_list_outer").html()?.replace(/\/n/g, "").replace(/(div|font)/g, "span").trim() as string)
+          content: htmlParse($(".new_list_outer").html() || '').replace(/<a/g,'<span').replace(/<\/a/g,'</span')//.replace(/http:\/\/www.ladis.com.cn/g,''))//decoder.feed($(".new_list_outer").html()?.replace(/\/n/g, "").replace(/(div|font)/g, "span").trim() as string)
         }
         return data
 
@@ -951,7 +951,7 @@ first().then(async () => {
   process.exit()
 });
 
-function htmlParse(html: string | null) {
+function htmlParse(html: string | null):string {
   //return decoder.feed(html?.replace(/\/n/g, "").replace(/(div|font)/g, "span").trim())
   //return decoder.feed(html?.replace(/\/n/g, "").trim())
   return decoder.feed(html?.replace(/\/n/g, "").trim())
