@@ -745,10 +745,10 @@ async function three() {
   {
 
     await DB.VR.deleteMany({})
-    await DB.Case.deleteMany({})
-    await DB.Case_list.deleteMany({})
-    await DB.News.deleteMany({})
-    await DB.News_list.deleteMany({})
+    await DB.Case.deleteMany({company: null})
+    await DB.Case_list.deleteMany({company: null})
+    await DB.News.deleteMany({company: null})
+    await DB.News_list.deleteMany({company: null})
 
     const vr: Promise<vr[]>[] = [];
     ["/360/node_970.shtml", "/360/node_969.shtml"].forEach(url => {
